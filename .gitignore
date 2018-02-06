@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+### don't push any kind of auth
+.httr-oauth
+droptoken.rds
+token.rds
+poisson-shiny-mail-auth.json
