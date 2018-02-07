@@ -6,8 +6,8 @@ function(input, output, session) {
   
   # Reactives --------------------
 
-  # --- read file upload as tibble 
-  get_data <- reactive({
+  # --- read, clean and check data
+  read_data <- reactive({
     req(input$uploadData)
     data <- input$uploadData
     if(is.null(data)) {return(NULL)}
@@ -15,9 +15,9 @@ function(input, output, session) {
     isolate(readr::read_csv(data$datapath))
   })
   
-  # --- clean common problems to avoid errors
+  # clean common problems to avoid errors
   clean_data <- reactive({
-    data <- get_data()
+    data <- read_data()
     if(length(data)) {
       # remove any column names like X1, X2 (blank headers from excel/numbers)
       data[,colnames(data) %in% paste0("X", 1:200)] <- NULL
@@ -27,16 +27,15 @@ function(input, output, session) {
     data
   })
   
-  # --- check that data conforms to requirements of ssd_fit_dist
   check_data <- reactive({
     data <- clean_data()
   })
   
   column_names <- reactive({
-    names(clean_data()) %>% print
+    names(clean_data()) 
   })
   
-  
+  # --- fit distributions
   fit_dist <- reactive({
     data <- clean_data()
     dist <-  ssdca::ssd_fit_dists(data, left = input$selectConc, dists = input$selectDist, silent = TRUE)
@@ -44,12 +43,38 @@ function(input, output, session) {
   
   plot_dist <- reactive({
     autoplot(fit_dist())
-  })
-  
+})
+    
   table_gof <- reactive({
     dist <- fit_dist()
     gof <- ssdca::ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ round(., 2))
   })
+  
+  # --- predict and model average
+  predict_hc <- reactive({
+    dist <- fit_dist()
+    pred <- predict(dist)
+  })
+  
+  plot_model_average <- reactive({
+    data <- clean_data()
+    pred <- predict_hc()
+    ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc)
+  })
+  
+  describe_hazard_conc <- reactive({
+    pred <- predict_hc()
+    est <- pred[pred$prop == input$selectHc, "est"]
+    lower <- pred[pred$prop == input$selectHc, "lcl"]
+    upper <- pred[pred$prop == input$selectHc, "ucl"]
+    
+    output <- paste("The model average estimate of the concentartion that affects", 
+                    input$selectHc, 
+                    "of the species is", est,
+                    "but it could be as low as", lower, 
+                    "or as high as", upper)
+  })
+  
   
   # Outputs --------------------
   # output$selectedDist <- renderPrint({input$selectDist%>% paste("\n") %>% glue::collapse()})
@@ -80,13 +105,19 @@ function(input, output, session) {
                      'persist' = FALSE))
   })
   
+  output$selectHc <- renderUI({
+    req(input$uploadData)
+    numericInput('selectHc', label = "Select hazard concentration", value = 0.05, 
+                 min = 0.01, max = 0.99, step = 0.05)
+  })
+  
   # --- fit dist
   output$distPlot <- renderPlot(plot_dist())
   output$gofTable <- renderDataTable(table_gof())
   
   # --- predict
-  output$modelAveragePlot <- renderPlot(model_average_plot())
-  output$hazardConc <- renderPrint(hazard_conc_text())
+  output$modelAveragePlot <- renderPlot(plot_model_average())
+  output$hazardConc <- renderPrint(describe_hazard_conc())
   
     
   # Observers --------------------

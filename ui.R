@@ -24,7 +24,7 @@ fluidPage(
       uiOutput('selectConc'),
       uiOutput('selectSpp'),
       uiOutput('selectDist'),
-      
+      uiOutput('selectHc'),
       br(),
       actionLink("information", label = "Technical info", icon = icon('info-circle')),
       br(),
@@ -44,20 +44,22 @@ fluidPage(
       # ),
       # verbatimTextOutput("selectedDist",  placeholder = TRUE)
 
-  
-      
-    ),
+      ),
     
     # Main panel for displaying outputs ----
     mainPanel(
       
       # Output: Tabset w/ plot, summary, and table ----
       tabsetPanel(type = "tabs",
-                  tabPanel(title = span(tagList(icon("columns"), "Fit")), 
+                  tabPanel(title = span(tagList(icon("columns"), "Fit")),
+                           br(),
                            plotOutput("distPlot"),
+                           br(),
                            DT::dataTableOutput("gofTable")),
-                  tabPanel(title = span(tagList(icon("calculator"), "Predict")),  
+                  tabPanel(title = span(tagList(icon("calculator"), "Predict")), 
+                           br(),
                            plotOutput("modelAveragePlot"),
+                           br(),
                            verbatimTextOutput("hazardConc")),
                   tabPanel(title = span(tagList(icon("code"), "Rcode")), 
                            verbatimTextOutput("code"))
