@@ -24,7 +24,7 @@ fluidPage(
       uiOutput('selectConc'),
       uiOutput('selectSpp'),
       selectizeInput('selectDist', 
-                     label = "Select distributions to fit:",
+                     label = label_mandatory("Select distributions to fit:"),
                      multiple = TRUE, 
                      choices = list(Recommended = default.dists, Additional = extra.dists),
                      selected = default.dists,
@@ -32,6 +32,7 @@ fluidPage(
                        'plugins' = list('remove_button'),
                        'create' = TRUE,
                        'persist' = FALSE)),
+      br(),
       actionLink("information", label = "Technical info", icon = icon('info-circle')),
       br(),
       actionLink("feedback", label = "Feedback?", icon = icon("comment"))

@@ -37,13 +37,13 @@ function(input, output, session) {
   
   output$selectConc = renderUI({
     selectInput("selectConc", 
-                label = "Select column with concentrations:", 
+                label = label_mandatory("Select concentration column:"), 
                 choices = column_names())
   })
   
   output$selectSpp = renderUI({
     selectInput("selectSpp", 
-                label = "Select column with species names:", 
+                label = "Select species column:", 
                 choices = column_names())
   })
   
