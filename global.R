@@ -17,8 +17,11 @@ helpers <- 'helpers/'
 source(paste0(helpers, 'functions.R'), local = T)
 source(paste0(helpers, 'auth.R'), local = T)
 
+extra.dists <- c("burr", "pareto")
+default.dists <- c("lnorm", "llog", "gompertz", "lgumbel", "gamma", "weibull")
+
 # red mandatory star
-labelMandatory <- function(label) {
+label_mandatory <- function(label) {
   tagList(
     label,
     span("*", class = "mandatory_star")
