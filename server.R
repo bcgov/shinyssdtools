@@ -71,7 +71,21 @@ function(input, output, session) {
     plot_dist()
   })
   
+  observeEvent(input$feedback,
+               {showModal(modalDialog(title = "", 
+                                      size = "m", easyClose = T,
+                                      footer = modalButton("Got it"),
+                                      textInput("name", "Name (optional):", width = "30%"),
+                                      textInput("email", "Email (optional):", width = "30%"),
+                                      textInput("comment", labelMandatory("Comment:"), width = "100%"),
+                                      actionButton("submit_feedback", "Submit")))})
   
+  # information
+  observeEvent(input$information,
+               {showModal(modalDialog("Here is where we put technical details about how the models are fit, etc.",
+                                      size = "m", easyClose = T,
+                                      footer = modalButton("Got it")))
+               })
  
   }
   

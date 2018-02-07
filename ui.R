@@ -32,8 +32,9 @@ fluidPage(
                        'plugins' = list('remove_button'),
                        'create' = TRUE,
                        'persist' = FALSE)),
-      actionLink("information", label = "Technical info", icon = icon('info-circle'))
-      # actionLink("feedback", label = "Feedback?")
+      actionLink("information", label = "Technical info", icon = icon('info-circle')),
+      br(),
+      actionLink("feedback", label = "Feedback?", icon = icon("comment"))
       
       # shinyWidgets::pickerInput(
       #   inputId = "selectDist", 
