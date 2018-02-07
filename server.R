@@ -6,8 +6,9 @@ function(input, output, session) {
   
   # Reactives --------------------
 
-  # --- read file upload into tibble 
+  # --- read file upload as tibble 
   get_data <- reactive({
+    req(input$uploadData)
     data <- input$uploadData
     if(is.null(data)) {return(NULL)}
     if(!grepl(".csv", data$name, fixed = TRUE)) {return(NULL)}
@@ -35,17 +36,6 @@ function(input, output, session) {
     names(clean_data()) %>% print
   })
   
-  output$selectConc = renderUI({
-    selectInput("selectConc", 
-                label = label_mandatory("Select concentration column:"), 
-                choices = column_names())
-  })
-  
-  output$selectSpp = renderUI({
-    selectInput("selectSpp", 
-                label = "Select species column:", 
-                choices = column_names())
-  })
   
   fit_dist <- reactive({
     data <- clean_data()
@@ -63,14 +53,45 @@ function(input, output, session) {
   
   # Outputs --------------------
   # output$selectedDist <- renderPrint({input$selectDist%>% paste("\n") %>% glue::collapse()})
-  output$distPlot <- renderPlot(plot_dist())
-  output$gofTable <- renderDataTable(table_gof())
-    
-  # Observers --------------------
-  observeEvent(input$fit, {
-    plot_dist()
+  
+  # --- render UI with choices based on file upload
+  output$selectConc = renderUI({
+    selectInput("selectConc", 
+                label = label_mandatory("Select concentration column:"), 
+                choices = column_names())
   })
   
+  output$selectSpp = renderUI({
+    selectInput("selectSpp", 
+                label = "Select species column:", 
+                choices = column_names())
+  })
+  
+  output$selectDist <- renderUI({
+    req(input$uploadData)
+    selectizeInput('selectDist', 
+                   label = label_mandatory("Select distributions to fit:"),
+                   multiple = TRUE, 
+                   choices = list(Recommended = default.dists, Additional = extra.dists),
+                   selected = default.dists,
+                   options = list(
+                     'plugins' = list('remove_button'),
+                     'create' = TRUE,
+                     'persist' = FALSE))
+  })
+  
+  # --- fit dist
+  output$distPlot <- renderPlot(plot_dist())
+  output$gofTable <- renderDataTable(table_gof())
+  
+  # --- predict
+  output$modelAveragePlot <- renderPlot(model_average_plot())
+  output$hazardConc <- renderPrint(hazard_conc_text())
+  
+    
+  # Observers --------------------
+  
+  # --- extras
   observeEvent(input$feedback,
                {showModal(modalDialog(title = "", 
                                       size = "m", easyClose = T,

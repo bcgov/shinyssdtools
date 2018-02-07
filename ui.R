@@ -23,15 +23,8 @@ fluidPage(
       # select which column is concentration
       uiOutput('selectConc'),
       uiOutput('selectSpp'),
-      selectizeInput('selectDist', 
-                     label = label_mandatory("Select distributions to fit:"),
-                     multiple = TRUE, 
-                     choices = list(Recommended = default.dists, Additional = extra.dists),
-                     selected = default.dists,
-                     options = list(
-                       'plugins' = list('remove_button'),
-                       'create' = TRUE,
-                       'persist' = FALSE)),
+      uiOutput('selectDist'),
+      
       br(),
       actionLink("information", label = "Technical info", icon = icon('info-circle')),
       br(),
