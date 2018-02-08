@@ -59,29 +59,18 @@ function(input, output, session) {
   plot_model_average <- reactive({
     data <- clean_data()
     pred <- predict_hc()
-    ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc)
-  })
-  
-  estimate_hc <- reactive({
-    pred <- predict_hc()
-    est <- pred[pred$prop == input$selectHc, "est"]
-    est
+    ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc/100)
   })
   
   describe_hazard_conc <- reactive({
-    # pred <- predict_hc()
-    # est <- pred[pred$prop == input$selectHc, "est"] %>% round(1)
-    # lower <- pred[pred$prop == input$selectHc, "lcl"] %>% round(1)
-    # upper <- pred[pred$prop == input$selectHc, "ucl"] %>% round(1)
-    
-    est <- input$selectHc*2 %>% round(1)
-    lower <- input$selectHc*1.5 %>% round(1)
-    upper <- input$selectHc*2.5 %>% round(1)
+    pred <- predict_hc()
+    est <- pred[round(pred$prop, 2) == (input$selectHc/100), "est"] %>% round(1)
+    lower <- pred[round(pred$prop, 2) == (input$selectHc/100), "lcl"] %>% round(1)
+    upper <- pred[round(pred$prop, 2) == (input$selectHc/100), "ucl"] %>% round(1)
     
     out <- list(est = est, lower = lower, upper = upper)
     out
   })
-  
   
   # Outputs --------------------
   # output$selectedDist <- renderPrint({input$selectDist%>% paste("\n") %>% glue::collapse()})

@@ -45,27 +45,15 @@ fluidPage(
                            br(),
                            plotOutput("modelAveragePlot"),
                            br(),
-                           div(style = "display:inline-block",
-                               tags$body("The model average estimate of the concentartion that affects")),
-                           div(style = "display:inline-block",
-                               numericInput("selectHc", label = NULL, value = 5, min = 0, 
-                                            max = 99, step = 5, width = "70px")),
-                           div(style = "display:inline-block",
-                               tags$body("% of the species is ")),
-                           div(style="display:inline-block",
-                               htmlOutput("estHc")
-                           ),
-                           div(style = "display:inline-block",
-                               tags$body("but it could be as low as")),
-                           div(style="display:inline-block",
-                               htmlOutput("lowerHc")
-                           ),
-                           div(style = "display:inline-block",
-                               tags$body("or as high as")),
-                           div(style="display:inline-block",
-                               htmlOutput("upperHc")
-                           )),
-                  
+                           inline(tags$body("The model average estimate of the concentration that affects")),
+                           inline(numericInput("selectHc", label = NULL, value = 5, min = 0, 
+                                               max = 99, step = 5, width = "70px")),
+                           inline(tags$body("% of the species is ")),
+                           inline(htmlOutput("estHc")),
+                           inline(tags$body("but it could be as low as")),
+                           inline(htmlOutput("lowerHc")),
+                           inline(tags$body("or as high as")),
+                           inline(htmlOutput("upperHc"))),
                   tabPanel(title = span(tagList(icon("code"), "Rcode")), 
                            verbatimTextOutput("code"))
                   

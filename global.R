@@ -29,6 +29,10 @@ label_mandatory <- function(label) {
 }
 appCSS <- ".mandatory_star { color: red; }"
 
+inline = function (x) {
+  tags$div(style="display:inline-block;", x)
+}
+
 
 
 
