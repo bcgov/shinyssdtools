@@ -33,11 +33,17 @@ function(input, output, session) {
   })
   
   check_data <- reactive({
+    # dependency on go/update button
     input$go
     
     data <- clean_data()
-    data
+    # data <- clean_data()
+    # conc <- data[[,input$selectConc]]
+    # if(!is.numeric(conc)) return(create_error("Concentration column must contain numbers."))
+
+    # data 
   })
+
   
   column_names <- reactive({
     names(clean_data()) 
@@ -54,6 +60,18 @@ function(input, output, session) {
   })
   
   # --- fit distributions
+  # fit_dist <- reactive({
+  #   withProgress(message = "Fitting distribution", value = 0, {
+  #     data <- check_data()
+  #     incProgress(20)
+  #     dist <-  isolate(ssdca::ssd_fit_dists(data, left = input$selectConc, 
+  #                                           dists = input$selectDist, silent = TRUE))
+  #     incProgress(80)
+  #   })
+  #   dist
+  #     
+  # })
+  
   fit_dist <- reactive({
       data <- check_data()
       dist <-  isolate(ssdca::ssd_fit_dists(data, left = input$selectConc, 
@@ -61,8 +79,7 @@ function(input, output, session) {
   })
   
   plot_dist <- reactive({
-    req(input$go)
-    autoplot(fit_dist())
+      autoplot(fit_dist())
   })
     
   table_gof <- reactive({
@@ -77,16 +94,22 @@ function(input, output, session) {
   })
   
   plot_model_average <- reactive({
-    data <- clean_data()
-    pred <- predict_hc()
-    ssdca::ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc/100)
+    withProgress(message = "Getting predictions...",
+                 detail = "This may take a minute or so...",
+                 value = 0, {
+                   data <- clean_data()
+                   incProgress(10)
+                   pred <- predict_hc()
+                   incProgress(75)})
+                   ssdca::ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc/100)
+                                    
   })
   
   describe_hazard_conc <- reactive({
     pred <- predict_hc()
-    est <- pred[round(pred$prop, 2) == (input$selectHc/100), "est"] %>% round(1)
-    lower <- pred[round(pred$prop, 2) == (input$selectHc/100), "lcl"] %>% round(1)
-    upper <- pred[round(pred$prop, 2) == (input$selectHc/100), "ucl"] %>% round(1)
+    est <- pred[round(pred$prop, 2) == (input$selectHc/100), "est"] %>% round(2)
+    lower <- pred[round(pred$prop, 2) == (input$selectHc/100), "lcl"] %>% round(2)
+    upper <- pred[round(pred$prop, 2) == (input$selectHc/100), "ucl"] %>% round(2)
     
     out <- list(est = est, lower = lower, upper = upper)
     out
@@ -124,14 +147,37 @@ function(input, output, session) {
   })
   
   # --- fit dist
-  output$distPlot <- renderPlot(plot_dist())
-  output$gofTable <- renderDataTable(table_gof())
+  output$distPlot <- renderPlot({
+    req(input$go)
+    withProgress(message = "Fitting distributions...", value = 0, {
+      incProgress(20)
+      plot_dist()
+
+  })})
+    
+  output$gofTable <- renderDataTable({
+    req(input$go)
+    table_gof()})
+  
+  # --- predict
+  output$modelAveragePlot <- renderPlot({
+    req(input$go)
+   plot_model_average()
+  })
+  
+  # --- describe results
+  output$estHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$est, "<b>"))})
+  output$lowerHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$lower, "<b>"))})
+  output$upperHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$upper, "<b>"))})
+  output$text1 <- renderUI({HTML("The model average estimate of the concentration that affects")})
+  output$selectHc <- renderUI({numericInput("selectHc", label = NULL, value = 5, min = 0, 
+                                            max = 99, step = 5, width = "70px")})
+  output$text2 <- renderUI({HTML("% of species is")})
+  output$text3 <- renderUI({HTML("but it could be as low as")})
+  output$text4 <- renderUI({HTML("or as high as")})
   
   # --- check data
   # output$hint <- renderText(check_data())
-  
-
-  
     
   # Observers --------------------
   # --- extras
@@ -150,29 +196,19 @@ function(input, output, session) {
                                       size = "m", easyClose = T,
                                       footer = modalButton("Got it")))})
   
-  # --- go/update
-  observeEvent(input$go, 
-               {
  
-    
-    # --- predict
-    output$modelAveragePlot <- renderPlot(plot_model_average())
-    output$hazardConc <- renderPrint(describe_hazard_conc())
-    
-    # --- describe results
-    output$estHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$est, "<b>"))})
-    output$lowerHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$lower, "<b>"))})
-    output$upperHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$upper, "<b>"))})
-    output$text1 <- renderUI({HTML("The model average estimate of the concentration that affects")})
-    output$selectHc <- renderUI({numericInput("selectHc", label = NULL, value = 5, min = 0, 
-                 max = 99, step = 5, width = "70px")})
-    output$text2 <- renderUI({HTML("% of species is")})
-    output$text3 <- renderUI({HTML("but it could be as low as")})
-    output$text4 <- renderUI({HTML("or as high as")})
-
-    })
-
 }
+  
+#   # --- go/update
+#   observeEvent(input$go, 
+#                {
+#  
+#     
+# 
+# 
+#     })
+# 
+# }
 
 
   

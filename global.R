@@ -33,6 +33,8 @@ inline = function (x) {
   tags$div(style="display:inline-block;", x)
 }
 
+messages <- c("hmmmm...", "something's not right...", "there's a problem...", "oh dear...", "bit of an issue...")
+
 plot_spin <- "
 #plot-container {
 position: relative;
