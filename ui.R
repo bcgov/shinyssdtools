@@ -38,6 +38,8 @@ fluidPage(
       tabsetPanel(type = "tabs",
                   tabPanel(title = span(tagList(icon("columns"), "Fit")),
                            br(),
+                           inline(tags$body("Hint: here is where we might put helpful hints if plot isn't loading")),
+                           # inline(textOutput("hint")),
                            plotOutput("distPlot"),
                            br(),
                            DT::dataTableOutput("gofTable")),

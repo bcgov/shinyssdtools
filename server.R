@@ -29,8 +29,8 @@ function(input, output, session) {
   
   check_data <- reactive({
     data <- clean_data()
-    if(!is.numeric(input$selectConc))
-      create_error("Concentration column must contain numbers.")
+    data <- data[ ,c(input$selectConc, input$selectSpp)]
+    data
   })
   
   column_names <- reactive({
@@ -115,9 +115,8 @@ function(input, output, session) {
                      'persist' = FALSE))
   })
   
-  output$estHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$est, "<b>"))})
-  output$lowerHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$lower, "<b>"))})
-  output$upperHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$upper, "<b>"))})
+  # --- check data
+  output$hint <- renderText(check_data())
   
   # --- fit dist
   output$distPlot <- renderPlot(plot_dist())
@@ -126,6 +125,11 @@ function(input, output, session) {
   # --- predict
   output$modelAveragePlot <- renderPlot(plot_model_average())
   output$hazardConc <- renderPrint(describe_hazard_conc())
+  
+  # --- describe results
+  output$estHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$est, "<b>"))})
+  output$lowerHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$lower, "<b>"))})
+  output$upperHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$upper, "<b>"))})
   
     
   # Observers --------------------
