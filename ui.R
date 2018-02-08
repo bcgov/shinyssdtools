@@ -40,7 +40,7 @@ fluidPage(
                            br(),
                            plotOutput("distPlot"),
                            br(),
-                           DT::dataTableOutput("gofTable")),
+                           dataTableOutput("gofTable")),
                   tabPanel(title = span(tagList(icon("calculator"), "Predict")), 
                            br(),
                            plotOutput("modelAveragePlot"),

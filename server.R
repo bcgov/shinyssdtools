@@ -145,9 +145,9 @@ function(input, output, session) {
       plot_dist()
   })
     
-  output$gofTable <- renderDataTable({
+  output$gofTable <- renderDataTable({ 
     req(input$go)
-    table_gof()})
+    datatable(table_gof(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))})
   
   # --- predict
   output$modelAveragePlot <- renderPlot({
