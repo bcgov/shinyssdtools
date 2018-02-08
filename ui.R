@@ -24,27 +24,12 @@ fluidPage(
       uiOutput('selectConc'),
       uiOutput('selectSpp'),
       uiOutput('selectDist'),
-      uiOutput('selectHc'),
       br(),
       actionLink("information", label = "Technical info", icon = icon('info-circle')),
       br(),
       actionLink("feedback", label = "Feedback?", icon = icon("comment"))
       
-      # shinyWidgets::pickerInput(
-      #   inputId = "selectDist", 
-      #   label = "Select distributions to fit", 
-      #   choices = full.dists,
-      #   selected = default.dists,
-      #   options = list(
-      #     `actions-box` = TRUE, 
-      #     size = 10,
-      #     `selected-text-format` = "count > 3"
-      #   ), 
-      #   multiple = TRUE
-      # ),
-      # verbatimTextOutput("selectedDist",  placeholder = TRUE)
-
-      ),
+    ),
     
     # Main panel for displaying outputs ----
     mainPanel(
@@ -60,13 +45,48 @@ fluidPage(
                            br(),
                            plotOutput("modelAveragePlot"),
                            br(),
-                           verbatimTextOutput("hazardConc")),
+                           div(style = "display:inline-block",
+                               tags$body("The model average estimate of the concentartion that affects")),
+                           div(style = "display:inline-block",
+                               numericInput("selectHc", label = NULL, value = 5, min = 0, 
+                                            max = 99, step = 5, width = "70px")),
+                           div(style = "display:inline-block",
+                               tags$body("% of the species is ")),
+                           div(style="display:inline-block",
+                               htmlOutput("estHc")
+                           ),
+                           div(style = "display:inline-block",
+                               tags$body("but it could be as low as")),
+                           div(style="display:inline-block",
+                               htmlOutput("lowerHc")
+                           ),
+                           div(style = "display:inline-block",
+                               tags$body("or as high as")),
+                           div(style="display:inline-block",
+                               htmlOutput("upperHc")
+                           )),
+                  
                   tabPanel(title = span(tagList(icon("code"), "Rcode")), 
                            verbatimTextOutput("code"))
+                  
+                  
       )
-      
     )
   )
 )
+
   
+# shinyWidgets::pickerInput(
+#   inputId = "selectDist", 
+#   label = "Select distributions to fit", 
+#   choices = full.dists,
+#   selected = default.dists,
+#   options = list(
+#     `actions-box` = TRUE, 
+#     size = 10,
+#     `selected-text-format` = "count > 3"
+#   ), 
+#   multiple = TRUE
+# ),
+# verbatimTextOutput("selectedDist",  placeholder = TRUE)
 

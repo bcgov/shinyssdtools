@@ -62,17 +62,24 @@ function(input, output, session) {
     ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc)
   })
   
-  describe_hazard_conc <- reactive({
+  estimate_hc <- reactive({
     pred <- predict_hc()
     est <- pred[pred$prop == input$selectHc, "est"]
-    lower <- pred[pred$prop == input$selectHc, "lcl"]
-    upper <- pred[pred$prop == input$selectHc, "ucl"]
+    est
+  })
+  
+  describe_hazard_conc <- reactive({
+    # pred <- predict_hc()
+    # est <- pred[pred$prop == input$selectHc, "est"] %>% round(1)
+    # lower <- pred[pred$prop == input$selectHc, "lcl"] %>% round(1)
+    # upper <- pred[pred$prop == input$selectHc, "ucl"] %>% round(1)
     
-    output <- paste("The model average estimate of the concentartion that affects", 
-                    input$selectHc, 
-                    "of the species is", est,
-                    "but it could be as low as", lower, 
-                    "or as high as", upper)
+    est <- input$selectHc*2 %>% round(1)
+    lower <- input$selectHc*1.5 %>% round(1)
+    upper <- input$selectHc*2.5 %>% round(1)
+    
+    out <- list(est = est, lower = lower, upper = upper)
+    out
   })
   
   
@@ -105,11 +112,9 @@ function(input, output, session) {
                      'persist' = FALSE))
   })
   
-  output$selectHc <- renderUI({
-    req(input$uploadData)
-    numericInput('selectHc', label = "Select hazard concentration", value = 0.05, 
-                 min = 0.01, max = 0.99, step = 0.05)
-  })
+  output$estHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$est, "<b>"))})
+  output$lowerHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$lower, "<b>"))})
+  output$upperHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$upper, "<b>"))})
   
   # --- fit dist
   output$distPlot <- renderPlot(plot_dist())
@@ -121,7 +126,6 @@ function(input, output, session) {
   
     
   # Observers --------------------
-  
   # --- extras
   observeEvent(input$feedback,
                {showModal(modalDialog(title = "", 
