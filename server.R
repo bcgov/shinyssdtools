@@ -29,15 +29,27 @@ function(input, output, session) {
   
   check_data <- reactive({
     data <- clean_data()
+    if(!is.numeric(input$selectConc))
+      create_error("Concentration column must contain numbers.")
   })
   
   column_names <- reactive({
     names(clean_data()) 
   })
   
+  guess_conc <- reactive({
+    name <- column_names()
+    conc <- name[stringr::str_detect(name %>% tolower, "conc")][1]
+  })
+  
+  guess_spp <- reactive({
+    name <- column_names()
+    name[stringr::str_detect(name %>% tolower, "sp")][1]
+  })
+  
   # --- fit distributions
   fit_dist <- reactive({
-    data <- clean_data()
+    data <- check_data()
     dist <-  ssdca::ssd_fit_dists(data, left = input$selectConc, dists = input$selectDist, silent = TRUE)
   })
   
@@ -79,13 +91,15 @@ function(input, output, session) {
   output$selectConc = renderUI({
     selectInput("selectConc", 
                 label = label_mandatory("Select concentration column:"), 
-                choices = column_names())
+                choices = column_names(),
+                selected = guess_conc())
   })
   
   output$selectSpp = renderUI({
     selectInput("selectSpp", 
                 label = "Select species column:", 
-                choices = column_names())
+                choices = column_names(),
+                selected = guess_spp())
   })
   
   output$selectDist <- renderUI({
