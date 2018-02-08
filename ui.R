@@ -40,8 +40,6 @@ fluidPage(
       tabsetPanel(type = "tabs",
                   tabPanel(title = span(tagList(icon("columns"), "Fit")),
                            br(),
-                           # inline(tags$body("Hint: here is where we might put helpful hints if plot isn't loading")),
-                           # inline(textOutput("hint")),
                            plotOutput("distPlot"),
                            br(),
                            DT::dataTableOutput("gofTable")),
@@ -56,28 +54,8 @@ fluidPage(
                            inline(htmlOutput("text3")),
                            inline(htmlOutput("lowerHc")),
                            inline(htmlOutput("text4")),
-                           inline(htmlOutput("upperHc"))),
-                  tabPanel(title = span(tagList(icon("code"), "Rcode")), 
-                           verbatimTextOutput("code"))
-                  
-                  
+                           inline(htmlOutput("upperHc")))
       )
     )
   )
 )
-
-  
-# shinyWidgets::pickerInput(
-#   inputId = "selectDist", 
-#   label = "Select distributions to fit", 
-#   choices = full.dists,
-#   selected = default.dists,
-#   options = list(
-#     `actions-box` = TRUE, 
-#     size = 10,
-#     `selected-text-format` = "count > 3"
-#   ), 
-#   multiple = TRUE
-# ),
-# verbatimTextOutput("selectedDist",  placeholder = TRUE)
-

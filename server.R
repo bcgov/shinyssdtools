@@ -89,20 +89,20 @@ function(input, output, session) {
   
   # --- predict and model average
   predict_hc <- reactive({
-    dist <- fit_dist()
-    pred <- predict(dist)
+    withProgress(value = 0, message = "Generating predictions...", {
+      incProgress(0.3)
+                   dist <- fit_dist()
+                   incProgress(amount = 0.6)
+                   pred <- predict(dist) 
+                   incProgress(0.8)
+                 })
+    pred
   })
   
   plot_model_average <- reactive({
-    withProgress(message = "Getting predictions...",
-                 detail = "This may take a minute or so...",
-                 value = 0, {
                    data <- clean_data()
-                   incProgress(10)
                    pred <- predict_hc()
-                   incProgress(75)})
                    ssdca::ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc/100)
-                                    
   })
   
   describe_hazard_conc <- reactive({
@@ -166,15 +166,31 @@ function(input, output, session) {
   })
   
   # --- describe results
-  output$estHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$est, "<b>"))})
-  output$lowerHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$lower, "<b>"))})
-  output$upperHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$upper, "<b>"))})
-  output$text1 <- renderUI({HTML("The model average estimate of the concentration that affects")})
-  output$selectHc <- renderUI({numericInput("selectHc", label = NULL, value = 5, min = 0, 
+  output$estHc <- renderUI({
+    req(input$go)
+    HTML(paste0("<b>", describe_hazard_conc()$est, "<b>"))})
+  output$lowerHc <- renderUI({
+    req(input$go)
+    HTML(paste0("<b>", describe_hazard_conc()$lower, "<b>"))})
+  output$upperHc <- renderUI({
+    req(input$go)
+    HTML(paste0("<b>", describe_hazard_conc()$upper, "<b>"))})
+  output$text1 <- renderUI({
+    req(input$go)
+    HTML("The model average estimate of the concentration that affects")})
+  output$selectHc <- renderUI({
+    req(input$go)
+    numericInput("selectHc", label = NULL, value = 5, min = 0, 
                                             max = 99, step = 5, width = "70px")})
-  output$text2 <- renderUI({HTML("% of species is")})
-  output$text3 <- renderUI({HTML("but it could be as low as")})
-  output$text4 <- renderUI({HTML("or as high as")})
+  output$text2 <- renderUI({
+    req(input$go)
+    HTML("% of species is")})
+  output$text3 <- renderUI({
+    req(input$go)
+    HTML("but it could be as low as")})
+  output$text4 <- renderUI({
+    req(input$go)
+    HTML("or as high as")})
   
   # --- check data
   # output$hint <- renderText(check_data())
