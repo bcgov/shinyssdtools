@@ -15,6 +15,11 @@ function(input, output, session) {
     isolate(readr::read_csv(data$datapath))
   })
   
+  # demo_data
+  demo_data <- reactive({
+    data <- read_csv("test/data/boron-data.csv")
+  })
+  
   # clean common problems to avoid errors
   clean_data <- reactive({
     data <- read_data()
@@ -28,8 +33,9 @@ function(input, output, session) {
   })
   
   check_data <- reactive({
+    input$go
+    
     data <- clean_data()
-    data <- data[ ,c(input$selectConc, input$selectSpp)]
     data
   })
   
@@ -49,17 +55,19 @@ function(input, output, session) {
   
   # --- fit distributions
   fit_dist <- reactive({
-    data <- check_data()
-    dist <-  ssdca::ssd_fit_dists(data, left = input$selectConc, dists = input$selectDist, silent = TRUE)
+      data <- check_data()
+      dist <-  isolate(ssdca::ssd_fit_dists(data, left = input$selectConc, 
+                                            dists = input$selectDist, silent = TRUE))
   })
   
   plot_dist <- reactive({
+    req(input$go)
     autoplot(fit_dist())
-})
+  })
     
   table_gof <- reactive({
-    dist <- fit_dist()
-    gof <- ssdca::ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ round(., 2))
+    req(input$go)
+    gof <- ssdca::ssd_gof(fit_dist()) %>% dplyr::mutate_if(is.numeric, ~ round(., 2))
   })
   
   # --- predict and model average
@@ -71,7 +79,7 @@ function(input, output, session) {
   plot_model_average <- reactive({
     data <- clean_data()
     pred <- predict_hc()
-    ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc/100)
+    ssdca::ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc/100)
   })
   
   describe_hazard_conc <- reactive({
@@ -115,21 +123,14 @@ function(input, output, session) {
                      'persist' = FALSE))
   })
   
-  # --- check data
-  output$hint <- renderText(check_data())
-  
   # --- fit dist
   output$distPlot <- renderPlot(plot_dist())
   output$gofTable <- renderDataTable(table_gof())
   
-  # --- predict
-  output$modelAveragePlot <- renderPlot(plot_model_average())
-  output$hazardConc <- renderPrint(describe_hazard_conc())
+  # --- check data
+  # output$hint <- renderText(check_data())
   
-  # --- describe results
-  output$estHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$est, "<b>"))})
-  output$lowerHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$lower, "<b>"))})
-  output$upperHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$upper, "<b>"))})
+
   
     
   # Observers --------------------
@@ -143,15 +144,37 @@ function(input, output, session) {
                                       textInput("comment", labelMandatory("Comment:"), width = "100%"),
                                       actionButton("submit_feedback", "Submit")))})
   
-  # information
+  # --- information
   observeEvent(input$information,
                {showModal(modalDialog("Here is where we put technical details about how the models are fit, etc.",
                                       size = "m", easyClose = T,
-                                      footer = modalButton("Got it")))
-               })
- 
-  }
+                                      footer = modalButton("Got it")))})
   
+  # --- go/update
+  observeEvent(input$go, 
+               {
+ 
+    
+    # --- predict
+    output$modelAveragePlot <- renderPlot(plot_model_average())
+    output$hazardConc <- renderPrint(describe_hazard_conc())
+    
+    # --- describe results
+    output$estHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$est, "<b>"))})
+    output$lowerHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$lower, "<b>"))})
+    output$upperHc <- renderUI({HTML(paste0("<b>", describe_hazard_conc()$upper, "<b>"))})
+    output$text1 <- renderUI({HTML("The model average estimate of the concentration that affects")})
+    output$selectHc <- renderUI({numericInput("selectHc", label = NULL, value = 5, min = 0, 
+                 max = 99, step = 5, width = "70px")})
+    output$text2 <- renderUI({HTML("% of species is")})
+    output$text3 <- renderUI({HTML("but it could be as low as")})
+    output$text4 <- renderUI({HTML("or as high as")})
+
+    })
+
+}
+
+
   
   
   

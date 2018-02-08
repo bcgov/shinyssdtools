@@ -15,6 +15,7 @@ fluidPage(
     # Sidebar panel for inputs ----
     sidebarPanel(
       
+      # actionLink("demo_data", label = "Use demo data", icon = icon('table')),
       # upload csv with data
       fileInput('uploadData', buttonLabel = span(tagList(icon("upload"), "csv")),
                 label = "", placeholder = "Upload your data...",
@@ -24,6 +25,7 @@ fluidPage(
       uiOutput('selectConc'),
       uiOutput('selectSpp'),
       uiOutput('selectDist'),
+      actionButton("go", "Go/update"),
       br(),
       actionLink("information", label = "Technical info", icon = icon('info-circle')),
       br(),
@@ -38,7 +40,7 @@ fluidPage(
       tabsetPanel(type = "tabs",
                   tabPanel(title = span(tagList(icon("columns"), "Fit")),
                            br(),
-                           inline(tags$body("Hint: here is where we might put helpful hints if plot isn't loading")),
+                           # inline(tags$body("Hint: here is where we might put helpful hints if plot isn't loading")),
                            # inline(textOutput("hint")),
                            plotOutput("distPlot"),
                            br(),
@@ -47,14 +49,13 @@ fluidPage(
                            br(),
                            plotOutput("modelAveragePlot"),
                            br(),
-                           inline(tags$body("The model average estimate of the concentration that affects")),
-                           inline(numericInput("selectHc", label = NULL, value = 5, min = 0, 
-                                               max = 99, step = 5, width = "70px")),
-                           inline(tags$body("% of the species is ")),
+                           inline(htmlOutput("text1")),
+                           inline(uiOutput("selectHc")),
+                           inline(htmlOutput("text2")),
                            inline(htmlOutput("estHc")),
-                           inline(tags$body("but it could be as low as")),
+                           inline(htmlOutput("text3")),
                            inline(htmlOutput("lowerHc")),
-                           inline(tags$body("or as high as")),
+                           inline(htmlOutput("text4")),
                            inline(htmlOutput("upperHc"))),
                   tabPanel(title = span(tagList(icon("code"), "Rcode")), 
                            verbatimTextOutput("code"))
