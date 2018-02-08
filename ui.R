@@ -14,7 +14,6 @@ fluidPage(
     
     # Sidebar panel for inputs ----
     sidebarPanel(
-      
       # actionLink("demo_data", label = "Use demo data", icon = icon('table')),
       # upload csv with data
       fileInput('uploadData', buttonLabel = span(tagList(icon("upload"), "csv")),
@@ -25,7 +24,7 @@ fluidPage(
       uiOutput('selectConc'),
       uiOutput('selectSpp'),
       uiOutput('selectDist'),
-      actionButton("go", "Go/update"),
+      actionButton("go", "update"),
       br(),
       actionLink("information", label = "Technical info", icon = icon('info-circle')),
       br(),
@@ -35,7 +34,6 @@ fluidPage(
     
     # Main panel for displaying outputs ----
     mainPanel(
-      
       # Output: Tabset w/ plot, summary, and table ----
       tabsetPanel(type = "tabs",
                   tabPanel(title = span(tagList(icon("columns"), "Fit")),

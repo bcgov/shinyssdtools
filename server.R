@@ -37,10 +37,9 @@ function(input, output, session) {
     input$go
     
     data <- clean_data()
-    # data <- clean_data()
     # conc <- data[[,input$selectConc]]
     # if(!is.numeric(conc)) return(create_error("Concentration column must contain numbers."))
-
+    # 
     # data 
   })
 
@@ -63,18 +62,15 @@ function(input, output, session) {
   # fit_dist <- reactive({
   #   withProgress(message = "Fitting distribution", value = 0, {
   #     data <- check_data()
-  #     incProgress(20)
-  #     dist <-  isolate(ssdca::ssd_fit_dists(data, left = input$selectConc, 
+  #     incProgress(0.6)
+  #     dist <-  isolate(ssdca::ssd_fit_dists(data, left = input$selectConc,
   #                                           dists = input$selectDist, silent = TRUE))
-  #     incProgress(80)
   #   })
-  #   dist
-  #     
   # })
   
   fit_dist <- reactive({
       data <- check_data()
-      dist <-  isolate(ssdca::ssd_fit_dists(data, left = input$selectConc, 
+      dist <-  isolate(ssdca::ssd_fit_dists(data, left = input$selectConc,
                                             dists = input$selectDist, silent = TRUE))
   })
   
@@ -83,7 +79,6 @@ function(input, output, session) {
   })
     
   table_gof <- reactive({
-    req(input$go)
     gof <- ssdca::ssd_gof(fit_dist()) %>% dplyr::mutate_if(is.numeric, ~ round(., 2))
   })
   
@@ -94,9 +89,7 @@ function(input, output, session) {
                    dist <- fit_dist()
                    incProgress(amount = 0.6)
                    pred <- predict(dist) 
-                   incProgress(0.8)
                  })
-    pred
   })
   
   plot_model_average <- reactive({
@@ -149,11 +142,8 @@ function(input, output, session) {
   # --- fit dist
   output$distPlot <- renderPlot({
     req(input$go)
-    withProgress(message = "Fitting distributions...", value = 0, {
-      incProgress(20)
       plot_dist()
-
-  })})
+  })
     
   output$gofTable <- renderDataTable({
     req(input$go)
