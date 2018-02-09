@@ -1,3 +1,1 @@
-rsconnect::deployApp(account = "poissonconsulting", 
-                     appName = "ssdca")
-y
+rsconnect::deployApp(account = "poissonconsulting")

@@ -77,12 +77,12 @@ function(input, output, session) {
   
   guess_conc <- reactive({
     name <- column_names()
-    name[stringr::str_detect(name %>% tolower, "conc")][1]
+    name[grepl("conc", name %>% tolower)][1]
   })
   
   guess_spp <- reactive({
     name <- column_names()
-    name[stringr::str_detect(name %>% tolower, "sp")][1]
+    name[grepl( "sp", name %>% tolower)][1]
   })
   
   # --- fit distributions
@@ -94,7 +94,7 @@ function(input, output, session) {
   
   plot_dist <- reactive({
     req(check_data())
-    autoplot(fit_dist())
+    ggplot2::autoplot(fit_dist())
   })
   
   table_gof <- reactive({
@@ -108,7 +108,7 @@ function(input, output, session) {
       incProgress(0.3)
       dist <- fit_dist()
       incProgress(amount = 0.6)
-      pred <- predict(dist, nboot = 10) 
+      pred <- stats::predict(dist, nboot = 10) 
       pred
     })
   })
@@ -169,14 +169,14 @@ function(input, output, session) {
   output$dlDistPlot <- downloadHandler(
     filename = function() {"ssdca_distFitPlot.png"},
     content = function(file) {
-      ggsave(file, plot = plot_dist(), device = "png")
+      ggplot2::ggsave(file, plot = plot_dist(), device = "png")
     }
   )
   
   output$dlModelPlot <- downloadHandler(
     filename = function() {"ssdca_modelAveragePlot.png"},
     content = function(file) {
-      ggsave(file, plot = plot_model_average(), device = "png")
+      ggplot2::ggsave(file, plot = plot_model_average(), device = "png")
     }
   )
   
@@ -223,8 +223,8 @@ function(input, output, session) {
   
   # --- feedback
   observeEvent(input$feedback,
-               {showModal(modalDialog(title = "", 
-                                      size = "m", easyClose = T,
+               {showModal(modalDialog(title = "Message sent to administrator.", 
+                                      size = "m", easyClose = TRUE,
                                       footer = modalButton("Never mind"),
                                       textInput("name", "Name (optional):", width = "30%"),
                                       textInput("email", "Email (optional):", width = "30%"),
@@ -232,7 +232,7 @@ function(input, output, session) {
                                       actionButton("submit_feedback", "Submit")))})
   
   observeEvent(input$submit_feedback,
-               {slackr(ssdca_shiny_feedback())
+               {slackr::slackr(ssdca_shiny_feedback())
                  removeModal()})
   
   # --- information
