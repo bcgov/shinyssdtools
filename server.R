@@ -9,7 +9,7 @@ function(input, output, session) {
   # --- read, clean and check data
   read_data <- reactive({
     if(input$demo_data)
-      return(read_csv("test/data/boron-data.csv"))
+      return(readr::read_csv("test/data/boron-data.csv"))
     req(input$uploadData)
     data <- input$uploadData
     if(is.null(data)) {return(NULL)}
@@ -45,7 +45,7 @@ function(input, output, session) {
     spp <- isolate(input$selectSpp)
     dist <- isolate(input$selectDist)
     
-    data <- clean_data()
+    data <- isolate(clean_data())
     
     if(!is.numeric(data[[conc]]))
       return(create_error("Concentration column must contain numbers."))
@@ -60,7 +60,7 @@ function(input, output, session) {
     if(any(is.na(data[[spp]])))
       return(create_error("Species names must not be missing."))
     if(anyDuplicated(data[[spp]]))
-      return(create_error("Some species are duplicated. This app only handles one chemical at a time and each species should only have one concentration value."))
+      return(create_error("Some species are duplicated. This app only handles one chemical at a time. Each species should only have one concentration value."))
     data 
   })
 
@@ -248,7 +248,7 @@ function(input, output, session) {
   
   # --- information
   observeEvent(input$information,
-               {showModal(modalDialog("Here is where we put technical details about how the models are fit, etc.",
+               {showModal(modalDialog(tech.info,
                                       size = "m", easyClose = T,
                                       footer = modalButton("Got it")))})
 }
