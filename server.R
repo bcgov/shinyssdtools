@@ -118,14 +118,20 @@ function(input, output, session) {
   
   plot_model_average <- reactive({
     req(check_data())
+    req(input$selectHc)
+    if(input$selectHc == 0 | input$selectHc > 99)
+      return(NULL)
     data <- check_data()
     pred <- predict_hc()
-    ssdca::ssd_plot(data, pred, left = isolate(input$selectConc), label = isolate(input$selectSpp), hc = input$selectHc, ci = FALSE)
+    ssdca::ssd_plot(data, pred, left = isolate(input$selectConc), label = isolate(input$selectSpp), 
+                    hc = input$selectHc, ci = FALSE, shift_x = 1.3)
   })
   
   describe_hc <- reactive({
     req(check_data())
-    req(input$selectHc)
+    req(input$selectHc | input$selectHc > 99)
+    if(input$selectHc == 0)
+      return(NULL)
     pred <- predict_hc()
     est <- pred[pred$percent == input$selectHc, "est"] %>% round(2)
     est
@@ -212,7 +218,7 @@ function(input, output, session) {
     # --- describe results
     output$estHc <- renderUI({HTML(paste0("<b>", describe_hc()$est, "<b>"))})
     output$text1 <- renderUI({HTML("The model average estimate of the concentration that affects")})
-    output$selectHc <- renderUI({numericInput("selectHc", label = NULL, value = 5, min = 0, 
+    output$selectHc <- renderUI({numericInput("selectHc", label = NULL, value = 5, min = 1, 
                                               max = 99, step = 5, width = "70px")})
     output$text2 <- renderUI({HTML("% of species is")})
     
