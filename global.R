@@ -17,7 +17,7 @@ helpers <- 'helpers/'
 source(paste0(helpers, 'functions.R'), local = T)
 source(paste0(helpers, 'auth.R'), local = T)
 
-extra.dists <- c("burr", "pareto")
+extra.dists <- c("pareto")
 default.dists <- c("lnorm", "llog", "gompertz", "lgumbel", "gamma", "weibull")
 
 # red mandatory star

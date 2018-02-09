@@ -117,7 +117,7 @@ function(input, output, session) {
     req(check_data())
     data <- check_data()
     pred <- predict_hc()
-    ssdca::ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc, ci = FALSE)
+    ssdca::ssd_plot(data, pred, left = isolate(input$selectConc), label = isolate(input$selectSpp), hc = input$selectHc, ci = FALSE)
   })
   
   describe_hc <- reactive({
