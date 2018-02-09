@@ -11,7 +11,10 @@ function(input, output, session) {
     req(input$uploadData)
     data <- input$uploadData
     if(is.null(data)) {return(NULL)}
-    if(!grepl(".csv", data$name, fixed = TRUE)) {return(NULL)}
+    if(!grepl(".csv", data$name, fixed = TRUE))  
+      return(create_error("We're not sure what to do with that file type. Please upload a csv."))
+    if(!grepl(".csv", data$name, fixed = TRUE)) 
+      return(NULL)
     isolate(readr::read_csv(data$datapath))
   })
   
@@ -27,20 +30,30 @@ function(input, output, session) {
       # remove any column names like X1, X2 (blank headers from excel/numbers)
       data[,colnames(data) %in% paste0("X", 1:200)] <- NULL
       # remove any rows with all NA
-      data <- data[!(rowSums(is.na(data)) == ncol(data)),] 
+      data <- data[!(rowSums(is.na(data)) == ncol(data)),]
     }
     data
   })
   
   check_data <- reactive({
     # dependency on go/update button
-    input$go
+    req(input$go)
+    
+    conc <- isolate(input$selectConc)
+    spp <- isolate(input$selectSpp)
+    dist <- isolate(input$selectDist)
     
     data <- clean_data()
-    # conc <- data[[,input$selectConc]]
-    # if(!is.numeric(conc)) return(create_error("Concentration column must contain numbers."))
-    # 
-    # data 
+    
+    if(!is.numeric(data[[conc]]))
+      return(create_error("Concentration column must contain numbers."))
+    if(any(data[[conc]] < 0))
+      return(create_error("Concentration values must be positive."))
+    if(any(duplicated(data[[spp]])))
+      return(create_error("Some species are duplicated. This app only handles one chemical at a time and each species should only have one concentration value."))
+    if(any(is.na(conc)))
+      return(create_error("No missing concentation values allowed."))
+    data 
   })
 
   
@@ -50,7 +63,7 @@ function(input, output, session) {
   
   guess_conc <- reactive({
     name <- column_names()
-    conc <- name[stringr::str_detect(name %>% tolower, "conc")][1]
+    name[stringr::str_detect(name %>% tolower, "conc")][1]
   })
   
   guess_spp <- reactive({
@@ -59,15 +72,6 @@ function(input, output, session) {
   })
   
   # --- fit distributions
-  # fit_dist <- reactive({
-  #   withProgress(message = "Fitting distribution", value = 0, {
-  #     data <- check_data()
-  #     incProgress(0.6)
-  #     dist <-  isolate(ssdca::ssd_fit_dists(data, left = input$selectConc,
-  #                                           dists = input$selectDist, silent = TRUE))
-  #   })
-  # })
-  
   fit_dist <- reactive({
       data <- check_data()
       dist <-  isolate(ssdca::ssd_fit_dists(data, left = input$selectConc,
@@ -75,6 +79,8 @@ function(input, output, session) {
   })
   
   plot_dist <- reactive({
+    if(is.null(check_data()))
+      return(NULL)
       autoplot(fit_dist())
   })
     
@@ -84,7 +90,7 @@ function(input, output, session) {
   
   # --- predict and model average
   predict_hc <- reactive({
-    withProgress(value = 0, message = "Generating predictions...", {
+    withProgress(value = 0, message = "This'll take a minute...", {
       incProgress(0.3)
                    dist <- fit_dist()
                    incProgress(amount = 0.6)
@@ -93,9 +99,11 @@ function(input, output, session) {
   })
   
   plot_model_average <- reactive({
-                   data <- clean_data()
-                   pred <- predict_hc()
-                   ssdca::ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc/100)
+    if(is.null(check_data())) 
+      return(NULL)
+    data <- check_data()
+    pred <- predict_hc()
+    ssdca::ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc/100)
   })
   
   describe_hazard_conc <- reactive({
@@ -108,9 +116,14 @@ function(input, output, session) {
     out
   })
   
-  # Outputs --------------------
-  # output$selectedDist <- renderPrint({input$selectDist%>% paste("\n") %>% glue::collapse()})
+  # --- create feedback
+  ssdca_shiny_feedback <- reactive({
+    c(Name = input$name,
+           Email = input$email,
+           Comment = input$comment)
+  })
   
+  # Outputs --------------------
   # --- render UI with choices based on file upload
   output$selectConc = renderUI({
     selectInput("selectConc", 
@@ -197,46 +210,42 @@ function(input, output, session) {
     }
   )
   
-  output$download <- downloadHandler(
+  output$dlGofTable <- downloadHandler(
     filename = function() {"ssdca_distGofTable.csv"},
     content <- function(file) {
-      readr::write_csv(table_gof(), file)
+      readr::write_csv(tibble(a = 1), file)
     }
   )
   
-  # --- check data
-  # output$hint <- renderText(check_data())
+  output$dlPredTable <- downloadHandler(
+    filename = function() {"ssdca_distGofTable.csv"},
+    content <- function(file) {
+      readr::write_csv(predict_hc(), file)
+    }
+  )
     
   # Observers --------------------
-  # --- extras
+  # --- feedback
   observeEvent(input$feedback,
                {showModal(modalDialog(title = "", 
                                       size = "m", easyClose = T,
-                                      footer = modalButton("Got it"),
+                                      footer = modalButton("Never mind"),
                                       textInput("name", "Name (optional):", width = "30%"),
                                       textInput("email", "Email (optional):", width = "30%"),
-                                      textInput("comment", labelMandatory("Comment:"), width = "100%"),
+                                      textInput("comment", label_mandatory("Comment:"), width = "100%"),
                                       actionButton("submit_feedback", "Submit")))})
+  
+  observeEvent(input$submit_feedback,
+               {slackr(ssdca_shiny_feedback())
+                 removeModal()})
   
   # --- information
   observeEvent(input$information,
                {showModal(modalDialog("Here is where we put technical details about how the models are fit, etc.",
                                       size = "m", easyClose = T,
                                       footer = modalButton("Got it")))})
-  
- 
 }
   
-#   # --- go/update
-#   observeEvent(input$go, 
-#                {
-#  
-#     
-# 
-# 
-#     })
-# 
-# }
 
 
   
