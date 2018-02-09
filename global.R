@@ -18,7 +18,7 @@ tech.info <- "This webpage fits species sensitivity distributions to concentrati
               statistic (ad), the Kolmogorov-Smirnov statistic (ks), the Cramer-von Mises statistic (cvm), 
               Akaike's Information Criterion (aic), Akaike's Information Criterion corrected for sample size (aicc)
               and the Bayesian Information Criterion (bic). The prediction is the model averaged (using aicc) 
-              estimate of the fit with 95% bootstrap confidence intervals. 
+              estimate of the fit. 
               The percent hazard concentration is the concentration of the chemical 
               which is predicted to affect that percent of the species tested.
               The webpage which was developed by Seb Dalgarno is powered by the ssdca R package by Joe Thorley and Carl Schwarz. 
