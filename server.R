@@ -5,21 +5,30 @@ options(shiny.maxRequestSize = 10*1024^2)
 function(input, output, session) {
   
   ########### Reactives --------------------
-  # --- read, clean and check data
-  read_data <- reactive({
-    if(input$demoData){
-      return(readr::read_csv("test/data/boron-data.csv"))
-    }
-      
-    req(input$uploadData)
-    data <- input$uploadData
-    if(!grepl(".csv", data$name, fixed = TRUE)) {
-      Sys.sleep(1)
-      return(create_error("We're not sure what to do with that file type. Please upload a csv."))
-    }
-
-    isolate(readr::read_csv(data$datapath))
+  values <- reactiveValues(
+    upload_state = NULL
+  )
+  
+  observeEvent(input$uploadData, {
+    values$upload_state <- 'uploaded'
   })
+  
+  observeEvent(input$demoData, {
+    values$upload_state <- 'demo'
+  })
+  
+  read_data <- reactive({
+    req(values$upload_state)
+    if (values$upload_state == 'uploaded') {
+      data <- input$uploadData
+      if(!grepl(".csv", data$name, fixed = TRUE)) {
+        Sys.sleep(1)
+        return(create_error("We're not sure what to do with that file type. Please upload a csv."))
+      }
+      return(readr::read_csv(data$datapath))
+    } else if (values$upload_state == 'demo') {
+      return(readr::read_csv("test/data/boron-data.csv"))
+    }})
   
   # clean common problems to avoid errors
   clean_data <- reactive({
@@ -40,7 +49,7 @@ function(input, output, session) {
     spp <- isolate(input$selectSpp)
     dist <- isolate(input$selectDist)
     
-    data <- clean_data()
+    data <- isolate(clean_data())
 
     if(!is.numeric(data[[conc]]))
       return(create_error("Concentration column must contain numbers."))
