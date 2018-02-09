@@ -30,26 +30,10 @@ label_mandatory <- function(label) {
 appCSS <- ".mandatory_star { color: red; }"
 
 inline = function (x) {
-  tags$div(style="display:inline-block;", x)
+  tags$div(style = "display:inline-block;", x)
 }
 
 messages <- c("hmmmm...", "something's not right...", "there's a problem...", "oh dear...", "bit of an issue...")
-
-plot_spin <- "
-#plot-container {
-position: relative;
-}
-#loading-spinner {
-position: absolute;
-left: 50%;
-top: 50%;
-z-index: -1;
-margin-top: -33px;  /* half of the spinner's height */
-margin-left: -33px; /* half of the spinner's width */
-}
-#plot.recalculating {
-z-index: -2;
-"
 
 
 
