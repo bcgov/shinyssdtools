@@ -104,12 +104,11 @@ function(input, output, session) {
   
   # --- predict and model average
   predict_hc <- reactive({
-    withProgress(value = 0, message = "This takes a minute or so...", {
+    withProgress(value = 0, message = "Calculating...", {
       incProgress(0.3)
       dist <- fit_dist()
       incProgress(amount = 0.6)
-      pred <- predict(dist) 
-      pred$prop %<>% round(2)
+      pred <- predict(dist, nboot = 10) 
       pred
     })
   })
@@ -118,18 +117,17 @@ function(input, output, session) {
     req(check_data())
     data <- check_data()
     pred <- predict_hc()
-    ssdca::ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc/100)
+    ssdca::ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc, ci = FALSE)
   })
   
   describe_hc <- reactive({
     req(check_data())
     pred <- predict_hc()
-    est <- pred[pred$prop == (input$selectHc/100), "est"] %>% round(2)
-    lower <- pred[pred$prop == (input$selectHc/100), "lcl"] %>% round(2)
-    upper <- pred[pred$prop == (input$selectHc/100), "ucl"] %>% round(2)
+    est <- pred[pred$percent == input$selectHc, "est"] %>% round(2)
+    # lower <- pred[pred$prop == (input$selectHc/100), "lcl"] %>% round(2)
+    # upper <- pred[pred$prop == (input$selectHc/100), "ucl"] %>% round(2)
     
-    out <- list(est = est, lower = lower, upper = upper)
-    out
+    est
   })
   
   # --- create feedback
@@ -192,7 +190,9 @@ function(input, output, session) {
   output$dlPredTable <- downloadHandler(
     filename = function() {"ssdca_predictTable.csv"},
     content <- function(file) {
-      readr::write_csv(predict_hc(), file)
+      pred <- predict_hc()
+      pred <- pred[, c("percent", "est")]
+      readr::write_csv(pred, file)
     }
   )
   
@@ -215,14 +215,10 @@ function(input, output, session) {
     
     # --- describe results
     output$estHc <- renderUI({HTML(paste0("<b>", describe_hc()$est, "<b>"))})
-    output$lowerHc <- renderUI({HTML(paste0("<b>", describe_hc()$lower, "<b>"))})
-    output$upperHc <- renderUI({HTML(paste0("<b>", describe_hc()$upper, "<b>"))})
     output$text1 <- renderUI({HTML("The model average estimate of the concentration that affects")})
     output$selectHc <- renderUI({numericInput("selectHc", label = NULL, value = 5, min = 0, 
                                                              max = 99, step = 5, width = "70px")})
     output$text2 <- renderUI({HTML("% of species is")})
-    output$text3 <- renderUI({HTML("but it could be as low as")})
-    output$text4 <- renderUI({HTML("or as high as")})
   })
   
   # --- feedback

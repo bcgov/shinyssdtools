@@ -54,11 +54,7 @@ fluidPage(
                            inline(htmlOutput("text1")),
                            inline(uiOutput("selectHc")),
                            inline(htmlOutput("text2")),
-                           inline(htmlOutput("estHc")),
-                           inline(htmlOutput("text3")),
-                           inline(htmlOutput("lowerHc")),
-                           inline(htmlOutput("text4")),
-                           inline(htmlOutput("upperHc")))
+                           inline(htmlOutput("estHc")))
       )
     )
   )
