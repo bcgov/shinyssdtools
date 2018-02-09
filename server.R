@@ -94,7 +94,10 @@ function(input, output, session) {
   
   plot_dist <- reactive({
     req(check_data())
-    ggplot2::autoplot(fit_dist())
+    withProgress(message = "Calculating...", value = 0,{
+      incProgress(0.6)
+      ggplot2::autoplot(fit_dist())
+    })
   })
   
   table_gof <- reactive({
@@ -124,9 +127,6 @@ function(input, output, session) {
     req(check_data())
     pred <- predict_hc()
     est <- pred[pred$percent == input$selectHc, "est"] %>% round(2)
-    # lower <- pred[pred$prop == (input$selectHc/100), "lcl"] %>% round(2)
-    # upper <- pred[pred$prop == (input$selectHc/100), "ucl"] %>% round(2)
-    
     est
   })
   
