@@ -8,6 +8,8 @@ function(input, output, session) {
 
   # --- read, clean and check data
   read_data <- reactive({
+    if(input$demo_data)
+      return(read_csv("test/data/boron-data.csv"))
     req(input$uploadData)
     data <- input$uploadData
     if(is.null(data)) {return(NULL)}
@@ -79,8 +81,7 @@ function(input, output, session) {
   })
   
   plot_dist <- reactive({
-    if(is.null(check_data()))
-      return(NULL)
+    req(check_data())
       autoplot(fit_dist())
   })
     
@@ -99,8 +100,7 @@ function(input, output, session) {
   })
   
   plot_model_average <- reactive({
-    if(is.null(check_data())) 
-      return(NULL)
+    req(check_data())
     data <- check_data()
     pred <- predict_hc()
     ssdca::ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc/100)
@@ -140,17 +140,16 @@ function(input, output, session) {
   })
   
   output$selectDist <- renderUI({
-    req(input$uploadData)
-    selectizeInput('selectDist', 
-                   label = label_mandatory("Select distributions to fit:"),
-                   multiple = TRUE, 
-                   choices = list(Recommended = default.dists, Additional = extra.dists),
-                   selected = default.dists,
-                   options = list(
-                     'plugins' = list('remove_button'),
-                     'create' = TRUE,
-                     'persist' = FALSE))
-  })
+        selectizeInput('selectDist', 
+                       label = label_mandatory("Select distributions to fit:"),
+                       multiple = TRUE, 
+                       choices = list(Recommended = default.dists, Additional = extra.dists),
+                       selected = default.dists,
+                       options = list(
+                         'plugins' = list('remove_button'),
+                         'create' = TRUE,
+                         'persist' = FALSE))
+      })
   
   # --- fit dist
   output$distPlot <- renderPlot({
