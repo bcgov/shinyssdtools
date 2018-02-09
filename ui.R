@@ -36,7 +36,7 @@ fluidPage(
     mainPanel(
       # Output: Tabset w/ plot, summary, and table ----
       tabsetPanel(type = "tabs",
-                  tabPanel(title = span(tagList(icon("columns"), "Fit")),
+                  tabPanel(title = span(tagList(icon("stats", lib = "glyphicon"), "Fit")),
                            br(),
                            inline(downloadButton("dlDistPlot", label = "plot", style = 'padding:4px; font-size:80%')),
                            inline(downloadButton("dlGofTable", label = "table", style = 'padding:4px; font-size:80%')),

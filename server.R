@@ -34,14 +34,13 @@ function(input, output, session) {
   })
   
   check_data <- reactive({
-    # dependency on go/update button
+
     req(input$go)
-    
     conc <- isolate(input$selectConc)
     spp <- isolate(input$selectSpp)
     dist <- isolate(input$selectDist)
     
-    data <- isolate(clean_data())
+    data <- clean_data()
 
     if(!is.numeric(data[[conc]]))
       return(create_error("Concentration column must contain numbers."))
@@ -57,6 +56,8 @@ function(input, output, session) {
       return(create_error("Species names must not be missing."))
     if(anyDuplicated(data[[spp]]))
       return(create_error("Some species are duplicated. This app only handles one chemical at a time. Each species should only have one concentration value."))
+    if(is.null(dist))
+      return(NULL)
     data 
   })
   
@@ -88,6 +89,7 @@ function(input, output, session) {
   })
   
   table_gof <- reactive({
+    req(check_data())
     gof <- ssdca::ssd_gof(fit_dist()) %>% dplyr::mutate_if(is.numeric, ~ round(., 2))
   })
   
@@ -111,6 +113,7 @@ function(input, output, session) {
   })
   
   describe_hc <- reactive({
+    req(check_data())
     pred <- predict_hc()
     est <- pred[pred$prop == (input$selectHc/100), "est"] %>% round(2)
     lower <- pred[pred$prop == (input$selectHc/100), "lcl"] %>% round(2)
@@ -155,33 +158,6 @@ function(input, output, session) {
                      'persist' = FALSE))
   })
   
-  # --- fit dist
-  output$distPlot <- renderPlot({
-    req(input$go)
-    plot_dist()
-  })
-  
-  output$gofTable <- renderDataTable({ 
-    req(input$go)
-    datatable(table_gof(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))})
-  
-  # --- predict
-  output$modelAveragePlot <- renderPlot({
-    req(input$go)
-    plot_model_average()
-  })
-  
-  # --- describe results
-  output$estHc <- renderUI({req(input$go); HTML(paste0("<b>", describe_hc()$est, "<b>"))})
-  output$lowerHc <- renderUI({req(input$go); HTML(paste0("<b>", describe_hc()$lower, "<b>"))})
-  output$upperHc <- renderUI({req(input$go); HTML(paste0("<b>", describe_hc()$upper, "<b>"))})
-  output$text1 <- renderUI({req(input$go); HTML("The model average estimate of the concentration that affects")})
-  output$selectHc <- renderUI({req(input$go); numericInput("selectHc", label = NULL, value = 5, min = 0, 
-                                                           max = 99, step = 5, width = "70px")})
-  output$text2 <- renderUI({req(input$go); HTML("% of species is")})
-  output$text3 <- renderUI({req(input$go); HTML("but it could be as low as")})
-  output$text4 <- renderUI({req(input$go); HTML("or as high as")})
-  
   # --- download handlers
   output$dlDistPlot <- downloadHandler(
     filename = function() {"ssdca_distFitPlot.png"},
@@ -212,6 +188,34 @@ function(input, output, session) {
   )
   
   ########### Observers --------------------
+  # update button
+  observeEvent(input$go, {
+    data <- check_data()
+    # --- fit dist
+    output$distPlot <- renderPlot({
+      plot_dist()
+    })
+    
+    output$gofTable <- renderDataTable({ 
+      datatable(table_gof(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))})
+    
+    # --- predict
+    output$modelAveragePlot <- renderPlot({
+      plot_model_average()
+    })
+    
+    # --- describe results
+    output$estHc <- renderUI({HTML(paste0("<b>", describe_hc()$est, "<b>"))})
+    output$lowerHc <- renderUI({HTML(paste0("<b>", describe_hc()$lower, "<b>"))})
+    output$upperHc <- renderUI({HTML(paste0("<b>", describe_hc()$upper, "<b>"))})
+    output$text1 <- renderUI({HTML("The model average estimate of the concentration that affects")})
+    output$selectHc <- renderUI({numericInput("selectHc", label = NULL, value = 5, min = 0, 
+                                                             max = 99, step = 5, width = "70px")})
+    output$text2 <- renderUI({HTML("% of species is")})
+    output$text3 <- renderUI({HTML("but it could be as low as")})
+    output$text4 <- renderUI({HTML("or as high as")})
+  })
+  
   # --- feedback
   observeEvent(input$feedback,
                {showModal(modalDialog(title = "", 
