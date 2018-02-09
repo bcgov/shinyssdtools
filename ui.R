@@ -38,13 +38,19 @@ fluidPage(
       tabsetPanel(type = "tabs",
                   tabPanel(title = span(tagList(icon("columns"), "Fit")),
                            br(),
+                           inline(downloadButton("dlDistPlot", label = "plot", style = 'padding:4px; font-size:80%')),
+                           inline(downloadButton("dlGofTable", label = "table", style = 'padding:4px; font-size:80%')),
+                           br(), br(),
                            plotOutput("distPlot"),
                            br(),
                            dataTableOutput("gofTable")),
                   tabPanel(title = span(tagList(icon("calculator"), "Predict")), 
                            br(),
+                           downloadButton("dlModelPlot", label = "plot", style = 'padding:4px; font-size:80%'),
+                           br(), br(),
                            plotOutput("modelAveragePlot"),
                            br(),
+                           HTML("<div style='height: 150px;'>"),
                            inline(htmlOutput("text1")),
                            inline(uiOutput("selectHc")),
                            inline(htmlOutput("text2")),
@@ -52,7 +58,9 @@ fluidPage(
                            inline(htmlOutput("text3")),
                            inline(htmlOutput("lowerHc")),
                            inline(htmlOutput("text4")),
-                           inline(htmlOutput("upperHc")))
+                           inline(htmlOutput("upperHc")),
+                  HTML("</div>"))
+                  
       )
     )
   )

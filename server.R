@@ -182,6 +182,28 @@ function(input, output, session) {
     req(input$go)
     HTML("or as high as")})
   
+  # --- download handlers
+  output$dlDistPlot <- downloadHandler(
+    filename = function() { "ssdca_distFitPlot.png"},
+    content = function(file) {
+      ggsave(file, plot = plot_dist(), device = "png")
+    }
+  )
+  
+  output$dlModelPlot <- downloadHandler(
+    filename = function() { "ssdca_modelAveragePlot.png"},
+    content = function(file) {
+      ggsave(file, plot = plot_model_average(), device = "png")
+    }
+  )
+  
+  output$download <- downloadHandler(
+    filename = function() {"ssdca_distGofTable.csv"},
+    content <- function(file) {
+      readr::write_csv(table_gof(), file)
+    }
+  )
+  
   # --- check data
   # output$hint <- renderText(check_data())
     
