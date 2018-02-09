@@ -14,7 +14,7 @@ fluidPage(
     
     # Sidebar panel for inputs ----
     sidebarPanel(
-      actionLink("demo_data", label = "Use demo data", icon = icon('table')),
+      actionLink("demoData", label = "Use demo data", icon = icon('table')),
       # upload csv with data
       fileInput('uploadData', buttonLabel = span(tagList(icon("upload"), "csv")),
                 label = "", placeholder = "Upload your data...",

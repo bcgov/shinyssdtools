@@ -7,14 +7,16 @@ function(input, output, session) {
   ########### Reactives --------------------
   # --- read, clean and check data
   read_data <- reactive({
-    if(input$demo_data) {
+    if(input$demoData){
       return(readr::read_csv("test/data/boron-data.csv"))
     }
       
     req(input$uploadData)
     data <- input$uploadData
-    if(!grepl(".csv", data$name, fixed = TRUE))  
+    if(!grepl(".csv", data$name, fixed = TRUE)) {
+      Sys.sleep(1)
       return(create_error("We're not sure what to do with that file type. Please upload a csv."))
+    }
 
     isolate(readr::read_csv(data$datapath))
   })
@@ -108,7 +110,7 @@ function(input, output, session) {
     ssdca::ssd_plot(data, pred, label = input$selectSpp, hc = input$selectHc/100)
   })
   
-  describe_hazard_conc <- reactive({
+  describe_hc <- reactive({
     pred <- predict_hc()
     est <- pred[pred$prop == (input$selectHc/100), "est"] %>% round(2)
     lower <- pred[pred$prop == (input$selectHc/100), "lcl"] %>% round(2)
@@ -170,9 +172,9 @@ function(input, output, session) {
   })
   
   # --- describe results
-  output$estHc <- renderUI({req(input$go); HTML(paste0("<b>", describe_hazard_conc()$est, "<b>"))})
-  output$lowerHc <- renderUI({req(input$go); HTML(paste0("<b>", describe_hazard_conc()$lower, "<b>"))})
-  output$upperHc <- renderUI({req(input$go); HTML(paste0("<b>", describe_hazard_conc()$upper, "<b>"))})
+  output$estHc <- renderUI({req(input$go); HTML(paste0("<b>", describe_hc()$est, "<b>"))})
+  output$lowerHc <- renderUI({req(input$go); HTML(paste0("<b>", describe_hc()$lower, "<b>"))})
+  output$upperHc <- renderUI({req(input$go); HTML(paste0("<b>", describe_hc()$upper, "<b>"))})
   output$text1 <- renderUI({req(input$go); HTML("The model average estimate of the concentration that affects")})
   output$selectHc <- renderUI({req(input$go); numericInput("selectHc", label = NULL, value = 5, min = 0, 
                                                            max = 99, step = 5, width = "70px")})
