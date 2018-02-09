@@ -125,6 +125,7 @@ function(input, output, session) {
   
   describe_hc <- reactive({
     req(check_data())
+    req(input$selectHc)
     pred <- predict_hc()
     est <- pred[pred$percent == input$selectHc, "est"] %>% round(2)
     est
@@ -208,17 +209,19 @@ function(input, output, session) {
     output$gofTable <- renderDataTable({ 
       datatable(table_gof(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))})
     
+    # --- describe results
+    output$estHc <- renderUI({HTML(paste0("<b>", describe_hc()$est, "<b>"))})
+    output$text1 <- renderUI({HTML("The model average estimate of the concentration that affects")})
+    output$selectHc <- renderUI({numericInput("selectHc", label = NULL, value = 5, min = 0, 
+                                              max = 99, step = 5, width = "70px")})
+    output$text2 <- renderUI({HTML("% of species is")})
+    
     # --- predict
     output$modelAveragePlot <- renderPlot({
       plot_model_average()
     })
     
-    # --- describe results
-    output$estHc <- renderUI({HTML(paste0("<b>", describe_hc()$est, "<b>"))})
-    output$text1 <- renderUI({HTML("The model average estimate of the concentration that affects")})
-    output$selectHc <- renderUI({numericInput("selectHc", label = NULL, value = 5, min = 0, 
-                                                             max = 99, step = 5, width = "70px")})
-    output$text2 <- renderUI({HTML("% of species is")})
+   
   })
   
   # --- feedback
