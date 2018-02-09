@@ -211,7 +211,7 @@ function(input, output, session) {
     
     # --- describe results
     output$estHc <- renderUI({HTML(paste0("<b>", describe_hc()$est, "<b>"))})
-    output$text1 <- renderUI({HTML("The model average estimate of the concentration that affects")})
+    output$text1 <- renderUI({HTML("The model averaged estimate of the concentration that affects")})
     output$selectHc <- renderUI({numericInput("selectHc", label = NULL, value = 5, min = 0, 
                                               max = 99, step = 5, width = "70px")})
     output$text2 <- renderUI({HTML("% of species is")})
