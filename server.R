@@ -91,12 +91,14 @@ function(input, output, session) {
   
   # --- predict and model average
   predict_hc <- reactive({
-    withProgress(value = 0, message = "This'll take a minute...", {
+    withProgress(value = 0, message = "This takes a minute or so...", {
       incProgress(0.3)
-                   dist <- fit_dist()
-                   incProgress(amount = 0.6)
-                   pred <- predict(dist) 
-                 })
+      dist <- fit_dist()
+      incProgress(amount = 0.6)
+      pred <- predict(dist) 
+      pred$prop %<>% round(2)
+      pred
+    })
   })
   
   plot_model_average <- reactive({
@@ -108,9 +110,9 @@ function(input, output, session) {
   
   describe_hazard_conc <- reactive({
     pred <- predict_hc()
-    est <- pred[round(pred$prop, 2) == (input$selectHc/100), "est"] %>% round(2)
-    lower <- pred[round(pred$prop, 2) == (input$selectHc/100), "lcl"] %>% round(2)
-    upper <- pred[round(pred$prop, 2) == (input$selectHc/100), "ucl"] %>% round(2)
+    est <- pred[pred$prop == (input$selectHc/100), "est"] %>% round(2)
+    lower <- pred[pred$prop == (input$selectHc/100), "lcl"] %>% round(2)
+    upper <- pred[pred$prop == (input$selectHc/100), "ucl"] %>% round(2)
     
     out <- list(est = est, lower = lower, upper = upper)
     out
@@ -134,7 +136,7 @@ function(input, output, session) {
   
   output$selectSpp = renderUI({
     selectInput("selectSpp", 
-                label = "Select species column:", 
+                label = "Select species column (optional):", 
                 choices = column_names(),
                 selected = guess_spp())
   })
