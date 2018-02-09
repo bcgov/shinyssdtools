@@ -4,25 +4,19 @@ options(shiny.maxRequestSize = 10*1024^2)
 
 function(input, output, session) {
   
-  # Reactives --------------------
-
+  ########### Reactives --------------------
   # --- read, clean and check data
   read_data <- reactive({
-    if(input$demo_data)
+    if(input$demo_data) {
       return(readr::read_csv("test/data/boron-data.csv"))
+    }
+      
     req(input$uploadData)
     data <- input$uploadData
-    if(is.null(data)) {return(NULL)}
     if(!grepl(".csv", data$name, fixed = TRUE))  
       return(create_error("We're not sure what to do with that file type. Please upload a csv."))
-    if(!grepl(".csv", data$name, fixed = TRUE)) 
-      return(NULL)
+
     isolate(readr::read_csv(data$datapath))
-  })
-  
-  # demo_data
-  demo_data <- reactive({
-    data <- read_csv("test/data/boron-data.csv")
   })
   
   # clean common problems to avoid errors
@@ -46,7 +40,7 @@ function(input, output, session) {
     dist <- isolate(input$selectDist)
     
     data <- isolate(clean_data())
-    
+
     if(!is.numeric(data[[conc]]))
       return(create_error("Concentration column must contain numbers."))
     if(any(is.na(data[[conc]])))
@@ -63,8 +57,8 @@ function(input, output, session) {
       return(create_error("Some species are duplicated. This app only handles one chemical at a time. Each species should only have one concentration value."))
     data 
   })
-
   
+  # --- render column choices
   column_names <- reactive({
     names(clean_data()) 
   })
@@ -81,16 +75,16 @@ function(input, output, session) {
   
   # --- fit distributions
   fit_dist <- reactive({
-      data <- check_data()
-      dist <-  isolate(ssdca::ssd_fit_dists(data, left = input$selectConc,
-                                            dists = input$selectDist, silent = TRUE))
+    data <- check_data()
+    dist <-  isolate(ssdca::ssd_fit_dists(data, left = input$selectConc,
+                                          dists = input$selectDist, silent = TRUE))
   })
   
   plot_dist <- reactive({
     req(check_data())
-      autoplot(fit_dist())
+    autoplot(fit_dist())
   })
-    
+  
   table_gof <- reactive({
     gof <- ssdca::ssd_gof(fit_dist()) %>% dplyr::mutate_if(is.numeric, ~ round(., 2))
   })
@@ -126,12 +120,12 @@ function(input, output, session) {
   
   # --- create feedback
   ssdca_shiny_feedback <- reactive({
-    c(Name = input$name,
-           Email = input$email,
-           Comment = input$comment)
+    data.frame(Name = input$name,
+               Email = input$email,
+               Comment = input$comment)
   })
   
-  # Outputs --------------------
+  ########### Outputs --------------------
   # --- render UI with choices based on file upload
   output$selectConc = renderUI({
     selectInput("selectConc", 
@@ -148,23 +142,23 @@ function(input, output, session) {
   })
   
   output$selectDist <- renderUI({
-        selectizeInput('selectDist', 
-                       label = label_mandatory("Select distributions to fit:"),
-                       multiple = TRUE, 
-                       choices = list(Recommended = default.dists, Additional = extra.dists),
-                       selected = default.dists,
-                       options = list(
-                         'plugins' = list('remove_button'),
-                         'create' = TRUE,
-                         'persist' = FALSE))
-      })
+    selectizeInput('selectDist', 
+                   label = label_mandatory("Select distributions to fit:"),
+                   multiple = TRUE, 
+                   choices = list(Recommended = default.dists, Additional = extra.dists),
+                   selected = default.dists,
+                   options = list(
+                     'plugins' = list('remove_button'),
+                     'create' = TRUE,
+                     'persist' = FALSE))
+  })
   
   # --- fit dist
   output$distPlot <- renderPlot({
     req(input$go)
-      plot_dist()
+    plot_dist()
   })
-    
+  
   output$gofTable <- renderDataTable({ 
     req(input$go)
     datatable(table_gof(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))})
@@ -172,46 +166,30 @@ function(input, output, session) {
   # --- predict
   output$modelAveragePlot <- renderPlot({
     req(input$go)
-   plot_model_average()
+    plot_model_average()
   })
   
   # --- describe results
-  output$estHc <- renderUI({
-    req(input$go)
-    HTML(paste0("<b>", describe_hazard_conc()$est, "<b>"))})
-  output$lowerHc <- renderUI({
-    req(input$go)
-    HTML(paste0("<b>", describe_hazard_conc()$lower, "<b>"))})
-  output$upperHc <- renderUI({
-    req(input$go)
-    HTML(paste0("<b>", describe_hazard_conc()$upper, "<b>"))})
-  output$text1 <- renderUI({
-    req(input$go)
-    HTML("The model average estimate of the concentration that affects")})
-  output$selectHc <- renderUI({
-    req(input$go)
-    numericInput("selectHc", label = NULL, value = 5, min = 0, 
-                                            max = 99, step = 5, width = "70px")})
-  output$text2 <- renderUI({
-    req(input$go)
-    HTML("% of species is")})
-  output$text3 <- renderUI({
-    req(input$go)
-    HTML("but it could be as low as")})
-  output$text4 <- renderUI({
-    req(input$go)
-    HTML("or as high as")})
+  output$estHc <- renderUI({req(input$go); HTML(paste0("<b>", describe_hazard_conc()$est, "<b>"))})
+  output$lowerHc <- renderUI({req(input$go); HTML(paste0("<b>", describe_hazard_conc()$lower, "<b>"))})
+  output$upperHc <- renderUI({req(input$go); HTML(paste0("<b>", describe_hazard_conc()$upper, "<b>"))})
+  output$text1 <- renderUI({req(input$go); HTML("The model average estimate of the concentration that affects")})
+  output$selectHc <- renderUI({req(input$go); numericInput("selectHc", label = NULL, value = 5, min = 0, 
+                                                           max = 99, step = 5, width = "70px")})
+  output$text2 <- renderUI({req(input$go); HTML("% of species is")})
+  output$text3 <- renderUI({req(input$go); HTML("but it could be as low as")})
+  output$text4 <- renderUI({req(input$go); HTML("or as high as")})
   
   # --- download handlers
   output$dlDistPlot <- downloadHandler(
-    filename = function() { "ssdca_distFitPlot.png"},
+    filename = function() {"ssdca_distFitPlot.png"},
     content = function(file) {
       ggsave(file, plot = plot_dist(), device = "png")
     }
   )
   
   output$dlModelPlot <- downloadHandler(
-    filename = function() { "ssdca_modelAveragePlot.png"},
+    filename = function() {"ssdca_modelAveragePlot.png"},
     content = function(file) {
       ggsave(file, plot = plot_model_average(), device = "png")
     }
@@ -225,13 +203,13 @@ function(input, output, session) {
   )
   
   output$dlPredTable <- downloadHandler(
-    filename = function() {"ssdca_distGofTable.csv"},
+    filename = function() {"ssdca_predictTable.csv"},
     content <- function(file) {
       readr::write_csv(predict_hc(), file)
     }
   )
-    
-  # Observers --------------------
+  
+  ########### Observers --------------------
   # --- feedback
   observeEvent(input$feedback,
                {showModal(modalDialog(title = "", 
@@ -252,12 +230,4 @@ function(input, output, session) {
                                       size = "m", easyClose = T,
                                       footer = modalButton("Got it")))})
 }
-  
-
-
-  
-  
-  
-  
-  
   
