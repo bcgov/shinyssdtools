@@ -190,7 +190,7 @@ function(input, output, session) {
   output$dlGofTable <- downloadHandler(
     filename = function() {"ssdca_distGofTable.csv"},
     content <- function(file) {
-      readr::write_csv(tibble(a = 1), file)
+      readr::write_csv(table_gof() %>% as_tibble(), file)
     }
   )
   
