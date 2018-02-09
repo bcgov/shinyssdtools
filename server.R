@@ -27,7 +27,7 @@ function(input, output, session) {
       }
       return(readr::read_csv(data$datapath))
     } else if (upload.values$upload_state == 'demo') {
-      return(readr::read_csv("test/data/boron-data.csv"))
+      return(readr::read_csv("demo-data/boron-data.csv"))
     }})
   
   # clean common problems to avoid errors
