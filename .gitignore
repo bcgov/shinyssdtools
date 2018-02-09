@@ -8,3 +8,4 @@
 droptoken.rds
 token.rds
 poisson-shiny-mail-auth.json
+.slackr
