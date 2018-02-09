@@ -158,7 +158,7 @@ function(input, output, session) {
     selectizeInput('selectDist', 
                    label = label_mandatory("Select distributions to fit:"),
                    multiple = TRUE, 
-                   choices = list(Recommended = default.dists, Additional = extra.dists),
+                   choices = c(default.dists, extra.dists),
                    selected = default.dists,
                    options = list(
                      'plugins' = list('remove_button'),
@@ -220,8 +220,6 @@ function(input, output, session) {
     output$modelAveragePlot <- renderPlot({
       plot_model_average()
     })
-    
-   
   })
   
   # --- feedback

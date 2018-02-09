@@ -24,7 +24,7 @@ tech.info <- "This webpage fits species sensitivity distributions to concentrati
               The webpage which was developed by Seb Dalgarno is powered by the ssdca R package by Joe Thorley and Carl Schwarz. 
               For more information see https://github.com/bcgov/ssdca."
 
-extra.dists <- c("pareto")
+extra.dists <- "pareto"
 default.dists <- c("lnorm", "llog", "gompertz", "lgumbel", "gamma", "weibull")
 
 # functions
