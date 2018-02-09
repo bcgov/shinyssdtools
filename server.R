@@ -49,12 +49,18 @@ function(input, output, session) {
     
     if(!is.numeric(data[[conc]]))
       return(create_error("Concentration column must contain numbers."))
-    if(any(data[[conc]] < 0))
+    if(any(is.na(data[[conc]])))
+      return(create_error("Concentration values must not be missing."))
+    if(any(data[[conc]] <= 0))
       return(create_error("Concentration values must be positive."))
-    if(any(duplicated(data[[spp]])))
+    if(any(is.infinite(data[[conc]])))
+      return(create_error("Concentration values must be finite."))
+    if(length(unique(data[[conc]])) < 5)
+      return(create_error("There must be at least 5 distinct concentration values."))
+    if(any(is.na(data[[spp]])))
+      return(create_error("Species names must not be missing."))
+    if(anyDuplicated(data[[spp]]))
       return(create_error("Some species are duplicated. This app only handles one chemical at a time and each species should only have one concentration value."))
-    if(any(is.na(conc)))
-      return(create_error("No missing concentation values allowed."))
     data 
   })
 
