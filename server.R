@@ -70,9 +70,15 @@ function(input, output, session) {
     data 
   })
   
+  names_data <- reactive({
+    data <- check_data()
+    names(data) %<>% make.names
+    data
+  })
+  
   # --- render column choices
   column_names <- reactive({
-    names(clean_data()) 
+    names(clean_data())
   })
   
   guess_conc <- reactive({
@@ -85,10 +91,16 @@ function(input, output, session) {
     name[grepl( "sp", name %>% tolower)][1]
   })
   
+  guess_group <- reactive({
+    name <- column_names()
+    name[grepl( "group", name %>% tolower)][1]
+  })
+  
   # --- fit distributions
   fit_dist <- reactive({
-    data <- check_data()
-    dist <-  isolate(ssdca::ssd_fit_dists(data, left = input$selectConc,
+    data <- names_data()
+    conc <- input$selectConc %>% make.names()
+    dist <-  isolate(ssdca::ssd_fit_dists(data, left = conc,
                                           dists = input$selectDist, silent = TRUE))
   })
   
@@ -106,12 +118,22 @@ function(input, output, session) {
   })
   
   # --- predict and model average
-  predict_hc <- reactive({
-    withProgress(value = 0, message = "Calculating...", {
+  predict_plot <- reactive({
+    withProgress(value = 0, message = "Generating plot...", {
       incProgress(0.3)
       dist <- fit_dist()
       incProgress(amount = 0.6)
       pred <- stats::predict(dist, nboot = 10) 
+      pred
+    })
+  })
+  
+  predict_hc <- reactive({
+    withProgress(value = 0, message = "Calculating CI from 10,000 bootstrap samples...", {
+      incProgress(0.3)
+      dist <- fit_dist()
+      incProgress(amount = 0.6)
+      pred <- ssdca::ssd_hc(dist, hc = input$selectHc, nboot = 10000) 
       pred
     })
   })
@@ -121,10 +143,14 @@ function(input, output, session) {
     req(input$selectHc)
     if(input$selectHc == 0 | input$selectHc > 99)
       return(NULL)
-    data <- check_data()
-    pred <- predict_hc()
-    ssdca::ssd_plot(data, pred, left = isolate(input$selectConc), label = isolate(input$selectSpp), 
-                    hc = input$selectHc, ci = FALSE, shift_x = 1.3)
+    data <- names_data()
+    pred <- predict_plot()
+    conc <- isolate(input$selectConc) %>% make.names()
+    group <- if(input$selectGroup == "-none-") {NULL} else {isolate(input$selectGroup) %>% make.names()}
+    spp <- if(input$selectSpp == "-none-") {NULL} else {isolate(input$selectSpp) %>% make.names()}
+    
+    ssdca::ssd_plot(data, pred, left = isolate(conc), label = isolate(spp), 
+                    color = isolate(group), hc = input$selectHc, ci = FALSE, shift_x = 1.3)
   })
   
   describe_hc <- reactive({
@@ -156,8 +182,15 @@ function(input, output, session) {
   output$selectSpp = renderUI({
     selectInput("selectSpp", 
                 label = "Select species column (optional):", 
-                choices = column_names(),
+                choices = c("-none-", column_names()),
                 selected = guess_spp())
+  })
+  
+  output$selectGroup = renderUI({
+    selectInput("selectGroup", 
+                label = "Select grouping column (optional):", 
+                choices = c("-none-", column_names()),
+                selected = "-none-")
   })
   
   output$selectDist <- renderUI({
@@ -215,6 +248,11 @@ function(input, output, session) {
     output$gofTable <- renderDataTable({ 
       datatable(table_gof(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))})
     
+    # --- predict
+    output$modelAveragePlot <- renderPlot({
+      plot_model_average()
+    })
+  })
     # --- describe results
     output$estHc <- renderUI({HTML(paste0("<b>", describe_hc()$est, "<b>"))})
     output$text1 <- renderUI({HTML("The model averaged estimate of the concentration that affects")})
@@ -222,11 +260,7 @@ function(input, output, session) {
                                               max = 99, step = 5, width = "70px")})
     output$text2 <- renderUI({HTML("% of species is")})
     
-    # --- predict
-    output$modelAveragePlot <- renderPlot({
-      plot_model_average()
-    })
-  })
+    
   
   # --- feedback
   observeEvent(input$feedback,

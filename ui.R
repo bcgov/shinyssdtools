@@ -23,6 +23,7 @@ fluidPage(
       # select which column is concentration
       uiOutput('selectConc'),
       uiOutput('selectSpp'),
+      uiOutput('selectGroup'),
       uiOutput('selectDist'),
       actionButton("go", "Update"),
       br(), br(),
