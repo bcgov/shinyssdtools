@@ -282,4 +282,6 @@ function(input, output, session) {
                                       size = "m", easyClose = T,
                                       footer = modalButton("Got it")))})
 }
+
+
   
