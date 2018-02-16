@@ -5,6 +5,8 @@ library(slackr)
 library(magrittr)
 library(DT)
 library(ssdca)
+library(shinythemes)
+library(rhandsontable)
 
 # configure slackr
 slackr::slackr_setup(config_file = "./.slackr")

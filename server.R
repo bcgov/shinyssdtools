@@ -1,10 +1,10 @@
-
 # change max file size upload to 10mb
 options(shiny.maxRequestSize = 10*1024^2)
 
 function(input, output, session) {
-  
   ########### Reactives --------------------
+  
+  # --- upload data
   upload.values <- reactiveValues(
     upload_state = NULL
   )
@@ -15,6 +15,10 @@ function(input, output, session) {
   
   observeEvent(input$demoData, {
     upload.values$upload_state <- 'demo'
+  })
+  
+  observeEvent(input$useHot, {
+    upload.values$upload_state <- 'hot'
   })
   
   read_data <- reactive({
@@ -28,260 +32,53 @@ function(input, output, session) {
       return(readr::read_csv(data$datapath))
     } else if (upload.values$upload_state == 'demo') {
       return(readr::read_csv("demo-data/boron-data.csv"))
-    }})
+    } else if (upload.values$upload_state == 'hot') {
+      return()
+    } })
   
-  # clean common problems to avoid errors
-  clean_data <- reactive({
-    data <- read_data()
-    if(length(data)) {
-      # remove any column names like X1, X2 (blank headers from excel/numbers)
-      data[,colnames(data) %in% paste0("X", 1:200)] <- NULL
-      # remove any rows with all NA
-      data <- data[!(rowSums(is.na(data)) == ncol(data)),]
+  hot.values = reactiveValues()
+  
+  hot_data = reactive({
+    if (!is.null(input$hot)) {
+      DF = hot_to_r(input$hot)
+    } else {
+      if (is.null(hot.values[["DF"]]))
+        DF = data.frame(Concentration = c(NA_real_, NA_real_, NA_real_, NA_real_, NA_real_), 
+                        Species = c(NA_character_, NA_character_, NA_character_, NA_character_, NA_character_))
+      else
+        DF = hot.values[["DF"]]
     }
-    data
-  })
-  
-  check_data <- reactive({
-
-    req(input$go)
-    conc <- isolate(input$selectConc)
-    spp <- isolate(input$selectSpp)
-    dist <- isolate(input$selectDist)
     
-    data <- isolate(clean_data())
-
-    if(!is.numeric(data[[conc]]))
-      return(create_error("Concentration column must contain numbers."))
-    if(any(is.na(data[[conc]])))
-      return(create_error("Concentration values must not be missing."))
-    if(any(data[[conc]] <= 0))
-      return(create_error("Concentration values must be positive."))
-    if(any(is.infinite(data[[conc]])))
-      return(create_error("Concentration values must be finite."))
-    if(length(unique(data[[conc]])) < 5)
-      return(create_error("There must be at least 5 distinct concentration values."))
-    if(any(is.na(data[[spp]])))
-      return(create_error("Species names must not be missing."))
-    if(anyDuplicated(data[[spp]]))
-      return(create_error("Some species are duplicated. This app only handles one chemical at a time. Each species should only have one concentration value."))
-    if(is.null(dist))
-      return(NULL)
-    data 
+    hot.values[["DF"]] = DF
+    DF
   })
   
-  names_data <- reactive({
-    data <- check_data()
-    names(data) %<>% make.names
-    data
+  output$hot <- renderRHandsontable({
+    DF = hot_data()
+    if (!is.null(DF))
+      rhandsontable(DF, width = 600, )
   })
-  
   # --- render column choices
-  column_names <- reactive({
-    names(clean_data())
-  })
-  
-  guess_conc <- reactive({
-    name <- column_names()
-    name[grepl("conc", name %>% tolower)][1]
-  })
-  
-  guess_spp <- reactive({
-    name <- column_names()
-    name[grepl( "sp", name %>% tolower)][1]
-  })
-  
-  guess_group <- reactive({
-    name <- column_names()
-    name[grepl( "group", name %>% tolower)][1]
-  })
-  
+
   # --- fit distributions
-  fit_dist <- reactive({
-    data <- names_data()
-    conc <- input$selectConc %>% make.names()
-    dist <-  isolate(ssdca::ssd_fit_dists(data, left = conc,
-                                          dists = input$selectDist, silent = TRUE))
-  })
-  
-  plot_dist <- reactive({
-    req(check_data())
-    withProgress(message = "Calculating...", value = 0,{
-      incProgress(0.6)
-      ggplot2::autoplot(fit_dist())
-    })
-  })
-  
-  table_gof <- reactive({
-    req(check_data())
-    gof <- ssdca::ssd_gof(fit_dist()) %>% dplyr::mutate_if(is.numeric, ~ round(., 2))
-  })
   
   # --- predict and model average
-  predict_plot <- reactive({
-    withProgress(value = 0, message = "Generating plot...", {
-      incProgress(0.3)
-      dist <- fit_dist()
-      incProgress(amount = 0.6)
-      pred <- stats::predict(dist, nboot = 10) 
-      pred
-    })
-  })
-  
-  predict_hc <- reactive({
-    withProgress(value = 0, message = "Calculating CI from 10,000 bootstrap samples...", {
-      incProgress(0.3)
-      dist <- fit_dist()
-      incProgress(amount = 0.6)
-      pred <- ssdca::ssd_hc(dist, hc = input$selectHc, nboot = 10000) 
-      pred
-    })
-  })
-  
-  plot_model_average <- reactive({
-    req(check_data())
-    req(input$selectHc)
-    if(input$selectHc == 0 | input$selectHc > 99)
-      return(NULL)
-    data <- names_data()
-    pred <- predict_plot()
-    conc <- isolate(input$selectConc) %>% make.names()
-    group <- if(input$selectGroup == "-none-") {NULL} else {isolate(input$selectGroup) %>% make.names()}
-    spp <- if(input$selectSpp == "-none-") {NULL} else {isolate(input$selectSpp) %>% make.names()}
-    
-    ssdca::ssd_plot(data, pred, left = isolate(conc), label = isolate(spp), 
-                    color = isolate(group), hc = input$selectHc, ci = FALSE, shift_x = 1.3)
-  })
-  
-  describe_hc <- reactive({
-    req(check_data())
-    req(input$selectHc | input$selectHc > 99)
-    if(input$selectHc == 0)
-      return(NULL)
-    pred <- predict_hc()
-    est <- pred[pred$percent == input$selectHc, "est"] %>% round(2)
-    est
-  })
-  
+
   # --- create feedback
-  ssdca_shiny_feedback <- reactive({
-    data.frame(Name = input$name,
-               Email = input$email,
-               Comment = input$comment)
-  })
   
   ########### Outputs --------------------
   # --- render UI with choices based on file upload
-  output$selectConc = renderUI({
-    selectInput("selectConc", 
-                label = label_mandatory("Select concentration column:"), 
-                choices = column_names(),
-                selected = guess_conc())
-  })
-  
-  output$selectSpp = renderUI({
-    selectInput("selectSpp", 
-                label = "Select species column (optional):", 
-                choices = c("-none-", column_names()),
-                selected = guess_spp())
-  })
-  
-  output$selectGroup = renderUI({
-    selectInput("selectGroup", 
-                label = "Select grouping column (optional):", 
-                choices = c("-none-", column_names()),
-                selected = "-none-")
-  })
-  
-  output$selectDist <- renderUI({
-    selectizeInput('selectDist', 
-                   label = label_mandatory("Select distributions to fit:"),
-                   multiple = TRUE, 
-                   choices = c(default.dists, extra.dists),
-                   selected = default.dists,
-                   options = list(
-                     'plugins' = list('remove_button'),
-                     'create' = TRUE,
-                     'persist' = FALSE))
-  })
   
   # --- download handlers
-  output$dlDistPlot <- downloadHandler(
-    filename = function() {"ssdca_distFitPlot.png"},
-    content = function(file) {
-      ggplot2::ggsave(file, plot = plot_dist(), device = "png")
-    }
-  )
-  
-  output$dlModelPlot <- downloadHandler(
-    filename = function() {"ssdca_modelAveragePlot.png"},
-    content = function(file) {
-      ggplot2::ggsave(file, plot = plot_model_average(), device = "png")
-    }
-  )
-  
-  output$dlGofTable <- downloadHandler(
-    filename = function() {"ssdca_distGofTable.csv"},
-    content <- function(file) {
-      readr::write_csv(table_gof() %>% as_tibble(), file)
-    }
-  )
-  
-  output$dlPredTable <- downloadHandler(
-    filename = function() {"ssdca_predictTable.csv"},
-    content <- function(file) {
-      pred <- predict_hc()
-      pred <- pred[, c("percent", "est")]
-      readr::write_csv(pred, file)
-    }
-  )
   
   ########### Observers --------------------
-  # update button
-  observeEvent(input$go, {
-    data <- check_data()
-    # --- fit dist
-    output$distPlot <- renderPlot({
-      plot_dist()
-    })
-    
-    output$gofTable <- renderDataTable({ 
-      datatable(table_gof(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))})
-    
-    # --- predict
-    output$modelAveragePlot <- renderPlot({
-      plot_model_average()
-    })
-  })
-    # --- describe results
-    output$estHc <- renderUI({HTML(paste0("<b>", describe_hc()$est, "<b>"))})
-    output$text1 <- renderUI({HTML("The model averaged estimate of the concentration that affects")})
-    output$selectHc <- renderUI({numericInput("selectHc", label = NULL, value = 5, min = 0, 
-                                              max = 99, step = 5, width = "70px")})
-    output$text2 <- renderUI({HTML("% of species is")})
-    
-    
+  
+  # --- describe results
   
   # --- feedback
-  observeEvent(input$feedback,
-               {showModal(modalDialog(title = "Message sent to administrator.", 
-                                      size = "m", easyClose = TRUE,
-                                      footer = modalButton("Never mind"),
-                                      textInput("name", "Name (optional):", width = "30%"),
-                                      textInput("email", "Email (optional):", width = "30%"),
-                                      textInput("comment", label_mandatory("Comment:"), width = "100%"),
-                                      actionButton("submit_feedback", "Submit")))})
-  
-  observeEvent(input$submit_feedback,
-               {slackr::slackr(ssdca_shiny_feedback())
-                 removeModal()})
   
   # --- information
-  observeEvent(input$information,
-               {showModal(modalDialog(tech.info,
-                                      size = "m", easyClose = T,
-                                      footer = modalButton("Got it")))})
+ 
 }
 
 
-  
