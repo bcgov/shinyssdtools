@@ -48,8 +48,6 @@ function(input, output, session) {
       data[,colnames(data) %in% paste0("X", 1:200)] <- NULL
       # remove any rows with all NA
       data <- data[!(rowSums(is.na(data) | data == "") == ncol(data)),]
-      # remove any cols with all NA
-      # data <- data[,colSums(is.na(data) | data == "") < nrow(data)]
     }
     print(data)
       data
@@ -62,7 +60,6 @@ function(input, output, session) {
     
     conc <- input$selectConc
     dist <- input$selectDist
-    
     data <- clean_data()
     
     if(length(data[[conc]]) == 0L)
