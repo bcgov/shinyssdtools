@@ -110,8 +110,6 @@ function(input, output, session) {
   })
   outputOptions(output, "checkpred", suspendWhenHidden = FALSE)
 
-  red_hint <- function(x) HTML(paste0("<font color='red'>", "Hint: ", x, "</font>"))
-  
   output$hintFi <- renderText(red_hint(check_fit()))
   output$hintPr <- renderText(red_hint(check_pred()))
 
@@ -217,21 +215,21 @@ function(input, output, session) {
   # --- render UI with choices based on file upload
   output$selectConc = renderUI({
     selectInput("selectConc", 
-                label = label_mandatory("Select column with concentration values:"), 
+                label = label_mandatory("Select column with concentration values"), 
                 choices = column_names(),
                 selected = guess_conc())
   })
   
   output$selectSpp = renderUI({
     selectInput("selectSpp", 
-                label = "Label by:", 
+                label = "Label by", 
                 choices = c("-none-", column_names()),
                 selected = guess_spp())
   })
   
   output$selectGroup = renderUI({
     selectInput("selectGroup", 
-                label = "Colour by:", 
+                label = "Colour by", 
                 choices = c("-none-", column_names()),
                 selected = "-none-")
   })
@@ -283,15 +281,49 @@ function(input, output, session) {
   })
   
   # --- download handlers
+  output$dlDistPlot <- downloadHandler(
+    filename = function() {"ssdca_distFitPlot.png"},
+    content = function(file) {
+      ggplot2::ggsave(file, plot = plot_dist(), device = "png")
+    }
+  )
   
+  output$dlModelPlot <- downloadHandler(
+    filename = function() {"ssdca_modelAveragePlot.png"},
+    content = function(file) {
+      ggplot2::ggsave(file, plot = plot_model_average(), device = "png")
+    }
+  )
+  
+  output$dlGofTable <- downloadHandler(
+    filename = function() {"ssdca_distGofTable.csv"},
+    content <- function(file) {
+      readr::write_csv(table_gof() %>% as_tibble(), file)
+    }
+  )
+  
+  output$dlPredTable <- downloadHandler(
+    filename = function() {"ssdca_predictTable.csv"},
+    content <- function(file) {
+      readr::write_csv(table_cl() %>% as_tibble(), file)
+    }
+  )  
   ########### Observers --------------------
   # --- data upload
   observeEvent(input$infoCl, {
-    shinyjs::toggle("clInfoText", anim = TRUE, animType = "slide")
+    shinyjs::toggle("clInfoText", anim = FALSE, animType = "slide", time = 0.2)
   })
   
   observeEvent(input$infoUpload, {
-    shinyjs::toggle("infoUploadText", anim = TRUE, animType = "slide")
+    shinyjs::toggle("infoUploadText", anim = TRUE, animType = "slide", time = 0.2)
+  })
+  
+  observeEvent(input$infoDemo, {
+    shinyjs::toggle("infoDemoText", anim = TRUE, animType = "slide", time = 0.2)
+  })
+  
+  observeEvent(input$infoHands, {
+    shinyjs::toggle("infoHandsText", anim = TRUE, animType = "slide", time = 0.2)
   })
   
   observeEvent(input$uploadData, {
