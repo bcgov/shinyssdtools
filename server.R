@@ -96,12 +96,12 @@ function(input, output, session) {
   
   check_pred <- reactive({
     data <- clean_data()
-    if(length(data[["Conc"]]) == 0L)
+    if("Concentration" %in% names(data) && length(data[["Concentration"]]) == 0L)
       return("You have not added a dataset.")
-    if(!is.null(input$selectConc) & length(data[[input$selectConc]]) == 0L)
-      return("You have not added a dataset.")
-    if(is.null(fit_dist()))
-      return("You have not fit distributions yet. Select the 'Fit' tab.")
+    if(is.null(input$selectConc))
+      return("You must select the 'Fit' tab before using the 'Predict' tab.")
+    if(check_fit() != "")
+      return("You have not successfully fit any distributions yet. Run the 'Fit' tab first.")
     ""
   })
   
@@ -262,6 +262,7 @@ function(input, output, session) {
                                  paste0("<b>", estimate_hc(), "</b>"))})
   
   output$clTable <- renderDataTable({
+    print(table_cl())
     if(check_pred() != "")
       return(NULL)
     datatable(table_cl(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))
@@ -281,21 +282,21 @@ function(input, output, session) {
   })
   
   # --- download handlers
-  output$dlDistPlot <- downloadHandler(
+  output$dlFitPlot <- downloadHandler(
     filename = function() {"ssdca_distFitPlot.png"},
     content = function(file) {
       ggplot2::ggsave(file, plot = plot_dist(), device = "png")
     }
   )
   
-  output$dlModelPlot <- downloadHandler(
+  output$dlPredPlot <- downloadHandler(
     filename = function() {"ssdca_modelAveragePlot.png"},
     content = function(file) {
       ggplot2::ggsave(file, plot = plot_model_average(), device = "png")
     }
   )
   
-  output$dlGofTable <- downloadHandler(
+  output$dlFitTable <- downloadHandler(
     filename = function() {"ssdca_distGofTable.csv"},
     content <- function(file) {
       readr::write_csv(table_gof() %>% as_tibble(), file)
@@ -340,6 +341,25 @@ function(input, output, session) {
   
   observeEvent(input$hot, {
     upload.values$upload_state <- 'hot'
+  })
+  
+  # --- download conditions
+  observe({
+    shinyjs::toggle(id = "divDlFitPlot", condition = check_fit() == "")
+  })
+  
+  observe({
+    shinyjs::toggle(id = "divDlFitTable", condition = check_fit() == "")
+  })
+  
+  observe({
+    shinyjs::toggle(id = "divDlPredPlot", condition = check_fit() == "" & check_pred() == "")
+  })
+  
+  observe({
+    shinyjs::toggle(id = "divDlPredTable", condition = check_fit() == "" & 
+                      check_pred() == "" & 
+                      input$getCl)
   })
   
   # --- describe results
