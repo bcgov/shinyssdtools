@@ -2,11 +2,11 @@
 fluidPage(
   shinyjs::useShinyjs(),
   shinythemes::themeSelector(),
-  # shinyjs::inlineCSS(appCSS),
-  # tags$head(
-  #   # Include custom CSS
-  #   includeCSS("style.css")
-  # ),
+  shinyjs::inlineCSS(appCSS),
+  tags$head(
+    # Include custom CSS
+    includeCSS("style.css")
+  ),
   # App title ----
   titlePanel("Fit and Plot Species Sensitivity Distributions"),
   
@@ -22,11 +22,12 @@ fluidPage(
                                 # upload csv with data
                                 hr(),
                                 p("2. Upload a csv file"),
-                                helpText("If you have an xls/xlsx file, try exporting a worksheet as csv from excel."),
-                                
-                                fileInput('uploadData', buttonLabel = span(tagList(icon("upload"), "csv")),
+                                inline(fileInput('uploadData', buttonLabel = span(tagList(icon("upload"), "csv")),
                                           label = "", placeholder = "Upload your data...",
-                                          accept = c('.csv')),
+                                          accept = c('.csv'))),
+                                inline(actionLink("infoUpload", icon = icon("info-circle"))),
+                                shinyjs::hidden(div(id = "infoUploadText", 
+                                                    helpText("If you have an xls/xlsx file, try exporting a worksheet as csv from excel."))),
                                 # input data in DataTable
                                 hr(),
                                 p("3. Fill out Spreadsheet"),
@@ -42,47 +43,73 @@ fluidPage(
                        fluidRow(
                          column(4,
                                 br(),
-                                helpText("Hint:"),
-                                wellPanel(
-                                  textOutput('hintFi')
-                                ),
                                 wellPanel(
                                   uiOutput('selectConc'),
-                                  uiOutput('selectDist'))
-                                ),
-                                
+                                  selectizeInput('selectDist', 
+                                                 label = label_mandatory("Select distributions to fit:"),
+                                                 multiple = TRUE, 
+                                                 choices = c(default.dists, extra.dists),
+                                                 selected = default.dists,
+                                                 options = list(
+                                                   'plugins' = list('remove_button'),
+                                                   'create' = TRUE,
+                                                   'persist' = FALSE))
+                                )),
                          column(8,
                                 br(),
-                                inline(downloadButton("dlDistPlot", label = "plot", style = 'padding:4px; font-size:80%')),
-                                inline(downloadButton("dlGofTable", label = "table", style = 'padding:4px; font-size:80%')),
+                                inline(downloadButton("dlDistPlot", label = "plot .png", style = 'padding:4px; font-size:80%')),
+                                inline(downloadButton("dlGofTable", label = "table .csv", style = 'padding:4px; font-size:80%')),
+                                br(), br(),
+                                conditionalPanel(
+                                  condition = "output.checkfit",
+                                  htmlOutput('hintFi')
+                                ),
                                 plotOutput("distPlot"),
                                 dataTableOutput("gofTable")))),
               tabPanel(title = span(tagList(icon("calculator"), "3. Predict")), 
                        fluidRow(
                          column(4,
                                 br(),
-                                helpText("Having trouble?"),
                                 wellPanel(
-                                  htmlOutput('hintPr')
-                                ),
-                                wellPanel(
+                                  h5("Estimate hazard concentration"),
+                                  inline(numericInput("selectHc", label = "Threshold (%)", value = 5, min = 0, 
+                                               max = 99, step = 5, width = "100px")),
+                                  inline(selectInput('bootSamp', label = "Bootstrap samples", 
+                                                     choices = c("500", "1,000", "5,000", "10,000"),
+                                                     width = "130px")),
+                                  hr(),
+                                  h5("Format plot"),
                                   uiOutput('selectSpp'),
                                   uiOutput('selectGroup'),
-                                  numericInput("selectHc", label = "Hazard Concentration:", value = 5, min = 0, 
-                                               max = 99, step = 5, width = "70px"))),
+                                  textInput('xaxis', value = "Concentration", label = "x-axis label"),
+                                  textInput('yaxis', value = "Percent of Species Affected", label = "y-axis label"),
+                                  textInput('title', value = "", label = "Plot title"),
+                                  numericInput('adjustLabel', value = 1.3, label = "Adjust label position",
+                                               min = 1, max = 10, step = 0.1))),
                        column(8,
                               br(),
-                              inline(downloadButton("dlModelPlot", label = "plot", style = 'padding:4px; font-size:80%')),
-                              inline(downloadButton("dlPredTable", label = "table", style = 'padding:4px; font-size:80%')),
+                              h5("Plot model average and estimate hazard concentration"),
+                              inline(downloadButton("dlModelPlot", label = "plot .png", style = 'padding:4px; font-size:80%')),
+                              inline(downloadButton("dlPredTable", label = "table .csv", style = 'padding:4px; font-size:80%')),
+                              br(), br(),
+                              conditionalPanel(
+                                condition = "output.checkpred",
+                                htmlOutput('hintPr')
+                              ),
                               plotOutput("modelAveragePlot"),
                               br(),
-                              inline(htmlOutput("estHc"))))),
-              tabPanel(title = span(tagList(icon("calculator"), "4. Confidence Interval")), 
-                       br(),
-                       helpText("Having trouble?"),
-                       wellPanel(
-                         htmlOutput('hintCi')
-                       )),
+                              htmlOutput("estHc"),
+                              hr(),
+                              inline(h5("Get confidence limits")),
+                              inline(actionLink("infoCl", icon = icon('info-circle'), label = NULL)),
+                              shinyjs::hidden(div(id = "clInfoText", helpText("Click 'Get CL' to calculate the upper and lower confidence limits (CL) for the estimated hazard concentration and selected % threshold.",
+                                                        "To calculate CL for a different % threshold or number of bootstrap samples, simply select new values in the sidebar and click 'Get CL' again."))),
+                              
+                              htmlOutput('describeCi'),
+                              br(),
+                              inline(actionButton('getCl', label = "Get CL")),
+                              dataTableOutput('clTable')
+                              ))),
               tabPanel(title = span(tagList(icon("code"), "Rcode")), 
                        br())
   )

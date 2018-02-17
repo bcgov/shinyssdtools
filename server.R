@@ -2,30 +2,15 @@
 options(shiny.maxRequestSize = 10*1024^2)
 
 function(input, output, session) {
-  ########### Reactives --------------------
   
+  ########### Reactives --------------------
   # --- upload data
   upload.values <- reactiveValues(
     upload_state = NULL
   )
   
-  read_data <- reactive({
-    req(upload.values$upload_state)
-    if (upload.values$upload_state == 'upload') {
-      data <- input$uploadData
-      if(!grepl(".csv", data$name, fixed = TRUE)) {
-        Sys.sleep(1)
-        return(create_error("We're not sure what to do with that file type. Please upload a csv."))
-      }
-      return(readr::read_csv(data$datapath))
-    } else if (upload.values$upload_state == 'demo') {
-      return(readr::read_csv("demo-data/boron-data.csv"))
-    } else if (upload.values$upload_state == 'hot') {
-      return(hot_data())
-    } })
-  
+  #  read/create handson table 
   hot.values = reactiveValues()
-  
   hot_data = reactive({
     if (!is.null(input$hot)) {
       DF = hot_to_r(input$hot)
@@ -41,6 +26,23 @@ function(input, output, session) {
     DF
   })
   
+  # read whichever dataset method user chooses
+  read_data <- reactive({
+    req(upload.values$upload_state)
+    if (upload.values$upload_state == 'upload') {
+      data <- input$uploadData
+      if(!grepl(".csv", data$name, fixed = TRUE)) {
+        Sys.sleep(1)
+        return(create_error("We're not sure what to do with that file type. Please upload a csv."))
+      }
+      return(readr::read_csv(data$datapath))
+    } else if (upload.values$upload_state == 'demo') {
+      return(readr::read_csv("demo-data/boron-data.csv"))
+    } else if (upload.values$upload_state == 'hot') {
+      return(hot_data())
+    } })
+  
+  
   clean_data <- reactive({
     data <- read_data()
     if(length(data)) {
@@ -54,6 +56,14 @@ function(input, output, session) {
       
     })
   
+  # deal with unacceptable coumn names
+  names_data <- reactive({
+    data <- clean_data()
+    names(data) %<>% make.names
+    data
+  })
+  
+  # --- Checks and hints for solving problems
   check_fit <- reactive({
     req(input$selectConc)
     req(input$selectDist)
@@ -75,21 +85,36 @@ function(input, output, session) {
     if(length(unique(data[[conc]])) < 8)
       return("There must be at least 8 distinct concentration values.")
     if(is.null(dist))
-      return("At least one distribution mut be selected.")
+      return("At least one distribution must be selected.")
     ""
   })
   
-  output$hintFi <- renderText(check_fit())
-  output$hintPr <- renderText(check_fit())
-  output$hintFi <- renderText(check_fit())
+  output$checkfit <- reactive({
+    check_fit() != ""
+  })
+  outputOptions(output, "checkfit", suspendWhenHidden = FALSE)
   
-  
-  names_data <- reactive({
+  check_pred <- reactive({
     data <- clean_data()
-    names(data) %<>% make.names
-    data
+    if(length(data[["Conc"]]) == 0L)
+      return("You have not added a dataset.")
+    if(!is.null(input$selectConc) & length(data[[input$selectConc]]) == 0L)
+      return("You have not added a dataset.")
+    if(is.null(fit_dist()))
+      return("You have not fit distributions yet. Select the 'Fit' tab.")
+    ""
   })
   
+  output$checkpred <- reactive({
+    check_pred() != ""
+  })
+  outputOptions(output, "checkpred", suspendWhenHidden = FALSE)
+
+  red_hint <- function(x) HTML(paste0("<font color='red'>", "Hint: ", x, "</font>"))
+  
+  output$hintFi <- renderText(red_hint(check_fit()))
+  output$hintPr <- renderText(red_hint(check_pred()))
+
   # --- render column choices
   column_names <- reactive({
     names(clean_data())
@@ -107,7 +132,8 @@ function(input, output, session) {
   
   # --- fit distributions
   fit_dist <- reactive({
-    print(clean_data())
+    if(is.null(input$selectConc))
+      return(NULL)
     data <- names_data()
     conc <- input$selectConc %>% make.names()
     dist <-  ssdca::ssd_fit_dists(data, left = conc,
@@ -124,9 +150,57 @@ function(input, output, session) {
   table_gof <- reactive({
     gof <- ssdca::ssd_gof(fit_dist()) %>% dplyr::mutate_if(is.numeric, ~ round(., 2))
   })
-  # --- predict and model average
   
-  # --- create feedback
+  # --- predict and model average
+  predict_hc <- reactive({
+    stats::predict(fit_dist(), nboot = 10)
+  })
+  
+  plot_model_average <- reactive({
+    req(input$selectConc)
+    req(input$selectDist)
+    req(input$selectHc)
+    req(input$selectSpp)
+    req(input$selectGroup)
+    if(input$selectHc == 0 | input$selectHc > 99)
+      return(NULL)
+    data <- names_data()
+    pred <- predict_hc()
+    conc <- input$selectConc %>% make.names()
+    group <- if(input$selectGroup == "-none-") {NULL} else {input$selectGroup %>% make.names()}
+    spp <- if(input$selectSpp == "-none-") {NULL} else {input$selectSpp %>% make.names()}
+    ssdca::ssd_plot(data, pred, left = conc, label = spp, 
+                    color = group, hc = input$selectHc, ci = FALSE, 
+                    shift_x = input$adjustLabel %>% as.numeric(), 
+                    xlab = input$xaxis, ylab = input$yaxis) +
+      ggtitle(input$title)
+  })
+  
+  estimate_hc <- reactive({
+    req(input$selectConc)
+    req(input$selectDist)
+    req(input$selectHc)
+    req(input$selectSpp)
+    req(input$selectGroup)
+    if(input$selectHc == 0 | input$selectHc > 99)
+      return(NULL)
+    pred <- predict_hc()
+    pred[pred$percent == input$selectHc, "est"] %>% round(2)
+  })
+  
+  # --- get confidence intervals
+  table_cl <- eventReactive(input$getCl, {
+    withProgress(value = 0, message = "Generating Confidence Limits...", {
+      incProgress(0.4)
+      ssdca::ssd_hc(fit_dist(), hc = input$selectHc, nboot = input$bootSamp %>% as.integer) %>%
+        mutate_at(c("est", "se", "ucl", "lcl"), ~ round(., 2))
+    })
+  })
+
+  estimate_time <- reactive({
+    df <- data.frame(n = c("500", "1,000", "5,000", "10,000"), time = c("10 seconds.", "15 seconds.", "1 and a half minutes.", "3 minutes."))
+    df[df$n == input$bootSamp,]$time
+  })
   
   ########### Outputs --------------------
   # --- datasets
@@ -162,20 +236,6 @@ function(input, output, session) {
                 selected = "-none-")
   })
   
-  output$selectDist <- renderUI({
-    selectizeInput('selectDist', 
-                   label = label_mandatory("Select distributions to fit:"),
-                   multiple = TRUE, 
-                   choices = c(default.dists, extra.dists),
-                   selected = default.dists,
-                   options = list(
-                     'plugins' = list('remove_button'),
-                     'create' = TRUE,
-                     'persist' = FALSE))
-  })  
-  
-  output$estHc <- renderUI({HTML( paste0("<b>", describe_hc()$est, "</b>"))})
-  
   # --- results
   output$distPlot <- renderPlot({
     if(check_fit() != "")
@@ -190,13 +250,50 @@ function(input, output, session) {
   
   # --- predict
   output$modelAveragePlot <- renderPlot({
+    if(check_pred() != "")
+      return(NULL)
     plot_model_average()
+  })
+  
+  output$estHc <- renderUI({
+    if(check_pred() != "")
+      return(NULL)
+    HTML("The model averaged estimate of the concentration that affects",
+                                 paste0("<b>", input$selectHc,"</b>"), 
+                                 "% of species is",
+                                 paste0("<b>", estimate_hc(), "</b>"))})
+  
+  output$clTable <- renderDataTable({
+    if(check_pred() != "")
+      return(NULL)
+    datatable(table_cl(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))
+  })
+  
+  output$sampTime <- renderText({
+    HTML("It will take around", paste0("<b>", estimate_time(), "</b>"), "to get CL from",
+         paste0("<b>", input$bootSamp, "</b>"), "bootstrap samples.")
+  })
+  
+  output$describeCi <- renderText({
+    HTML("You have selected", paste0("<b>", input$selectHc, "</b>"), 
+         "% threshold to estimate hazard concentration and", 
+         paste0("<b>", input$bootSamp, "</b>"), 
+         "bootstrap samples to generate confidence limits. This will take around",
+         paste0("<b>", estimate_time(), "</b>"))
   })
   
   # --- download handlers
   
   ########### Observers --------------------
   # --- data upload
+  observeEvent(input$infoCl, {
+    shinyjs::toggle("clInfoText", anim = TRUE, animType = "slide")
+  })
+  
+  observeEvent(input$infoUpload, {
+    shinyjs::toggle("infoUploadText", anim = TRUE, animType = "slide")
+  })
+  
   observeEvent(input$uploadData, {
     upload.values$upload_state <- 'upload'
   })
