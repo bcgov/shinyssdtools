@@ -1,18 +1,19 @@
 # Define UI
 fluidPage(
   shinyjs::useShinyjs(),
-  shinythemes::themeSelector(),
+  # shinythemes::themeSelector(),
   shinyjs::inlineCSS(appCSS),
   tags$head(
     # Include custom CSS
     includeCSS("style.css")
-  ),
+  ),                                                                                                                                                                                                                                                                                                             
   # App title ----
   titlePanel("Fit and Plot Species Sensitivity Distributions"),
   
   tabsetPanel(type = "tabs",
               tabPanel(title = span(tagList(icon("table"), "1. Data")),
-                       fluidRow(
+                       fluidRow(helpText("   Note: the app is designed to handle one chemical at a time. Each species should not have more than one concentration value."),
+
                          column(5,
                                 h5("Choose one of the following options:"),
                                 hr(),
