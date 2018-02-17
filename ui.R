@@ -59,7 +59,7 @@ fluidPage(
                                 wellPanel(
                                   uiOutput('selectConc'),
                                   selectizeInput('selectDist', 
-                                                 label = label_mandatory("Select distributions to fit:"),
+                                                 label = label_mandatory("Select distributions to fit"),
                                                  multiple = TRUE, 
                                                  choices = c(default.dists, extra.dists),
                                                  selected = default.dists,

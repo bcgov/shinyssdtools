@@ -305,7 +305,11 @@ function(input, output, session) {
   output$dlPredTable <- downloadHandler(
     filename = function() {"ssdca_predictTable.csv"},
     content <- function(file) {
-      readr::write_csv(table_cl() %>% as_tibble(), file)
+      if(!is.null(table_cl())) {
+        return(readr::write_csv(table_cl() %>% as_tibble(), file))
+      } else {
+        return(NULL)
+      }
     }
   )  
   ########### Observers --------------------
