@@ -141,8 +141,8 @@ function(input, output, session) {
   
   # --- fit distributions
   fit_dist <- reactive({
-    if(is.null(input$selectConc))
-      return(NULL)
+    req(input$selectConc)
+    req(check_fit() == "")
     data <- names_data()
     conc <- input$selectConc %>% make.names()
     dist <-  ssdca::ssd_fit_dists(data, left = conc,
@@ -150,9 +150,10 @@ function(input, output, session) {
   })
   
   plot_dist <- reactive({
+    dist <- fit_dist()
     withProgress(message = "Calculating...", value = 0,{
       incProgress(0.6)
-      ggplot2::autoplot(fit_dist())
+      ggplot2::autoplot(dist)
     })
   })
   
@@ -162,11 +163,11 @@ function(input, output, session) {
   
   # --- predict and model average
   predict_hc <- reactive({
+    req(check_fit() == "")
     stats::predict(fit_dist(), nboot = 10)
   })
   
   plot_model_average <- reactive({
-    req(check_pred() == "")
     if(input$selectHc == 0 | input$selectHc > 99)
       return()
     data <- names_data()
@@ -182,19 +183,15 @@ function(input, output, session) {
   })
   
   estimate_hc <- reactive({
-    req(input$selectConc)
-    req(input$selectDist)
-    req(input$selectHc)
-    req(input$selectSpp)
-    req(input$selectGroup)
     if(input$selectHc == 0 | input$selectHc > 99)
-      return(NULL)
+      return()
     pred <- predict_hc()
     pred[pred$percent == input$selectHc, "est"] %>% round(2)
   })
   
   # --- get confidence intervals
   table_cl <- eventReactive(input$getCl, {
+    req(check_fit() == "")
     withProgress(value = 0, message = "Generating Confidence Limits...", {
       incProgress(0.4)
       ssdca::ssd_hc(fit_dist(), hc = input$selectHc, nboot = input$bootSamp %>% 
@@ -251,34 +248,25 @@ function(input, output, session) {
   
   # --- render fit results
   output$distPlot <- renderPlot({
-    if(check_fit() != "")
-      return(NULL)
     plot_dist()
   })
   
   output$gofTable <- renderDataTable({ 
-    if(check_fit() != "")
-      return(NULL)
     datatable(table_gof(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))})
   
   # --- render predict results
   output$modelAveragePlot <- renderPlot({
-    if(check_pred() != "")
-      return(NULL)
     plot_model_average()
   })
   
   output$estHc <- renderUI({
-    if(check_pred() != "")
-      return(NULL)
     HTML("The model averaged estimate of the concentration that affects",
                                  paste0("<b>", input$selectHc,"</b>"), 
                                  "% of species is",
                                  paste0("<b>", estimate_hc(), "</b>"))})
   
   output$clTable <- renderDataTable({
-    if(check_pred() != "")
-      return(NULL)
+    # req(check_pred() == "")
     datatable(table_cl(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))
   })
   
@@ -323,7 +311,7 @@ function(input, output, session) {
       if(!is.null(table_cl())) {
         return(readr::write_csv(table_cl() %>% as_tibble(), file))
       } else {
-        return(NULL)
+        return()
       }
     }
   )  
@@ -359,8 +347,7 @@ function(input, output, session) {
       })
 
   output$codeFit <- renderUI({
-    if(check_fit() != "")
-      return()
+    req(check_fit() == "")
     c1 <- "# fit distributions"
     fit <- paste0("dist <- ssdca::ssd_fit_dists(data, left = '", input$selectConc, 
          "', dists = c(", paste0("'", input$selectDist, "'", collapse = ', '), "))")
@@ -372,10 +359,7 @@ function(input, output, session) {
   })
   
   output$codePredPlot <- renderUI({
-    if(check_fit() != "")
-      return()
-    if(check_pred() != "")
-      return()
+    req(check_pred() == "")
     req(input$selectSpp)
     
     c1 <- "# plot model average"
@@ -393,6 +377,7 @@ function(input, output, session) {
   
   output$codePredCl<- renderUI({
     req(input$getCl)
+    req(check_pred() == "")
     c1 <- "# get confidence limits"
     c2 <- "# use 'nboot' argument to change the number of bootstrap samples"
     conf <- paste0("ssdca::ssd_hc(dist, hc = ", input$selectHc, "L",
@@ -442,11 +427,11 @@ function(input, output, session) {
   })
   
   observe({
-    shinyjs::toggle(id = "divDlPredPlot", condition = !is.null(plot_model_average()))
+    shinyjs::toggle(id = "divDlPredPlot", condition = check_pred() == "")
   })
   
   observe({
-    shinyjs::toggle(id = "divDlPredTable", condition = input$getCl)
+    shinyjs::toggle(id = "divDlPredTable", condition = input$getCl && check_pred() == "")
   })
   
   # --- feedback
