@@ -467,8 +467,10 @@ function(input, output, session) {
                                       actionButton("submit_feedback", "Submit")))})
   
   observeEvent(input$submit_feedback,
-               {slackr::slackr(ssdca_shiny_feedback())
+               {withProgress(value = 0.2, "Sending...", {
+                 slackr::slackr(ssdca_shiny_feedback())
                  removeModal()})
+                 })
   
   # --- information
   observeEvent(input$information,
