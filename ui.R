@@ -135,8 +135,8 @@ fluidPage(
                               ))),
               tabPanel(title = span(tagList(icon("code"), "Rcode")), 
                        br(),
-                       helpText("Copy and paste code into R script. Code will be added as functions are executed within the app.",
-                                "For example, to get code for generating confidence limits you must first click 'Get CL' button in the 'Predict' tab."),
+                       helpText("Copy and paste code below to reproduce results. Code is added as functions are executed within the app.",
+                                "(e.g., code for generating confidence limits will appear after 'Get CL' is clicked.)"),
                        wellPanel(
                          uiOutput('codeHead'),
                          br(),
