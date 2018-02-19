@@ -50,7 +50,7 @@ create_error <- function(message, header = "random") {
   ))
 }
 
-red_hint <- function(x) HTML(paste0("<font color='red'>", "Hint: ", x, "</font>"))
+hint <- function(x) HTML(paste0("<font color='grey'>", "Hint: ", x, "</font>"))
 
 
 

@@ -70,6 +70,10 @@ fluidPage(
                                                    'persist' = FALSE)))),
                          column(8,
                                 br(),
+                                conditionalPanel(
+                                  condition = "output.checkfit",
+                                  htmlOutput('hintFi')
+                                ),
                                 inline(shinyjs::hidden(div(id = "divDlFitPlot", 
                                                     downloadButton("dlFitPlot", label = "plot .png", 
                                                                                                 style = 'padding:4px; font-size:80%')))),
@@ -77,10 +81,6 @@ fluidPage(
                                                     downloadButton("dlFitTable", label = "table .csv", 
                                                                                                  style = 'padding:4px; font-size:80%')))),
                                 br(), br(),
-                                conditionalPanel(
-                                  condition = "output.checkfit",
-                                  htmlOutput('hintFi')
-                                ),
                                 plotOutput("distPlot"),
                                 dataTableOutput("gofTable")))),
               tabPanel(title = span(tagList(icon("calculator"), "3. Predict")), 
@@ -106,6 +106,10 @@ fluidPage(
                        column(8,
                               br(),
                               h5("Plot model average and estimate hazard concentration"),
+                              conditionalPanel(
+                                condition = "output.checkpred",
+                                htmlOutput('hintPr')
+                              ),
                               inline(shinyjs::hidden(div(id = "divDlPredPlot", 
                                                   downloadButton("dlPredPlot", label = "plot .png", 
                                                                         style = 'padding:4px; font-size:80%')))),
@@ -113,10 +117,6 @@ fluidPage(
                                                   downloadButton("dlPredTable", label = "table .csv", 
                                                                         style = 'padding:4px; font-size:80%')))),
                               br(), 
-                              conditionalPanel(
-                                condition = "output.checkpred",
-                                htmlOutput('hintPr')
-                              ),
                               plotOutput("modelAveragePlot"),
                               br(),
                               htmlOutput("estHc"),
@@ -126,15 +126,27 @@ fluidPage(
                               shinyjs::hidden(div(id = "clInfoText", helpText("Click 'Get CL' to calculate the upper and lower confidence limits (CL) for the estimated hazard concentration and selected % threshold.",
                                                         "To calculate CL for a different % threshold or number of bootstrap samples, simply select new values in the sidebar and click 'Get CL' again."))),
                               
-                              htmlOutput('describeCi'),
+                              htmlOutput('describeCl'),
                               br(),
                               inline(actionButton('getCl', label = "Get CL")),
                               dataTableOutput('clTable')
                               ))),
               tabPanel(title = span(tagList(icon("code"), "Rcode")), 
-                       br())
-  )
-)
+                       br(),
+                       helpText("Copy and paste code into R script. Code will be added as functions are executed within the app."),
+                       wellPanel(
+                         uiOutput('codeHead'),
+                         br(),
+                         uiOutput('codeData'),
+                         br(),
+                         uiOutput('codeFit'),
+                         br(),
+                         uiOutput('codePredPlot'),
+                         br(),
+                         uiOutput('codePredCl'))
+                       )
+                      
+))
 #   # Sidebar layout with input and output definitions ----
 #   sidebarLayout(
 #     

@@ -51,7 +51,6 @@ function(input, output, session) {
       # remove any rows with all NA
       data <- data[!(rowSums(is.na(data) | data == "") == ncol(data)),]
     }
-    print(data)
       data
       
     })
@@ -110,8 +109,8 @@ function(input, output, session) {
   })
   outputOptions(output, "checkpred", suspendWhenHidden = FALSE)
 
-  output$hintFi <- renderText(red_hint(check_fit()))
-  output$hintPr <- renderText(red_hint(check_pred()))
+  output$hintFi <- renderText(hint(check_fit()))
+  output$hintPr <- renderText(hint(check_pred()))
 
   # --- render column choices
   column_names <- reactive({
@@ -126,6 +125,18 @@ function(input, output, session) {
   guess_spp <- reactive({
     name <- column_names()
     name[grepl( "sp", name %>% tolower)][1]
+  })
+  
+  code_spp <- reactive({
+    if(input$selectSpp == "-none-")
+      return('NULL')
+    paste0("'", input$selectSpp, "'")
+  })
+  
+  code_group <- reactive({
+    if(input$selectGroup == "-none-")
+      return('NULL')
+    paste0("'", input$selectGroup, "'")
   })
   
   # --- fit distributions
@@ -190,7 +201,8 @@ function(input, output, session) {
   table_cl <- eventReactive(input$getCl, {
     withProgress(value = 0, message = "Generating Confidence Limits...", {
       incProgress(0.4)
-      ssdca::ssd_hc(fit_dist(), hc = input$selectHc, nboot = input$bootSamp %>% as.integer) %>%
+      ssdca::ssd_hc(fit_dist(), hc = input$selectHc, nboot = input$bootSamp %>% 
+                      gsub(",", "", .) %>% as.integer) %>%
         mutate_at(c("est", "se", "ucl", "lcl"), ~ round(., 2))
     })
   })
@@ -273,7 +285,7 @@ function(input, output, session) {
          paste0("<b>", input$bootSamp, "</b>"), "bootstrap samples.")
   })
   
-  output$describeCi <- renderText({
+  output$describeCl <- renderText({
     HTML("You have selected", paste0("<b>", input$selectHc, "</b>"), 
          "% threshold to estimate hazard concentration and", 
          paste0("<b>", input$bootSamp, "</b>"), 
@@ -313,6 +325,80 @@ function(input, output, session) {
       }
     }
   )  
+  
+  # --- render code
+  output$codeHead <- renderUI({
+    if(upload.values$upload_state == "hot" && is.na(read_data()$Concentration[1]))
+      return()
+    l1 <- "library(ssdca)"
+    l2 <- "library(dplyr)"
+    l3 <- "library(ggplot2)"
+    l4 <- "library(magrittr)"
+    l5 <- "library(readr)"
+    HTML(paste(l1, l2, l3, l4, sep = "<br/>"))
+  })
+  
+  output$codeData <- renderUI({
+    if(upload.values$upload_state == "hot" && is.na(read_data()$Concentration[1]))
+      return()
+    c1 <- "# read dataset into r object"
+    c2 <- "# if you uploaded a csv file, you may need to change the path within read_csv()"
+    hot <- paste0("data <- ", capture.output(dput(clean_data())) %>% glue::collapse())
+    upload <- paste0("data <- readr::read_csv('", input$uploadData$name, "'d)")
+    demo <- "data <- ssdca::boron_data"
+    c3 <- "# fix unacceptable column names"
+    name <- "names(data) %<>% make.names"
+    if(upload.values$upload_state == "hot")
+      return(HTML(paste(c1, c2, hot, c3, name, sep = "<br/>")))
+    if(upload.values$upload_state == "upload")
+      return(HTML(paste(c1, c2, upload, c3, name, sep = "<br/>")))
+    if(upload.values$upload_state == "demo")
+      return(HTML(paste(c1, c2, demo, c3, name, sep = "<br/>")))
+      })
+
+  output$codeFit <- renderUI({
+    if(check_fit() != "")
+      return()
+    c1 <- "# fit distributions"
+    fit <- paste0("dist <- ssdca::ssd_fit_dists(data, left = '", input$selectConc, 
+         "', dists = c(", paste0("'", input$selectDist, "'", collapse = ', '), "))")
+    c2 <- "# plot distributions"
+    plot <- "ggplot2::autoplot(dist)"
+    c3 <- "# goodness of fit table"
+    table <- "ssdca::ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ round(., 2))"
+    HTML(paste(c1, fit, c2, plot, c3, table, sep = "<br/>"))
+  })
+  
+  output$codePredPlot <- renderUI({
+    if(check_fit() != "")
+      return()
+    if(check_pred() != "")
+      return()
+    req(input$selectSpp)
+    
+    c1 <- "# plot model average"
+    pred <- "pred <- stats::predict(dist, nboot = 10L)"
+    plot <-  paste0("ssdca::ssd_plot(data, pred, left = '", input$selectConc, 
+                    "', label = ", code_spp(),
+                    ", color = ", code_group(),
+                    ", hc = ", input$selectHc, "L",
+                    ", ci = FALSE, shift_x = ", input$adjustLabel,
+                    ", xlab = '", input$xaxis,
+                    "', ylab = '", input$yaxis,
+                    "') + ggplot2::ggtitle('", input$title, "')")
+    HTML(paste(c1, pred, plot, sep = "<br/>"))
+  })
+  
+  output$codePredCl<- renderUI({
+    req(input$getCl)
+    c1 <- "# get confidence limits"
+    c2 <- "# use 'nboot' argument to change the number of bootstrap samples"
+    conf <- paste0("ssdca::ssd_hc(dist, hc = ", input$selectHc, "L",
+    ", nboot = ", input$bootSamp %>% gsub(',', '', .) %>% as.integer,
+    "L) %>% dplyr::mutate_at(c('est', 'se', 'ucl', 'lcl'), ~ round(., 2))") 
+    HTML(paste(c1, c2, conf, sep = "<br/>"))
+  })
+  
   ########### Observers --------------------
   # --- data upload
   observeEvent(input$infoCl, {
