@@ -451,7 +451,7 @@ function(input, output, session) {
   
   # --- feedback
   observeEvent(input$feedback,
-               {showModal(modalDialog(title = "Message sent to administrator.", 
+               {showModal(modalDialog(title = "You can use this to report a bug, request a feature, or simply to provide some feedback. The message is sent to the administrator.", 
                                       size = "m", easyClose = TRUE,
                                       footer = modalButton("Never mind"),
                                       textInput("name", "Name (optional):", width = "30%"),
