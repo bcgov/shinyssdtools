@@ -172,7 +172,7 @@ function(input, output, session) {
     req(input$selectSpp)
     req(input$selectGroup)
     if(input$selectHc == 0 | input$selectHc > 99)
-      return(NULL)
+      return()
     data <- names_data()
     pred <- predict_hc()
     conc <- input$selectConc %>% make.names()
@@ -281,7 +281,6 @@ function(input, output, session) {
                                  paste0("<b>", estimate_hc(), "</b>"))})
   
   output$clTable <- renderDataTable({
-    print(table_cl())
     if(check_pred() != "")
       return(NULL)
     datatable(table_cl(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))
@@ -439,21 +438,19 @@ function(input, output, session) {
   
   # --- download button conditions
   observe({
-    shinyjs::toggle(id = "divDlFitPlot", condition = check_fit() == "")
+    shinyjs::toggle(id = "divDlFitPlot", condition = check_fit() == "" && !is.null(fit_dist()))
   })
   
   observe({
-    shinyjs::toggle(id = "divDlFitTable", condition = check_fit() == "")
+    shinyjs::toggle(id = "divDlFitTable", condition = check_fit() == "" && !is.null(fit_dist()))
   })
   
   observe({
-    shinyjs::toggle(id = "divDlPredPlot", condition = check_fit() == "" & check_pred() == "")
+    shinyjs::toggle(id = "divDlPredPlot", condition = !is.null(plot_model_average()))
   })
   
   observe({
-    shinyjs::toggle(id = "divDlPredTable", condition = check_fit() == "" & 
-                      check_pred() == "" & 
-                      input$getCl)
+    shinyjs::toggle(id = "divDlPredTable", condition = input$getCl)
   })
   
   # --- feedback
