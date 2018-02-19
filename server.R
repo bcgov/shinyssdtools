@@ -212,6 +212,13 @@ function(input, output, session) {
     df[df$n == input$bootSamp,]$time
   })
   
+  # --- create feedback
+  ssdca_shiny_feedback <- reactive({
+    data.frame(Name = input$name,
+               Email = input$email,
+               Comment = input$comment)
+  })
+  
   ########### Outputs --------------------
   # --- datasets
   output$hot <- renderRHandsontable({
@@ -448,9 +455,27 @@ function(input, output, session) {
                       check_pred() == "" & 
                       input$getCl)
   })
-
+  
+  # --- feedback
+  observeEvent(input$feedback,
+               {showModal(modalDialog(title = "Message sent to administrator.", 
+                                      size = "m", easyClose = TRUE,
+                                      footer = modalButton("Never mind"),
+                                      textInput("name", "Name (optional):", width = "30%"),
+                                      textInput("email", "Email (optional):", width = "30%"),
+                                      textInput("comment", label_mandatory("Comment:"), width = "100%"),
+                                      actionButton("submit_feedback", "Submit")))})
+  
+  observeEvent(input$submit_feedback,
+               {slackr::slackr(ssdca_shiny_feedback())
+                 removeModal()})
+  
+  # --- information
+  observeEvent(input$information,
+               {showModal(modalDialog(tech.info,
+                                      size = "m", easyClose = T,
+                                      footer = modalButton("Got it")))})
 }
-
 
 
 

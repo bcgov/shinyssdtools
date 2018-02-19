@@ -9,7 +9,9 @@ fluidPage(
   ),                                                                                                                                                                                                                                                                                                             
   # App title ----
   titlePanel("Fit and Plot Species Sensitivity Distributions"),
-  
+  actionLink("information", label = "Technical info", icon = icon('info-circle')),
+  actionLink("feedback", label = "Feedback?", icon = icon("comment")),
+  br(), br(),
   tabsetPanel(type = "tabs",
               tabPanel(title = span(tagList(icon("table"), "1. Data")),
                        fluidRow(helpText("   Note: the app is designed to handle one chemical at a time. Each species should not have more than one concentration value."),
