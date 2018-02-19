@@ -21,15 +21,15 @@ fluidPage(
                                 inline(actionLink("demoData", label = "boron dataset", icon = icon('table'))),
                                 inline(actionLink('infoDemo', icon = icon('info-circle'), label = NULL)),
                                 shinyjs::hidden(div(id = "infoDemoText", 
-                                                    helpText("This can be used to demo the app or view a dataset in the correct format."))),
+                                                    helpText("This can be used to demo the app or view a dataset that 'works'."))),
                                 # upload csv with data
                                 hr(),
                                 inline(p("2. Upload a csv file")),
                                 inline(actionLink("infoUpload", icon = icon("info-circle"), label = NULL)),
                                 shinyjs::hidden(div(id = "infoUploadText", 
-                                                    helpText("Upload an external dataset here. The dataset must include a column with with at least 8 distinct, positive, non-missing, numeric concentration values.", 
-                                                             "Other useful but optional variables include species and group, which may be used to label and color plot output.",
-                                                             "If you have an xls/xlsx file, try exporting a worksheet as csv from excel."))),
+                                                    helpText("Upload a csv file containing your dataset. The dataset must include a column with with at least 8 distinct, positive, non-missing, numeric concentration values.", 
+                                                             "Other useful but optional variables include species and group, which may be used to label and color plot output, respectively.",
+                                                             "If you have an xls/xlsx file, try exporting a worksheet to csv using excel."))),
                                 fileInput('uploadData', buttonLabel = span(tagList(icon("upload"), "csv")),
                                           label = "", placeholder = "Upload your data...",
                                           accept = c('.csv')),
@@ -39,7 +39,7 @@ fluidPage(
                                 inline(p("3. Fill out table below")),
                                 inline(actionLink("infoHands", icon = icon('info-circle'), label = NULL)),
                                 shinyjs::hidden(div(id = "infoHandsText", 
-                                                    helpText("The table below is interactive and is similar to an excel spreadsheet.",
+                                                    helpText("The table below is interactive and acts like a very simple excel spreadsheet.",
                                                              "Click on a cell to begin data input.",
                                                              "Right-click on the table to delete/insert rows or columns.", 
                                                              "Column names cannot be changed.", 
@@ -147,31 +147,4 @@ fluidPage(
                        )
                       
 ))
-#   # Sidebar layout with input and output definitions ----
-#   sidebarLayout(
-#     
-#     # Sidebar panel for inputs ----
-#     sidebarPanel(
-#       actionLink("demoData", label = "Use demo data", icon = icon('table')),
-#       # upload csv with data
-#       fileInput('uploadData', buttonLabel = span(tagList(icon("upload"), "csv")),
-#                 label = "", placeholder = "Upload your data...",
-#                 accept = c('.csv')),
-#       
-#       # select which column is concentration
-#       uiOutput('selectConc'),
-#       uiOutput('selectSpp'),
-#       uiOutput('selectGroup'),
-#       uiOutput('selectDist'),
-#       actionButton("go", "Update"),
-#       br(), br(),
-#       actionLink("information", label = "Technical info", icon = icon('info-circle')),
-#       br(),
-#       actionLink("feedback", label = "Feedback?", icon = icon("comment"))
-#       
-#     ),
-#     )
-#   )
-# )
-# 
-# 
+

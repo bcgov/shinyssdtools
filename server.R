@@ -246,7 +246,7 @@ function(input, output, session) {
                 selected = "-none-")
   })
   
-  # --- results
+  # --- render fit results
   output$distPlot <- renderPlot({
     if(check_fit() != "")
       return(NULL)
@@ -258,7 +258,7 @@ function(input, output, session) {
       return(NULL)
     datatable(table_gof(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))})
   
-  # --- predict
+  # --- render predict results
   output$modelAveragePlot <- renderPlot({
     if(check_pred() != "")
       return(NULL)
@@ -400,7 +400,7 @@ function(input, output, session) {
   })
   
   ########### Observers --------------------
-  # --- data upload
+  # --- info
   observeEvent(input$infoCl, {
     shinyjs::toggle("clInfoText", anim = FALSE, animType = "slide", time = 0.2)
   })
@@ -417,6 +417,7 @@ function(input, output, session) {
     shinyjs::toggle("infoHandsText", anim = TRUE, animType = "slide", time = 0.2)
   })
   
+  # --- user data
   observeEvent(input$uploadData, {
     upload.values$upload_state <- 'upload'
   })
@@ -429,7 +430,7 @@ function(input, output, session) {
     upload.values$upload_state <- 'hot'
   })
   
-  # --- download conditions
+  # --- download button conditions
   observe({
     shinyjs::toggle(id = "divDlFitPlot", condition = check_fit() == "")
   })
@@ -447,13 +448,7 @@ function(input, output, session) {
                       check_pred() == "" & 
                       input$getCl)
   })
-  
-  # --- describe results
-  
-  # --- feedback
-  
-  # --- information
-  
+
 }
 
 
