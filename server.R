@@ -166,11 +166,7 @@ function(input, output, session) {
   })
   
   plot_model_average <- reactive({
-    req(input$selectConc)
-    req(input$selectDist)
-    req(input$selectHc)
-    req(input$selectSpp)
-    req(input$selectGroup)
+    req(check_pred() == "")
     if(input$selectHc == 0 | input$selectHc > 99)
       return()
     data <- names_data()
