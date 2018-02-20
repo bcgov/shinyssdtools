@@ -191,10 +191,10 @@ function(input, output, session) {
   
   # --- get confidence intervals
   table_cl <- eventReactive(input$getCl, {
-    req(check_fit() == "")
+    dist <- fit_dist()
     withProgress(value = 0, message = "Generating Confidence Limits...", {
       incProgress(0.4)
-      ssdca::ssd_hc(fit_dist(), hc = input$selectHc, nboot = input$bootSamp %>% 
+      ssdca::ssd_hc(dist, hc = input$selectHc, nboot = input$bootSamp %>% 
                       gsub(",", "", .) %>% as.integer) %>%
         mutate_at(c("est", "se", "ucl", "lcl"), ~ round(., 2))
     })
@@ -359,10 +359,13 @@ function(input, output, session) {
   })
   
   output$codePredPlot <- renderUI({
+    req(check_fit() == "")
     req(check_pred() == "")
     req(input$selectSpp)
     
     c1 <- "# plot model average"
+    c2 <- "set the nboot argument and set ci = TRUE in ssd_plot to add confidence intervals to plot."
+    c3 <- "We reccommend using nboot = 10000, although this may take half a day to run"
     pred <- "pred <- stats::predict(dist, nboot = 10L)"
     plot <-  paste0("ssdca::ssd_plot(data, pred, left = '", input$selectConc, 
                     "', label = ", code_spp(),
@@ -372,11 +375,12 @@ function(input, output, session) {
                     ", xlab = '", input$xaxis,
                     "', ylab = '", input$yaxis,
                     "') + ggplot2::ggtitle('", input$title, "')")
-    HTML(paste(c1, pred, plot, sep = "<br/>"))
+    HTML(paste(c1, c2, c3, pred, plot, sep = "<br/>"))
   })
   
   output$codePredCl<- renderUI({
     req(input$getCl)
+    req(check_fit() == "")
     req(check_pred() == "")
     c1 <- "# get confidence limits"
     c2 <- "# use 'nboot' argument to change the number of bootstrap samples"
