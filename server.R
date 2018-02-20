@@ -150,6 +150,7 @@ function(input, output, session) {
   })
   
   plot_dist <- reactive({
+    print(fit_fail())
     dist <- fit_dist()
     # withProgress(message = "This won't take long...", value = 0,{
       # incProgress(0.6)
@@ -160,6 +161,12 @@ function(input, output, session) {
   table_gof <- reactive({
     dist <- fit_dist()
     gof <- ssdca::ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ round(., 2))
+  })
+  
+  fit_fail <- reactive({
+    req(input$selectDist)
+    dist <- fit_dist()
+    paste0(setdiff(input$selectDist, names(dist)), collapse = ", ")
   })
   
   # --- predict and model average
@@ -257,6 +264,10 @@ function(input, output, session) {
   output$gofTable <- renderDataTable({ 
     datatable(table_gof(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))})
   
+  output$fitFail <- renderText({
+    req(fit_fail() != "")
+    HTML(paste0("<font color='grey'>", paste(fit_fail(), "distribution(s) failed to fit."), "</font>"))
+  })
   # --- render predict results
   output$modelAveragePlot <- renderPlot({
     plot_model_average()

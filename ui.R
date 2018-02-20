@@ -86,6 +86,10 @@ fluidPage(
                                   downloadButton("dlFitTable", label = "table .csv", 
                                                  style = 'padding:4px; font-size:80%'))),
                          br(), br(),
+                         conditionalPanel(
+                           condition = "output.distPlot",
+                           htmlOutput('fitFail')
+                         ),
                                 plotOutput("distPlot"),
                                 dataTableOutput("gofTable")))),
               tabPanel(title = span(tagList(icon("calculator"), "3. Predict")), 
