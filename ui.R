@@ -77,6 +77,11 @@ fluidPage(
                                   condition = "output.checkfit",
                                   htmlOutput('hintFi')
                                 ),
+                                conditionalPanel(
+                                  condition = "output.distPlot",
+                                  h5("Plot fitted distributions")
+                                ),
+                                
                                 inline(conditionalPanel(
                                   condition = "output.distPlot",
                                   downloadButton("dlFitPlot", label = "plot .png", 
@@ -91,6 +96,11 @@ fluidPage(
                            htmlOutput('fitFail')
                          ),
                                 plotOutput("distPlot"),
+                         br(),
+                         conditionalPanel(
+                           condition = "output.gofTable",
+                           h5("Goodness of fit table")
+                         ),
                                 dataTableOutput("gofTable")))),
               tabPanel(title = span(tagList(icon("calculator"), "3. Predict")), 
                        fluidRow(
@@ -114,36 +124,49 @@ fluidPage(
                                                min = 1, max = 10, step = 0.1))),
                        column(8,
                               br(),
-                              h5("Plot model average and estimate hazard concentration"),
                               conditionalPanel(
                                 condition = "output.checkpred",
                                 htmlOutput('hintPr')
+                              ),
+                              conditionalPanel(
+                                condition = "output.modelAveragePlot",
+                                h5("Plot model average and estimate hazard concentration")
                               ),
                               inline(conditionalPanel(
                                 condition = "output.modelAveragePlot",
                                 downloadButton("dlPredPlot", label = "plot .png", 
                                                style = 'padding:4px; font-size:80%'))),
-                             
-                              inline(conditionalPanel(
-                                condition = "output.clTable",
-                                downloadButton("dlPredTable", label = "table .csv", 
-                                               style = 'padding:4px; font-size:80%'))),
                               br(), 
                               plotOutput("modelAveragePlot"),
                               br(),
-                              htmlOutput("estHc"),
+                              conditionalPanel(
+                                condition = "output.modelAveragePlot",
+                                htmlOutput("estHc")
+                              ),
                               hr(),
-                              inline(h5("Get confidence limits")),
-                              inline(actionLink("infoCl", icon = icon('info-circle'), label = NULL)),
+                              inline(conditionalPanel(
+                                condition = "output.modelAveragePlot",
+                                h5("Get confidence limits")
+                              )),
+                              inline(conditionalPanel(
+                                condition = "output.modelAveragePlot",
+                                actionLink("infoCl", icon = icon('info-circle'), label = NULL)
+                                )),
                               shinyjs::hidden(div(id = "clInfoText", helpText("Click 'Get CL' to calculate the upper and lower confidence limits (CL) for the estimated hazard concentration and selected % threshold.",
-                                                        "To calculate CL for a different % threshold or number of bootstrap samples, simply select new values in the sidebar and click 'Get CL' again."))),
-                              
-                              htmlOutput('describeCl'),
-                              br(),
-                              inline(actionButton('getCl', label = "Get CL")),
-                              dataTableOutput('clTable')
-                              ))),
-              tabPanel(title = span(tagList(icon("code"), "Rcode")), 
+                                                                              "To calculate CL for a different % threshold or number of bootstrap samples, simply select new values in the sidebar and click 'Get CL' again."))),
+                              conditionalPanel(
+                                condition = "output.modelAveragePlot",
+                                htmlOutput('describeCl')
+                              ),
+                              inline(conditionalPanel(
+                                condition = "output.modelAveragePlot",
+                                actionButton('getCl', label = "Get CL")
+                              )),
+                              conditionalPanel(
+                                condition = "output.modelAveragePlot",
+                                dataTableOutput('clTable')
+                              )))),
+              tabPanel(title = span(tagList(icon("code"), "R code")), 
                        br(),
                        helpText("Copy and paste code below to reproduce results. Code is added as functions are executed within the app.",
                                 "(e.g., code for generating confidence limits will appear after 'Get CL' is clicked.)"),
