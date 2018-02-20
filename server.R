@@ -151,10 +151,10 @@ function(input, output, session) {
   
   plot_dist <- reactive({
     dist <- fit_dist()
-    withProgress(message = "Calculating...", value = 0,{
-      incProgress(0.6)
+    # withProgress(message = "This won't take long...", value = 0,{
+      # incProgress(0.6)
       ggplot2::autoplot(dist)
-    })
+    # })
   })
   
   table_gof <- reactive({
@@ -165,7 +165,7 @@ function(input, output, session) {
   # --- predict and model average
   predict_hc <- reactive({
     dist <- fit_dist()
-    stats::predict(fit_dist(), nboot = 10)
+    stats::predict(dist, nboot = 10)
   })
   
   plot_model_average <- reactive({
@@ -195,7 +195,7 @@ function(input, output, session) {
   # --- get confidence intervals
   table_cl <- eventReactive(input$getCl, {
     dist <- fit_dist()
-    withProgress(value = 0, message = "Generating Confidence Limits...", {
+    withProgress(value = 0, message = "Getting Confidence Limits...", {
       incProgress(0.4)
       ssdca::ssd_hc(dist, hc = input$selectHc, nboot = input$bootSamp %>% 
                       gsub(",", "", .) %>% as.integer) %>%
@@ -422,23 +422,6 @@ function(input, output, session) {
   
   observeEvent(input$hot, {
     upload.values$upload_state <- 'hot'
-  })
-  
-  # --- download button conditions
-  observe({
-    shinyjs::toggle(id = "divDlFitPlot", condition = check_fit() == "" && !is.null(fit_dist()))
-  })
-  
-  observe({
-    shinyjs::toggle(id = "divDlFitTable", condition = check_fit() == "" && !is.null(fit_dist()))
-  })
-  
-  observe({
-    shinyjs::toggle(id = "divDlPredPlot", condition = check_pred() == "")
-  })
-  
-  observe({
-    shinyjs::toggle(id = "divDlPredTable", condition = input$getCl && check_pred() == "")
   })
   
   # --- feedback

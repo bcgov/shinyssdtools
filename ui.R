@@ -76,13 +76,15 @@ fluidPage(
                                   condition = "output.checkfit",
                                   htmlOutput('hintFi')
                                 ),
-                                inline(shinyjs::hidden(div(id = "divDlFitPlot", 
-                                                    downloadButton("dlFitPlot", label = "plot .png", 
-                                                                                                style = 'padding:4px; font-size:80%')))),
-                                inline(shinyjs::hidden(div(id = "divDlFitTable", 
-                                                    downloadButton("dlFitTable", label = "table .csv", 
-                                                                                                 style = 'padding:4px; font-size:80%')))),
-                                br(), br(),
+                                inline(conditionalPanel(
+                                  condition = "output.distPlot",
+                                  downloadButton("dlFitPlot", label = "plot .png", 
+                                                 style = 'padding:4px; font-size:80%'))),
+                                inline(conditionalPanel(
+                                  condition = "output.distPlot",
+                                  downloadButton("dlFitTable", label = "table .csv", 
+                                                 style = 'padding:4px; font-size:80%'))),
+                         br(), br(),
                                 plotOutput("distPlot"),
                                 dataTableOutput("gofTable")))),
               tabPanel(title = span(tagList(icon("calculator"), "3. Predict")), 
@@ -112,12 +114,15 @@ fluidPage(
                                 condition = "output.checkpred",
                                 htmlOutput('hintPr')
                               ),
-                              inline(shinyjs::hidden(div(id = "divDlPredPlot", 
-                                                  downloadButton("dlPredPlot", label = "plot .png", 
-                                                                        style = 'padding:4px; font-size:80%')))),
-                              inline(shinyjs::hidden(div(id = "divDlPredTable", 
-                                                  downloadButton("dlPredTable", label = "table .csv", 
-                                                                        style = 'padding:4px; font-size:80%')))),
+                              inline(conditionalPanel(
+                                condition = "output.modelAveragePlot",
+                                downloadButton("dlPredPlot", label = "plot .png", 
+                                               style = 'padding:4px; font-size:80%'))),
+                             
+                              inline(conditionalPanel(
+                                condition = "output.clTable",
+                                downloadButton("dlPredTable", label = "table .csv", 
+                                               style = 'padding:4px; font-size:80%'))),
                               br(), 
                               plotOutput("modelAveragePlot"),
                               br(),
