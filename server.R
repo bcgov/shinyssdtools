@@ -130,13 +130,13 @@ function(input, output, session) {
   code_spp <- reactive({
     if(input$selectSpp == "-none-")
       return('NULL')
-    paste0("'", input$selectSpp, "'")
+    paste0("'", input$selectSpp %>% make.names(), "'")
   })
   
   code_group <- reactive({
     if(input$selectGroup == "-none-")
       return('NULL')
-    paste0("'", input$selectGroup, "'")
+    paste0("'", input$selectGroup %>% make.names(), "'")
   })
   
   # --- fit distributions
@@ -334,31 +334,32 @@ function(input, output, session) {
   output$codeData <- renderUI({
     if(upload.values$upload_state == "hot" && is.na(read_data()$Concentration[1]))
       return()
-    c1 <- "# read dataset into r object"
-    c2 <- "# if you uploaded a csv file, you may need to change the path within read_csv()"
+    c1 <- "# read dataset"
+    c2 <- "# the file argument of read_csv() assumes the file is in your working directory. You may need to change the file path to correctly read your dataset."
     hot <- paste0("data <- ", capture.output(dput(clean_data())) %>% glue::collapse())
-    upload <- paste0("data <- readr::read_csv('", input$uploadData$name, "'d)")
+    upload <- paste0("data <- readr::read_csv(file = '", input$uploadData$name, "')")
     demo <- "data <- ssdca::boron_data"
     c3 <- "# fix unacceptable column names"
     name <- "names(data) %<>% make.names"
     if(upload.values$upload_state == "hot")
-      return(HTML(paste(c1, c2, hot, c3, name, sep = "<br/>")))
+      return(HTML(paste(c1, hot, c3, name, sep = "<br/>")))
     if(upload.values$upload_state == "upload")
       return(HTML(paste(c1, c2, upload, c3, name, sep = "<br/>")))
     if(upload.values$upload_state == "demo")
-      return(HTML(paste(c1, c2, demo, c3, name, sep = "<br/>")))
+      return(HTML(paste(c1, demo, c3, name, sep = "<br/>")))
       })
 
   output$codeFit <- renderUI({
     req(check_fit() == "")
     c1 <- "# fit distributions"
-    fit <- paste0("dist <- ssdca::ssd_fit_dists(data, left = '", input$selectConc, 
+    fit <- paste0("dist <- ssdca::ssd_fit_dists(data, left = '", input$selectConc %>% make.names, 
          "', dists = c(", paste0("'", input$selectDist, "'", collapse = ', '), "))")
     c2 <- "# plot distributions"
     plot <- "ggplot2::autoplot(dist)"
     c3 <- "# goodness of fit table"
-    table <- "ssdca::ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ round(., 2))"
-    HTML(paste(c1, fit, c2, plot, c3, table, sep = "<br/>"))
+    c4 <- "# use digits argument in round() to change how output is rounded."
+    table <- "ssdca::ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ round(., digits = 2))"
+    HTML(paste(c1, fit, c2, plot, c3, c4, table, sep = "<br/>"))
   })
   
   output$codePredPlot <- renderUI({
@@ -370,7 +371,7 @@ function(input, output, session) {
     c2 <- "# set the nboot argument and set ci = TRUE in ssd_plot to add confidence intervals to plot."
     c3 <- "# we reccommend using nboot = 10000, although this may take half a day to run"
     pred <- "pred <- stats::predict(dist, nboot = 10L)"
-    plot <-  paste0("ssdca::ssd_plot(data, pred, left = '", input$selectConc, 
+    plot <-  paste0("ssdca::ssd_plot(data, pred, left = '", input$selectConc %>% make.names, 
                     "', label = ", code_spp(),
                     ", color = ", code_group(),
                     ", hc = ", input$selectHc, "L",
@@ -386,11 +387,12 @@ function(input, output, session) {
     req(check_fit() == "")
     req(check_pred() == "")
     c1 <- "# get confidence limits"
-    c2 <- "# use 'nboot' argument to change the number of bootstrap samples"
+    c2 <- "# use nboot argument within ssd_hc() to change the number of bootstrap samples"
+    c3 <- "# use digits argument in round() to change how output is rounded."
     conf <- paste0("ssdca::ssd_hc(dist, hc = ", input$selectHc, "L",
     ", nboot = ", input$bootSamp %>% gsub(',', '', .) %>% as.integer,
-    "L) %>% dplyr::mutate_at(c('est', 'se', 'ucl', 'lcl'), ~ round(., 2))") 
-    HTML(paste(c1, c2, conf, sep = "<br/>"))
+    "L) %>% dplyr::mutate_at(c('est', 'se', 'ucl', 'lcl'), ~ round(., digits = 2))") 
+    HTML(paste(c1, c2, c3, conf, sep = "<br/>"))
   })
   
   ########### Observers --------------------
