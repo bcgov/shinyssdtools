@@ -158,18 +158,21 @@ function(input, output, session) {
   })
   
   table_gof <- reactive({
-    gof <- ssdca::ssd_gof(fit_dist()) %>% dplyr::mutate_if(is.numeric, ~ round(., 2))
+    dist <- fit_dist()
+    gof <- ssdca::ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ round(., 2))
   })
   
   # --- predict and model average
   predict_hc <- reactive({
-    req(check_fit() == "")
+    dist <- fit_dist()
     stats::predict(fit_dist(), nboot = 10)
   })
   
   plot_model_average <- reactive({
     if(input$selectHc == 0 | input$selectHc > 99)
       return()
+    req(input$selectSpp)
+    req(input$selectGroup)
     data <- names_data()
     pred <- predict_hc()
     conc <- input$selectConc %>% make.names()
