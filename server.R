@@ -364,8 +364,8 @@ function(input, output, session) {
     req(input$selectSpp)
     
     c1 <- "# plot model average"
-    c2 <- "set the nboot argument and set ci = TRUE in ssd_plot to add confidence intervals to plot."
-    c3 <- "We reccommend using nboot = 10000, although this may take half a day to run"
+    c2 <- "# set the nboot argument and set ci = TRUE in ssd_plot to add confidence intervals to plot."
+    c3 <- "# we reccommend using nboot = 10000, although this may take half a day to run"
     pred <- "pred <- stats::predict(dist, nboot = 10L)"
     plot <-  paste0("ssdca::ssd_plot(data, pred, left = '", input$selectConc, 
                     "', label = ", code_spp(),
