@@ -324,11 +324,9 @@ function(input, output, session) {
     if(upload.values$upload_state == "hot" && is.na(read_data()$Concentration[1]))
       return()
     l1 <- "library(ssdca)"
-    l2 <- "library(dplyr)"
-    l3 <- "library(ggplot2)"
-    l4 <- "library(magrittr)"
-    l5 <- "library(readr)"
-    HTML(paste(l1, l2, l3, l4, sep = "<br/>"))
+    l2 <- "library(ggplot2)"
+    if(upload.values$upload_state == "upload") {l3 <- "library(readr)"} else {l3 <- NULL}
+    HTML(paste(l1, l2, l3, sep = "<br/>"))
   })
   
   output$codeData <- renderUI({
@@ -337,10 +335,10 @@ function(input, output, session) {
     c1 <- "# read dataset"
     c2 <- "# the file argument of read_csv() assumes the file is in your working directory. You may need to change the file path to correctly read your dataset."
     hot <- paste0("data <- ", capture.output(dput(clean_data())) %>% glue::collapse())
-    upload <- paste0("data <- readr::read_csv(file = '", input$uploadData$name, "')")
+    upload <- paste0("data <- read_csv(file = '", input$uploadData$name, "')")
     demo <- "data <- ssdca::boron_data"
     c3 <- "# fix unacceptable column names"
-    name <- "names(data) %<>% make.names"
+    name <- "colnames(data) <- make.names(colnames(data))"
     if(upload.values$upload_state == "hot")
       return(HTML(paste(c1, hot, c3, name, sep = "<br/>")))
     if(upload.values$upload_state == "upload")
@@ -352,14 +350,13 @@ function(input, output, session) {
   output$codeFit <- renderUI({
     req(check_fit() == "")
     c1 <- "# fit distributions"
-    fit <- paste0("dist <- ssdca::ssd_fit_dists(data, left = '", input$selectConc %>% make.names, 
+    fit <- paste0("dist <- ssd_fit_dists(data, left = '", input$selectConc %>% make.names, 
          "', dists = c(", paste0("'", input$selectDist, "'", collapse = ', '), "))")
     c2 <- "# plot distributions"
-    plot <- "ggplot2::autoplot(dist)"
+    plot <- "autoplot(dist)"
     c3 <- "# goodness of fit table"
-    c4 <- "# use digits argument in round() to change how output is rounded."
-    table <- "ssdca::ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ round(., digits = 2))"
-    HTML(paste(c1, fit, c2, plot, c3, c4, table, sep = "<br/>"))
+    table <- "ssd_gof(dist)"
+    HTML(paste(c1, fit, c2, plot, c3, table, sep = "<br/>"))
   })
   
   output$codePredPlot <- renderUI({
@@ -370,15 +367,15 @@ function(input, output, session) {
     c1 <- "# plot model average"
     c2 <- "# set the nboot argument and set ci = TRUE in ssd_plot to add confidence intervals to plot."
     c3 <- "# we reccommend using nboot = 10000, although this may take half a day to run"
-    pred <- "pred <- stats::predict(dist, nboot = 10L)"
-    plot <-  paste0("ssdca::ssd_plot(data, pred, left = '", input$selectConc %>% make.names, 
+    pred <- "pred <- predict(dist, nboot = 10L)"
+    plot <-  paste0("ssd_plot(data, pred, left = '", input$selectConc %>% make.names, 
                     "', label = ", code_spp(),
                     ", color = ", code_group(),
                     ", hc = ", input$selectHc, "L",
                     ", ci = FALSE, shift_x = ", input$adjustLabel,
                     ", xlab = '", input$xaxis,
                     "', ylab = '", input$yaxis,
-                    "') + ggplot2::ggtitle('", input$title, "')")
+                    "') + ggtitle('", input$title, "')")
     HTML(paste(c1, c2, c3, pred, plot, sep = "<br/>"))
   })
   
@@ -387,12 +384,10 @@ function(input, output, session) {
     req(check_fit() == "")
     req(check_pred() == "")
     c1 <- "# get confidence limits"
-    c2 <- "# use nboot argument within ssd_hc() to change the number of bootstrap samples"
-    c3 <- "# use digits argument in round() to change how output is rounded."
-    conf <- paste0("ssdca::ssd_hc(dist, hc = ", input$selectHc, "L",
-    ", nboot = ", input$bootSamp %>% gsub(',', '', .) %>% as.integer,
-    "L) %>% dplyr::mutate_at(c('est', 'se', 'ucl', 'lcl'), ~ round(., digits = 2))") 
-    HTML(paste(c1, c2, c3, conf, sep = "<br/>"))
+    c2 <- "# use the nboot argument in ssd_hc to set the number of bootstrap samples"
+    conf <- paste0("ssd_hc(dist, hc = ", input$selectHc, "L",
+    ", nboot = ", input$bootSamp %>% gsub(',', '', .) %>% as.integer, "L)") 
+    HTML(paste(c1, c2, conf, sep = "<br/>"))
   })
   
   ########### Observers --------------------
