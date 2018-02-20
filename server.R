@@ -266,7 +266,7 @@ function(input, output, session) {
   
   output$fitFail <- renderText({
     req(fit_fail() != "")
-    HTML(paste0("<font color='grey'>", paste(fit_fail(), "distribution(s) failed to fit."), "</font>"))
+    HTML(paste0("<font color='grey'>", paste(fit_fail(), "distribution(s) failed to fit. Run R code to get more information."), "</font>"))
   })
   # --- render predict results
   output$modelAveragePlot <- renderPlot({
