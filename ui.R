@@ -16,7 +16,7 @@ fluidPage(
               tabPanel(title = span(tagList(icon("table"), "1. Data")),
                        fluidRow(helpText("   Note: the app is designed to handle one chemical at a time. Each species should not have more than one concentration value."),
 
-                         column(5,
+                         column(4,
                                 h5("Choose one of the following options:"),
                                 hr(),
                                 inline(p("1. Use ")),
@@ -51,11 +51,11 @@ fluidPage(
                                                              "If the table is behaving unexpectedly, please reload the website."))),
                                 rHandsontableOutput("hot"),
                                 hr()),
-                         column(7,
+                         column(8,
                                 h5("Preview chosen dataset:"),
                                 hr(),
-                                wellPanel(dataTableOutput('viewUpload', width = 500), 
-                                          style = "overflow-x:scroll; max-height: 600px; max-width: 540px")))),
+                                wellPanel(dataTableOutput('viewUpload', width = 600), 
+                                          style = "overflow-x:scroll; max-height: 600px; max-width: 640px")))),
               tabPanel(title = span(tagList(icon("stats", lib = "glyphicon"), "2. Fit")),
                        fluidRow(
                          column(4,
