@@ -41,7 +41,7 @@ inline = function (x) {
   tags$div(style = "display:inline-block;", x)
 }
 
-hint <- function(x) HTML(paste0("<font color='grey'>", "Hint: ", x, "</font>"))
+hint <- function(x) HTML(paste0("<font color='grey'>", x, "</font>"))
 
 
 

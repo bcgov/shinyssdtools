@@ -127,16 +127,28 @@ function(input, output, session) {
     name[grepl( "sp", name %>% tolower)][1]
   })
   
-  code_spp <- reactive({
-    if(input$selectSpp == "-none-")
+  code_label <- reactive({
+    if(input$selectLabel == "-none-")
       return('NULL')
-    paste0("'", input$selectSpp %>% make.names(), "'")
+    paste0("'", input$selectLabel %>% make.names(), "'")
   })
   
-  code_group <- reactive({
-    if(input$selectGroup == "-none-")
+  code_colour <- reactive({
+    if(input$selectColour == "-none-")
       return('NULL')
-    paste0("'", input$selectGroup %>% make.names(), "'")
+    paste0("'", input$selectColour %>% make.names(), "'")
+  })
+  
+  code_shape <- reactive({
+    if(input$selectShape == "-none-")
+      return('NULL')
+    paste0("'", input$selectShape %>% make.names(), "'")
+  })
+  
+  code_hc <- reactive({
+    if(!input$checkHc)
+      return('NULL') 
+    paste0(input$selectHc, "L")
   })
   
   # --- fit distributions
@@ -150,7 +162,6 @@ function(input, output, session) {
   })
   
   plot_dist <- reactive({
-    print(fit_fail())
     dist <- fit_dist()
     # withProgress(message = "This won't take long...", value = 0,{
       # incProgress(0.6)
@@ -178,15 +189,25 @@ function(input, output, session) {
   plot_model_average <- reactive({
     if(input$selectHc == 0 | input$selectHc > 99)
       return()
-    req(input$selectSpp)
-    req(input$selectGroup)
+    req(input$selectColour)
+    req(input$selectLabel)
+    req(input$selectShape)
+    
     data <- names_data()
     pred <- predict_hc()
     conc <- input$selectConc %>% make.names()
-    group <- if(input$selectGroup == "-none-") {NULL} else {input$selectGroup %>% make.names()}
-    spp <- if(input$selectSpp == "-none-") {NULL} else {input$selectSpp %>% make.names()}
-    ssdca::ssd_plot(data, pred, left = conc, label = spp, 
-                    color = group, hc = input$selectHc, ci = FALSE, 
+    colour <- if(input$selectColour == "-none-") {NULL} else {input$selectColour %>% make.names()}
+    label <- if(input$selectLabel == "-none-") {NULL} else {input$selectLabel %>% make.names()}
+    shape <- if(input$selectShape == "-none-") {NULL} else {input$selectShape %>% make.names()}
+    hc <- if(!input$checkHc) {NULL} else {input$selectHc}
+    
+    shape_data <- if(is.null(shape)) {NULL} else {data[[shape]]} 
+    
+    validate(need(is.null(shape_data) | shape_data %>% is.character(), message = "Symbol variable cannot be numeric."))
+    validate(need(shape_data %>% unique %>% length < 7, message = "Symbol variable cannot have more than 6 distinct values."))
+    
+    ssdca::ssd_plot(data, pred, left = conc, label = label, 
+                    color = colour, shape = shape, hc = hc, ci = FALSE, 
                     shift_x = input$adjustLabel %>% as.numeric(), 
                     xlab = input$xaxis, ylab = input$yaxis) +
       ggtitle(input$title)
@@ -242,19 +263,27 @@ function(input, output, session) {
                 selected = guess_conc())
   })
   
-  output$selectSpp = renderUI({
-    selectInput("selectSpp", 
+  output$selectLabel = renderUI({
+    selectInput("selectLabel", 
                 label = "Label by", 
                 choices = c("-none-", column_names()),
                 selected = guess_spp())
   })
   
-  output$selectGroup = renderUI({
-    selectInput("selectGroup", 
+  output$selectColour = renderUI({
+    selectInput("selectColour", 
                 label = "Colour by", 
                 choices = c("-none-", column_names()),
                 selected = "-none-")
   })
+  
+  output$selectShape = renderUI({
+    selectInput("selectShape", 
+                label = "Symbol by", 
+                choices = c("-none-", column_names()),
+                selected = "-none-")
+  })
+  
   
   # --- render fit results
   output$distPlot <- renderPlot({
@@ -280,7 +309,6 @@ function(input, output, session) {
                                  paste0("<b>", estimate_hc(), "</b>"))})
   
   output$clTable <- renderDataTable({
-    # req(check_pred() == "")
     datatable(table_cl(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))
   })
   
@@ -373,16 +401,17 @@ function(input, output, session) {
   output$codePredPlot <- renderUI({
     req(check_fit() == "")
     req(check_pred() == "")
-    req(input$selectSpp)
+    req(input$selectLabel)
     
     c1 <- "# plot model average"
     c2 <- "# set the nboot argument and set ci = TRUE in ssd_plot to add confidence intervals to plot."
     c3 <- "# we reccommend using nboot = 10000, although this may take half a day to run"
     pred <- "pred <- predict(dist, nboot = 10L)"
     plot <-  paste0("ssd_plot(data, pred, left = '", input$selectConc %>% make.names, 
-                    "', label = ", code_spp(),
-                    ", color = ", code_group(),
-                    ", hc = ", input$selectHc, "L",
+                    "', label = ", code_label(),
+                    ", color = ", code_colour(),
+                    ", shape = ", code_shape(),
+                    ", hc = ", code_hc(), 
                     ", ci = FALSE, shift_x = ", input$adjustLabel,
                     ", xlab = '", input$xaxis,
                     "', ylab = '", input$yaxis,
