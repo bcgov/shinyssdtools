@@ -12,8 +12,6 @@ library(rhandsontable)
 slackr::slackr_setup(config_file = "./.slackr")
 
 # objects
-messages <- c("hmmmm...", "something's not right...", "there's a problem...", "oh dear...", "bit of an issue...")
-
 tech.info <- "This webpage fits species sensitivity distributions to concentration data. 
               The user is able to select more than one distribution and plot the individual fits. 
 The columns in the goodness of fit table are the distribution (dist), the Anderson-Darling 
@@ -41,14 +39,6 @@ appCSS <- ".mandatory_star { color: red; }"
 
 inline = function (x) {
   tags$div(style = "display:inline-block;", x)
-}
-
-create_error <- function(message, header = "random") {
-  showModal(modalDialog(
-    footer = modalButton("Got it"),
-    title = ifelse(header == "random", sample(messages, 1), header),
-    message
-  ))
 }
 
 hint <- function(x) HTML(paste0("<font color='grey'>", "Hint: ", x, "</font>"))
