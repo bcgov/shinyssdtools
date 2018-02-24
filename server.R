@@ -369,17 +369,16 @@ function(input, output, session) {
   })
   
   output$codeData <- renderUI({
-    if(upload.values$upload_state == "hot" && is.na(read_data()$Concentration[1]))
-      return()
     c1 <- "# read dataset"
     c2 <- "# the file argument of read_csv() assumes the file is in your working directory. You may need to change the file path to correctly read your dataset."
+    c4 <- "# this is the output of dput, which is used to create a data.frame from data entered in interactive spreadsheet"
     hot <- paste0("data <- ", capture.output(dput(clean_data())) %>% glue::collapse())
     upload <- paste0("data <- read_csv(file = '", input$uploadData$name, "')")
     demo <- "data <- ssdca::boron_data"
     c3 <- "# fix unacceptable column names"
     name <- "colnames(data) <- make.names(colnames(data))"
     if(upload.values$upload_state == "hot")
-      return(HTML(paste(c1, hot, c3, name, sep = "<br/>")))
+      return(HTML(paste(c1, c4, hot, c3, name, sep = "<br/>")))
     if(upload.values$upload_state == "upload")
       return(HTML(paste(c1, c2, upload, c3, name, sep = "<br/>")))
     if(upload.values$upload_state == "demo")
