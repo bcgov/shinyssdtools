@@ -138,6 +138,10 @@ fluidPage(
                                 condition = "output.modelAveragePlot",
                                 downloadButton("dlPredPlot", label = "plot .png", 
                                                style = 'padding:4px; font-size:80%'))),
+                              inline(conditionalPanel(
+                                condition = "output.clTable",
+                                downloadButton("dlPredTable", label = "table .csv", 
+                                               style = 'padding:4px; font-size:80%'))),
                               br(), 
                               plotOutput("modelAveragePlot"),
                               br(),
