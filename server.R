@@ -81,8 +81,10 @@ function(input, output, session) {
       return("Concentration values must be positive.")
     if(any(is.infinite(data[[conc]])))
       return("Concentration values must be finite.")
-    if(length(unique(data[[conc]])) < 8)
-      return("There must be at least 8 distinct concentration values.")
+    if(zero_range(data[[conc]]))
+      return("Concentration values must not all be identical.")
+    if(length(data[[conc]]) < 6)
+      return("There must be at least 6 concentration values.")
     if(is.null(dist))
       return("At least one distribution must be selected.")
     ""
