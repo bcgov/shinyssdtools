@@ -263,9 +263,9 @@ function(input, output, session) {
       theme(panel.border = element_blank(), 
             panel.grid.major = element_blank(),  
             panel.grid.minor = element_blank(), 
-            panel.background = element_rect(fill='white', colour='black'),
+            panel.background = element_rect(fill = NA, colour='black'),
             axis.text = element_text(color = "black"),
-            legend.key = element_rect(fill = "white", colour = "white")) +
+            legend.key = element_rect(fill = NA, colour = NA)) +
       expand_limits(x = get_expandX())
   })
   
