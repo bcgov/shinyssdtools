@@ -114,6 +114,7 @@ function(input, output, session) {
   output$hintFi <- renderText(hint(check_fit()))
   output$hintPr <- renderText(hint(check_pred()))
 
+
   # --- render column choices
   column_names <- reactive({
     names(clean_data())
@@ -151,6 +152,52 @@ function(input, output, session) {
     if(!input$checkHc)
       return('NULL') 
     paste0(input$selectHc, "L")
+  })
+  
+  # --- get values
+  get_width <- reactive({
+    ifelse(input$selectWidth == 0, 1, input$selectWidth)
+  })
+  
+  get_width2 <- reactive({
+    ifelse(input$selectWidth2 == 0, 1, input$selectWidth2)
+  })
+  
+  get_height <- reactive({
+    ifelse(input$selectHeight == 0, 1, input$selectHeight)
+  })
+  
+  get_height2 <- reactive({
+    ifelse(input$selectHeight2 == 0, 1, input$selectHeight2)
+  })
+  
+  get_dpi <- reactive({
+    if(input$selectDpi > 3000)
+      return(3000)
+    if(input$selectDpi == 0)
+      return(1)
+    input$selectDpi
+  })
+  
+  get_dpi2 <- reactive({
+    if(input$selectDpi2 > 3000)
+      return(3000)
+    if(input$selectDpi2 == 0)
+      return(1)
+    input$selectDpi2
+  })
+  
+  get_expandX <- reactive({
+    conc <- input$selectConc
+    data <- clean_data()
+    ifelse(is.na(input$expandX), max(data[[conc]], na.rm = TRUE), input$expandX)
+  })
+  
+  estimate_hc <- reactive({
+    if(input$selectHc == 0 | input$selectHc > 99)
+      return()
+    pred <- predict_hc()
+    pred[pred$percent == input$selectHc, "est"] %>% round(2)
   })
   
   # --- fit distributions
@@ -194,7 +241,7 @@ function(input, output, session) {
     req(input$selectColour)
     req(input$selectLabel)
     req(input$selectShape)
-    
+
     data <- names_data()
     pred <- predict_hc()
     conc <- input$selectConc %>% make.names()
@@ -212,14 +259,14 @@ function(input, output, session) {
                     color = colour, shape = shape, hc = hc, ci = FALSE, 
                     shift_x = input$adjustLabel %>% as.numeric(), 
                     xlab = input$xaxis, ylab = input$yaxis) +
-      ggtitle(input$title)
-  })
-  
-  estimate_hc <- reactive({
-    if(input$selectHc == 0 | input$selectHc > 99)
-      return()
-    pred <- predict_hc()
-    pred[pred$percent == input$selectHc, "est"] %>% round(2)
+      ggtitle(input$title) +
+      theme(panel.border = element_blank(), 
+            panel.grid.major = element_blank(),  
+            panel.grid.minor = element_blank(), 
+            panel.background = element_rect(fill='white', colour='black'),
+            axis.text = element_text(color = "black"),
+            legend.key = element_rect(fill = "white", colour = "white")) +
+      expand_limits(x = get_expandX())
   })
   
   # --- get confidence intervals
@@ -286,6 +333,16 @@ function(input, output, session) {
                 selected = "-none-")
   })
   
+  output$expandX <- renderUI({
+    numericInput('expandX', label = 'Expand X-axis', min = 1, value = )
+  })
+  
+  output$expandX <- renderUI({
+    req(input$selectConc)
+    conc <- input$selectConc
+    data <- clean_data()
+    numericInput('expandX', label = 'Expand X-axis', min = 1, value = max(data[[conc]], na.rm = TRUE))
+  })
   
   # --- render fit results
   output$distPlot <- renderPlot({
@@ -331,14 +388,16 @@ function(input, output, session) {
   output$dlFitPlot <- downloadHandler(
     filename = function() {"ssdca_distFitPlot.png"},
     content = function(file) {
-      ggplot2::ggsave(file, plot = plot_dist(), device = "png")
+      ggplot2::ggsave(file, plot = plot_dist(), device = "png",
+                      width = get_width2(), height = get_height2(), dpi = get_dpi2())
     }
   )
   
   output$dlPredPlot <- downloadHandler(
     filename = function() {"ssdca_modelAveragePlot.png"},
     content = function(file) {
-      ggplot2::ggsave(file, plot = plot_model_average(), device = "png")
+      ggplot2::ggsave(file, plot = plot_model_average(), device = "png", 
+                      width = get_width(), height = get_height(), dpi = get_dpi())
     }
   )
   
