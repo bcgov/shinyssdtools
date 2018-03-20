@@ -8,7 +8,9 @@ fluidPage(
     includeCSS("style.css")
   ),                                                                                                                                                                                                                                                                                                             
   # App title ----
-  titlePanel("Fit and Plot Species Sensitivity Distributions"),
+  titlePanel(title = div(img(src = 'bcgov-logo.png',
+                             height = 170/5,
+                             width = 624/5), "  Fit and Plot Species Sensitivity Distributions")),
   actionLink("information", label = "Technical info", icon = icon('info-circle')),
   actionLink("feedback", label = "Feedback", icon = icon("comment")),
   br(), br(),
