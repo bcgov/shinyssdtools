@@ -12,6 +12,18 @@ div.outer {
   padding: 0;
 }
 
+body{
+  	font-family: Myriad-Pro, Calibri, Arial, 'sans serif';
+	color: #494949;
+	font-size: 13px;
+}
+
+ #data {
+   background-color: white;
+ }
+ 
+
+
 /* Customize fonts */
   body, label, input, button, select { 
     font-family: 'Helvetica Neue', Helvetica;
@@ -44,7 +56,32 @@ left: 10px;
 font-size: 12px;
 }
 
-/* If not using map tiles, show a white background */
-  .leaflet-container {
-    background-color: white !important;
-  }
+#titleHead {	
+	background-color: #003366;
+	color: #fff;
+    	text-align: center;
+}
+
+#note {
+  	padding: 15px;
+}
+
+
+ #information {background-color: white;
+   	padding: 20px;
+    	text-align: center;
+
+        color: #245269;
+ }
+ 
+ #feedback {background-color: white;
+    	text-align: center;
+
+        color: #245269;
+ }
+ 
+ h5, a{
+   color: #245269;
+ }
+ 
+ 

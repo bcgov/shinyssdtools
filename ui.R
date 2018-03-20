@@ -2,21 +2,23 @@
 fluidPage(
   shinyjs::useShinyjs(),
   # shinythemes::themeSelector(),
-  shinyjs::inlineCSS(appCSS),
+  # shinyjs::inlineCSS(appCSS),
   tags$head(
     # Include custom CSS
     includeCSS("style.css")
   ),                                                                                                                                                                                                                                                                                                             
   # App title ----
-  titlePanel(title = div(img(src = 'bcgov-logo.png',
-                             height = 170/5,
-                             width = 624/5), "  Fit and Plot Species Sensitivity Distributions")),
+  div(id = 'titleHead', titlePanel(
+                 title = div(img(src = 'bc_gov_logo_transparent.png',
+                                 height = 305/3,
+                                 width = 645/3), "  Fit and Plot Species Sensitivity Distributions"))),
+  br(),
   actionLink("information", label = "Technical info", icon = icon('info-circle')),
   actionLink("feedback", label = "Feedback", icon = icon("comment")),
   br(), br(),
   tabsetPanel(type = "tabs",
               tabPanel(title = span(tagList(icon("table"), "1. Data")),
-                       fluidRow(helpText("   Note: the app is designed to handle one chemical at a time. Each species should not have more than one concentration value."),
+                       fluidRow(div(id = 'note', helpText("Note: the app is designed to handle one chemical at a time. Each species should not have more than one concentration value.")),
                                 
                                 column(4,
                                        h5("Choose one of the following options:"),
@@ -62,7 +64,7 @@ fluidPage(
                        fluidRow(
                          column(4,
                                 br(),
-                                wellPanel(
+                                wellPanel(div(id = 'wellfit', 
                                   uiOutput('selectConc'),
                                   selectizeInput('selectDist', 
                                                  label = label_mandatory("Select distributions to fit"),
@@ -77,7 +79,7 @@ fluidPage(
                                   h5("Format png"),
                                   inline(numericInput('selectWidth2', label = 'Width', min = 1, max = 20, step = 1, value = 8)),
                                   inline(numericInput('selectHeight2', label = 'Height', min = 1, max = 20, step = 1, value = 6)),
-                                  inline(numericInput('selectDpi2', label = 'Dpi', min = 50, max = 3000, step = 50, value = 300)))),
+                                  inline(numericInput('selectDpi2', label = 'Dpi', min = 50, max = 3000, step = 50, value = 300))))),
                          column(8,
                                 br(),
                                 conditionalPanel(
