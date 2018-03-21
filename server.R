@@ -563,7 +563,7 @@ function(input, output, session) {
                  showModal(modalDialog(
                    footer = modalButton("OK"),
                    title = "",
-                   "Thanks! your message has been sent to the administrator."
+                   "Thanks! Your message was successfully submitted."
                  ))})
 }
 

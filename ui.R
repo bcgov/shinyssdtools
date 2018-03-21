@@ -210,7 +210,8 @@ fluidPage(
               tabPanel(title = span(tagList(icon("comment"), "Feedback")),
                        br(),
                                                            div(id = 'feedbackForm', 
-                                                               h5("You can use this to report a bug, request a feature, or simply to provide some feedback. \nThe message is sent directly to the administrator's slack channel."), 
+                                                               HTML("You can use this to report a bug, request a feature, or simply to provide some feedback. The message is sent directly to the administrator's slack channel."),
+                                                               br(),
                                                                wellPanel(textInput("name", "Name (optional):", width = "30%"),
                                                            textInput("email", "Email (optional):", width = "30%"),
                                                            textInput("comment", label_mandatory("Comment:"), width = "100%"),
@@ -218,7 +219,7 @@ fluidPage(
               tabPanel(title = span(tagList(icon("info-circle"), "Info")),
                        br(),
                        wellPanel(
-                         p(tech.info)
+                         HTML(tech.info)
                        ))
               
   ))

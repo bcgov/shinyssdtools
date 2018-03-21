@@ -21,64 +21,19 @@ body{
 #codes{
   background-color:#EEEEEE;
   font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New;
-  font-size: 11px;
+  font-size: 12px;
+  font-weight: 200;
 }
 
 #feedbackForm{
   max-width: 500px;
 }
 
-/* Customize fonts */
-  body, label, input, button, select { 
-    font-family: 'Helvetica Neue', Helvetica;
-    font-weight: 200;
-    /*color: #F0F0F0;*/
-  }
-h1, h2, h3, h4 { font-weight: 200; }
- h5 {
-   font-weight: 300;
-   color: #494949;
- }
- 
- a {
-  font-weight: 300;
-   color:  #5475A7;
-   font-size: 15px;
- }
-
-#demoData {
-     font-size: 13px;
-
-}
-#controls {
-/* Appearance */
-  background-color: white;
-padding: 0 20px 20px 20px;
-cursor: move;
-/* Fade out while not hovering */
-  opacity: 0.6;
-zoom: 0.9;
-transition: opacity 500ms 1s;
-}
-#controls:hover {
-/* Fade in while hovering */
-  opacity: 0.9;
-transition-delay: 0;
-}
-
-/* Position and style citation */
-  #cite {
-  position: absolute;
-bottom: 10px;
-left: 10px;
-font-size: 12px;
-}
-
 #titleHead {	
 	background-color: #003366;
 	color: #fff;
   text-align: center;
-  font-weight: 200;
+  font-weight: 100;
   font-size: 10px;
 }
 
@@ -90,16 +45,44 @@ font-size: 12px;
  #information {background-color: white;
    	padding: 15px;
     	text-align: center;
-
         color: #2B4777;
  }
  
- #feedback {background-color: white;
+ #feedback {
+   background-color: white;
     	text-align: center;
-
         color: #2B4777;
  }
  
+/* Customize fonts */
+  body, label, input, button, select { 
+    font-family: Myriad-Pro, Calibri, Arial, 'sans serif';
+    font-weight: 100;
+    	color: #494949;
+    		font-size: 13px;
+
+
+    /*color: #F0F0F0;*/
+  }
+h1, h2, h3, h4 { font-weight: 100; }
+ h5 {
+   font-weight: 200;
+   color: #5475A7;
+ }
+ 
+ a {
+  font-weight: 200;
+   color:  #5475A7;
+   font-size: 15px;
+ }
+
+#demoData {
+     font-size: 13px;
+}
+
+
+
+
 
 
  
