@@ -12,24 +12,19 @@ fluidPage(
                  title = div(img(src = 'bc_gov_logo_transparent.png',
                                  height = 305/3,
                                  width = 645/3), "  Fit and Plot Species Sensitivity Distributions"))),
-  br(),
-  actionLink("information", label = "Technical info", icon = icon('info-circle')),
-  actionLink("feedback", label = "Feedback", icon = icon("comment")),
   br(), br(),
   tabsetPanel(type = "tabs",
               tabPanel(title = span(tagList(icon("table"), "1. Data")),
-                       fluidRow(
-                                
+                       fluidRow(br(),
                                 column(4,
                                        h5("Choose one of the following options:"),
-                                       hr(),
                                        inline(p("1. Use ")),
                                        inline(actionLink("demoData", label = "boron dataset", icon = icon('table'))),
                                        inline(actionLink('infoDemo', icon = icon('info-circle'), label = NULL)),
                                        shinyjs::hidden(div(id = "infoDemoText", 
                                                            helpText("This can be used to demo the app or view a dataset that 'works'."))),
                                        # upload csv with data
-                                       hr(),
+                                       br(),
                                        inline(p("2. Upload a csv file")),
                                        inline(actionLink("infoUpload", icon = icon("info-circle"), label = NULL)),
                                        shinyjs::hidden(div(id = "infoUploadText", 
@@ -41,7 +36,6 @@ fluidPage(
                                                  accept = c('.csv')),
                                        
                                        # input data in DataTable
-                                       hr(),
                                        inline(p("3. Fill out table below")),
                                        inline(actionLink("infoHands", icon = icon('info-circle'), label = NULL)),
                                        shinyjs::hidden(div(id = "infoHandsText", 
@@ -53,11 +47,9 @@ fluidPage(
                                                                     with at least 8 distinct, positive, non-missing, numeric values.",
                                                                     "Species and Group are optional and may be used to format plot outputs.",
                                                                     "If the table is behaving unexpectedly, please reload the website."))),
-                                       rHandsontableOutput("hot"),
-                                       hr()),
+                                       rHandsontableOutput("hot")),
                                 column(8,
                                        h5("Preview chosen dataset:"),
-                                       hr(),
                                        wellPanel(dataTableOutput('viewUpload', width = 600), 
                                                  style = "overflow-x:scroll; max-height: 600px; max-width: 640px"))),
                        div(id = 'note', helpText("Note: the app is designed to handle one chemical at a time. Each species should not have more than one concentration value."))),
@@ -213,7 +205,19 @@ fluidPage(
                          uiOutput('codeSavePred'),
                          br(),
                          uiOutput('codePredCl'))
-              )
+              ),
+              tabPanel(title = span(tagList(icon("comment"), "Feedback")),
+                       br(),
+                       h5("You can use this to report a bug, request a feature, or simply to provide some feedback. \nThe message is sent directly to the administrator's slack channel."), 
+                                                           wellPanel(textInput("name", "Name (optional):", width = "30%"),
+                                                           textInput("email", "Email (optional):", width = "30%"),
+                                                           textInput("comment", label_mandatory("Comment:"), width = "100%"),
+                                                           actionButton("submit_feedback", "Submit"))),
+              tabPanel(title = span(tagList(icon("info-circle"), "Info")),
+                       br(),
+                       wellPanel(
+                         p(tech.info)
+                       ))
               
   ))
 

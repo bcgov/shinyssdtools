@@ -555,26 +555,11 @@ function(input, output, session) {
   })
   
   # --- feedback
-  observeEvent(input$feedback,
-               {showModal(modalDialog(title = "You can use this to report a bug, request a feature, or simply to provide some feedback. The message is sent to the administrator.", 
-                                      size = "m", easyClose = TRUE,
-                                      footer = modalButton("Never mind"),
-                                      textInput("name", "Name (optional):", width = "30%"),
-                                      textInput("email", "Email (optional):", width = "30%"),
-                                      textInput("comment", label_mandatory("Comment:"), width = "100%"),
-                                      actionButton("submit_feedback", "Submit")))})
-  
   observeEvent(input$submit_feedback,
                {withProgress(value = 0.2, "Sending...", {
                  slackr::slackr(ssdca_shiny_feedback())
                  removeModal()})
                  })
-  
-  # --- information
-  observeEvent(input$information,
-               {showModal(modalDialog(tech.info,
-                                      size = "m", easyClose = T,
-                                      footer = modalButton("Got it")))})
 }
 
 
