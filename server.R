@@ -556,10 +556,15 @@ function(input, output, session) {
   
   # --- feedback
   observeEvent(input$submit_feedback,
-               {withProgress(value = 0.2, "Sending...", {
+               {               req(input$comment)
+                 withProgress(value = 0.2, "Sending...", {
                  slackr::slackr(ssdca_shiny_feedback())
-                 removeModal()})
                  })
+                 showModal(modalDialog(
+                   footer = modalButton("OK"),
+                   title = "",
+                   "Thanks! your message has been sent to the administrator."
+                 ))})
 }
 
 

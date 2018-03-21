@@ -191,7 +191,8 @@ fluidPage(
                        br(),
                        helpText("Copy and paste code below to reproduce results. Code is added as functions are executed within the app.",
                                 "(e.g., code for generating confidence limits will appear after 'Get CL' is clicked.)"),
-                       wellPanel(
+                       div(id = 'codes',
+                           wellPanel(
                          uiOutput('codeHead'),
                          br(),
                          uiOutput('codeData'),
@@ -205,14 +206,15 @@ fluidPage(
                          uiOutput('codeSavePred'),
                          br(),
                          uiOutput('codePredCl'))
-              ),
+              )),
               tabPanel(title = span(tagList(icon("comment"), "Feedback")),
                        br(),
-                       h5("You can use this to report a bug, request a feature, or simply to provide some feedback. \nThe message is sent directly to the administrator's slack channel."), 
-                                                           wellPanel(textInput("name", "Name (optional):", width = "30%"),
+                                                           div(id = 'feedbackForm', 
+                                                               h5("You can use this to report a bug, request a feature, or simply to provide some feedback. \nThe message is sent directly to the administrator's slack channel."), 
+                                                               wellPanel(textInput("name", "Name (optional):", width = "30%"),
                                                            textInput("email", "Email (optional):", width = "30%"),
                                                            textInput("comment", label_mandatory("Comment:"), width = "100%"),
-                                                           actionButton("submit_feedback", "Submit"))),
+                                                           actionButton("submit_feedback", "Submit")))),
               tabPanel(title = span(tagList(icon("info-circle"), "Info")),
                        br(),
                        wellPanel(
