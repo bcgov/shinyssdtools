@@ -18,20 +18,28 @@ body{
 	font-size: 13px;
 }
 
- #data {
-   background-color: white;
- }
- 
-
-
 /* Customize fonts */
   body, label, input, button, select { 
     font-family: 'Helvetica Neue', Helvetica;
     font-weight: 200;
     /*color: #F0F0F0;*/
   }
-h1, h2, h3, h4 { font-weight: 400; }
+h1, h2, h3, h4 { font-weight: 200; }
+ h5 {
+   font-weight: 300;
+   color: #2B4777;
+ }
+ 
+ a {
+  font-weight: 300;
+   color:  #5475A7;
+   font-size: 15px;
+ }
 
+#demoData {
+     font-size: 13px;
+
+}
 #controls {
 /* Appearance */
   background-color: white;
@@ -59,7 +67,9 @@ font-size: 12px;
 #titleHead {	
 	background-color: #003366;
 	color: #fff;
-    	text-align: center;
+  text-align: center;
+  font-weight: 200;
+  font-size: 10px;
 }
 
 #note {
@@ -68,20 +78,21 @@ font-size: 12px;
 
 
  #information {background-color: white;
-   	padding: 20px;
+   	padding: 15px;
     	text-align: center;
 
-        color: #245269;
+        color: #2B4777;
  }
  
  #feedback {background-color: white;
     	text-align: center;
 
-        color: #245269;
+        color: #2B4777;
  }
  
- h5, a{
-   color: #245269;
- }
+
+
+ 
+
  
  

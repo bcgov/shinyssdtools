@@ -472,10 +472,17 @@ function(input, output, session) {
                     ", color = ", code_colour(),
                     ", shape = ", code_shape(),
                     ", hc = ", code_hc(), 
-                    ", ci = FALSE, shift_x = ", input$adjustLabel,
+                    ", ci = FALSE, <br/>shift_x = ", input$adjustLabel,
                     ", xlab = '", input$xaxis,
                     "', ylab = '", input$yaxis,
-                    "') + ggtitle('", input$title, "')")
+                    "') + <br/> ggtitle('", input$title, 
+                    "') +<br/> theme(panel.border = element_blank(),<br/> 
+                    panel.grid.major = element_blank(),<br/>  
+                    panel.grid.minor = element_blank(),<br/> 
+                    panel.background = element_rect(fill = NA, colour='black'),<br/>
+                    axis.text = element_text(color = 'black'),<br/>
+                    legend.key = element_rect(fill = NA, colour = NA)) +<br/>
+                    expand_limits(x = ", get_expandX(), ")")
     HTML(paste(c1, c2, c3, pred, plot, sep = "<br/>"))
   })
   
@@ -488,6 +495,32 @@ function(input, output, session) {
     conf <- paste0("ssd_hc(dist, hc = ", input$selectHc, "L",
     ", nboot = ", input$bootSamp %>% gsub(',', '', .) %>% as.integer, "L)") 
     HTML(paste(c1, c2, conf, sep = "<br/>"))
+  })
+  
+  output$codeSaveFit <- renderUI({
+    req(check_fit() == "")
+    c1 <- "# save plot"
+    c2 <- "# width and height are in inches, dpi (dots per inch) sets resolution"
+    save <- paste0("ggsave('fit_dist_plot.png', 
+                   width = ", get_width2(), 
+                   " , height = ", get_height2(), 
+                   " , dpi = ", get_dpi2(),
+                   ")")
+    HTML(paste(c1, c2, save, sep = "<br/>"))
+  })
+  
+  output$codeSavePred <- renderUI({
+    req(check_fit() == "")
+    req(check_pred() == "")
+    req(input$selectLabel)
+    c1 <- "# save plot"
+    c2 <- "# width and height are in inches, dpi (dots per inch) sets resolution"
+    save <- paste0("ggsave('model_average_plot.png', 
+                   width = ", get_width(), 
+                   " , height = ", get_height(), 
+                   " , dpi = ", get_dpi(),
+                   ")")
+    HTML(paste(c1, c2, save, sep = "<br/>"))
   })
   
   ########### Observers --------------------

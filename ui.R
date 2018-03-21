@@ -18,7 +18,7 @@ fluidPage(
   br(), br(),
   tabsetPanel(type = "tabs",
               tabPanel(title = span(tagList(icon("table"), "1. Data")),
-                       fluidRow(div(id = 'note', helpText("Note: the app is designed to handle one chemical at a time. Each species should not have more than one concentration value.")),
+                       fluidRow(
                                 
                                 column(4,
                                        h5("Choose one of the following options:"),
@@ -59,12 +59,13 @@ fluidPage(
                                        h5("Preview chosen dataset:"),
                                        hr(),
                                        wellPanel(dataTableOutput('viewUpload', width = 600), 
-                                                 style = "overflow-x:scroll; max-height: 600px; max-width: 640px")))),
+                                                 style = "overflow-x:scroll; max-height: 600px; max-width: 640px"))),
+                       div(id = 'note', helpText("Note: the app is designed to handle one chemical at a time. Each species should not have more than one concentration value."))),
               tabPanel(title = span(tagList(icon("stats", lib = "glyphicon"), "2. Fit")),
                        fluidRow(
                          column(4,
                                 br(),
-                                wellPanel(div(id = 'wellfit', 
+                                wellPanel(
                                   uiOutput('selectConc'),
                                   selectizeInput('selectDist', 
                                                  label = label_mandatory("Select distributions to fit"),
@@ -79,7 +80,7 @@ fluidPage(
                                   h5("Format png"),
                                   inline(numericInput('selectWidth2', label = 'Width', min = 1, max = 20, step = 1, value = 8)),
                                   inline(numericInput('selectHeight2', label = 'Height', min = 1, max = 20, step = 1, value = 6)),
-                                  inline(numericInput('selectDpi2', label = 'Dpi', min = 50, max = 3000, step = 50, value = 300))))),
+                                  inline(numericInput('selectDpi2', label = 'Dpi', min = 50, max = 3000, step = 50, value = 300)))),
                          column(8,
                                 br(),
                                 conditionalPanel(
@@ -205,7 +206,11 @@ fluidPage(
                          br(),
                          uiOutput('codeFit'),
                          br(),
+                         uiOutput('codeSaveFit'),
+                         br(),
                          uiOutput('codePredPlot'),
+                         br(),
+                         uiOutput('codeSavePred'),
                          br(),
                          uiOutput('codePredCl'))
               )
