@@ -25,8 +25,8 @@ To cite package ‘ssdtools’ in publications use:<br/>
 Joe Thorley and Carl Schwarz (2018). ssdtools: Species Sensitivity
 Distributions. R package version 0.0.1.9002.<br/><br/>
 To cite the web app use:<br/>
-Seb Dalgarno (2018) ssdtools-shiny: A shiny web app to analyse species sensitivity distributions. 
-Prepared by Poisson Consulting for the Ministry of the Environment, British Columbia. https://poissonconsulting.shinyapps.io/ssdca-shiny/"
+Seb Dalgarno (2018) ssdtools: A shiny web app to analyse species sensitivity distributions. 
+Prepared by Poisson Consulting for the Ministry of the Environment, British Columbia. https://poissonconsulting.shinyapps.io/ssdtools/"
 
 extra.dists <- "pareto"
 default.dists <- c("lnorm", "llog", "gompertz", "lgumbel", "gamma", "weibull")
