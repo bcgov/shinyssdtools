@@ -421,7 +421,7 @@ function(input, output, session) {
   output$codeHead <- renderUI({
     if(upload.values$upload_state == "hot" && is.na(read_data()$Concentration[1]))
       return()
-    l1 <- "library(ssdca)"
+    l1 <- "library(ssdtools)"
     l2 <- "library(ggplot2)"
     if(upload.values$upload_state == "upload") {l3 <- "library(readr)"} else {l3 <- NULL}
     HTML(paste(l1, l2, l3, sep = "<br/>"))
@@ -433,7 +433,7 @@ function(input, output, session) {
     c4 <- "# this is the output of dput, which is used to create a data.frame from data entered in interactive spreadsheet"
     hot <- paste0("data <- ", capture.output(dput(clean_data())) %>% glue::collapse())
     upload <- paste0("data <- read_csv(file = '", input$uploadData$name, "')")
-    demo <- "data <- ssdca::boron_data"
+    demo <- "data <- ssdtools::boron_data"
     c3 <- "# fix unacceptable column names"
     name <- "colnames(data) <- make.names(colnames(data))"
     if(upload.values$upload_state == "hot")
