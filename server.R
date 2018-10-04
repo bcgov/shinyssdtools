@@ -42,7 +42,6 @@ function(input, output, session) {
       return(hot_data())
     } })
   
-  
   clean_data <- reactive({
     data <- read_data()
     if(length(data)) {
@@ -52,7 +51,6 @@ function(input, output, session) {
       data <- data[!(rowSums(is.na(data) | data == "") == ncol(data)),]
     }
       data
-      
     })
   
   # deal with unacceptable coumn names
@@ -566,6 +564,7 @@ function(input, output, session) {
                    "Thanks! Your message was successfully submitted."
                  ))})
 }
+
 
 
 

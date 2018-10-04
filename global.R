@@ -5,7 +5,6 @@ library(slackr)
 library(magrittr)
 library(DT)
 library(ssdca)
-library(shinythemes)
 library(rhandsontable)
 
 # configure slackr
@@ -22,11 +21,11 @@ The prediction is the model averaged (using aicc)
 estimate of the fit. 
 The percent hazard concentration is the concentration of the chemical 
 which is predicted to affect that percent of the species tested.<br/><br/>
-To cite package ‘ssdca’ in publications use:<br/>
-Joe Thorley and Carl Schwarz (2018). ssdca: Species Sensitivity
-Distributions. R package version 0.0.0.9025.<br/><br/>
+To cite package ‘ssdtools’ in publications use:<br/>
+Joe Thorley and Carl Schwarz (2018). ssdtools: Species Sensitivity
+Distributions. R package version 0.0.1.9002.<br/><br/>
 To cite the web app use:<br/>
-Seb Dalgarno (2018) ssdca-shiny: A shiny web app to analyse species sensitivity distributions. 
+Seb Dalgarno (2018) ssdtools-shiny: A shiny web app to analyse species sensitivity distributions. 
 Prepared by Poisson Consulting for the Ministry of the Environment, British Columbia. https://poissonconsulting.shinyapps.io/ssdca-shiny/"
 
 extra.dists <- "pareto"
