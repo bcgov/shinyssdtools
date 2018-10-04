@@ -1,2 +1,2 @@
-# ssdca-shiny
-Shiny interface to ssdca R package
+# ssdtools-shiny
+Shiny interface to ssdtools R package
