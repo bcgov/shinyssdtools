@@ -421,10 +421,11 @@ function(input, output, session) {
   output$codeHead <- renderUI({
     if(upload.values$upload_state == "hot" && is.na(read_data()$Concentration[1]))
       return()
-    l1 <- "library(ssdtools)"
-    l2 <- "library(ggplot2)"
-    if(upload.values$upload_state == "upload") {l3 <- "library(readr)"} else {l3 <- NULL}
-    HTML(paste(l1, l2, l3, sep = "<br/>"))
+    l1 <- "install.packages('ssdtools')"
+    l2 <- "library(ssdtools)"
+    l3 <- "library(ggplot2)"
+    if(upload.values$upload_state == "upload") {l4 <- "library(readr)"} else {l4 <- NULL}
+    HTML(paste(l1, l2, l3, l4, sep = "<br/>"))
   })
   
   output$codeData <- renderUI({
