@@ -1,0 +1,45 @@
+---
+title: "ssdtools App User Guide"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This app fits species sensitivity distributions to concentration data. The user is able to select more than one distribution and plot the individual fits. The app is built from the R package [ssdtools](https://github.com/bcgov/ssdtools), and shares the same functionality.
+
+Hint: Find and click the info icons throughout the app to find more information on a particular input.
+
+### Step 1: Provide data in tab `1. Data`
+
+Data should be provided for **only one chemical** at a time. Each species should not have more than one concentration value. You must provide a table with at least one column containing concentration values. There should be at least 8 distinct, positive, non-missing values.  
+You may also include species and group columns, which may be used to label and color plot output, respectively.  
+Any additional columns are accepted but are not used within the app.
+
+For example:
+
+```{r data-demo, echo=FALSE, message = FALSE}
+library(knitr)
+library(dplyr)
+library(kableExtra)
+df <- ssdtools::boron_data[1:8,] %>% select(Concentration = Conc, Species, Group)
+kable(df) %>% kable_styling("bordered", full_width = FALSE, font_size = 11)
+
+```
+
+There are three options to provide data to the app:  
+
+1. Use the **demo Boron dataset**. 
+    - This can be used to simply preview the app functionality on a dataset that 'works'. 
+2. Upload a **csv file**. 
+    - The app does not accept excel formats or text files. If you have an excel file, try exporting a worksheet to csv. 
+3. Fill out the **interactive table**. 
+    - The concentration column must be filled out. Click on a cell to begin data input. Right-click on the table to delete/insert rows or columns. Column names cannot be changed. If the table is behaving unexpectedly, please reload the website.
+    
+    
+```{r data-plot, echo=FALSE, results="asis"}
+
+```
+
+The columns in the goodness of fit table are the distribution (dist), the Anderson-Darling statistic (ad), the Kolmogorov-Smirnov statistic (ks), the Cramer-von Mises statistic (cvm), Akaike’s Information Criterion (aic), Akaike’s Information Criterion corrected for sample size (aicc), Bayesian Information Criterion (bic), the AICc difference (delta) and the AICc based Akaike weight (weight). The prediction is the model averaged (using aicc) estimate of the fit. The percent hazard concentration is the concentration of the chemical which is predicted to affect that percent of the species tested.
