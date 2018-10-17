@@ -23,8 +23,7 @@ This app **fits species sensitivity distributions to concentration data**. The a
 * Data should be provided for **only one chemical** at a time. 
 * Each species should not have more than one concentration value. 
 * Data must have **at least one column** containing **at least 8 distinct, positive, non-missing concentration values**. 
-* Optionally, **species and group** columns can be included, which are used to label and color plot output, respectively.  
-* Any additional columns are accepted but are not used by any functions.
+* Optionally, **species** and **group** columns can be included, which are used to label and color plot output, respectively.  
 
 ```{r data-demo, echo=FALSE, message = FALSE}
 library(knitr)
@@ -34,14 +33,16 @@ df <- ssdtools::boron_data[1:8,] %>% dplyr::select(Concentration = Conc, Species
 kable(df) %>% kable_styling("bordered", full_width = FALSE, font_size = 11)
 ```
 
+* Any additional columns are accepted but are not used by any functions.
+
 There are three options to provide data to the app:  
 
 1. **Use the demo Boron dataset**. 
     - Quickly preview the app functionality on a dataset that 'works'. 
 2. **Upload a csv file**. 
-    - Excel file formats are not accepted. If you have an excel file, try exporting a worksheet to csv. 
+    - Excel file formats are not accepted. If you have an excel file, export a worksheet to csv. 
 3. **Fill out the interactive table**. 
-    - Species and Group columns are optional. Click on a cell to begin entering data. Right-click on the table to delete/insert rows or columns. Column names cannot be changed. 
+    - Click on a cell to begin entering data. Right-click on the table to delete/insert rows or columns. Column names cannot be changed.  
     
 Finally, preview the data provided in the table on the right hand side of the tab.  
 \
@@ -58,7 +59,7 @@ Finally, preview the data provided in the table on the right hand side of the ta
 
 1. Specify **which column contains concentration values**. The app attempts to guess which column contains concentration values based on data column names. This may need to be corrected.
 2. **Select or deselect distributions to fit**. The outputs may take a moment to update.
-3. Format the plot using inputs in the sidebar and **download plot and goodness of fit table** as png and csv files, respectively.
+3. Format the plot using inputs in the sidebar and **download plot** and **goodness of fit table** as a png and csv file, respectively.
 \
 
  <center>
@@ -74,6 +75,9 @@ The columns in the goodness of fit table are the distribution (dist), the Anders
 ### Step 3: Predict hazard concentration
 1. Select the **threshold % species affected** to calculate **estimated hazard concentration**. This affects the plot (dotted line), text displayed below the plot and calculations of confidence limits.
 2. Select the number of **bootstrap samples used to calculate confidence limits**. The recommended number of samples is 10,000, although this can take around 3 minutes to process. Select lower number of bootstrap samples to reduce processing time.  
+
+# if the species labels are off the plot, ...
+
 \
 
 ```{r cl-time, echo=FALSE, message = FALSE}
@@ -83,7 +87,7 @@ tibble(`Bootstrap Samples` = c(10000, 5000, 1000, 500),
   kable_styling("bordered", full_width = FALSE, font_size = 11)
 ```
 3. Since confidence limits take time to calculate, they are not calculated automatically; you must press the `Get CL` button.
-4. **Format plot** using various inputs in sidebar and **download plot and table** as png and csv file, respectively.
+4. **Format plot** using various inputs in sidebar and **download plot and table** as png and csv file, respectively. If the species labels are not fully visible within the plot, adjust the x-axis limits.
 \
 
  <center>
@@ -104,6 +108,3 @@ Copy R code to reproduce outputs programmatically. Code is dynamically generated
 ![Get R code to reproduce results programmatically in tab `R Code`](https://media.giphy.com/media/XIgsL03rRnEfn8nNas/giphy.gif)
 
 </center>
-
-
-
