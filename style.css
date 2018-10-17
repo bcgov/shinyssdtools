@@ -80,6 +80,12 @@ h1, h2, h3, h4 { font-weight: 100; }
      font-size: 13px;
 }
 
+.wellpanel {
+  overflow-x:scroll; 
+  max-height: 700px; 
+  background-color: #f9f9f9;
+}
+
 /*********************** navbar css ****************************/
 .navbar .navbar-nav {float: right}
 

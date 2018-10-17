@@ -127,7 +127,7 @@ ui = tagList(shinyjs::useShinyjs(),
                                                                  inline(numericInput('selectWidth', label = 'Width', min = 1, max = 20, step = 1, value = 8)),
                                                                  inline(numericInput('selectHeight', label = 'Height', min = 1, max = 20, step = 1, value = 6)),
                                                                  inline(numericInput('selectDpi', label = 'Dpi', min = 50, max = 3000, step = 50, value = 600)),
-                                                                 uiOutput('expandX'))))),
+                                                                 uiOutput('expandX')))), class = "wellpanel"),
                                     column(8,
                                            br(),
                                            conditionalPanel(
