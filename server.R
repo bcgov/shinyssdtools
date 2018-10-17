@@ -379,6 +379,11 @@ function(input, output, session) {
          paste0("<b>", estimate_time(), "</b>"))
   })
   
+  # --- render UI
+  onclick('linkFormatPredict', toggle('divFormatPredict', anim = TRUE, animType = "slide", time = 0.2))
+  onclick('linkPngFormatPredict', toggle('divPngFormatPredict', anim = TRUE, animType = "slide", time = 0.2))
+  onclick('linkFormatFit', toggle('divFormatFit', anim = TRUE, animType = "slide", time = 0.2))
+  
   # --- download handlers
   output$dlFitPlot <- downloadHandler(
     filename = function() {"ssdca_distFitPlot.png"},
