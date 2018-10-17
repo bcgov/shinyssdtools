@@ -4,8 +4,9 @@ library(readr)
 library(slackr)
 library(magrittr)
 library(DT)
-library(ssdca)
+library(ssdtools)
 library(rhandsontable)
+library(shinyjs)
 
 # configure slackr
 slackr::slackr_setup(config_file = "./.slackr")
