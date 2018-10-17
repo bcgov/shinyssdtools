@@ -194,21 +194,21 @@ ui = tagList(shinyjs::useShinyjs(),
                                         br(),
                                         uiOutput('codePredCl'))
                                   )),
-                         tabPanel(title = span(tagList(icon("comment"), "Feedback")),
-                                  br(),
-                                  div(id = 'feedbackForm', 
-                                      HTML("You can use this to report a bug, request a feature, or simply to provide some feedback. The message is sent directly to the administrator's slack channel."),
-                                      br(),
-                                      wellPanel(textInput("name", "Name (optional):", width = "50%"),
-                                                textInput("email", "Email (optional):", width = "50%"),
-                                                textAreaInput("comment", label_mandatory("Comment:"), width = "100%", height = '100px'),
-                                                actionButton("submit_feedback", "Submit")))),
-                         tabPanel(title = span(tagList(icon("info-circle"), "Info")),
+                         tabPanel(title = "About",
                                   br(),
                                   wellPanel(
                                     HTML("This is a draft and may change at some point in the future.<br><br>",
-                                         tech.info)
-                                  ))
+                                         tech.info)),
+                                    br(),
+                                  p(HTML("If you have any questions or concerns you can"), actionLink('contactUs', label = 'message us.')),
+                                  shinyjs::hidden(div(id = 'feedbackForm',
+                                        br(),
+                                        wellPanel(textInput("name", "Name (optional):", width = "50%"),
+                                                  textInput("email", "Email (optional):", width = "50%"),
+                                                  textAreaInput("comment", label_mandatory("Comment:"), width = "100%", height = '100px'),
+                                                  actionButton("submit_feedback", "Submit"))))),
+                         tabPanel(title = "User Guide",
+                                  includeHTML('user-guide/user-guide.html'))
              ))
 
 

@@ -1,6 +1,3 @@
-# change max file size upload to 10mb
-options(shiny.maxRequestSize = 10*1024^2)
-
 function(input, output, session) {
   
   ########### Reactives --------------------
@@ -554,17 +551,37 @@ function(input, output, session) {
   })
   
   # --- feedback
-  observeEvent(input$submit_feedback,
-               {               req(input$comment)
-                 withProgress(value = 0.2, "Sending...", {
-                 slackr::slackr(ssdca_shiny_feedback())
-                 })
-                 showModal(modalDialog(
-                   footer = modalButton("OK"),
-                   title = "",
-                   "Thanks! Your message was successfully submitted."
-                 ))})
+  observeEvent(input$contactUs, {
+    shinyjs::toggle("feedbackForm", anim = TRUE, animType = "slide", time = 0.2)
+  })
+  
+  create_feedback <- reactive({
+    data.frame(App = "ssdtools",
+               Name = input$name,
+               Email = input$email,
+               Comment = input$comment)
+  })
+  
+  observe({
+    shinyjs::toggleState("submit_feedback", condition = input$comment != "")
+  })
+  
+  observeEvent(input$submit_feedback, {   
+    progress <- shiny::Progress$new()
+    on.exit(progress$close())
+    progress$set(message = "Sending message...", value = 0.5)  
+    create_feedback() %>% slackr::slackr()
+    showModal(modalDialog(
+      footer = modalButton("OK"),
+      title = "",
+      "Thanks! Your message was successfully submitted."
+    ))
+    shinyjs::reset('feedbackForm')
+    shinyjs::hide('feedbackForm')})
 }
+  
+
+
 
 
 
