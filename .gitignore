@@ -11,3 +11,6 @@ poisson-shiny-mail-auth.json
 .slackr
 
 *.DS_Store
+*.gif
+*.html
+*.md
