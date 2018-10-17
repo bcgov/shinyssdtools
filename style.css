@@ -68,12 +68,13 @@ h1, h2, h3, h4 { font-weight: 100; }
  h5 {
    font-weight: 200;
    color: #5475A7;
+   font-size: 13px;
  }
  
  a {
   font-weight: 200;
    color:  #5475A7;
-   font-size: 15px;
+   font-size: 13px;
  }
 
 #demoData {
@@ -83,7 +84,6 @@ h1, h2, h3, h4 { font-weight: 100; }
 .wellpanel {
   overflow-x:scroll; 
   max-height: 700px; 
-  background-color: #f9f9f9;
 }
 
 /*********************** navbar css ****************************/
