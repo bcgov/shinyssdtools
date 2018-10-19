@@ -237,6 +237,7 @@ function(input, output, session) {
     req(input$selectLabel)
     req(input$selectShape)
 
+    print(input$selectColour)
     data <- names_data()
     pred <- predict_hc()
     conc <- input$selectConc %>% make.names()
@@ -261,7 +262,8 @@ function(input, output, session) {
             panel.background = element_rect(fill = NA, colour='black'),
             axis.text = element_text(color = "black"),
             legend.key = element_rect(fill = NA, colour = NA)) +
-      expand_limits(x = get_expandX())
+      expand_limits(x = input$xMax) + 
+      scale_color_brewer(palette = input$selectPalette)
   })
   
   # --- get confidence intervals
@@ -328,17 +330,6 @@ function(input, output, session) {
                 selected = "-none-")
   })
   
-  output$expandX <- renderUI({
-    numericInput('expandX', label = 'Expand X-axis', min = 1, value = )
-  })
-  
-  output$expandX <- renderUI({
-    req(input$selectConc)
-    conc <- input$selectConc
-    data <- clean_data()
-    numericInput('expandX', label = 'Expand X-axis', min = 1, value = max(data[[conc]], na.rm = TRUE))
-  })
-  
   # --- render fit results
   output$distPlot <- renderPlot({
     plot_dist()
@@ -383,6 +374,20 @@ function(input, output, session) {
   onclick('linkFormatPredict', toggle('divFormatPredict', anim = TRUE, animType = "slide", time = 0.2))
   onclick('linkPngFormatPredict', toggle('divPngFormatPredict', anim = TRUE, animType = "slide", time = 0.2))
   onclick('linkFormatFit', toggle('divFormatFit', anim = TRUE, animType = "slide", time = 0.2))
+  
+  output$uiXmax <- renderUI({
+    req(input$selectConc)
+    conc <- input$selectConc
+    data <- clean_data()
+    numericInput('xMax', label = 'X-axis max', min = 1, value = max(data[[conc]], na.rm = TRUE))
+  })
+  
+  output$uiXmin <- renderUI({
+    req(input$selectConc)
+    conc <- input$selectConc
+    data <- clean_data()
+    numericInput('xMin', label = 'X-axis min', min = 1, value = min(data[[conc]], na.rm = TRUE))
+  })
   
   # --- download handlers
   output$dlFitPlot <- downloadHandler(
