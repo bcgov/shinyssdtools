@@ -3,7 +3,6 @@ title: ""
 output: 
   html_document:
     toc: true
-    toc_float: true
 ---
 
 ```{r setup, include=FALSE}
@@ -76,8 +75,6 @@ The columns in the goodness of fit table are the distribution (dist), the Anders
 1. Select the **threshold % species affected** to calculate **estimated hazard concentration**. This affects the plot (dotted line), text displayed below the plot and calculations of confidence limits.
 2. Select the number of **bootstrap samples used to calculate confidence limits**. The recommended number of samples is 10,000, although this can take around 3 minutes to process. Select lower number of bootstrap samples to reduce processing time.  
 
-# if the species labels are off the plot, ...
-
 \
 
 ```{r cl-time, echo=FALSE, message = FALSE}
@@ -87,7 +84,17 @@ tibble(`Bootstrap Samples` = c(10000, 5000, 1000, 500),
   kable_styling("bordered", full_width = FALSE, font_size = 11)
 ```
 3. Since confidence limits take time to calculate, they are not calculated automatically; you must press the `Get CL` button.
-4. **Format plot** using various inputs in sidebar and **download plot and table** as png and csv file, respectively. If the species labels are not fully visible within the plot, adjust the x-axis limits.
+4. **Format plot** using various inputs in sidebar and **download plot and table** as png and csv file, respectively. 
+    + If the species labels are not fully visible within the plot, adjust the x-axis max limit and label position using inputs labeled 'X-axis max' and 'Adjust label', respectively.
+    + Qualitative colour palettes are from [ColorBrewer](http://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3)
+
+ <center>
+
+
+![ColorBrewer qualitative palettes.](/Users/sebastiandalgarno/Poisson/Code/ssdtools-shiny/ssdtools-shiny/user-guide/cb-qual.png){width=400px}
+
+</center>
+
 \
 
  <center>

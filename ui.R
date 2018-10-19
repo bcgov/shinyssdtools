@@ -61,7 +61,7 @@ ui = tagList(shinyjs::useShinyjs(),
                                                                  br(),
                                                                  inline(numericInput('selectWidth2', label = 'Width', min = 1, max = 20, step = 1, value = 8)),
                                                                  inline(numericInput('selectHeight2', label = 'Height', min = 1, max = 20, step = 1, value = 6)),
-                                                                 inline(numericInput('selectDpi2', label = 'Dpi', min = 50, max = 3000, step = 50, value = 300)))))),
+                                                                 inline(numericInput('selectDpi2', label = 'Dpi (resolution)', min = 50, max = 3000, step = 50, value = 300)))))),
                                     column(8,
                                            br(),
                                            conditionalPanel(
@@ -114,20 +114,26 @@ ui = tagList(shinyjs::useShinyjs(),
                                                                  uiOutput('selectLabel'),
                                                                  uiOutput('selectColour'),
                                                                  uiOutput('selectShape'),
+                                                                 selectInput('selectPalette', label = 'Colour palette', choices = pals, selected = pals[1]),
                                                                  textInput('xaxis', value = "Concentration", label = "x-axis label"),
                                                                  textInput('yaxis', value = "Percent of Species Affected", label = "y-axis label"),
                                                                  textInput('title', value = "", label = "Plot title"),
-                                                                 inline(numericInput('adjustLabel', value = 1.3, label = "Adjust label",
-                                                                                     min = 1, max = 10, step = 0.1)),
-                                                                 inline(checkboxInput('checkHc', label = "HC Estimate", value = TRUE)))),
+                                                                 textInput('legend', value = "", label = "Legend title"),
+                                                                 splitLayout(
+                                                                   uiOutput('uiXmax'),
+                                                                   numericInput('adjustLabel', value = 1.3, label = "Adjust label",
+                                                                                min = 1, max = 10, step = 0.1)
+                                                                 ),
+                                                                   inline(checkboxInput('checkHc', label = "HC Estimate", value = TRUE)) 
+                                                                 )),
                                              br(), br(),
                                              actionLink('linkPngFormatPredict', label = "Png file formatting options"),
                                              shinyjs::hidden(div(id = "divPngFormatPredict",
                                                                  br(),
                                                                  inline(numericInput('selectWidth', label = 'Width', min = 1, max = 20, step = 1, value = 8)),
                                                                  inline(numericInput('selectHeight', label = 'Height', min = 1, max = 20, step = 1, value = 6)),
-                                                                 inline(numericInput('selectDpi', label = 'Dpi', min = 50, max = 3000, step = 50, value = 600)),
-                                                                 uiOutput('expandX')))), class = "wellpanel"),
+                                                                 inline(numericInput('selectDpi', label = 'Dpi (resolution)', min = 50, max = 3000, step = 50, value = 600)),
+                                                                 uiOutput('expandX'))), class = "wellpanel")),
                                     column(8,
                                            br(),
                                            conditionalPanel(
@@ -213,8 +219,7 @@ ui = tagList(shinyjs::useShinyjs(),
                                                                 textInput("email", "Email (optional):", width = "50%"),
                                                                 textAreaInput("comment", label_mandatory("Comment:"), width = "100%", height = '100px'),
                                                                 actionButton("submit_feedback", "Submit"))))),
-                         tabPanel(title = "User Guide",
-                                  includeHTML('user-guide/user-guide.html'))
+                         tabPanel(title = "User Guide")
              ))
 
 
