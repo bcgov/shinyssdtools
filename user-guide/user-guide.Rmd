@@ -87,6 +87,7 @@ tibble(`Bootstrap Samples` = c(10000, 5000, 1000, 500),
 4. **Format plot** using various inputs in sidebar and **download plot and table** as png and csv file, respectively. 
     + If the species labels are not fully visible within the plot, adjust the x-axis max limit and label position using inputs labeled 'X-axis max' and 'Adjust label', respectively.
     + Qualitative colour palettes are from [ColorBrewer](http://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3)
+    + If you are using the same variable for colour and shape, providing the same legend title will combine both into a single legend.
 
  <center>
 
