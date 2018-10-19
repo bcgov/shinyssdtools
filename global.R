@@ -7,11 +7,14 @@ library(DT)
 library(ssdtools)
 library(rhandsontable)
 library(shinyjs)
+library(RColorBrewer)
 
 # configure slackr
 slackr::slackr_setup(config_file = "./.slackr")
 
 # objects
+pals <- brewer.pal.info[which(brewer.pal.info$category == "qual"),] %>% row.names
+
 tech.info <- "This webpage fits species sensitivity distributions to concentration data. 
               The user is able to select more than one distribution and plot the individual fits. <br/><br/>
 The columns in the goodness of fit table are the distribution (dist), the Anderson-Darling 
