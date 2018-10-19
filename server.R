@@ -237,7 +237,6 @@ function(input, output, session) {
     req(input$selectLabel)
     req(input$selectShape)
 
-    print(input$selectColour)
     data <- names_data()
     pred <- predict_hc()
     conc <- input$selectConc %>% make.names()
@@ -263,7 +262,8 @@ function(input, output, session) {
             axis.text = element_text(color = "black"),
             legend.key = element_rect(fill = NA, colour = NA)) +
       expand_limits(x = input$xMax) + 
-      scale_color_brewer(palette = input$selectPalette)
+      scale_color_brewer(palette = input$selectPalette, name = input$legendColour) + 
+      scale_shape(name = input$legendShape)
   })
   
   # --- get confidence intervals
@@ -328,6 +328,14 @@ function(input, output, session) {
                 label = "Symbol by", 
                 choices = c("-none-", column_names()),
                 selected = "-none-")
+  })
+  
+  output$uiLegendColour <- renderUI({
+    textInput('legendColour', label = "Colour legend title", value = input$selectColour)
+  })
+  
+  output$uiLegendShape <- renderUI({
+    textInput('legendShape', label = "Shape legend title", value = input$selectShape)
   })
   
   # --- render fit results
