@@ -5,6 +5,6 @@ account: poissonconsulting
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 276992
-bundleId: 1622130
+bundleId: 1654470
 url: https://poissonconsulting.shinyapps.io/ssdca-shiny/
-when: 1538640725.8602
+when: 1540153602.10593
