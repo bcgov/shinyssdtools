@@ -182,12 +182,6 @@ function(input, output, session) {
     input$selectDpi2
   })
   
-  get_expandX <- reactive({
-    conc <- input$selectConc
-    data <- clean_data()
-    ifelse(is.na(input$expandX), max(data[[conc]], na.rm = TRUE), input$expandX)
-  })
-  
   estimate_hc <- reactive({
     if(input$selectHc == 0 | input$selectHc > 99)
       return()

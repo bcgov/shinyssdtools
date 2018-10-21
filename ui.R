@@ -86,7 +86,7 @@ ui = tagList(shinyjs::useShinyjs(),
                                              condition = "output.distPlot",
                                              htmlOutput('fitFail')
                                            ),
-                                           plotOutput("distPlot"),
+                                           withSpinner(plotOutput("distPlot")),
                                            br(),
                                            conditionalPanel(
                                              condition = "output.gofTable",
@@ -159,7 +159,7 @@ ui = tagList(shinyjs::useShinyjs(),
                                              downloadButton("dlPredTable", label = "table .csv", 
                                                             style = 'padding:4px; font-size:80%'))),
                                            br(), 
-                                           plotOutput("modelAveragePlot"),
+                                           withSpinner(plotOutput("modelAveragePlot")),
                                            br(),
                                            conditionalPanel(
                                              condition = "output.modelAveragePlot",
@@ -222,6 +222,7 @@ ui = tagList(shinyjs::useShinyjs(),
                                                                 textAreaInput("comment", label_mandatory("Comment:"), width = "100%", height = '100px'),
                                                                 actionButton("submit_feedback", "Submit"))))),
                          tabPanel(title = "User Guide",
+                                  br(),
                                   includeHTML("user-guide/user-guide.html"))
              ))
 

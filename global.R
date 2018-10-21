@@ -8,6 +8,7 @@ library(ssdtools)
 library(rhandsontable)
 library(shinyjs)
 library(RColorBrewer)
+library(shinycssloaders)
 
 # configure slackr
 slackr::slackr_setup(config_file = "./.slackr")
