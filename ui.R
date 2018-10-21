@@ -221,7 +221,8 @@ ui = tagList(shinyjs::useShinyjs(),
                                                                 textInput("email", "Email (optional):", width = "50%"),
                                                                 textAreaInput("comment", label_mandatory("Comment:"), width = "100%", height = '100px'),
                                                                 actionButton("submit_feedback", "Submit"))))),
-                         tabPanel(title = "User Guide")
+                         tabPanel(title = "User Guide",
+                                  includeHTML("user-guide/user-guide.html"))
              ))
 
 
