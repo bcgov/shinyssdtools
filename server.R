@@ -476,6 +476,10 @@ function(input, output, session) {
     req(check_fit() == "")
     req(check_pred() == "")
     req(input$selectLabel)
+    print(input$legendShape)
+    xmax <- ifelse(is.null(input$xMax), "NULL", input$xMax)
+    legend.colour <- ifelse(is.null(input$legendColour), "NULL", paste0("'", input$legendColour, "'"))
+    legend.shape <- ifelse(is.null(input$legendShape) || input$legendShape == "-none-", "NULL", paste0("'", input$legendShape, "'"))
     
     c1 <- "# plot model average"
     c2 <- "# set the nboot argument and set ci = TRUE in ssd_plot to add confidence intervals to plot."
@@ -496,7 +500,9 @@ function(input, output, session) {
                     panel.background = element_rect(fill = NA, colour='black'),<br/>
                     axis.text = element_text(color = 'black'),<br/>
                     legend.key = element_rect(fill = NA, colour = NA)) +<br/>
-                    expand_limits(x = ", get_expandX(), ")")
+                    expand_limits(x = ", xmax, ") +<br/>
+                    scale_color_brewer(palette = '", input$selectPalette, "', name = ", legend.colour, ") +<br/> 
+                    scale_shape(name = ", legend.shape, ")")
     HTML(paste(c1, c2, c3, pred, plot, sep = "<br/>"))
   })
   
