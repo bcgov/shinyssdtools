@@ -1,0 +1,11 @@
+﻿id,english,french
+navtitle,Fit and Plot Species Sensitivity Distributions,Ajustement des courbes de Distribution de la Sensibilité des Espèces
+nav1,1. Data,1. Données
+nav2,2. Fit,2. Ajustement
+nav3,3. Predict,3. Estimation
+navr,4. R code,4. Code R
+navabout,About,À propos
+navguide,User Guide,Guide de l’utilisateur
+1choose,Choose one of the following options:,Choisir l’une des options suivantes :
+1data,1. Use,1. Utiliser
+1data2,boron dataset,l’ensemble des données pour le bore

@@ -1,6 +1,37 @@
 function(input, output, session) {
   
+  ########### Render UI -------------------
+  output$ui_1choose <- renderUI({
+    h5(tr("ui_1choose"))
+  })
+  
+  output$ui_navtitle <- renderUI({
+    h5(tr("ui_navtitle"))
+  })
+  
+  output$ui_1data <- renderUI({
+    p(tr("ui_1data"), actionLink("demoData", tr("ui_1data2"), icon = icon('table')))
+  })
+  
   ########### Reactives --------------------
+  # --- upload data
+  translation.value <- reactiveValues(
+    lang = "English"
+  )
+  observeEvent(input$fr, {
+    translation.value$lang <- 'French'
+  })
+  observeEvent(input$en, {
+    translation.value$lang <- 'English'
+  })
+  
+  tr <- function(id, lang = translation.value$lang){
+    if(lang == "English"){
+      return(translations$english[translations$id == id])
+    }
+    return(translations$french[translations$id == id])
+  }
+  
   # --- upload data
   upload.values <- reactiveValues(
     upload_state = NULL

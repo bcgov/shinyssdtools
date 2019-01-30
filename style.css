@@ -54,6 +54,22 @@ body{
         color: #2B4777;
  }
  
+ .msw-button {
+  font-size: 11px;
+  padding: 5px;
+  border: 0;
+  text-decoration: underline;
+  margin-bottom: 2px;
+  display: inline-block;
+
+}
+
+.div-link {
+    font-size: 11px;
+    text-align: right;
+    display: inline-block;
+}
+ 
 /* Customize fonts */
   body, label, input, button, select { 
     font-family: Myriad-Pro, Calibri, Arial, 'sans serif';
