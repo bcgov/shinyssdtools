@@ -182,8 +182,20 @@ function(input, output, session) {
     actionButton('getCl', label = tr("ui_3clbutton"))
   })
 
+  output$ui_4help <- renderUI({
+    helpText(tr("ui_4help"))
+  })
+  
+  output$ui_about <- renderUI({
+    HTML(tr("ui_draft"), tr("ui_about"))
+  })
+  
   output$test <- renderUI({
-
+    
+  })
+  
+  output$test <- renderUI({
+    
   })
   # 
   ########### Reactives --------------------

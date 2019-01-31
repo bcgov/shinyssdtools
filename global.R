@@ -18,23 +18,6 @@ pals <- brewer.pal.info[which(brewer.pal.info$category == "qual"),] %>% row.name
 
 source("translation.R")
 
-tech.info <- "This webpage fits species sensitivity distributions to concentration data. 
-              The user is able to select more than one distribution and plot the individual fits. <br/><br/>
-The columns in the goodness of fit table are the distribution (dist), the Anderson-Darling 
-statistic (ad), the Kolmogorov-Smirnov statistic (ks), the Cramer-von Mises statistic (cvm), 
-Akaike’s Information Criterion (aic), Akaike’s Information Criterion corrected for sample size (aicc), 
-Bayesian Information Criterion (bic), the AICc difference (delta) and the AICc based Akaike weight (weight).
-The prediction is the model averaged (using aicc) 
-estimate of the fit. 
-The percent hazard concentration is the concentration of the chemical 
-which is predicted to affect that percent of the species tested.<br/><br/>
-To cite package ‘ssdtools’ in publications use:<br/>
-Joe Thorley and Carl Schwarz (2018). ssdtools: Species Sensitivity
-Distributions. R package version 0.0.1.9002.<br/><br/>
-To cite the web app use:<br/>
-Seb Dalgarno (2018) ssdtools: A shiny web app to analyse species sensitivity distributions. 
-Prepared by Poisson Consulting for the Ministry of the Environment, British Columbia. https://poissonconsulting.shinyapps.io/ssdtools/"
-
 extra.dists <- "pareto"
 default.dists <- c("lnorm", "llog", "gompertz", "lgumbel", "gamma", "weibull")
 
