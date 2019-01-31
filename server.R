@@ -13,6 +13,52 @@ function(input, output, session) {
     p(tr("ui_1data"), actionLink("demoData", tr("ui_1data2"), icon = icon('table')))
   })
   
+  output$ui_1datahelp <- renderUI({
+    helpText(tr("ui_1datahelp"))
+  })
+  
+  output$ui_1csv <- renderUI({
+    p(tr("ui_1csv"))
+  })
+  
+  output$ui_1csvhelp <- renderUI({
+        helpText(tr("ui_1csvhelp"))
+  })
+  
+  output$ui_1csvupload <- renderUI({
+    fileInput('uploadData', buttonLabel = span(tagList(icon("upload"), "csv")),
+              label = "", placeholder = tr("ui_1csvlabel"),
+              accept = c('.csv'))
+  })
+  
+  output$ui_1table <- renderUI({
+    p(tr("ui_1table"))
+  })
+  
+  output$ui_1tablehelp <- renderUI({
+    helpText(tr("ui_1tablehelp"))
+  })
+  
+  output$ui_1preview <- renderUI({
+    h5(tr("ui_1preview"))
+  })
+  
+  output$ui_1note <- renderUI({
+    helpText(tr("ui_1note"))
+  })
+  
+  output$test <- renderUI({
+    
+  })
+  
+  output$test <- renderUI({
+    
+  })
+  
+  output$test <- renderUI({
+    
+  })
+  
   ########### Reactives --------------------
   # --- upload data
   translation.value <- reactiveValues(
@@ -322,9 +368,18 @@ function(input, output, session) {
       rhandsontable(DF, width = 600, useTypes = FALSE) 
   })
   
-  output$viewUpload <- renderDataTable({
-    read_data()
+  output$viewUpload <- DT::renderDataTable({
+    datatable(read_data(), options = dtopt())
+    })
+  
+  dtopt <- reactive({
+    url <- paste0("//cdn.datatables.net/plug-ins/1.10.11/i18n/", translation.value$lang, ".json")
+    list(
+      language = list(url = url),
+      pageLength = 10
+    )
   })
+
   
   # --- render UI with choices based on file upload
   output$selectConc = renderUI({
