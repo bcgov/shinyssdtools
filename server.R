@@ -82,25 +82,75 @@ function(input, output, session) {
                 selected = guess_conc())
   })
   
-  output$test <- renderUI({
+  output$ui_2plot <- renderUI({
+    h5(tr("ui_2plot"))
+  })
+  
+  output$ui_2table <- renderUI({
+    h5(tr("ui_2table"))
+  })
+  
+  output$ui_2dlplot <- renderUI({
+      downloadButton("dlFitPlot", label = tr("ui_2dlplot"), 
+                     style = 'padding:4px; font-size:80%')
+  })
+  
+  output$ui_2dltable <- renderUI({
+      downloadButton("dlFitTable", label = tr("ui_2dltable"), 
+                     style = 'padding:4px; font-size:80%')
+  })
+  
+  output$ui_3est <- renderUI({
+    h5(tr("ui_3est"))
+  })
+  
+  output$ui_3bshint <- renderUI({
+    hint(tr("ui_3bshint"))
+  })
+  
+  output$ui_3thresh <- renderUI({
+    numericInput("selectHc", label = tr("ui_3thresh"), value = 5, min = 0, 
+                 max = 99, step = 5, width = "100px")
+  })
+  
+  output$ui_3samples <- renderUI({
+    selectInput('bootSamp', label = tr("ui_3samples"), 
+                choices = c("500", "1,000", "5,000", "10,000"),
+                selected = "10,000",
+                width = "130px")
+  })
+  
+  output$ui_3plotopts <- renderUI({
+    actionLink('linkFormatPredict', label = tr("ui_3plotopts"))
+  })
+  
+  output$ui_3pal <- renderUI({
+    selectInput('selectPalette', label = tr("ui_3pal"), choices = pals, selected = pals[2])
+  })
+  
+  output$ui_3xlab <- renderUI({
+    textInput('xaxis', value = "Concentration", label = tr("ui_3xlab"))
+  })
+  
+  output$ui_3ylab <- renderUI({
+    textInput('yaxis', value = "Percent of Species Affected", label = tr("ui_3ylab"))
+  })
+  
+  output$ui_3title <- renderUI({
+    textInput('title', value = "", label = tr("ui_3title"))
+  })
+  
+  output$ui_3bshint <- renderUI({
     
   })
   
-  output$test <- renderUI({
+  output$ui_3bshint <- renderUI({
     
   })
   
-  output$test <- renderUI({
-    
-  })
   
-  output$test <- renderUI({
-    
-  })
   
-  output$test <- renderUI({
-    
-  })
+  
   
   ########### Reactives --------------------
   # --- upload data
@@ -323,13 +373,15 @@ function(input, output, session) {
     dist <- fit_dist()
     # withProgress(message = "This won't take long...", value = 0,{
       # incProgress(0.6)
-      ggplot2::autoplot(dist)
+     ggplot2::autoplot(dist, ylab = tr("ui_2ploty"))
     # })
   })
   
   table_gof <- reactive({
     dist <- fit_dist()
     gof <- ssdca::ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ round(., 2))
+    names(gof) <- gsub("weight", tr("ui_2weight"), names(gof))
+    gof
   })
   
   fit_fail <- reactive({
@@ -425,25 +477,23 @@ function(input, output, session) {
 
   
   # --- render UI with choices based on file upload
-
-  
   output$selectLabel = renderUI({
     selectInput("selectLabel", 
-                label = "Label by", 
+                label = tr("ui_3label"), 
                 choices = c("-none-", column_names()),
                 selected = guess_spp())
   })
   
   output$selectColour = renderUI({
     selectInput("selectColour", 
-                label = "Colour by", 
+                label = tr("ui_3colour"), 
                 choices = c("-none-", column_names()),
                 selected = "-none-")
   })
   
   output$selectShape = renderUI({
     selectInput("selectShape", 
-                label = "Symbol by", 
+                label = tr("ui_3symbol"), 
                 choices = c("-none-", column_names()),
                 selected = "-none-")
   })

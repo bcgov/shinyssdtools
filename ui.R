@@ -57,17 +57,14 @@ ui = tagList(shinyjs::useShinyjs(),
                                            ),
                                            conditionalPanel(
                                              condition = "output.distPlot",
-                                             h5("Plot fitted distributions")
+                                             uiOutput("ui_2plot")
                                            ),
-                                           
                                            inline(conditionalPanel(
                                              condition = "output.distPlot",
-                                             downloadButton("dlFitPlot", label = "plot .png", 
-                                                            style = 'padding:4px; font-size:80%'))),
+                                           uiOutput("ui_2dlplot"))),
                                            inline(conditionalPanel(
                                              condition = "output.distPlot",
-                                             downloadButton("dlFitTable", label = "table .csv", 
-                                                            style = 'padding:4px; font-size:80%'))),
+                                           uiOutput("ui_2dltable"))),
                                            br(), br(),
                                            conditionalPanel(
                                              condition = "output.distPlot",
@@ -77,7 +74,7 @@ ui = tagList(shinyjs::useShinyjs(),
                                            br(),
                                            conditionalPanel(
                                              condition = "output.gofTable",
-                                             h5("Goodness of fit table")
+                                             uiOutput("ui_2table")
                                            ),
                                            dataTableOutput("gofTable")))),
                          tabPanel(title = span(tagList(icon("calculator"), uiOutput("nav_3"))), 
@@ -85,20 +82,16 @@ ui = tagList(shinyjs::useShinyjs(),
                                     column(4,
                                            br(),
                                            wellPanel(
-                                             h5("Estimate hazard concentration"),
-                                             hint("10,000 bootstrap samples recommended"),
+                                             uiOutput("ui_3est"),
+                                             uiOutput("ui_3bshint"),
                                              br(), br(),
-                                             inline(numericInput("selectHc", label = "Threshold (%)", value = 5, min = 0, 
-                                                                 max = 99, step = 5, width = "100px")),
-                                             inline(selectInput('bootSamp', label = "Bootstrap samples", 
-                                                                choices = c("500", "1,000", "5,000", "10,000"),
-                                                                selected = "10,000",
-                                                                width = "130px")),
+                                             inline(uiOutput("ui_3thresh")),
+                                             inline(uiOutput("ui_3samples")),
                                              br(),
                                              uiOutput('selectLabel'),
                                              uiOutput('selectColour'),
                                              uiOutput('selectShape'),
-                                             actionLink('linkFormatPredict', label = "Plot formatting options"),
+                                             uiOutput("ui_plotopts"),
                                              shinyjs::hidden(div(id = 'divFormatPredict',
                                                                  br(),
                                                                 

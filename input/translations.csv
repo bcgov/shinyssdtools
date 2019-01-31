@@ -11,7 +11,7 @@ navguide,User Guide,Guide de l’utilisateur
 1data2,boron dataset,l’ensemble des données pour le bore
 1datahelp,1. This can be used to demo the app or view a dataset that 'works'. ,1. Ces données peuvent être téléchargées pour visualiser un ensemble 'fonctionnel' de données.
 1csv,2. Upload a csv file,2. Télécharger un fichier csv
-1csvhelp,"2. Upload a csv file containing your dataset. The dataset must include a column with with at least 8 distinct, positive, non-missing, numeric concentration values. Other useful but optional variables include species and group, which may be used to label and color plot output, respectively. If you have an xls/xlsx file, try exporting a worksheet to csv using excel. ","2. Télécharger vos données en fichier .csv. L’ensemble des données doit former au moins 1 colonne comportant au minimum 8 concentrations distinctes et positives. Des colonnes pour les espèces et les groupes taxonomiques peuvent également être ajoutées. Des étiquettes et des couleurs sont alors disponibles pour permettre leur identification dans le graphique. Si vous avez un fichier .xl/.xls, il faut l’exporter dans une feuille de calcul .csv en utilisant Excel. "
+1csvhelp,"2. Upload a csv file containing your dataset. The dataset must include a column with at least 8 distinct, positive, non-missing, numeric concentration values. Other useful but optional variables include species and group, which may be used to label and color plot output, respectively. If you have an xls/xlsx file, try exporting a worksheet to csv using excel. ","2. Télécharger vos données en fichier .csv. L’ensemble des données doit former au moins 1 colonne comportant au minimum 8 concentrations distinctes et positives. Des colonnes pour les espèces et les groupes taxonomiques peuvent également être ajoutées. Des étiquettes et des couleurs sont alors disponibles pour permettre leur identification dans le graphique. Si vous avez un fichier .xl/.xls, il faut l’exporter dans une feuille de calcul .csv en utilisant Excel. "
 1csvlabel,Upload your data,Télécharger les données
 1table,3. Fill out table below:,3. Remplir le tableau ci-dessous:
 1tablehelp,"3. The table below is interactive and acts like a simple excel spreadsheet. Click on a cell to begin data input. Right-click on the table to delete/insert rows or columns. Column names cannot be changed. The Concentration column must be filled out, with at least 8 distinct, positive, non-missing, numeric values. Species and Group are optional and may be used to format plot outputs. If the table is behaving unexpectedly, please reload the website. ","3. Le tableau ci-dessous est interactif et s’utilise comme une feuille Excel normale. Cliquer sur une cellule pour commencer à rentrer les données. Faire un clic-droit pour ajouter ou supprimer des colonnes ou des rangées. Le nom des colonnes ne peut pas être modifiés.  La colonne concentration doit être remplie avec, au moins, 8 valeurs numériques positives et distinctes. Aucune valeur manquante. Les colonnes Espèces et Groupes sont optionnelles et sont utilisés pour la mise en forme du graphique. Recharger le site web si des erreurs surviennent dans le tableau.  "
@@ -22,8 +22,29 @@ navguide,User Guide,Guide de l’utilisateur
 2png,Png file formatting options,Option de formatage 'png'
 2plot,Plot fitted distributions,Courbes de distribution ajustée
 2table,Goodness of Fit table,Évaluation de la qualité de l’ajustement des courbes de distribution
-2weight,Weight,Coefficient de pondération
+2weight,weight,coefficient de pondération
 2ploty,Species affected,Espèces recensées
 2height,Width,Largeur
 2width,Height,Hauteur
 2dpi,Dpi (resolution),Dpi (résolution)
+2dlplot,Plot .png,Graphique .png
+2dltable,Table .csv,Tableau .csv
+3est,Estimate hazard concentration,Estimation de la concentration de risque (Ex. HC5) et de son incertitude associée
+3bshint,"10,000 bootstrap samples recommended",10 000 simulations bootstrap recommandées
+3thresh,Threshold (%),Centile sélectionné (%)
+3samples,Bootstrap samples,Simulation bootstrap
+3label,Label by:,Organiser les étiquettes par :
+3colour,Colour by:,Organiser les couleurs par :
+3symbol,Symbol by:,Organiser les symboles par :
+3plotopts,Plot formatting options,Option de formatage des graphiques
+3pngopts,Png file formatting options,Option de formatage png
+3model,Plot model average and estimate hazard concentration,Modèle agrégé et estimation du centile sélectionné (Ex. HC5) 
+3help,"Click 'Get CL' to calculate the upper and lower confidence limits (CL) for the estimated hazard concentration and selected % threshold."",","Cliquer 'Get CL' pour obtenir le minimum et le maximum des limites de confiance (CL) pour l’estimation de la concentration limite (ex. HC5) et sélectioner le % limite (5). Pour calculer CL d’un % différent ou un nombre différent de simulations bootstrap, entrer simplement de nouvelles valeurs dans la case et cliquer 'Get CL'. "
+2hc,"                                                                                           ""To calculate CL for a different % threshold or number of bootstrap samples, simply select new values in the sidebar and click 'Get CL' again.","Selon le modèle agrégé, la concentration affectant 5 % des espèces est de 1,25"
+3ci,Get confidence limits,Obtenir les intervalles de confiance
+3pal,Colour palette ,Éventail de couleur  
+3xlab,X-axis label ,Titre de l’axe des X  
+3ylab,Y-axis label ,Titre de l’axe des Y 
+3title,Plot title ,Titre du graphique  
+3legend,Colour legend title ,Titre de la légende par couleur
+3time,,Le percentile limite est de 5 % et le nombre de simulations bootstrap est de 10 000. Cela prendra environ 3 minutes pour générer les intervalles de confiance. 
