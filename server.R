@@ -47,6 +47,49 @@ function(input, output, session) {
     helpText(tr("ui_1note"))
   })
   
+  output$ui_2select <- renderUI({
+    selectizeInput('selectDist', 
+                   label = label_mandatory(tr("ui_2dist")),
+                   multiple = TRUE, 
+                   choices = c(default.dists, extra.dists),
+                   selected = default.dists,
+                   options = list(
+                     'plugins' = list('remove_button'),
+                     'create' = TRUE,
+                     'persist' = FALSE))
+  })
+  
+  output$ui_2png <- renderUI({
+    actionLink('linkFormatFit', label = tr("ui_2png"))
+  })
+  
+  output$ui_2width <- renderUI({
+    numericInput('selectWidth2', label = tr("ui_2width"), min = 1, max = 20, step = 1, value = 8)
+  })
+  
+  output$ui_2height <- renderUI({
+    numericInput('selectHeight2', label = tr("ui_2height"), min = 1, max = 20, step = 1, value = 6)
+    })
+  
+  output$ui_2dpi <- renderUI({
+    numericInput('selectDpi2', label = tr("ui_2dpi"), min = 50, max = 3000, step = 50, value = 300)  
+    })
+  
+  output$selectConc = renderUI({
+    selectInput("selectConc", 
+                label = label_mandatory(tr("ui_2conc")), 
+                choices = column_names(),
+                selected = guess_conc())
+  })
+  
+  output$test <- renderUI({
+    
+  })
+  
+  output$test <- renderUI({
+    
+  })
+  
   output$test <- renderUI({
     
   })
@@ -382,12 +425,7 @@ function(input, output, session) {
 
   
   # --- render UI with choices based on file upload
-  output$selectConc = renderUI({
-    selectInput("selectConc", 
-                label = label_mandatory("Select column with concentration values"), 
-                choices = column_names(),
-                selected = guess_conc())
-  })
+
   
   output$selectLabel = renderUI({
     selectInput("selectLabel", 

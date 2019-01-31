@@ -9,3 +9,21 @@ navguide,User Guide,Guide de l’utilisateur
 1choose,Choose one of the following options:,Choisir l’une des options suivantes :
 1data,1. Use,1. Utiliser
 1data2,boron dataset,l’ensemble des données pour le bore
+1datahelp,1. This can be used to demo the app or view a dataset that 'works'. ,1. Ces données peuvent être téléchargées pour visualiser un ensemble 'fonctionnel' de données.
+1csv,2. Upload a csv file,2. Télécharger un fichier csv
+1csvhelp,"2. Upload a csv file containing your dataset. The dataset must include a column with with at least 8 distinct, positive, non-missing, numeric concentration values. Other useful but optional variables include species and group, which may be used to label and color plot output, respectively. If you have an xls/xlsx file, try exporting a worksheet to csv using excel. ","2. Télécharger vos données en fichier .csv. L’ensemble des données doit former au moins 1 colonne comportant au minimum 8 concentrations distinctes et positives. Des colonnes pour les espèces et les groupes taxonomiques peuvent également être ajoutées. Des étiquettes et des couleurs sont alors disponibles pour permettre leur identification dans le graphique. Si vous avez un fichier .xl/.xls, il faut l’exporter dans une feuille de calcul .csv en utilisant Excel. "
+1csvlabel,Upload your data,Télécharger les données
+1table,3. Fill out table below:,3. Remplir le tableau ci-dessous:
+1tablehelp,"3. The table below is interactive and acts like a simple excel spreadsheet. Click on a cell to begin data input. Right-click on the table to delete/insert rows or columns. Column names cannot be changed. The Concentration column must be filled out, with at least 8 distinct, positive, non-missing, numeric values. Species and Group are optional and may be used to format plot outputs. If the table is behaving unexpectedly, please reload the website. ","3. Le tableau ci-dessous est interactif et s’utilise comme une feuille Excel normale. Cliquer sur une cellule pour commencer à rentrer les données. Faire un clic-droit pour ajouter ou supprimer des colonnes ou des rangées. Le nom des colonnes ne peut pas être modifiés.  La colonne concentration doit être remplie avec, au moins, 8 valeurs numériques positives et distinctes. Aucune valeur manquante. Les colonnes Espèces et Groupes sont optionnelles et sont utilisés pour la mise en forme du graphique. Recharger le site web si des erreurs surviennent dans le tableau.  "
+1note,Note: the app is designed to handle one chemical at a time. Each species should not have more than one concentration value.,Note : L’application est faite pour travailler un contaminant à la fois. Il n’est pas possible d’entrer plus d’une concentration par espèce. 
+1preview,Preview chosen dataset:,Visualiser les données:
+2conc,Select column with concentration values,Sélectionner la colonne avec les concentrations
+2dist,Select distributions to fit,Sélectionner des distributions pour l’ajustement
+2png,Png file formatting options,Option de formatage 'png'
+2plot,Plot fitted distributions,Courbes de distribution ajustée
+2table,Goodness of Fit table,Évaluation de la qualité de l’ajustement des courbes de distribution
+2weight,Weight,Coefficient de pondération
+2ploty,Species affected,Espèces recensées
+2height,Width,Largeur
+2width,Height,Hauteur
+2dpi,Dpi (resolution),Dpi (résolution)
