@@ -77,7 +77,7 @@ ui = tagList(shinyjs::useShinyjs(),
                                              uiOutput("ui_2table")
                                            ),
                                            dataTableOutput("gofTable")))),
-                         tabPanel(title = span(tagList(icon("calculator"), uiOutput("nav_3"))), 
+                         tabPanel(title = span(tagList(icon("calculator"), uiOutput("nav_3"))),
                                   fluidRow(
                                     column(4,
                                            br(),
@@ -91,14 +91,13 @@ ui = tagList(shinyjs::useShinyjs(),
                                              uiOutput('selectLabel'),
                                              uiOutput('selectColour'),
                                              uiOutput('selectShape'),
-                                             uiOutput("ui_plotopts"),
+                                             uiOutput("ui_3plotopts"),
                                              shinyjs::hidden(div(id = 'divFormatPredict',
                                                                  br(),
-                                                                
-                                                                 selectInput('selectPalette', label = 'Colour palette', choices = pals, selected = pals[2]),
-                                                                 textInput('xaxis', value = "Concentration", label = "x-axis label"),
-                                                                 textInput('yaxis', value = "Percent of Species Affected", label = "y-axis label"),
-                                                                 textInput('title', value = "", label = "Plot title"),
+                                                                uiOutput("ui_3pal"),
+                                                                uiOutput("ui_3xlab"),
+                                                                uiOutput("ui_3ylab"),
+                                                                uiOutput("ui_3title"),
                                                                  uiOutput('uiLegendColour'),
                                                                  uiOutput('uiLegendShape'),
                                                                  splitLayout(
@@ -106,16 +105,15 @@ ui = tagList(shinyjs::useShinyjs(),
                                                                    numericInput('adjustLabel', value = 1.3, label = "Adjust label",
                                                                                 min = 1, max = 10, step = 0.1)
                                                                  ),
-                                                                   inline(checkboxInput('checkHc', label = "HC Estimate", value = TRUE)) 
+                                                                   inline(checkboxInput('checkHc', label = "HC Estimate", value = TRUE))
                                                                  )),
                                              br(), br(),
-                                             actionLink('linkPngFormatPredict', label = "Png file formatting options"),
+                                             uiOutput("ui_3pngopts"),
                                              shinyjs::hidden(div(id = "divPngFormatPredict",
                                                                  br(),
-                                                                 inline(numericInput('selectWidth', label = 'Width', min = 1, max = 20, step = 1, value = 8)),
-                                                                 inline(numericInput('selectHeight', label = 'Height', min = 1, max = 20, step = 1, value = 6)),
-                                                                 inline(numericInput('selectDpi', label = 'Dpi (resolution)', min = 50, max = 3000, step = 50, value = 600)),
-                                                                 uiOutput('expandX'))), class = "wellpanel")),
+                                                                 uiOutput("ui_3width"),
+                                                                 uiOutput("ui_3height"),
+                                                                 uiOutput("ui_3dpi"))), class = "wellpanel")),
                                     column(8,
                                            br(),
                                            conditionalPanel(
@@ -123,22 +121,16 @@ ui = tagList(shinyjs::useShinyjs(),
                                              htmlOutput('hintPr')
                                            ),
                                            conditionalPanel(
-                                             condition = "input.expandX",
-                                             htmlOutput('hintEx')
-                                           ),
-                                           conditionalPanel(
                                              condition = "output.modelAveragePlot",
-                                             h5("Plot model average and estimate hazard concentration")
+                                             uiOutput("ui_3model")
                                            ),
                                            inline(conditionalPanel(
                                              condition = "output.modelAveragePlot",
-                                             downloadButton("dlPredPlot", label = "plot .png", 
-                                                            style = 'padding:4px; font-size:80%'))),
+                                             uiOutput("ui_3dlplot"))),
                                            inline(conditionalPanel(
                                              condition = "output.clTable",
-                                             downloadButton("dlPredTable", label = "table .csv", 
-                                                            style = 'padding:4px; font-size:80%'))),
-                                           br(), 
+                                             uiOutput("ui_3dltable"))),
+                                           br(),
                                            withSpinner(plotOutput("modelAveragePlot")),
                                            br(),
                                            conditionalPanel(
@@ -148,26 +140,27 @@ ui = tagList(shinyjs::useShinyjs(),
                                            hr(),
                                            inline(conditionalPanel(
                                              condition = "output.modelAveragePlot",
-                                             h5("Get confidence limits")
+                                             uiOutput("ui_3cl")
                                            )),
                                            inline(conditionalPanel(
                                              condition = "output.modelAveragePlot",
                                              actionLink("infoCl", icon = icon('info-circle'), label = NULL)
                                            )),
-                                           shinyjs::hidden(div(id = "clInfoText", helpText("Click 'Get CL' to calculate the upper and lower confidence limits (CL) for the estimated hazard concentration and selected % threshold.",
-                                                                                           "To calculate CL for a different % threshold or number of bootstrap samples, simply select new values in the sidebar and click 'Get CL' again."))),
+                                           shinyjs::hidden(div(id = "clInfoText",
+                                                               uiOutput("ui_3help"))),
                                            conditionalPanel(
                                              condition = "output.modelAveragePlot",
                                              htmlOutput('describeCl')
                                            ),
                                            inline(conditionalPanel(
                                              condition = "output.modelAveragePlot",
-                                             actionButton('getCl', label = "Get CL")
+                                             uiOutput("ui_3clbutton")
                                            )),
                                            conditionalPanel(
                                              condition = "output.modelAveragePlot",
                                              dataTableOutput('clTable')
-                                           )))),
+                                           )
+                                           ))),
                          tabPanel(title = span(tagList(icon("code"), uiOutput("nav_code"))), 
                                   br(),
                                   helpText("Copy and paste code below to reproduce results. Code is added as functions are executed within the app.",

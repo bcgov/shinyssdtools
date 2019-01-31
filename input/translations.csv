@@ -40,11 +40,21 @@ navguide,User Guide,Guide de l’utilisateur
 3pngopts,Png file formatting options,Option de formatage png
 3model,Plot model average and estimate hazard concentration,Modèle agrégé et estimation du centile sélectionné (Ex. HC5) 
 3help,"Click 'Get CL' to calculate the upper and lower confidence limits (CL) for the estimated hazard concentration and selected % threshold."",","Cliquer 'Get CL' pour obtenir le minimum et le maximum des limites de confiance (CL) pour l’estimation de la concentration limite (ex. HC5) et sélectioner le % limite (5). Pour calculer CL d’un % différent ou un nombre différent de simulations bootstrap, entrer simplement de nouvelles valeurs dans la case et cliquer 'Get CL'. "
-2hc,"                                                                                           ""To calculate CL for a different % threshold or number of bootstrap samples, simply select new values in the sidebar and click 'Get CL' again.","Selon le modèle agrégé, la concentration affectant 5 % des espèces est de 1,25"
-3ci,Get confidence limits,Obtenir les intervalles de confiance
+3hc,The model averaged estimate of the concentration that affects,"Selon le modèle agrégé, la concentration affectant "
+3hc2,% of species is,% des espèces est de 
+3cl,Get confidence limits,Obtenir les intervalles de confiance
 3pal,Colour palette ,Éventail de couleur  
 3xlab,X-axis label ,Titre de l’axe des X  
 3ylab,Y-axis label ,Titre de l’axe des Y 
 3title,Plot title ,Titre du graphique  
 3legend,Colour legend title ,Titre de la légende par couleur
+3shape,Shape legend title,Titre de la légende par forme
 3time,,Le percentile limite est de 5 % et le nombre de simulations bootstrap est de 10 000. Cela prendra environ 3 minutes pour générer les intervalles de confiance. 
+3width,Width,Largeur
+3height,Height,Hauteur
+3dpi,Dpi (resolution),Dpi (résolution)
+3clbutton,Get CL,Obtenir CL
+3cldesc1,The selected % threshold to estimate hazard concentration is,Le percentile limite est de
+3cldesc2,and the number of bootstrap samples is,et le nombre de simulations bootstrap est de
+3cldesc3,This will take around,Cela prendra environ
+3cldesc4,to generate confidence limits.,pour générer les intervalles de confiance. 

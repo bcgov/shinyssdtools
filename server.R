@@ -48,9 +48,9 @@ function(input, output, session) {
   })
   
   output$ui_2select <- renderUI({
-    selectizeInput('selectDist', 
+    selectizeInput('selectDist',
                    label = label_mandatory(tr("ui_2dist")),
-                   multiple = TRUE, 
+                   multiple = TRUE,
                    choices = c(default.dists, extra.dists),
                    selected = default.dists,
                    options = list(
@@ -58,100 +58,134 @@ function(input, output, session) {
                      'create' = TRUE,
                      'persist' = FALSE))
   })
-  
+
   output$ui_2png <- renderUI({
     actionLink('linkFormatFit', label = tr("ui_2png"))
   })
-  
+
   output$ui_2width <- renderUI({
     numericInput('selectWidth2', label = tr("ui_2width"), min = 1, max = 20, step = 1, value = 8)
   })
-  
+
   output$ui_2height <- renderUI({
     numericInput('selectHeight2', label = tr("ui_2height"), min = 1, max = 20, step = 1, value = 6)
     })
-  
+
   output$ui_2dpi <- renderUI({
-    numericInput('selectDpi2', label = tr("ui_2dpi"), min = 50, max = 3000, step = 50, value = 300)  
+    numericInput('selectDpi2', label = tr("ui_2dpi"), min = 50, max = 3000, step = 50, value = 300)
     })
-  
+
   output$selectConc = renderUI({
-    selectInput("selectConc", 
-                label = label_mandatory(tr("ui_2conc")), 
+    selectInput("selectConc",
+                label = label_mandatory(tr("ui_2conc")),
                 choices = column_names(),
                 selected = guess_conc())
   })
-  
+
   output$ui_2plot <- renderUI({
     h5(tr("ui_2plot"))
   })
-  
+
   output$ui_2table <- renderUI({
     h5(tr("ui_2table"))
   })
-  
+
   output$ui_2dlplot <- renderUI({
-      downloadButton("dlFitPlot", label = tr("ui_2dlplot"), 
+      downloadButton("dlFitPlot", label = tr("ui_2dlplot"),
                      style = 'padding:4px; font-size:80%')
   })
-  
+
   output$ui_2dltable <- renderUI({
-      downloadButton("dlFitTable", label = tr("ui_2dltable"), 
+      downloadButton("dlFitTable", label = tr("ui_2dltable"),
                      style = 'padding:4px; font-size:80%')
   })
-  
+
   output$ui_3est <- renderUI({
     h5(tr("ui_3est"))
   })
-  
+
   output$ui_3bshint <- renderUI({
     hint(tr("ui_3bshint"))
   })
-  
+
   output$ui_3thresh <- renderUI({
-    numericInput("selectHc", label = tr("ui_3thresh"), value = 5, min = 0, 
+    numericInput("selectHc", label = tr("ui_3thresh"), value = 5, min = 0,
                  max = 99, step = 5, width = "100px")
   })
-  
+
   output$ui_3samples <- renderUI({
-    selectInput('bootSamp', label = tr("ui_3samples"), 
+    selectInput('bootSamp', label = tr("ui_3samples"),
                 choices = c("500", "1,000", "5,000", "10,000"),
                 selected = "10,000",
                 width = "130px")
   })
-  
+
   output$ui_3plotopts <- renderUI({
     actionLink('linkFormatPredict', label = tr("ui_3plotopts"))
   })
-  
+
   output$ui_3pal <- renderUI({
     selectInput('selectPalette', label = tr("ui_3pal"), choices = pals, selected = pals[2])
   })
-  
+
   output$ui_3xlab <- renderUI({
     textInput('xaxis', value = "Concentration", label = tr("ui_3xlab"))
   })
-  
+
   output$ui_3ylab <- renderUI({
     textInput('yaxis', value = "Percent of Species Affected", label = tr("ui_3ylab"))
   })
-  
+
   output$ui_3title <- renderUI({
     textInput('title', value = "", label = tr("ui_3title"))
   })
-  
-  output$ui_3bshint <- renderUI({
-    
+
+  output$ui_3pngopts <- renderUI({
+    actionLink('linkPngFormatPredict', label = tr("ui_3pngopts"))
   })
-  
-  output$ui_3bshint <- renderUI({
-    
+
+  output$ui_3width <- renderUI({
+    inline(numericInput('selectWidth', label = tr("ui_3width"), min = 1, max = 20, step = 1, value = 8))
   })
-  
-  
-  
-  
-  
+
+  output$ui_3height <- renderUI({
+    inline(numericInput('selectHeight', label = tr("ui_3height"), min = 1, max = 20, step = 1, value = 6))
+  })
+
+  output$ui_3dpi <- renderUI({
+    inline(numericInput('selectDpi', label = tr("ui_3dpi"), min = 50, max = 3000, step = 50, value = 600))
+  })
+
+  output$ui_3model <- renderUI({
+    h5(tr("ui_3model"))
+  })
+
+  output$ui_3dlplot <- renderUI({
+    downloadButton("dlPredPlot", label = tr("ui_2dlplot"),
+                   style = 'padding:4px; font-size:80%')
+  })
+
+  output$ui_3dltable <- renderUI({
+    downloadButton("dlPredTable", label = tr("ui_2dltable"),
+                   style = 'padding:4px; font-size:80%')
+  })
+
+  output$ui_3cl <- renderUI({
+    h5(tr("ui_3cl"))
+  })
+
+  output$ui_3help <- renderUI({
+    helpText(tr("ui_3help"))
+  })
+
+  output$ui_3clbutton <- renderUI({
+    actionButton('getCl', label = tr("ui_3clbutton"))
+  })
+
+  output$test <- renderUI({
+
+  })
+  # 
   ########### Reactives --------------------
   # --- upload data
   translation.value <- reactiveValues(
@@ -393,16 +427,22 @@ function(input, output, session) {
   # --- predict and model average
   predict_hc <- reactive({
     dist <- fit_dist()
+    print(dist)
     stats::predict(dist, nboot = 10)
   })
   
   plot_model_average <- reactive({
+    req(input$selectHC)
     if(input$selectHc == 0 | input$selectHc > 99)
       return()
     req(input$selectColour)
     req(input$selectLabel)
     req(input$selectShape)
 
+    print(input$selectColour)
+    print(input$selectLabel)
+    print(input$selectShape)
+    
     data <- names_data()
     pred <- predict_hc()
     conc <- input$selectConc %>% make.names()
@@ -411,10 +451,25 @@ function(input, output, session) {
     shape <- if(input$selectShape == "-none-") {NULL} else {input$selectShape %>% make.names()}
     hc <- if(!input$checkHc) {NULL} else {input$selectHc}
     
-    shape_data <- if(is.null(shape)) {NULL} else {data[[shape]]} 
+    print("hi2")
+    print(is.null(shape_data))
     
-    validate(need(is.null(shape_data) | shape_data %>% is.character(), message = "Symbol variable cannot be numeric."))
+    shape_data <- if(is.null(shape)) {NULL} else {data[[shape]]}
+    print("hi")
+    print(is.character(shape_data))
+    print(is.null(shape_data))
+    
+    validate(need(is.null(shape_data) || shape_data %>% is.character(), message = "Symbol variable cannot be numeric."))
     validate(need(shape_data %>% unique %>% length < 7, message = "Symbol variable cannot have more than 6 distinct values."))
+    print(data)
+    print(pred)
+    print(conc)
+    print(label)
+    print(colour)
+    print(hc)
+    print(input$adjustLabel)
+    print(input$xaxis)
+    print(input$yaxis)
     
     ssdca::ssd_plot(data, pred, left = conc, label = label, 
                     color = colour, shape = shape, hc = hc, ci = FALSE, 
@@ -499,11 +554,11 @@ function(input, output, session) {
   })
   
   output$uiLegendColour <- renderUI({
-    textInput('legendColour', label = "Colour legend title", value = input$selectColour)
+    textInput('legendColour', label = tr("ui_3legend"), value = input$selectColour)
   })
   
   output$uiLegendShape <- renderUI({
-    textInput('legendShape', label = "Shape legend title", value = input$selectShape)
+    textInput('legendShape', label = tr("ui_3shape"), value = input$selectShape)
   })
   
   # --- render fit results
@@ -512,7 +567,7 @@ function(input, output, session) {
   })
   
   output$gofTable <- renderDataTable({ 
-    datatable(table_gof(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))})
+    datatable(table_gof(), options = list(dtopt(), paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))})
   
   output$fitFail <- renderText({
     req(fit_fail() != "")
@@ -524,26 +579,20 @@ function(input, output, session) {
   })
   
   output$estHc <- renderUI({
-    HTML("The model averaged estimate of the concentration that affects",
-                                 paste0("<b>", input$selectHc,"</b>"), 
-                                 "% of species is",
-                                 paste0("<b>", estimate_hc(), "</b>"))})
+    HTML(tr("ui_3hc"), paste0("<b>", input$selectHc,"</b>"), 
+         tr("ui_3hc2"), paste0("<b>", estimate_hc(), "</b>"))})
   
   output$clTable <- renderDataTable({
     datatable(table_cl(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))
   })
   
-  output$sampTime <- renderText({
-    HTML("It will take around", paste0("<b>", estimate_time(), "</b>"), "to get CL from",
-         paste0("<b>", input$bootSamp, "</b>"), "bootstrap samples.")
-  })
-  
   output$describeCl <- renderText({
-    HTML("You have selected", paste0("<b>", input$selectHc, "</b>"), 
-         "% threshold to estimate hazard concentration and", 
+    HTML(tr("ui_3cldesc1"), paste0("<b>", input$selectHc, "</b>"), 
+         tr("ui_3cldesc2"), 
          paste0("<b>", input$bootSamp, "</b>"), 
-         "bootstrap samples to generate confidence limits. This will take around",
-         paste0("<b>", estimate_time(), "</b>"))
+         tr("ui_3cldesc3"),
+         paste0("<b>", estimate_time(), "</b>"),
+         tr("ui_3cldesc4"))
   })
   
   # --- render UI
