@@ -644,7 +644,7 @@ function(input, output, session) {
   
   # --- download handlers
   output$dlFitPlot <- downloadHandler(
-    filename = function() {"ssdca_distFitPlot.png"},
+    filename = function() {"ssdtools_distFitPlot.png"},
     content = function(file) {
       ggplot2::ggsave(file, plot = plot_dist(), device = "png",
                       width = get_width2(), height = get_height2(), dpi = get_dpi2())
