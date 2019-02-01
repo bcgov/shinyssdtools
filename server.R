@@ -519,7 +519,14 @@ function(input, output, session) {
   })
 
   estimate_time <- reactive({
-    df <- data.frame(n = c("500", "1,000", "5,000", "10,000"), time = c("10 seconds", "15 seconds", "1 and a half minutes", "3 minutes"))
+    if(translation.value$lang == "English"){
+      df <- data.frame(n = c("500", "1,000", "5,000", "10,000"), 
+                       time = c("10 seconds", "15 seconds", "1.5 minutes", "3 minutes"))
+    } else {
+      df <- data.frame(n = c("500", "1,000", "5,000", "10,000"), 
+                       time = c("10 secondes", "15 secondes", "1.5 minutes", "3 minutes"))
+    }
+    
     df[df$n == input$bootSamp,]$time
   })
   
@@ -604,13 +611,13 @@ function(input, output, session) {
          tr("ui_3hc2"), paste0("<b>", estimate_hc(), "</b>"))})
   
   output$clTable <- renderDataTable({
-    datatable(table_cl(), options = list(paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))
+    datatable(table_cl(), options = list(dom = "t"))
   })
   
   output$describeCl <- renderText({
     HTML(tr("ui_3cldesc1"), paste0("<b>", input$selectHc, "</b>"), 
          tr("ui_3cldesc2"), 
-         paste0("<b>", input$bootSamp, "</b>"), 
+         paste0("<b>", input$bootSamp, ".</b>"), 
          tr("ui_3cldesc3"),
          paste0("<b>", estimate_time(), "</b>"),
          tr("ui_3cldesc4"))
