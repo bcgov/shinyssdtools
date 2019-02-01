@@ -466,8 +466,6 @@ function(input, output, session) {
   })
   
   plot_model_average <- reactive({
-    # print(input$selectHC)
-    # req(input$selectHC)
     req(input$selectColour)
     req(input$selectLabel)
     req(input$selectShape)
@@ -478,9 +476,7 @@ function(input, output, session) {
 
     data <- names_data()
     pred <- predict_hc()
-    print(pred)
     conc <- input$selectConc %>% make.names()
-    print(conc)
     colour <- if(input$selectColour == "-none-") {NULL} else {input$selectColour %>% make.names()}
     label <- if(input$selectLabel == "-none-") {NULL} else {input$selectLabel %>% make.names()}
     shape <- if(input$selectShape == "-none-") {NULL} else {input$selectShape %>% make.names()}
@@ -721,7 +717,6 @@ function(input, output, session) {
     req(check_fit() == "")
     req(check_pred() == "")
     req(input$selectLabel)
-    print(input$legendShape)
     xmax <- ifelse(is.null(input$xMax), "NULL", input$xMax)
     legend.colour <- ifelse(is.null(input$legendColour), "NULL", paste0("'", input$legendColour, "'"))
     legend.shape <- ifelse(is.null(input$legendShape) || input$legendShape == "-none-", "NULL", paste0("'", input$legendShape, "'"))
