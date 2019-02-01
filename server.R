@@ -190,14 +190,15 @@ function(input, output, session) {
     HTML(tr("ui_draft"), tr("ui_about"))
   })
   
-  output$test <- renderUI({
-    
+  output$ui_userguide <- renderUI({
+    if(translation.value$lang == "English"){
+      return(includeHTML("user-guide/user-guide.html"))
+    }
+    includeHTML("user-guide/user-guide-french.html")
   })
   
-  output$test <- renderUI({
-    
-  })
-  # 
+  
+
   ########### Reactives --------------------
   # --- upload data
   translation.value <- reactiveValues(
@@ -579,7 +580,8 @@ function(input, output, session) {
   })
   
   output$gofTable <- renderDataTable({ 
-    datatable(table_gof(), options = list(dtopt(), paging = FALSE, sDom  = '<"top">lrt<"bottom">ip'))})
+    datatable(table_gof(), options = list(dom = "t"))
+    })
   
   output$fitFail <- renderText({
     req(fit_fail() != "")

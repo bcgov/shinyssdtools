@@ -52,7 +52,7 @@ navguide,User Guide,Guide de l’utilisateur
 3width,Width,Largeur
 3height,Height,Hauteur
 3dpi,Dpi (resolution),Dpi (résolution)
-3clbutton,Get CL,Obtenir CL
+3clbutton,Get CL,Get CL
 3cldesc1,The selected % threshold to estimate hazard concentration is,Le percentile limite est de
 3cldesc2,and the number of bootstrap samples is,et le nombre de simulations bootstrap est de
 3cldesc3,This will take around,Cela prendra environ

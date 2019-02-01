@@ -187,7 +187,7 @@ ui = tagList(shinyjs::useShinyjs(),
                                   ),
                          tabPanel(title = uiOutput("nav_guide"),
                                   br(),
-                                  includeHTML("user-guide/user-guide.html"))
+                                  uiOutput("ui_userguide"))
              ))
 
 
