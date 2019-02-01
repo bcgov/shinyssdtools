@@ -652,7 +652,7 @@ function(input, output, session) {
   )
   
   output$dlPredPlot <- downloadHandler(
-    filename = function() {"ssdca_modelAveragePlot.png"},
+    filename = function() {"ssdtools_modelAveragePlot.png"},
     content = function(file) {
       ggplot2::ggsave(file, plot = plot_model_average(), device = "png", 
                       width = get_width(), height = get_height(), dpi = get_dpi())
@@ -660,14 +660,14 @@ function(input, output, session) {
   )
   
   output$dlFitTable <- downloadHandler(
-    filename = function() {"ssdca_distGofTable.csv"},
+    filename = function() {"ssdtools_distGofTable.csv"},
     content <- function(file) {
       readr::write_csv(table_gof() %>% as_tibble(), file)
     }
   )
   
   output$dlPredTable <- downloadHandler(
-    filename = function() {"ssdca_predictTable.csv"},
+    filename = function() {"ssdtools_predictTable.csv"},
     content <- function(file) {
       if(!is.null(table_cl())) {
         return(readr::write_csv(table_cl() %>% as_tibble(), file))
