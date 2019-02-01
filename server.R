@@ -1,12 +1,36 @@
 function(input, output, session) {
   
-  ########### Render UI -------------------
+  ########### Render UI Translations -------------------
   output$ui_1choose <- renderUI({
     h5(tr("ui_1choose"))
   })
   
   output$ui_navtitle <- renderUI({
-    h5(tr("ui_navtitle"))
+    HTML(tr("ui_navtitle"))
+  })
+  
+  output$ui_nav1 <- renderUI({
+    HTML(tr("ui_nav1"))
+  })
+  
+  output$ui_nav2 <- renderUI({
+    HTML(tr("ui_nav2"))
+  })
+  
+  output$ui_nav3 <- renderUI({
+    HTML(tr("ui_nav3"))
+  })
+  
+  output$ui_nav4 <- renderUI({
+    HTML(tr("ui_nav4"))
+  })
+  
+  output$ui_navabout <- renderUI({
+    HTML(tr("ui_navabout"))
+  })
+  
+  output$ui_navguide <- renderUI({
+    HTML(tr("ui_navguide"))
   })
   
   output$ui_1data <- renderUI({
@@ -196,8 +220,6 @@ function(input, output, session) {
     }
     includeHTML("user-guide/user-guide-french.html")
   })
-  
-  
 
   ########### Reactives --------------------
   # --- upload data
@@ -326,7 +348,6 @@ function(input, output, session) {
   output$hintFi <- renderText(hint(check_fit()))
   output$hintPr <- renderText(hint(check_pred()))
 
-
   # --- render column choices
   column_names <- reactive({
     names(clean_data())
@@ -409,6 +430,7 @@ function(input, output, session) {
   # --- fit distributions
   fit_dist <- reactive({
     req(input$selectConc)
+    req(input$selectDist)
     req(check_fit() == "")
     data <- names_data()
     conc <- input$selectConc %>% make.names()
@@ -440,50 +462,35 @@ function(input, output, session) {
   # --- predict and model average
   predict_hc <- reactive({
     dist <- fit_dist()
-    print(dist)
     stats::predict(dist, nboot = 10)
   })
   
   plot_model_average <- reactive({
-    req(input$selectHC)
-    if(input$selectHc == 0 | input$selectHc > 99)
-      return()
+    # print(input$selectHC)
+    # req(input$selectHC)
     req(input$selectColour)
     req(input$selectLabel)
     req(input$selectShape)
-
-    print(input$selectColour)
-    print(input$selectLabel)
-    print(input$selectShape)
+    req(input$selectConc)
     
+    if(input$selectHc == 0 | input$selectHc > 99)
+      return()
+
     data <- names_data()
     pred <- predict_hc()
+    print(pred)
     conc <- input$selectConc %>% make.names()
+    print(conc)
     colour <- if(input$selectColour == "-none-") {NULL} else {input$selectColour %>% make.names()}
     label <- if(input$selectLabel == "-none-") {NULL} else {input$selectLabel %>% make.names()}
     shape <- if(input$selectShape == "-none-") {NULL} else {input$selectShape %>% make.names()}
     hc <- if(!input$checkHc) {NULL} else {input$selectHc}
     
-    print("hi2")
-    print(is.null(shape_data))
-    
     shape_data <- if(is.null(shape)) {NULL} else {data[[shape]]}
-    print("hi")
-    print(is.character(shape_data))
-    print(is.null(shape_data))
-    
-    validate(need(is.null(shape_data) || shape_data %>% is.character(), message = "Symbol variable cannot be numeric."))
+
+    validate(need(is.null(shape_data) | shape_data %>% is.character(), message = "Symbol variable cannot be numeric."))
     validate(need(shape_data %>% unique %>% length < 7, message = "Symbol variable cannot have more than 6 distinct values."))
-    print(data)
-    print(pred)
-    print(conc)
-    print(label)
-    print(colour)
-    print(hc)
-    print(input$adjustLabel)
-    print(input$xaxis)
-    print(input$yaxis)
-    
+
     ssdca::ssd_plot(data, pred, left = conc, label = label, 
                     color = colour, shape = shape, hc = hc, ci = FALSE, 
                     shift_x = input$adjustLabel %>% as.numeric(), 
@@ -512,7 +519,7 @@ function(input, output, session) {
   })
 
   estimate_time <- reactive({
-    df <- data.frame(n = c("500", "1,000", "5,000", "10,000"), time = c("10 seconds.", "15 seconds.", "1 and a half minutes.", "3 minutes."))
+    df <- data.frame(n = c("500", "1,000", "5,000", "10,000"), time = c("10 seconds", "15 seconds", "1 and a half minutes", "3 minutes"))
     df[df$n == input$bootSamp,]$time
   })
   
