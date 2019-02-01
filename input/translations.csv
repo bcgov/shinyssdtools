@@ -3,7 +3,7 @@ navtitle,Fit and Plot Species Sensitivity Distributions,Ajustement des courbes d
 nav1,1. Data,1. Données
 nav2,2. Fit,2. Ajustement
 nav3,3. Predict,3. Estimation
-navr,4. R code,4. Code R
+nav4,R code,Code R
 navabout,About,À propos
 navguide,User Guide,Guide de l’utilisateur
 1choose,Choose one of the following options:,Choisir l’une des options suivantes :
