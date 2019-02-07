@@ -250,6 +250,7 @@ function(input, output, session) {
   hot_data = reactive({
     if (!is.null(input$hot)) {
       DF = hot_to_r(input$hot)
+      DF <- mutate_if(DF, is.factor, as.character)
     } else {
       if (is.null(hot.values[["DF"]]))
         DF = data.frame(Concentration = rep(NA_real_, 10), 
@@ -306,21 +307,21 @@ function(input, output, session) {
     data <- clean_data()
     
     if(length(data[[conc]]) == 0L)
-      return("You have not added a dataset.")
+      return(tr("ui_hintdata"))
     if(!is.numeric(data[[conc]]))
-      return("Concentration column must contain numbers.")
+      return(tr("ui_hintnum"))
     if(any(is.na(data[[conc]])))
-      return("Concentration values must not be missing.")
+      return(tr("ui_hintmiss"))
     if(any(data[[conc]] <= 0))
-      return("Concentration values must be positive.")
+      return(tr("ui_hintpos"))
     if(any(is.infinite(data[[conc]])))
-      return("Concentration values must be finite.")
+      return(tr("ui_hintfin"))
     if(zero_range(data[[conc]]))
-      return("Concentration values must not all be identical.")
+      return(tr("ui_hintident"))
     if(length(data[[conc]]) < 6)
-      return("There must be at least 6 concentration values.")
+      return(tr("ui_hint6"))
     if(is.null(dist))
-      return("At least one distribution must be selected.")
+      return(tr("ui_hintdist"))
     ""
   })
   
@@ -332,11 +333,11 @@ function(input, output, session) {
   check_pred <- reactive({
     data <- clean_data()
     if("Concentration" %in% names(data) && length(data[["Concentration"]]) == 0L)
-      return("You have not added a dataset.")
+      return(tr("ui_hintdata"))
     if(is.null(input$selectConc))
-      return("You must select the 'Fit' tab before using the 'Predict' tab.")
+      return(tr("ui_hintpred"))
     if(check_fit() != "")
-      return("You have not successfully fit any distributions yet. Run the 'Fit' tab first.")
+      return(tr("ui_hintfit"))
     ""
   })
   
@@ -595,7 +596,7 @@ function(input, output, session) {
   
   output$fitFail <- renderText({
     req(fit_fail() != "")
-    HTML(paste0("<font color='grey'>", paste(fit_fail(), "distribution(s) failed to fit. Run R code to get more information."), "</font>"))
+    HTML(paste0("<font color='grey'>", paste(fit_fail(), tr("ui_hintfail")), "</font>"))
   })
   # --- render predict results
   output$modelAveragePlot <- renderPlot({
