@@ -484,9 +484,8 @@ function(input, output, session) {
     hc <- if(!input$checkHc) {NULL} else {input$selectHc}
     
     shape_data <- if(is.null(shape)) {NULL} else {data[[shape]]}
-
-    validate(need(is.null(shape_data) | shape_data %>% is.character(), message = "Symbol variable cannot be numeric."))
-    validate(need(shape_data %>% unique %>% length < 7, message = "Symbol variable cannot have more than 6 distinct values."))
+    
+    validate(need(is.null(shape_data) | shape_data %>% is.character(), message = tr("ui_hintsym")))
 
     ssdca::ssd_plot(data, pred, left = conc, label = label, 
                     color = colour, shape = shape, hc = hc, ci = FALSE, 
