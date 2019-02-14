@@ -688,7 +688,7 @@ function(input, output, session) {
     c1 <- "# read dataset"
     c2 <- "# the file argument of read_csv() assumes the file is in your working directory. You may need to change the file path to correctly read your dataset."
     c4 <- "# this is the output of dput, which is used to create a data.frame from data entered in interactive spreadsheet"
-    hot <- paste0("data <- ", capture.output(dput(clean_data())) %>% glue::collapse())
+    hot <- paste0("data <- ", capture.output(dput(clean_data())) %>% glue::glue_collapse())
     upload <- paste0("data <- read_csv(file = '", input$uploadData$name, "')")
     demo <- "data <- ssdtools::boron_data"
     c3 <- "# fix unacceptable column names"
