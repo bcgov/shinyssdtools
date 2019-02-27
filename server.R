@@ -1,226 +1,5 @@
 function(input, output, session) {
   
-  ########### Render UI Translations -------------------
-  output$ui_1choose <- renderUI({
-    h5(tr("ui_1choose"))
-  })
-  
-  output$ui_navtitle <- renderUI({
-    HTML(tr("ui_navtitle"))
-  })
-  
-  output$ui_nav1 <- renderUI({
-    HTML(tr("ui_nav1"))
-  })
-  
-  output$ui_nav2 <- renderUI({
-    HTML(tr("ui_nav2"))
-  })
-  
-  output$ui_nav3 <- renderUI({
-    HTML(tr("ui_nav3"))
-  })
-  
-  output$ui_nav4 <- renderUI({
-    HTML(tr("ui_nav4"))
-  })
-  
-  output$ui_navabout <- renderUI({
-    HTML(tr("ui_navabout"))
-  })
-  
-  output$ui_navguide <- renderUI({
-    HTML(tr("ui_navguide"))
-  })
-  
-  output$ui_1data <- renderUI({
-    p(tr("ui_1data"), actionLink("demoData", tr("ui_1data2"), icon = icon('table')))
-  })
-  
-  output$ui_1datahelp <- renderUI({
-    helpText(tr("ui_1datahelp"))
-  })
-  
-  output$ui_1csv <- renderUI({
-    p(tr("ui_1csv"))
-  })
-  
-  output$ui_1csvhelp <- renderUI({
-        helpText(tr("ui_1csvhelp"))
-  })
-  
-  output$ui_1csvupload <- renderUI({
-    fileInput('uploadData', buttonLabel = span(tagList(icon("upload"), "csv")),
-              label = "", placeholder = tr("ui_1csvlabel"),
-              accept = c('.csv'))
-  })
-  
-  output$ui_1table <- renderUI({
-    p(tr("ui_1table"))
-  })
-  
-  output$ui_1tablehelp <- renderUI({
-    helpText(tr("ui_1tablehelp"))
-  })
-  
-  output$ui_1preview <- renderUI({
-    h5(tr("ui_1preview"))
-  })
-  
-  output$ui_1note <- renderUI({
-    helpText(tr("ui_1note"))
-  })
-  
-  output$ui_2select <- renderUI({
-    selectizeInput('selectDist',
-                   label = label_mandatory(tr("ui_2dist")),
-                   multiple = TRUE,
-                   choices = c(default.dists, extra.dists),
-                   selected = default.dists,
-                   options = list(
-                     'plugins' = list('remove_button'),
-                     'create' = TRUE,
-                     'persist' = FALSE))
-  })
-
-  output$ui_2png <- renderUI({
-    actionLink('linkFormatFit', label = tr("ui_2png"))
-  })
-
-  output$ui_2width <- renderUI({
-    numericInput('selectWidth2', label = tr("ui_2width"), min = 1, max = 20, step = 1, value = 8)
-  })
-
-  output$ui_2height <- renderUI({
-    numericInput('selectHeight2', label = tr("ui_2height"), min = 1, max = 20, step = 1, value = 6)
-    })
-
-  output$ui_2dpi <- renderUI({
-    numericInput('selectDpi2', label = tr("ui_2dpi"), min = 50, max = 3000, step = 50, value = 300)
-    })
-
-  output$selectConc = renderUI({
-    selectInput("selectConc",
-                label = label_mandatory(tr("ui_2conc")),
-                choices = column_names(),
-                selected = guess_conc())
-  })
-
-  output$ui_2plot <- renderUI({
-    h5(tr("ui_2plot"))
-  })
-
-  output$ui_2table <- renderUI({
-    h5(tr("ui_2table"))
-  })
-
-  output$ui_2dlplot <- renderUI({
-      downloadButton("dlFitPlot", label = tr("ui_2dlplot"),
-                     style = 'padding:4px; font-size:80%')
-  })
-
-  output$ui_2dltable <- renderUI({
-      downloadButton("dlFitTable", label = tr("ui_2dltable"),
-                     style = 'padding:4px; font-size:80%')
-  })
-
-  output$ui_3est <- renderUI({
-    h5(tr("ui_3est"))
-  })
-
-  output$ui_3bshint <- renderUI({
-    hint(tr("ui_3bshint"))
-  })
-
-  output$ui_3thresh <- renderUI({
-    numericInput("selectHc", label = tr("ui_3thresh"), value = 5, min = 0,
-                 max = 99, step = 5, width = "100px")
-  })
-
-  output$ui_3samples <- renderUI({
-    selectInput('bootSamp', label = tr("ui_3samples"),
-                choices = c("500", "1,000", "5,000", "10,000"),
-                selected = "10,000",
-                width = "130px")
-  })
-
-  output$ui_3plotopts <- renderUI({
-    actionLink('linkFormatPredict', label = tr("ui_3plotopts"))
-  })
-
-  output$ui_3pal <- renderUI({
-    selectInput('selectPalette', label = tr("ui_3pal"), choices = pals, selected = pals[2])
-  })
-
-  output$ui_3xlab <- renderUI({
-    textInput('xaxis', value = "Concentration", label = tr("ui_3xlab"))
-  })
-
-  output$ui_3ylab <- renderUI({
-    textInput('yaxis', value = "Percent of Species Affected", label = tr("ui_3ylab"))
-  })
-
-  output$ui_3title <- renderUI({
-    textInput('title', value = "", label = tr("ui_3title"))
-  })
-
-  output$ui_3pngopts <- renderUI({
-    actionLink('linkPngFormatPredict', label = tr("ui_3pngopts"))
-  })
-
-  output$ui_3width <- renderUI({
-    inline(numericInput('selectWidth', label = tr("ui_3width"), min = 1, max = 20, step = 1, value = 8))
-  })
-
-  output$ui_3height <- renderUI({
-    inline(numericInput('selectHeight', label = tr("ui_3height"), min = 1, max = 20, step = 1, value = 6))
-  })
-
-  output$ui_3dpi <- renderUI({
-    inline(numericInput('selectDpi', label = tr("ui_3dpi"), min = 50, max = 3000, step = 50, value = 600))
-  })
-
-  output$ui_3model <- renderUI({
-    h5(tr("ui_3model"))
-  })
-
-  output$ui_3dlplot <- renderUI({
-    downloadButton("dlPredPlot", label = tr("ui_2dlplot"),
-                   style = 'padding:4px; font-size:80%')
-  })
-
-  output$ui_3dltable <- renderUI({
-    downloadButton("dlPredTable", label = tr("ui_2dltable"),
-                   style = 'padding:4px; font-size:80%')
-  })
-
-  output$ui_3cl <- renderUI({
-    h5(tr("ui_3cl"))
-  })
-
-  output$ui_3help <- renderUI({
-    helpText(tr("ui_3help"))
-  })
-
-  output$ui_3clbutton <- renderUI({
-    actionButton('getCl', label = tr("ui_3clbutton"))
-  })
-
-  output$ui_4help <- renderUI({
-    helpText(tr("ui_4help"))
-  })
-  
-  output$ui_about <- renderUI({
-    HTML(tr("ui_draft"), tr("ui_about"))
-  })
-  
-  output$ui_userguide <- renderUI({
-    if(translation.value$lang == "English"){
-      return(includeHTML("user-guide/user-guide.html"))
-    }
-    includeHTML("user-guide/user-guide-french.html")
-  })
-
   ########### Reactives --------------------
   # --- upload data
   translation.value <- reactiveValues(
@@ -290,7 +69,7 @@ function(input, output, session) {
       data
     })
   
-  # deal with unacceptable coumn names
+  # deal with unacceptable column names
   names_data <- reactive({
     data <- clean_data()
     names(data) %<>% make.names
@@ -425,7 +204,7 @@ function(input, output, session) {
     if(input$selectHc == 0 | input$selectHc > 99)
       return()
     pred <- predict_hc()
-    pred[pred$percent == input$selectHc, "est"] %>% round(2)
+    pred[pred$percent == input$selectHc, "est"] %>% signif(3)
   })
   
   # --- fit distributions
@@ -435,21 +214,18 @@ function(input, output, session) {
     req(check_fit() == "")
     data <- names_data()
     conc <- input$selectConc %>% make.names()
-    dist <-  ssdca::ssd_fit_dists(data, left = conc,
+    dist <-  ssdtools::ssd_fit_dists(data, left = conc,
                                           dists = input$selectDist, silent = TRUE)
   })
   
   plot_dist <- reactive({
     dist <- fit_dist()
-    # withProgress(message = "This won't take long...", value = 0,{
-      # incProgress(0.6)
      ggplot2::autoplot(dist, ylab = tr("ui_2ploty"))
-    # })
   })
   
   table_gof <- reactive({
     dist <- fit_dist()
-    gof <- ssdca::ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ round(., 2))
+    gof <- ssdtools::ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ signif(., 3))
     names(gof) <- gsub("weight", tr("ui_2weight"), names(gof))
     gof
   })
@@ -487,7 +263,7 @@ function(input, output, session) {
     
     validate(need(is.null(shape_data) | shape_data %>% is.character(), message = tr("ui_hintsym")))
 
-    ssdca::ssd_plot(data, pred, left = conc, label = label, 
+    ssdtools::ssd_plot(data, pred, left = conc, label = label, 
                     color = colour, shape = shape, hc = hc, ci = FALSE, 
                     shift_x = input$adjustLabel %>% as.numeric(), 
                     xlab = input$xaxis, ylab = input$yaxis) +
@@ -508,9 +284,9 @@ function(input, output, session) {
     dist <- fit_dist()
     withProgress(value = 0, message = "Getting Confidence Limits...", {
       incProgress(0.4)
-      ssdca::ssd_hc(dist, hc = input$selectHc, nboot = input$bootSamp %>% 
+      ssdtools::ssd_hc(dist, hc = input$selectHc, nboot = input$bootSamp %>% 
                       gsub(",", "", .) %>% as.integer) %>%
-        mutate_at(c("est", "se", "ucl", "lcl"), ~ round(., 2))
+        mutate_at(c("est", "se", "ucl", "lcl"), ~ signif(., 3))
     })
   })
 
@@ -524,13 +300,6 @@ function(input, output, session) {
     }
     
     df[df$n == input$bootSamp,]$time
-  })
-  
-  # --- create feedback
-  ssdca_shiny_feedback <- reactive({
-    data.frame(Name = input$name,
-               Email = input$email,
-               Comment = input$comment)
   })
   
   ########### Outputs --------------------
@@ -814,34 +583,227 @@ function(input, output, session) {
     upload.values$upload_state <- 'hot'
   })
   
-  # --- feedback
-  observeEvent(input$contactUs, {
-    shinyjs::toggle("feedbackForm", anim = TRUE, animType = "slide", time = 0.2)
+  ########### Render UI Translations -------------------
+  output$ui_1choose <- renderUI({
+    h5(tr("ui_1choose"))
   })
   
-  create_feedback <- reactive({
-    data.frame(App = "ssdtools",
-               Name = input$name,
-               Email = input$email,
-               Comment = input$comment)
+  output$ui_navtitle <- renderUI({
+    HTML(tr("ui_navtitle"))
   })
   
-  observe({
-    shinyjs::toggleState("submit_feedback", condition = input$comment != "")
+  output$ui_nav1 <- renderUI({
+    HTML(tr("ui_nav1"))
   })
   
-  observeEvent(input$submit_feedback, {   
-    progress <- shiny::Progress$new()
-    on.exit(progress$close())
-    progress$set(message = "Sending message...", value = 0.5)  
-    create_feedback() %>% slackr::slackr()
-    showModal(modalDialog(
-      footer = modalButton("OK"),
-      title = "",
-      "Thanks! Your message was successfully submitted."
-    ))
-    shinyjs::reset('feedbackForm')
-    shinyjs::hide('feedbackForm')})
+  output$ui_nav2 <- renderUI({
+    HTML(tr("ui_nav2"))
+  })
+  
+  output$ui_nav3 <- renderUI({
+    HTML(tr("ui_nav3"))
+  })
+  
+  output$ui_nav4 <- renderUI({
+    HTML(tr("ui_nav4"))
+  })
+  
+  output$ui_navabout <- renderUI({
+    HTML(tr("ui_navabout"))
+  })
+  
+  output$ui_navguide <- renderUI({
+    HTML(tr("ui_navguide"))
+  })
+  
+  output$ui_1data <- renderUI({
+    p(tr("ui_1data"), actionLink("demoData", tr("ui_1data2"), icon = icon('table')))
+  })
+  
+  output$ui_1datahelp <- renderUI({
+    helpText(tr("ui_1datahelp"))
+  })
+  
+  output$ui_1csv <- renderUI({
+    p(tr("ui_1csv"))
+  })
+  
+  output$ui_1csvhelp <- renderUI({
+    helpText(tr("ui_1csvhelp"))
+  })
+  
+  output$ui_1csvupload <- renderUI({
+    fileInput('uploadData', buttonLabel = span(tagList(icon("upload"), "csv")),
+              label = "", placeholder = tr("ui_1csvlabel"),
+              accept = c('.csv'))
+  })
+  
+  output$ui_1table <- renderUI({
+    p(tr("ui_1table"))
+  })
+  
+  output$ui_1tablehelp <- renderUI({
+    helpText(tr("ui_1tablehelp"))
+  })
+  
+  output$ui_1preview <- renderUI({
+    h5(tr("ui_1preview"))
+  })
+  
+  output$ui_1note <- renderUI({
+    helpText(tr("ui_1note"))
+  })
+  
+  output$ui_2select <- renderUI({
+    selectizeInput('selectDist',
+                   label = label_mandatory(tr("ui_2dist")),
+                   multiple = TRUE,
+                   choices = c(default.dists, extra.dists),
+                   selected = default.dists,
+                   options = list(
+                     'plugins' = list('remove_button'),
+                     'create' = TRUE,
+                     'persist' = FALSE))
+  })
+  
+  output$ui_2png <- renderUI({
+    actionLink('linkFormatFit', label = tr("ui_2png"))
+  })
+  
+  output$ui_2width <- renderUI({
+    numericInput('selectWidth2', label = tr("ui_2width"), min = 1, max = 20, step = 1, value = 8)
+  })
+  
+  output$ui_2height <- renderUI({
+    numericInput('selectHeight2', label = tr("ui_2height"), min = 1, max = 20, step = 1, value = 6)
+  })
+  
+  output$ui_2dpi <- renderUI({
+    numericInput('selectDpi2', label = tr("ui_2dpi"), min = 50, max = 3000, step = 50, value = 300)
+  })
+  
+  output$selectConc = renderUI({
+    selectInput("selectConc",
+                label = label_mandatory(tr("ui_2conc")),
+                choices = column_names(),
+                selected = guess_conc())
+  })
+  
+  output$ui_2plot <- renderUI({
+    h5(tr("ui_2plot"))
+  })
+  
+  output$ui_2table <- renderUI({
+    h5(tr("ui_2table"))
+  })
+  
+  output$ui_2dlplot <- renderUI({
+    downloadButton("dlFitPlot", label = tr("ui_2dlplot"),
+                   style = 'padding:4px; font-size:80%')
+  })
+  
+  output$ui_2dltable <- renderUI({
+    downloadButton("dlFitTable", label = tr("ui_2dltable"),
+                   style = 'padding:4px; font-size:80%')
+  })
+  
+  output$ui_3est <- renderUI({
+    h5(tr("ui_3est"))
+  })
+  
+  output$ui_3bshint <- renderUI({
+    hint(tr("ui_3bshint"))
+  })
+  
+  output$ui_3thresh <- renderUI({
+    numericInput("selectHc", label = tr("ui_3thresh"), value = 5, min = 0,
+                 max = 99, step = 5, width = "100px")
+  })
+  
+  output$ui_3samples <- renderUI({
+    selectInput('bootSamp', label = tr("ui_3samples"),
+                choices = c("500", "1,000", "5,000", "10,000"),
+                selected = "10,000",
+                width = "130px")
+  })
+  
+  output$ui_3plotopts <- renderUI({
+    actionLink('linkFormatPredict', label = tr("ui_3plotopts"))
+  })
+  
+  output$ui_3pal <- renderUI({
+    selectInput('selectPalette', label = tr("ui_3pal"), choices = pals, selected = pals[2])
+  })
+  
+  output$ui_3xlab <- renderUI({
+    textInput('xaxis', value = "Concentration", label = tr("ui_3xlab"))
+  })
+  
+  output$ui_3ylab <- renderUI({
+    textInput('yaxis', value = "Percent of Species Affected", label = tr("ui_3ylab"))
+  })
+  
+  output$ui_3title <- renderUI({
+    textInput('title', value = "", label = tr("ui_3title"))
+  })
+  
+  output$ui_3pngopts <- renderUI({
+    actionLink('linkPngFormatPredict', label = tr("ui_3pngopts"))
+  })
+  
+  output$ui_3width <- renderUI({
+    inline(numericInput('selectWidth', label = tr("ui_3width"), min = 1, max = 20, step = 1, value = 8))
+  })
+  
+  output$ui_3height <- renderUI({
+    inline(numericInput('selectHeight', label = tr("ui_3height"), min = 1, max = 20, step = 1, value = 6))
+  })
+  
+  output$ui_3dpi <- renderUI({
+    inline(numericInput('selectDpi', label = tr("ui_3dpi"), min = 50, max = 3000, step = 50, value = 600))
+  })
+  
+  output$ui_3model <- renderUI({
+    h5(tr("ui_3model"))
+  })
+  
+  output$ui_3dlplot <- renderUI({
+    downloadButton("dlPredPlot", label = tr("ui_2dlplot"),
+                   style = 'padding:4px; font-size:80%')
+  })
+  
+  output$ui_3dltable <- renderUI({
+    downloadButton("dlPredTable", label = tr("ui_2dltable"),
+                   style = 'padding:4px; font-size:80%')
+  })
+  
+  output$ui_3cl <- renderUI({
+    h5(tr("ui_3cl"))
+  })
+  
+  output$ui_3help <- renderUI({
+    helpText(tr("ui_3help"))
+  })
+  
+  output$ui_3clbutton <- renderUI({
+    actionButton('getCl', label = tr("ui_3clbutton"))
+  })
+  
+  output$ui_4help <- renderUI({
+    helpText(tr("ui_4help"))
+  })
+  
+  output$ui_about <- renderUI({
+    HTML(tr("ui_draft"), tr("ui_about"))
+  })
+  
+  output$ui_userguide <- renderUI({
+    if(translation.value$lang == "English"){
+      return(includeHTML("user-guide/user-guide.html"))
+    }
+    includeHTML("user-guide/user-guide-french.html")
+  })
+  
 }
   
 
