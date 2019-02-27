@@ -1,7 +1,6 @@
 library(shiny)
 library(dplyr)
 library(readr)
-library(slackr)
 library(magrittr)
 library(ggplot2)
 library(DT)
