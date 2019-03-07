@@ -10,6 +10,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.
 
-rsconnect::deployApp(account = "poissonconsulting", appName = "ssdtools", forceUpdate = TRUE)
-rsconnect::deployApp(account = "poissonconsulting", appName = "ssdca-shiny", forceUpdate = TRUE)
+rsconnect::deployApp(account = "poissonconsulting", appName = "ssdtools", forceUpdate = TRUE, appDir = "shinyApp")
+rsconnect::deployApp(account = "poissonconsulting", appName = "ssdca-shiny", forceUpdate = TRUE, appDir = "shinyApp")
 
