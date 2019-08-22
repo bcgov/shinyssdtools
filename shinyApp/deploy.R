@@ -11,5 +11,5 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 rsconnect::deployApp(account = "poissonconsulting", appName = "ssdtools", forceUpdate = TRUE, appDir = "shinyApp")
-rsconnect::deployApp(account = "poissonconsulting", appName = "ssdca-shiny", forceUpdate = TRUE, appDir = "shinyApp")
+rsconnect::deployApp(account = "poissonconsulting", appName = "ssdca-shiny", forceUpdate = TRUE, appDir = "shinyApp-forward")
 
