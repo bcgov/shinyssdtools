@@ -18,8 +18,8 @@ ui <- fluidPage(
              br(),
     h3("ssdtools doesn't live here anymore!"),
     h5("Please go to"),
-    tags$a(href = "https://poissonconsulting.shinyapps.io/ssdtools/", 
-           "https://poissonconsulting.shinyapps.io/ssdtools/"),
+    tags$a(href = "https://bcgov-env.shinyapps.io/ssdtools/", 
+           "https://bcgov-env.shinyapps.io/ssdtools/"),
     h5("and update your bookmarks."))
 )
 
