@@ -1,0 +1,149 @@
+id,english,french,french 2020-01-20 (MM)
+,,,
+navtitle,Fit and Plot Species Sensitivity Distributions,Ajustement des courbes de Distribution de la Sensibilité des Espèces,Ajustement et Représentation des courbes de Distribution de la Sensibilité des Espèces
+,,,
+nav1,1. Data,1. Données,
+,,,
+nav2,2. Fit,2. Ajustement,
+,,,
+nav3,3. Predict,3. Estimation,
+,,,
+nav4,R code,Code R,
+,,,
+navabout,About,À propos,
+,,,
+navguide,User Guide,Guide de l’utilisateur,
+,,,
+1choose,Choose one of the following options:,Choisir l’une des options suivantes :,
+,,,
+1data,1. Use,1. Utiliser,
+,,,
+1data2,boron dataset,l’ensemble des données pour le bore,l’ensemble de données pour le bore
+,,,
+1datahelp,1. This can be used to demo the app or view a dataset that 'works'. ,1. Ces données peuvent être téléchargées pour visualiser un ensemble 'fonctionnel' de données.,
+,,,
+1csv,2. Upload a csv file,2. Télécharger un fichier csv,
+,,,
+1csvhelp,"2. Upload a csv file containing your dataset. The dataset must include a column with at least 8 distinct, positive, non-missing, numeric concentration values. Other useful but optional variables include species and group, which may be used to label and color plot output, respectively. If you have an xls/xlsx file, try exporting a worksheet to csv using excel. ","2. Télécharger vos données en fichier .csv. L’ensemble des données doit former au moins 1 colonne comportant au minimum 8 concentrations distinctes et positives. Des colonnes pour les espèces et les groupes taxonomiques peuvent également être ajoutées. Des étiquettes et des couleurs sont alors disponibles pour permettre leur identification dans le graphique. Si vous avez un fichier .xl/.xls, il faut l’exporter dans une feuille de calcul .csv en utilisant Excel. ","2. Télécharger vos données en fichier .csv. L’ensemble de données doit contenir une colonne comportant au minimum 8 valeurs numériques de concentrations distinctes, positives et sans valeur manquantes. Il est possible d'ajouter des colonnes pour les espèces et les groupes taxonomiques, ce qui est pratique mais optionnel. Des étiquettes et des couleurs sont alors disponibles pour permettre leur identification dans le graphique. Si vous avez un fichier .xls/.xlsx, il faut l’exporter dans une feuille de calcul .csv en utilisant Excel. "
+,,,
+1csvlabel,Upload your data,Télécharger les données,
+,,,
+1table,3. Fill out table below:,3. Remplir le tableau ci-dessous:,
+,,,
+1tablehelp,"3. The table below is interactive and acts like a simple excel spreadsheet. Click on a cell to begin data input. Right-click on the table to delete/insert rows or columns. Column names cannot be changed. The Concentration column must be filled out, with at least 8 distinct, positive, non-missing, numeric values. Species and Group are optional and may be used to format plot outputs. If the table is behaving unexpectedly, please reload the website. ","3. Le tableau ci-dessous est interactif et s’utilise comme une feuille Excel normale. Cliquer sur une cellule pour commencer à rentrer les données. Faire un clic-droit pour ajouter ou supprimer des colonnes ou des rangées. Le nom des colonnes ne peut pas être modifiés.  La colonne concentration doit être remplie avec, au moins, 8 valeurs numériques positives et distinctes. Aucune valeur manquante. Les colonnes Espèces et Groupes sont optionnelles et sont utilisés pour la mise en forme du graphique. Recharger le site web si des erreurs surviennent dans le tableau.  ","3. Le tableau ci-dessous est interactif et il s’utilise comme une feuille de calcul Excel normale. Cliquer sur une cellule pour commencer à entrer les données. Faire un clic-droit pour ajouter ou supprimer des colonnes ou des rangées. Il n'est pas possiible de modifier le nom des colonnes.  La colonne concentration doit être remplie avec au moins 8 valeurs numériques positives, distinctes et sans valeur manquante. Les colonnes Espèces et Groupes sont optionnelles et sont utilisées pour la mise en forme du graphique. Relancer le site web si des erreurs surviennent dans le tableau.  "
+,,,
+1note,Note: the app is designed to handle one chemical at a time. Each species should not have more than one concentration value.,Note : L’application est faite pour travailler un contaminant à la fois. Il n’est pas possible d’entrer plus d’une concentration par espèce. ,
+,,,
+1preview,Preview chosen dataset:,Visualiser les données:,Prévisualiser l'ensemble de données:
+,,,
+2conc,Select column with concentration values,Sélectionner la colonne avec les concentrations,Sélectionner la colonne avec les valeurs de concentration
+,,,
+2dist,Select distributions to fit,Sélectionner des distributions pour l’ajustement,
+,,,
+2png,Png file formatting options,Option de formatage 'png',
+,,,
+2plot,Plot fitted distributions,Courbes de distribution ajustée,Représentation des courbes de distribution ajustées
+,,,
+2table,Goodness of Fit table,Évaluation de la qualité de l’ajustement des courbes de distribution,Tableau de l'évaluation de la qualité de l’ajustement des courbes de distribution
+,,,
+2weight,weight,coefficient de pondération,
+,,,
+2ploty,Species affected,Espèces recensées,Espèces affectées
+,,,
+2height,Width,Largeur,
+,,,
+2width,Height,Hauteur,
+,,,
+2dpi,Dpi (resolution),Dpi (résolution),
+,,,
+2dlplot,Plot .png,Graphique .png,
+,,,
+2dltable,Table .csv,Tableau .csv,
+,,,
+3est,Estimate hazard concentration,Estimation de la concentration de risque (Ex. HC5) et de son incertitude associée,Estimation de la concentration présentant un risque
+,,,
+3bshint,"10,000 bootstrap samples recommended",10 000 simulations bootstrap recommandées,
+,,,
+3thresh,Threshold (%),Centile sélectionné (%),Seuil (%)
+,,,
+3samples,Bootstrap samples,Simulation bootstrap,Simulations bootstrap
+,,,
+3label,Label by:,Organiser les étiquettes par :,
+,,,
+3colour,Colour by:,Organiser les couleurs par :,
+,,,
+3symbol,Symbol by:,Organiser les symboles par :,
+,,,
+3plotopts,Plot formatting options,Option de formatage des graphiques,Options de formatage du graphique
+,,,
+3pngopts,Png file formatting options,Option de formatage png,Options de formatage du fichier .png
+,,,
+3model,Plot model average and estimate hazard concentration,Modèle agrégé et estimation du centile sélectionné (Ex. HC5) ,Représentation de l'inférence multimodèle et estimation de la concentration présentant un risque
+,,,
+3help,"Click 'Get CL' to calculate the upper and lower confidence limits (CL) for the estimated hazard concentration and selected % threshold."",","Cliquer 'Get CL' pour obtenir le minimum et le maximum des limites de confiance (CL) pour l’estimation de la concentration limite (ex. HC5) et sélectioner le % limite (5). Pour calculer CL d’un % différent ou un nombre différent de simulations bootstrap, entrer simplement de nouvelles valeurs dans la case et cliquer 'Get CL'. ",Cliquer 'Obtenir bornes' pour obtenir les bornes inférieures et supérieures de l'intervalle de confiance  pour l’estimation de la concentration présentant un risque et le seuil (%) sélectionné. 
+,,,
+3hc,The model averaged estimate of the concentration that affects,"Selon le modèle agrégé, la concentration affectant ",L'estimation par inférence multimodèle de la concentration affectant
+,,,
+3hc2,% of species is,% des espèces est de ,
+,,,
+3cl,Get confidence limits,Obtenir les intervalles de confiance,Obtenir les bornes de l'intervalle de confiance
+,,,
+3pal,Colour palette ,Éventail de couleur  ,
+,,,
+3xlab,X-axis label ,Titre de l’axe des X  ,
+,,,
+3ylab,Y-axis label ,Titre de l’axe des Y ,
+,,,
+3title,Plot title ,Titre du graphique  ,
+,,,
+3legend,Colour legend title ,Titre de la légende par couleur,Titre de la légende des couleurs
+,,,
+3shape,Shape legend title,Titre de la légende par forme,Titre de la légende des symboles
+,,,
+3width,Width,Largeur,
+,,,
+3height,Height,Hauteur,
+,,,
+3dpi,Dpi (resolution),Dpi (résolution),
+,,,
+3clbutton,Get CL,Get CL,Obtenir bornes
+,,,
+3cldesc1,The selected % threshold to estimate hazard concentration is,Le percentile limite est de,Le seuil (%) sélectionné pour estimer la concentration présentant un risque est de 
+,,,
+3cldesc11,The selected hazard concentration to estimate % threshold is,Le concentration est de,La concentration présentant un risque sélectionnée pour estimer le seuil (%) est de 
+,,,
+3cldesc2,and the number of bootstrap samples is,et le nombre de simulations bootstrap est de,
+,,,
+3cldesc3,This will take around,Cela prendra environ,
+,,,
+3cldesc4,to generate confidence limits.,pour générer les intervalles de confiance. ,pour générer les bornes de l'intervalle de confiance. 
+,,,
+4help,"Copy and paste code below to reproduce results. Code is added as functions are executed within the app. (e.g., code for generating confidence limits will appear after 'Get CL' is clicked.)",Copier et coller le code R ci-dessous pour reproduire la programmation. Le code est ajouté après chaque exécution dans l’application. (par exemple : le code qui génère l’estimation des intervalles de confiance apparaitra après que 'Get CL' aura été cliqué.,Copier et coller le code R ci-dessous pour reproduire les résultats. Le code est ajouté après chaque exécution de fonctions dans l’application (par exemple : le code qui génère l’estimation des intervalles de confiance apparaitra après que 'Obtenir bornes' soit cliqué.
+,,,
+draft,This is a draft and may change at some point in the future.<br><br>,Cette version pourrait être modifiée en tout temps.<br><br>,Cette version est une ébauche et elle pourrait être modifiée en tout temps.<br><br>
+,,,
+about,"This webpage fits species sensitivity distributions to concentration data. The user is able to select more than one distribution and plot the individual fits. <br/><br/>The columns in the goodness of fit table are the distribution (dist), the Anderson-Darling statistic (ad), the Kolmogorov-Smirnov statistic (ks), the Cramer-von Mises statistic (cvm), Akaike's Information Criterion (aic), Akaike's Information Criterion corrected for sample size (aicc), Bayesian Information Criterion (bic), the AICc difference (delta) and the AICc based Akaike weight (weight). The prediction is the model averaged (using aicc) estimate of the fit. The percent hazard concentration is the concentration of the chemical which is predicted to affect that percent of the species tested.<br/><br/>To cite package ssdtools in publications use:<br/>Thorley, J. and Schwarz C., (2018). ssdtools: An R package to fit Species Sensitivity Distributions. Journal of Open Source Software, 3(31), 1082. https://doi.org/10.21105/joss.01082<br/><br/>To cite the web app use:<br/>Seb Dalgarno (2018) ssdtools: A shiny web app to analyse species sensitivity distributions. Prepared by Poisson Consulting for the Ministry of the Environment, British Columbia. https://bcgov-env.shinyapps.io/ssdtools/","Cette page Web estime les fonctions de distribution de la sensibilité des espèces grâce aux données de concentration. L'utilisateur peut sélectionner plus d'une distribution, et voir individuellement les graphiques de chaque courbe d'ajustement. <br/><br/> Les colonnes du tableau des degrés d’ajustement sont la distribution (dist), la statistique d’Anderson-Darling (ad), la statistique de Kolmogorov-Smirnov (ks), la statistique de Cramer-von-Mises (cmv), le critère d’information Akaike (aic), le critère d’information Akaike corrigé pour la t-aille de l’échantillon (aicc), le critère d’information Bayésien (bic), la différence AICc (delta) et le coefficient AICc basé sur le poids Akaike (weight). L’estimation de la fonction de distribution finale (modèle agrégé) est basée sur l’inférence multimodèle (à partir de l’ aicc). La concentration du centile limite (ex. HC5) est la concentration estimée d’une substance affectant ce centile (ex. 5%) de l’ensemble des espèces.<br/><br/>Pour citer l’application R ‘ssdtools’:<br/>Thorley, J. and Schwarz C., (2018). ssdtools: An R package to fit Species Sensitivity Distributions. Journal of Open Source Software, 3(31), 1082. https://doi.org/10.21105/joss.01082<br/><br/>Pour citer l’application web :<br/>Seb Dalgarno (2018) ssdtools: A shiny web app to analyse species sensitivity distributions. Prepared by Poisson Consulting for the Ministry of the Environment, British Columbia. https://bcgov-env.shinyapps.io/ssdtools/","Cette page Web ajuste les fonctions de distribution de sensibilité des espèces aux données de concentration. L'utilisateur peut sélectionner plus d'une distribution et représenter individuellement chaque courbe d'ajustement dans un graphique. <br/><br/> Les colonnes du tableau de l'évaluation de la qualité de l’ajustement des courbes de distributiont sont la distribution (dist), la statistique d’Anderson-Darling (ad), la statistique de Kolmogorov-Smirnov (ks), la statistique de Cramer-von-Mises (cmv), le critère d’information Akaike (aic), le critère d’information Akaike corrigé pour la taille de l’échantillon (aicc), le critère d’information Bayésien (bic), la différence entre AICc (delta) et la pondération des critères d'information AICc (coefficient de pondération). L’estimation de la fonction de distribution finale est basée sur l’inférence multimodèle (à partir de l’AICc). La concentration présentant un risque est la concentration estimée d’une substance affectant un centile (seuil) sélectionné de l’ensemble des espèces.<br/><br/>Pour citer l’application R ‘ssdtools’:<br/>Thorley, J. and Schwarz C., (2018). ssdtools: An R package to fit Species Sensitivity Distributions. Journal of Open Source Software, 3(31), 1082. https://doi.org/10.21105/joss.01082<br/><br/>Pour citer l’application web :<br/>Seb Dalgarno (2018) ssdtools: A shiny web app to analyse species sensitivity distributions. Prepared by Poisson Consulting for the Ministry of the Environment, British Columbia. https://bcgov-env.shinyapps.io/ssdtools/"
+,,,
+hintdata,You have not added a dataset.,Aucun ensemble de données n’a été entré.,Aucun ensemble de données n’a été ajouté.
+,,,
+hintnum,Concentration column must contain number.,La colonne 'concentration' doit contenir des nombres.,
+,,,
+hintmiss,Concentration values must not be missing.,Aucune concentration ne doit être manquante.,Aucune valeur de concentration ne doit être manquante.
+,,,
+hintpos,Concentration values must be positive.,Les concentrations doivent être des valeurs positives.  ,Les valeurs de concentration doivent être des  positives.  
+,,,
+hintfin,Concentration values must be finite.,Les concentrations ne peuvent pas être des données censurées.,Les valeurs de concentration ne peuvent pas être censurées.
+,,,
+hintident,Concentration values must not all be identical.,Les concentrations ne peuvent pas être toutes identiques.,Les valeur de concentration ne doivent pas être toutes identiques.
+,,,
+hint6,There must be at least 6 concentration values.,Six concentrations sont minimalement requises. ,Six valeurs de concentration sont minimalement requises. 
+,,,
+hintdist,At least one distribution must be selected.,Une distribution doit minimalement être sélectionnée. ,Au moins une distribution doit  être sélectionnée. 
+,,,
+hintpred,You must select the 'Fit' tab before using the 'Predict' tab.,Sélectionner l’onglet 'Ajustement' avant l’onglet 'Estimation'.,
+,,,
+hintfit,You have not successfully fit any distributions yet. Run the 'Fit' tab first.,Aucune distribution n’a été ajustée. Exécuter l’onglet 'Ajustement' en premier.,Aucune distribution n’a encore été ajustée avec succès. Exécuter d'abord l’onglet 'Ajustement'.
+,,,
+hintfail,distribution(s) failed to fit. Run R code to get more information.,échec dans l’ajustement des distributions. Exécuter le code R pour plus d’informations.,
+,,,
+hintsym,Symbol variable cannot be numeric. ,La colonne 'Symboles' ne doit contenir des nombres.,La colonne 'Symboles' ne doit pas contenir de nombres.

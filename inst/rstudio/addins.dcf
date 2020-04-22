@@ -1,0 +1,5 @@
+Name: ssdtools app
+Description: ssdtools Shiny App.
+Binding: shinyssdtools_addin
+Interactive: true
+
