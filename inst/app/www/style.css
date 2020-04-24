@@ -1,0 +1,209 @@
+input[type="number"] {
+  max-width: 80%;
+}
+
+div.outer {
+  position: fixed;
+  top: 41px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+body{
+  	font-family: Myriad-Pro, Calibri, Arial, 'sans serif';
+	color: #494949;
+	font-size: 13px;
+}
+
+#codes{
+  background-color:#EEEEEE;
+  font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New;
+  font-size: 12px;
+  font-weight: 200;
+}
+
+#feedbackForm{
+  max-width: 500px;
+}
+
+#titleHead {	
+	background-color: #003366;
+	color: #fff;
+  text-align: center;
+  font-weight: 100;
+  font-size: 10px;
+}
+
+#note {
+  	padding: 15px;
+}
+
+
+ #information {background-color: white;
+   	padding: 15px;
+    	text-align: center;
+        color: #2B4777;
+ }
+ 
+ #feedback {
+   background-color: white;
+    	text-align: center;
+        color: #2B4777;
+ }
+ 
+ .msw-button {
+  font-size: 11px;
+  padding: 5px;
+  border: 0;
+  text-decoration: underline;
+  margin-bottom: 2px;
+  display: inline-block;
+
+}
+
+.div-link {
+    font-size: 11px;
+    text-align: right;
+    display: inline-block;
+}
+ 
+/* Customize fonts */
+  body, label, input, button, select { 
+    font-family: Myriad-Pro, Calibri, Arial, 'sans serif';
+    font-weight: 100;
+    	color: #494949;
+    		font-size: 13px;
+
+
+    /*color: #F0F0F0;*/
+  }
+h1, h2, h3, h4 { font-weight: 100; }
+ h5 {
+   font-weight: 200;
+   color: #5475A7;
+   font-size: 13px;
+ }
+ 
+ a {
+  font-weight: 200;
+   color:  #5475A7;
+   font-size: 13px;
+ }
+
+#demoData {
+     font-size: 13px;
+}
+
+.wellpanel {
+  overflow-x:scroll; 
+  max-height: 700px; 
+}
+
+/*********************** navbar css ****************************/
+.navbar .navbar-nav {float: right}
+
+.navbar-header {
+  padding: 0px 20px 0px 30px;
+}
+
+.navbar.navbar-default.navbar-static-top{
+  padding:0;
+  margin-bottom: 0px;
+  background: rgba(44,62,80, 1);
+}
+.navbar-default {
+    box-shadow: 0 4px 4px -2px rgba(0,0,0,.2);
+}
+.navbar-default {
+  background-color: #101010;
+  border-color: transparent;
+}
+.navbar-default .navbar-brand {
+  color: #E0E0E0;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #E0E0E0;
+  background-color: transparent;
+}
+.navbar-default .navbar-text {
+  color: #E0E0E0;
+}
+.navbar-default .navbar-nav > li > a {
+  color:  #E0E0E0;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #37CBA2;
+  background-color: transparent;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #37CBA2;
+  background-color: transparent;
+}
+.navbar-default .navbar-nav > .disabled > a,
+.navbar-default .navbar-nav > .disabled > a:hover,
+.navbar-default .navbar-nav > .disabled > a:focus {
+  color: #101010;
+  background-color: transparent;
+}
+.navbar-default .navbar-toggle {
+  border-color: #101010;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #37CBA2;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #E0E0E0;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: transparent;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  background-color: #101010;
+  color:#37CBA2;
+}
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #E0E0E0;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #101010;
+    background-color: transparent;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #E0E0E0;
+    background-color: #101010;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+    color: #cccccc;
+    background-color: transparent;
+  }
+}
+.navbar-default .btn-link {
+  color: #E0E0E0;
+}
+
+
+
+
+
+
+ 
+
+ 
+ 
