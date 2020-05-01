@@ -1,2 +1,3 @@
-rsconnect::deployApp(appDir = ".", account = "poissonconsulting", 
-                     appName = "ssdtools3", forceUpdate = TRUE)
+rsconnect::deployApp(appDir = ".", account = "bcgov-env", 
+                     appName = "ssdtools", forceUpdate = TRUE)
+
