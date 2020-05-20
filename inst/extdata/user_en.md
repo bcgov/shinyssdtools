@@ -64,10 +64,10 @@ The columns in the goodness of fit table are the distribution (dist), the Anders
 
 Bootstrap Samples &nbsp;&nbsp; | Estimated Processing Time
 --- | ---
-10,000 &nbsp; | 5 seconds
-5,000 &nbsp;| 10 seconds 
-1,000 &nbsp;| 20 seconds
-500 &nbsp;| 45 seconds
+10,000 &nbsp; | 45 seconds
+5,000 &nbsp;| 20 seconds 
+1,000 &nbsp;| 10 seconds
+500 &nbsp;| 5 seconds
 
 </center>
 
