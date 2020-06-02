@@ -1,19 +1,22 @@
 ---
-title: 'shinyssdtools: A web application and R package for fitting Species Sensitivity Distributions'
-date: '2020-06-02'
+title: 'shinyssdtools: A web application for fitting Species Sensitivity Distributions'
 authors:
 - affiliation: 1
-   name: Seb Dalgarno
-   orcid: 0000-0002-3658-4517
+  name: Seb Dalgarno
+  orcid: 0000-0002-3658-4517
 affiliations:
-- index: 1
-  name: Poisson Consulting Ltd., Nelson, Canada
-bibliography: paper.bib
+  index: 1
+  name: Poisson Consulting, Nelson, British Columbia
 tags:
    - R
    - Shiny
    - ssdtools
    - species sensitivity distributions
+date: '2020-06-02'
+bibliography: paper.bib
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
 # Summary
