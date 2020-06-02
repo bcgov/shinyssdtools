@@ -16,7 +16,7 @@ tags:
    - species sensitivity distributions
 ---
 
-# Summary
+## Summary
 
 `shinyssdtools` is a Shiny [@shiny] web application for fitting Species Sensitivity Distributions (SSDs).
 The application provides a Graphical User Interface (GUI) to the `ssdtools` R package [@ssdtools].
