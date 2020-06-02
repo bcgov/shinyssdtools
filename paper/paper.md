@@ -51,8 +51,8 @@ The `shinyssdtools` application is available at https://bcgov-env.shinyapps.io/s
 `shinyssdtools` is bundled as an R package [@r] to allow the user to install and run locally using just three lines of R code:
 
 ```r
-install.packages("remotes")
-remotes::install_github(“bcgov/shinyssdtools”)
+install.packages('remotes')
+remotes::install_github('bcgov/shinyssdtools')
 shinyssdtools::run_ssdtools_app()
 ```
 
