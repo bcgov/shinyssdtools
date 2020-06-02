@@ -14,9 +14,6 @@ tags:
    - Shiny
    - ssdtools
    - species sensitivity distributions
-output: 
-  html_document: 
-    keep_md: yes
 ---
 
 # Summary
