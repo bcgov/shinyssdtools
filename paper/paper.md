@@ -16,7 +16,7 @@ tags:
    - species sensitivity distributions
 ---
 
-## Summary
+# Summary
 
 `shinyssdtools` is a Shiny [@shiny] web application for fitting Species Sensitivity Distributions (SSDs).
 The application provides a Graphical User Interface (GUI) to the `ssdtools` R package [@ssdtools].
@@ -45,7 +45,7 @@ The app also allows the user to download plots and tables, calculate goodness-of
 
 ![shinyssdtools user interface](shinyssdtools_ui.png)
 
-### Install
+# Installation
 
 The `shinyssdtools` application is available at https://bcgov-env.shinyapps.io/ssdtools/.
 `shinyssdtools` is bundled as an R package [@r] to allow the user to install and run locally using just three lines of R code:
@@ -56,12 +56,12 @@ remotes::install_github('bcgov/shinyssdtools')
 shinyssdtools::run_ssdtools_app()
 ```
 
-## Contribution
+# Contribution
 
 The similarly named `shinyssd` is an alternative open source Shiny web application to fit SSDs that is also bundled as an R package [@dandrea_shinyssd_2019].
 `shinyssdtools` contributes by being bilingual; providing additonal distributions including the gamma, Gompertz and log-Gumbel; by allowing the user to model average and by providing the R code to replicate the analysis.
 
-## Acknowledgements
+# Acknowledgements
 
 We acknowledge contributions from Angeline Tillmanns, Marianne Métivier, Andy Teucher, David Fox, Carl Schwarz and Joe Thorley.
 Development of `shinyssdtools` was funded by the Ministry of Environment and Climate Change Strategy, British Columbia.
