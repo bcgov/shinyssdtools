@@ -6,8 +6,8 @@ authors:
   name: Seb Dalgarno
   orcid: 0000-0002-3658-4517
 affiliations:
+- name: Poisson Consulting, Nelson, British Columbia
   index: 1
-  name: Poisson Consulting, Nelson, British Columbia
 bibliography: paper.bib
 tags:
    - R
