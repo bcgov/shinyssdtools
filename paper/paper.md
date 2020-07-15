@@ -18,15 +18,16 @@ tags:
 
 # Summary
 
-`shinyssdtools` is a Shiny [@shiny] web application for fitting Species Sensitivity Distributions (SSDs).
-The application provides a Graphical User Interface (GUI) to the `ssdtools` R package [@ssdtools].
+`shinyssdtools` is a Shiny [@shiny] web application and R package for fitting Species Sensitivity Distributions (SSDs). It has been internationally adopted by Canadian and Australian governments.
 
 SSDs are used to estimate the concentration of a chemical that affects a certain percentage (typically 5%) of the species considered [@posthuma_species_2001]. 
-The `ssdtools` R package allows model averaging using information-theoretic criteria and the construction of confidence intervals using bootstrapping [@ssdtools].
+The `ssdtools` R package [@ssdtools] allows model averaging using information-theoretic criteria and the construction of confidence intervals using bootstrapping [@ssdtools].
+
+`shinyssdtools` provides access to the core functionality in the `ssdtools` R package, and the following functionality in addition: translation to French; generation of R code to reproduce results from a session; further customization of plot and table outputs; download of tables and plot outputs. 
 
 ### Graphical User Interface
 
-The `shinyssdtools` web app, which is available in French or English, provides access to the core functionality of `ssdtools` via five navigational tabs. 
+The `shinyssdtools` web application has five navigational tabs: 
 
 1. Data
    - Upload a dataset or enter data manually.
@@ -40,8 +41,6 @@ The `shinyssdtools` web app, which is available in French or English, provides a
    - Copy the R code required to reproduce the results.
 1. User guide
    - Step-by-step guide to proper use of the application.
-   
-The app also allows the user to download plots and tables, calculate goodness-of-fit criteria, and estimate the percentage of species affected by a specific concentration.
 
 ![shinyssdtools user interface](shinyssdtools_ui.png)
 
