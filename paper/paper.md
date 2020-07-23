@@ -18,7 +18,7 @@ tags:
 
 # Summary
 
-`shinyssdtools` is a Shiny [@shiny] web application and R package for fitting Species Sensitivity Distributions (SSDs). It has been internationally adopted by Canadian and Australian governments.
+`shinyssdtools` is a Shiny [@shiny] web application and R package for fitting Species Sensitivity Distributions (SSDs). It has been adopted by the governments of British Columbia, Canada and Australia to set water quality benchmarks and to characterize the effects of chemical contaminants for water quality and/or ecological risk assessment purposes. 
 
 SSDs are used to estimate the concentration of a chemical that affects a certain percentage (typically 5%) of the species considered [@posthuma_species_2001]. 
 The `ssdtools` R package [@ssdtools] allows model averaging using information-theoretic criteria and the construction of confidence intervals using bootstrapping [@ssdtools].
@@ -63,6 +63,6 @@ The similarly named `shinyssd` is an alternative open source Shiny web applicati
 # Acknowledgements
 
 We acknowledge contributions from Angeline Tillmanns, Marianne Métivier, Andy Teucher, David Fox, Carl Schwarz and Joe Thorley.
-Development of `shinyssdtools` was funded by the Ministry of Environment and Climate Change Strategy, British Columbia.
+Development of `shinyssdtools` was funded by the Ministry of Environment and Climate Change Strategy, British Columbia. The governments of British Columbia, Canada and Australia have also contributed to it's development.
 
 ## References
