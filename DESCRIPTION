@@ -30,8 +30,6 @@ Suggests:
     testthat (>= 2.1.0),
     knitr,
     rmarkdown
-Remotes:
-    bcgov/ssdtools
 URL: https://github.com/bcgov/shinyssdtools
 BugReports: https://github.com/bcgov/shinyssdtools/issues
 Encoding: UTF-8
