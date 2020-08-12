@@ -636,7 +636,7 @@ app_server <- function(input, output, session) {
     c1 <- "# plot model average"
     c2 <- "# to add confidence intervals set ci = TRUE in predict and ssd_plot"
     c3 <- "# we recommend using nboot = 10000 in predict, although this may take several minutes to run"
-    pred <- "pred <- predict(dist, nboot = 10L)"
+    pred <- "pred <- predict(dist, nboot = 10L, ci = FALSE)"
     plot <- paste0(
       "ssd_plot(data, pred, left = '", input$selectConc %>% make.names(),
       "', label = ", code_label(),
@@ -1035,10 +1035,22 @@ app_server <- function(input, output, session) {
   })
 
   output$ui_about <- renderUI({
-    if (translation.value$lang == "English") {
-      return(includeMarkdown(system.file("extdata/about_en.md", package = "shinyssdtools")))
+    ver <- paste("ssdtools version:", utils::packageVersion("ssdtools"))
+    if (translation.value$lang == "English"){
+      return({
+        tagList(
+          p(ver),
+          includeMarkdown(system.file("extdata/about_en.md", package = "shinyssdtools"))
+        )
+      })
+    } else {
+      return({
+        tagList(
+          p(ver),
+          includeMarkdown(system.file("extdata/about_fr.md", package = "shinyssdtools"))
+        )
+      })
     }
-    includeMarkdown(system.file("extdata/about_fr.md", package = "shinyssdtools"))
   })
 
   output$ui_userguide <- renderUI({
