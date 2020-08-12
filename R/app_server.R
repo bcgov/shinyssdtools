@@ -1035,10 +1035,22 @@ app_server <- function(input, output, session) {
   })
 
   output$ui_about <- renderUI({
-    if (translation.value$lang == "English") {
-      return(includeMarkdown(system.file("extdata/about_en.md", package = "shinyssdtools")))
+    ver <- paste("ssdtools version:", utils::packageVersion("ssdtools"))
+    if (translation.value$lang == "English"){
+      return({
+        tagList(
+          p(ver),
+          includeMarkdown(system.file("extdata/about_en.md", package = "shinyssdtools"))
+        )
+      })
+    } else {
+      return({
+        tagList(
+          p(ver),
+          includeMarkdown(system.file("extdata/about_fr.md", package = "shinyssdtools"))
+        )
+      })
     }
-    includeMarkdown(system.file("extdata/about_fr.md", package = "shinyssdtools"))
   })
 
   output$ui_userguide <- renderUI({
