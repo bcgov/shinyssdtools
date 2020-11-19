@@ -17,13 +17,9 @@ tags:
 ---
 
 # Summary
+The species sensitivity distribution (SSD) is the most widely used method for getting water quality benchmarks to characterize effects of chemical contaminants for water quality or ecological risk assessment [@fox_2020]. This typically involves estimating the concentration of a chemical that affects a 5% of the species considered [@posthuma_species_2001]. The `ssdtools` R package, developed for the British Columbia Ministry of Environment and Climate Change Strategy [@ssdtools], has recently advanced SSD methods by providing model averaging using information-theoretic criteria and the construction of confidence intervals using bootstrapping [@fox_2020]. 
 
-`shinyssdtools` is a Shiny [@shiny] web application and R package for fitting Species Sensitivity Distributions (SSDs). It was developed for the Province of British Columbia with input from the governments of Canada as well as Australia and New Zealand. The shinyssdtools app has been used by the governments of B.C. and Canada to derive water quality benchmarks.
-
-SSDs are used to estimate the concentration of a chemical that affects a certain percentage (typically 5%) of the species considered [@posthuma_species_2001]. 
-The `ssdtools` R package [@ssdtools] allows model averaging using information-theoretic criteria and the construction of confidence intervals using bootstrapping [@ssdtools].
-
-`shinyssdtools` provides access to the core functionality in the `ssdtools` R package, and the following functionality in addition: translation to French; generation of R code to reproduce results from a session; further customization of plot and table outputs; download of tables and plot outputs. 
+`shinyssdtools` is a web-based graphical user interface (GUI) and R package built with the Shiny web framework [@shiny]. It provides access to the core functionality in the `ssdtools` R package via a simple and modern user interface. It also provides the following functionality in addition to `ssdtools`: translation to French; generation of R code to reproduce results from a session; further customization of plot and table outputs; download of tables and plot outputs. `shinyssdtools` can be accessed from the web or it can be run locally by installing the R package. The advantage of using a web application over standalone software is that it is possible to ensure that the user is using the most up-to-date version. The advantage of developing the application as an R package is that the source code is openly visible and is available for local modification. 
 
 ### Graphical User Interface
 
@@ -57,10 +53,13 @@ remotes::install_github('bcgov/shinyssdtools')
 shinyssdtools::run_ssdtools_app()
 ```
 
-# Contribution
+# Statement of Need
+`ssdtools` is an R package that has provided recent advances in SSD methodology [@fox_2020]. `shinyssdtools` provides access to this functionality via a simple, modern GUI without requiring users to be familiar with the R programming language. Data can be easily uploaded to the application, the interface can be viewed in multiple languages (French and English) and R code output is provided so that analyses can be reproduced or shared. `shinyssdtools` was developed for the Province of British Columbia with input from the governments of Canada as well as Australia and New Zealand and has been used by the governments of B.C. and Canada to derive water quality benchmarks.
 
-The similarly named `shinyssd` is an alternative open source Shiny web application to fit SSDs that is also bundled as an R package [@dandrea_shinyssd_2019].
-`shinyssdtools` contributes by being bilingual; providing additional distributions including the gamma, Gompertz and log-Gumbel; by allowing the user to model average and by providing the R code to replicate the analysis.
+# Contribution
+SSD Toolbox is standalone software performing similar functionality to `shinyssdtools` developed by the US Environmental Protection Agency [@ssdtoolbox_2020]. It can be downloaded as a Windows executable file and requires installation of version 9.5 of the MATLAB® Runtime Compiler (MCR) from Mathworks, which requires 3.75GB of hard disk space. `shinyssdtools` provides a more appealing user interface, is open-source, is operating-system-agnostic and does not require local installation of bulky software. 
+
+The similarly named `shinyssd` is an alternative open source Shiny web application to fit SSDs that is also bundled as an R package [@dandrea_shinyssd_2019]. `shinyssdtools` contributes by being bilingual; providing additional distributions including the gamma, Gompertz and log-Gumbel; by allowing the user to model average and by providing the R code to replicate the analysis.
 
 # Acknowledgements
 
