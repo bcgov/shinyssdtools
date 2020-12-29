@@ -12,6 +12,7 @@
 
 app_ui <- function() {
   tagList(
+    tags$head(tags$title("shinyssdtools")),
     shinyjs::useShinyjs(),
     waiter::use_butler(),
     add_external_resources(),
