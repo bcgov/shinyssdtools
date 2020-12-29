@@ -86,9 +86,9 @@ app_ui <- function() {
               div(
                 id = "divFormatFit",
                 br(),
-                inline(uiOutput("ui_2width")),
-                inline(uiOutput("ui_2height")),
-                inline(uiOutput("ui_2dpi"))
+                uiOutput("ui_2width"),
+                uiOutput("ui_2height"),
+                uiOutput("ui_2dpi")
               )
             )
           ),
