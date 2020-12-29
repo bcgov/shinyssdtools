@@ -6,7 +6,7 @@ Authors@R: c(
     person("Sebastian", "Dalgarno", , "seb@poissonconsulting.ca", c("aut", "cre"), comment = c(ORCID = "0000-0002-3658-4517"))
     )
 Description: Shiny App with tools for visualizing and analyzing species sensitivity sistributions.
-License: MIT + file LICENSE
+License: Apache License | file LICENSE
 Depends: 
     R (>= 3.4.0),
     ssdtools
