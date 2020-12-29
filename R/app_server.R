@@ -283,7 +283,7 @@ app_server <- function(input, output, session) {
   # --- predict and model average
   predict_hc <- reactive({
     dist <- fit_dist()
-    stats::predict(dist, nboot = 10, ci = FALSE)
+    stats::predict(dist, nboot = 10, ci = TRUE)
   })
 
   plot_model_average <- reactive({
