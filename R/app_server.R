@@ -283,7 +283,7 @@ app_server <- function(input, output, session) {
   # --- predict and model average
   predict_hc <- reactive({
     dist <- fit_dist()
-    stats::predict(dist, nboot = 10, ci = FALSE)
+    stats::predict(dist, nboot = 10, ci = TRUE)
   })
 
   plot_model_average <- reactive({
@@ -441,9 +441,9 @@ app_server <- function(input, output, session) {
   })
   output$distPlot1 <- renderPlot({
     req(plot_dist())
-    suppressWarnings(waiter::show_butler())
+    suppressWarnings(waiter::waiter_show())
     x <- plot_dist()
-    suppressWarnings(waiter::hide_butler())
+    suppressWarnings(waiter::waiter_hide())
     x
   })
 
@@ -457,9 +457,9 @@ app_server <- function(input, output, session) {
   })
   # --- render predict results
   output$modelAveragePlot <- renderPlot({
-    suppressWarnings(waiter::show_butler())
+    suppressWarnings(waiter::waiter_show())
     x <- plot_model_average()
-    suppressWarnings(waiter::hide_butler())
+    suppressWarnings(waiter::waiter_hide())
     x
   })
 
@@ -744,7 +744,7 @@ app_server <- function(input, output, session) {
 
   ########### Render UI Translations -------------------
   output$ui_1choose <- renderUI({
-    h5(tr("ui_1choose", trans()))
+    h4(tr("ui_1choose", trans()))
   })
 
   output$ui_navtitle <- renderUI({
@@ -812,7 +812,7 @@ app_server <- function(input, output, session) {
   })
 
   output$ui_1preview <- renderUI({
-    h5(tr("ui_1preview", trans()))
+    h4(tr("ui_1preview", trans()))
   })
 
   output$ui_1note1 <- renderUI({
@@ -858,11 +858,11 @@ app_server <- function(input, output, session) {
   })
 
   output$ui_2plot <- renderUI({
-    h5(tr("ui_2plot", trans()))
+    h4(tr("ui_2plot", trans()))
   })
 
   output$ui_2table <- renderUI({
-    h5(tr("ui_2table", trans()))
+    h4(tr("ui_2table", trans()))
   })
 
   output$ui_2dlplot <- renderUI({
@@ -887,7 +887,7 @@ app_server <- function(input, output, session) {
   })
 
   output$ui_3est <- renderUI({
-    h5(tr("ui_3est", trans()))
+    h4(tr("ui_3est", trans()))
   })
 
   output$ui_3bshint <- renderUI({
@@ -994,7 +994,7 @@ app_server <- function(input, output, session) {
   })
 
   output$ui_3model <- renderUI({
-    h5(tr("ui_3model", trans()))
+    h4(tr("ui_3model", trans()))
   })
 
   output$ui_3dlplot <- renderUI({
@@ -1019,7 +1019,7 @@ app_server <- function(input, output, session) {
   })
 
   output$ui_3cl <- renderUI({
-    h5(tr("ui_3cl", trans()))
+    h4(tr("ui_3cl", trans()))
   })
 
   output$ui_3help <- renderUI({

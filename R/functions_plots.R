@@ -11,7 +11,7 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
                              legend_colour, legend_shape, lang) {
   gp <- ssdtools::ssd_plot(x, pred,
     left = conc, label = label,
-    color = colour, shape = shape, hc = percent, ci = FALSE,
+    color = colour, shape = shape, hc = percent, ci = TRUE,
     shift_x = label_adjust %>% as.numeric(),
     xlab = xaxis, ylab = yaxis
   ) +
