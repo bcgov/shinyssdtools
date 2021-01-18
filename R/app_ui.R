@@ -14,7 +14,7 @@ app_ui <- function() {
   tagList(
     tags$head(tags$title("shinyssdtools")),
     shinyjs::useShinyjs(),
-    waiter::use_butler(),
+    waiter::use_waiter(),
     add_external_resources(),
     tags$style(
       type = "text/css",

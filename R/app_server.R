@@ -441,9 +441,9 @@ app_server <- function(input, output, session) {
   })
   output$distPlot1 <- renderPlot({
     req(plot_dist())
-    suppressWarnings(waiter::show_butler())
+    suppressWarnings(waiter::waiter_show())
     x <- plot_dist()
-    suppressWarnings(waiter::hide_butler())
+    suppressWarnings(waiter::waiter_hide())
     x
   })
 
@@ -457,9 +457,9 @@ app_server <- function(input, output, session) {
   })
   # --- render predict results
   output$modelAveragePlot <- renderPlot({
-    suppressWarnings(waiter::show_butler())
+    suppressWarnings(waiter::waiter_show())
     x <- plot_model_average()
-    suppressWarnings(waiter::hide_butler())
+    suppressWarnings(waiter::waiter_hide())
     x
   })
 
