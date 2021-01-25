@@ -23,7 +23,7 @@ The `ssdtools` R package [@ssdtools] has recently advanced SSD methods by provid
 
 `shinyssdtools` is a web-based graphical user interface (GUI) to the `ssdtools` R package.
 `shinyssdtools`, which was developed in the Shiny web framework [@shiny], is an R package in its own right.
-As well as providing access to the core functionality in `ssdtools` it also offers the following value-added features: a bilingual (English/French) interface, customization and downloads of plots and tables and generation of R scripts for reproducibility. 
+As well as providing access to the core functionality in `ssdtools`, it also offers the following value-added features: a bilingual (English/French) interface, customization and downloads of plots and tables and generation of R scripts for reproducibility. 
 `shinyssdtools` can be accessed from the web or it can be run locally by installing the R package.
 
 ### Graphical User Interface
@@ -69,7 +69,7 @@ Data can be easily uploaded to the application, the interface can be viewed in m
 All historical and existing SSD software was recently reviewed by @fox_2020 who considered `ssdtools`, `shinyssdtools` and `SSD Toolbox` to be the most important contributions because they provide model averaging.
 
 `SSD Toolbox` is standalone software performing similar functionality to `shinyssdtools` developed by the US Environmental Protection Agency [@ssdtoolbox_2020]. 
-It can be downloaded as a Windows executable file and requires installation of version 9.5 of the MATLAB® Runtime Compiler (MCR) from Mathworks, which requires 3.75GB of hard disk space. 
+It can be downloaded as a Windows executable file and requires installation of version 9.5 of the MATLAB® Runtime Compiler (MCR) from Mathworks, which requires 3.75 GB of hard disk space. 
 `shinyssdtools` provides a more appealing user interface, is open-source and does not require local installation of bulky software. 
 
 The similarly named `shinyssd` is an alternative open source Shiny web application to fit SSDs that is also bundled as an R package [@dandrea_shinyssd_2019]. 
