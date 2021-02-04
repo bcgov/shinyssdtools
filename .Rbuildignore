@@ -20,3 +20,4 @@
 ^deploy\.R$
 ^paper$
 ^.vscode$
+^compliance.yaml$
