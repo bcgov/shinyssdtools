@@ -1,7 +1,5 @@
-translations <- readxl::read_xlsx(system.file(package = "shinyssdtools", "extdata/translations2.xlsx"), sheet = 1)
-translations$french[!is.na(translations$french2)] <- translations$french2[!is.na(translations$french2)]
+translations <- readxl::read_xlsx(system.file(package = "shinyssdtools", "extdata/translations.xlsx"), sheet = 1)
 translations$id <- paste0("ui_", translations$id)
-translations$french2 <- NULL
 
 # ad translation for hc
 translations <- translations %>%
