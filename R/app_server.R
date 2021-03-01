@@ -345,7 +345,7 @@ app_server <- function(input, output, session) {
     dist <- fit_dist()
     withProgress(value = 0, message = "Getting Confidence Limits...", {
       incProgress(0.4)
-      nboot <- as.integer(gsub(",", "", input$bootSamp))
+      nboot <- as.integer(gsub("(,|\\s)", "", input$bootSamp))
       if (input$thresh_type == "Concentration") {
         y <- ssd_hp_ave(dist, conc = thresh_rv$conc, nboot = nboot)
       } else {
