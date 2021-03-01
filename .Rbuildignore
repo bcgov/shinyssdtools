@@ -21,3 +21,4 @@
 ^paper$
 ^.vscode$
 ^compliance.yaml$
+^\.github$
