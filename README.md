@@ -32,7 +32,7 @@ In addition to providing access to core functionality in the
 
 ## Utilization
 
-Once installed run
+Once cloned run
 
 ``` r
 # install.packages("shiny")
