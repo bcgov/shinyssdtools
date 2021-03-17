@@ -18,7 +18,7 @@ Shiny web application for fitting Species Sensitivity Distributions
 
 `shinyssdtools` provides a Graphical User Interface (GUI) to the
 [ssdtools](https://cran.r-project.org/package=ssdtools) R package. The
-app can be run locally by installing the R package and running
+app can be run locally by cloning the repository and running
 `shiny::shinyAppDir(".")` or by visiting [this
 site](https://bcgov-env.shinyapps.io/ssdtools/).
 
@@ -29,16 +29,6 @@ In addition to providing access to core functionality in the
 1.  translation to French
 2.  generation of R code required to reproduce results
 3.  further customization of plot and table outputs
-
-## Installation
-
-You can install the development version from
-[GitHub](https://github.com/) with:
-
-``` r
-# install.packages("devtools")
-devtools::install_github("bcgov/shinyssdtools")
-```
 
 ## Utilization
 
