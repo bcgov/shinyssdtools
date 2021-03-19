@@ -1,0 +1,10 @@
+name: ssdtools_test
+title:
+username:
+account: bcgov-env
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3823001
+bundleId: 4370272
+url: https://bcgov-env.shinyapps.io/ssdtools_test/
+when: 1616189174.86336
