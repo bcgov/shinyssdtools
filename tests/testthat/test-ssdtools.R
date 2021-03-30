@@ -1,7 +1,3 @@
-library(testthat)
-library(ssdtools)
-source("R/functions.R")
-
 test_that("ssd_hp and ssd_hc output table includes all dists", {
   x <- boron_data
 
