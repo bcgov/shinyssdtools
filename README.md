@@ -8,6 +8,7 @@
 [![Lifecycle:
 maturing](https://img.shields.io/badge/Lifecycle-Maturing-007EC6)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.02848/status.svg)](https://doi.org/10.21105/joss.02848)
+[![R-CMD-check](https://github.com/bcgov/shinyssdtools/workflows/R-CMD-check/badge.svg)](https://github.com/bcgov/shinyssdtools/actions)
 <!-- badges: end -->
 
 Shiny web application for fitting Species Sensitivity Distributions
