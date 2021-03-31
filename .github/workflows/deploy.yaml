@@ -36,3 +36,4 @@ jobs:
           rsconnect::deployApp(appName =${{github.event.repository.name}})
         shell: Rscript {0}        
         
+        
