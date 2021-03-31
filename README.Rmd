@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 ### Summary
 
-`shinyssdtools` provides a Graphical User Interface (GUI) to the [ssdtools](https://cran.r-project.org/package=ssdtools) R package. The app can be run locally by cloning the repository and running `shiny::shinyAppDir(".")` or by visiting [this site](https://bcgov-env.shinyapps.io/ssdtools/).
+`shinyssdtools` provides a Graphical User Interface (GUI) to the [ssdtools](https://cran.r-project.org/package=ssdtools) R package. The app can be run locally by installing the R package and running `shinyssdtools::run_ssdtools_app()` or by visiting [this site](https://bcgov-env.shinyapps.io/ssdtools/).
 
 In addition to providing access to core functionality in the [ssdtools](https://cran.r-project.org/package=ssdtools) R package, `shinyssdtools` provides:  
 
@@ -34,13 +34,21 @@ In addition to providing access to core functionality in the [ssdtools](https://
 3. further customization of plot and table outputs
 
 
+## Installation
+
+ You can install the development version from [GitHub](https://github.com/) with:
+
+ ``` r
+ # install.packages("devtools")
+ devtools::install_github("bcgov/shinyssdtools")
+ ```
+
 ## Utilization
 
-Once cloned run
+Once installed run
 
 ```r
-# install.packages("shiny")
-shiny::shinyAppDir(".")
+shinyssdtools::run_ssdtools_app()
 ```
 
 ### Getting Help or Reporting an Issue
