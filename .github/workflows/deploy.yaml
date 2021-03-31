@@ -30,10 +30,15 @@ jobs:
         shell: Rscript {0}
         
       - name: Main run
-        if: github.ref == 'refs/heads/master' && github.ref == 'refs/heads/main' 
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' 
         run: |
           rsconnect::setAccountInfo(name='poissonconsulting', token=${{secrets.SHINYAPPS_TOKEN}}, secret=${{secrets.SHINYAPPS_SECRET}})
           rsconnect::deployApp(appName =${{github.event.repository.name}})
         shell: Rscript {0}        
         
-        
+      - name: Dev run
+        if: github.ref == 'refs/heads/dev'     
+        run: |
+          rsconnect::setAccountInfo(name='poissonconsulting', token=${{secrets.SHINYAPPS_TOKEN}}, secret=${{secrets.SHINYAPPS_SECRET}})
+          rsconnect::deployApp(appName= paste0(${{ github.event.repository.name }}, "dev"))          
+        shell: Rscript {0}
