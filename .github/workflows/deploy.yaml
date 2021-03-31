@@ -39,6 +39,12 @@ jobs:
       - name: Dev run
         if: github.ref == 'refs/heads/dev'     
         run: |
-          rsconnect::setAccountInfo(name='poissonconsulting', token=${{secrets.SHINYAPPS_TOKEN}}, secret=${{secrets.SHINYAPPS_SECRET}})
-          rsconnect::deployApp(appName= paste0('${{ github.event.repository.name }}', 'dev'))          
+          rsconnect::setAccountInfo(name='poissonconsulting', token='${{secrets.SHINYAPPS_TOKEN}}', secret='${{secrets.SHINYAPPS_SECRET}}')
+          rsconnect::deployApp(appName= paste0('${{github.event.repository.name}}', 'dev'))          
         shell: Rscript {0}
+        
+        
+        
+        
+        
+        
