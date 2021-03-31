@@ -1,11 +1,12 @@
 on:
   push:
     branches:
-      - actions
-  pull_request:
-    branches:
       - main
       - master
+      - dev    
+  pull_request:
+    branches:
+      - dev
 
 name: deploy
 
@@ -27,9 +28,17 @@ jobs:
           install.packages(c("remotes", "rsconnect"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
+        
+    if: github.ref == 'refs/heads/master' && github.ref == 'refs/heads/main' 
       - name: shinyapps credentials
         run: |
-          print("here")
           rsconnect::setAccountInfo(name='poissonconsulting', token=${{secrets.SHINYAPPS_TOKEN}}, secret=${{secrets.SHINYAPPS_SECRET}})
-          rsconnect::deployApp(appName = 'shinybugtest')
+          rsconnect::deployApp(appName =${{github.event.repository.name}})
+        shell: Rscript {0}        
+        
+    if: github.ref == 'refs/heads/dev'     
+      - name: shinyapps credentials
+        run: |
+          rsconnect::setAccountInfo(name='poissonconsulting', token=${{secrets.SHINYAPPS_TOKEN}}, secret=${{secrets.SHINYAPPS_SECRET}})
+          rsconnect::deployApp(appName= paste0(${{ github.event.repository.name }}, "dev"))          
         shell: Rscript {0}
