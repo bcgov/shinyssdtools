@@ -32,7 +32,7 @@ jobs:
       - name: Main run
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' 
         run: |
-          rsconnect::setAccountInfo(name='poissonconsulting', token=${{secrets.SHINYAPPS_TOKEN}}, secret=${{secrets.SHINYAPPS_SECRET}})
+          rsconnect::setAccountInfo(name='${{github.repository_owner}}', token=${{secrets.SHINYAPPS_TOKEN}}, secret=${{secrets.SHINYAPPS_SECRET}})
           rsconnect::deployApp(appName =${{github.event.repository.name}})
         shell: Rscript {0}        
         
