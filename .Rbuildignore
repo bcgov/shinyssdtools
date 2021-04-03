@@ -14,7 +14,7 @@
 ^cran-comments\.md$
 ^data-raw$
 ^rsconnect$
-^shinyApp-forward$
+^app-forward$
 ^app\.R$
 ^paper$
 ^.vscode$
