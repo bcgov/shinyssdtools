@@ -38,7 +38,7 @@ functionality in the [`ssdtools`](https://github.com/bcgov/ssdtools)
 package, `shinyssdtools` also provides
 
 -   a bilingual (English/French) interface;
--   generation of R scripts for reproducibility
+-   generation of R scripts for reproducibility;
 -   customization and downloads of plots and tables
 
 ## Information

@@ -1,3 +1,3 @@
 shinyssdtools_addin <- function() {
-  shinyssdtools::run_ssdtools_app()
+  shinyssdtools::run_app()
 }
