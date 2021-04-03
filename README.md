@@ -62,6 +62,21 @@ Please note that this project is released with a [Contributor Code of
 Conduct](https://github.com/bcgov/shinyssdtools/blob/master/.github/CONTRIBUTING.md).
 By participating in this project you agree to abide by its terms.
 
+## Deployment to `shinyapps.io`
+
+### Manually
+
+Run the `deploy-app.R` script in the scripts directory (after setting
+the account argument to be your `shinyapps.io` account name).
+
+### Automatically
+
+If your `shinyapps.io` account name is the same as your GitHub account
+name simply make a commit in the master or dev branch and include
+`deploy app` in the message (after setting `SHINYAPPS_TOKEN` and
+`SHINYAPPS_SECRET` in your repository GitHub secrets). This triggers the
+`deploy-app.yml` GitHub action.
+
 ## License
 
 The code is released under the Apache License 2.0
@@ -79,15 +94,3 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
-------------------------------------------------------------------------
-
-<a rel="license" href="https://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons Licence"
-style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br /><span
-xmlns:dct="http://purl.org/dc/terms/"
-property="dct:title">shinyssdtools</span> by <span
-xmlns:cc="http://creativecommons.org/ns#"
-property="cc:attributionName">the Province of British Columbia </span>
-is licensed under a
-<a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
-Creative Commons Attribution 4.0 International License</a>.

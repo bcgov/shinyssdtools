@@ -615,7 +615,7 @@ app_server <- function(input, output, session) {
     req(check_fit() == "")
     c1 <- "# fit distributions"
     fit <- paste0(
-      "dist <- ssd_fit_dists(data, left = '", input$selectConc %>% make.names(),
+      "dist <- ssdtools::ssd_fit_dists(data, left = '", input$selectConc %>% make.names(),
       "', dists = c(", paste0("'", input$selectDist, "'", collapse = ", "), "))"
     )
     c2 <- "# plot distributions"

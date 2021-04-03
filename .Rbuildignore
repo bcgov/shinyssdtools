@@ -11,14 +11,13 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-^build\.R$
 ^cran-comments\.md$
 ^data-raw$
 ^rsconnect$
 ^shinyApp-forward$
 ^app\.R$
-^deploy\.R$
 ^paper$
 ^.vscode$
 ^compliance.yaml$
 ^\.github$
+^scripts$
