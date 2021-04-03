@@ -1,4 +1,4 @@
-#' Run Shiny Application
+#' Run Shiny ssdtools Application
 #'
 #' @export
 run_app <- function() {

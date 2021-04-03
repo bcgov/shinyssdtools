@@ -64,7 +64,7 @@ Please note that this project is released with a [Contributor Code of
 Conduct](https://github.com/bcgov/shinyssdtools/blob/master/.github/CONTRIBUTING.md).
 By participating in this project you agree to abide by its terms.
 
-## Deployment to `shinyapps.io`
+## Deployment
 
 ### Manually
 
