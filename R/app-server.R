@@ -1040,14 +1040,14 @@ app_server <- function(input, output, session) {
       return({
         tagList(
           p(ver),
-          includeMarkdown(system.file("extdata/about_en.md", package = "shinyssdtools"))
+          includeMarkdown(system.file("extdata/about-en.md", package = "shinyssdtools"))
         )
       })
     } else {
       return({
         tagList(
           p(ver),
-          includeMarkdown(system.file("extdata/about_fr.md", package = "shinyssdtools"))
+          includeMarkdown(system.file("extdata/about-fr.md", package = "shinyssdtools"))
         )
       })
     }
@@ -1055,8 +1055,8 @@ app_server <- function(input, output, session) {
   
   output$ui_userguide <- renderUI({
     if (translation.value$lang == "English") {
-      return(includeMarkdown(system.file(package = "shinyssdtools", "extdata/user_en.md")))
+      return(includeMarkdown(system.file(package = "shinyssdtools", "extdata/user-en.md")))
     }
-    includeMarkdown(system.file(package = "shinyssdtools", "extdata/user_fr.md"))
+    includeMarkdown(system.file(package = "shinyssdtools", "extdata/user-fr.md"))
   })
 }
