@@ -3,10 +3,15 @@
 .RData
 .Ruserdata
 
-*.DS_Store
-*.gif
+.DS_Store
+.Renviron
+.RProfile
+.httr-oauth
 
-inst/doc
+*.html
+
+docs/
+inst/docs/
 
 .vscode/
 

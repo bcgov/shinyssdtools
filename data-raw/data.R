@@ -1,4 +1,4 @@
-translations <- readxl::read_xlsx("extdata/translations.xlsx", sheet = 1)
+translations <- readxl::read_xlsx(system.file(package = "shinyssdtools", "extdata/translations.xlsx"), sheet = 1)
 translations$id <- paste0("ui_", translations$id)
 
 # ad translation for hc
@@ -46,7 +46,7 @@ translations <- dplyr::bind_rows(
 
 checkr::check_key(translations, "id")
 
-boron.data <- readr::read_csv("extdata/boron-data.csv")
+boron.data <- readr::read_csv(system.file(package = "shinyssdtools", "extdata/boron-data.csv"))
 
 pal <- RColorBrewer::brewer.pal.info
 pals <- pal[which(pal$category == "qual"), ] %>% row.names()
