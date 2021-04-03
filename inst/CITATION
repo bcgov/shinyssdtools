@@ -1,0 +1,18 @@
+citHeader("To cite shinyssdtools in publications use:")
+
+citEntry(entry = "Article",
+  title        = "{shinyssdtools}: A web application for fitting Species Sensitivity Distributions (SSDs)",
+  author       = personList(as.person("Seb Dalgarno")),
+  journal      = "Journal of Statistical Software",
+  year         = "2021",
+  volume       = "6",
+  number       = "57",
+  pages        = "2848",
+  url          = "https://doi.org/10.21105/joss.02848",
+
+  textVersion  =
+  paste("Dalgarno, S. (2021).",
+        "shinyssdtools: A web application for fitting Species Sensitivity Distributions (SSDs).",
+        "Journal of Open Source Software, 6(57), 2848.",
+        "https://doi.org/10.21105/joss.02848.")
+)
