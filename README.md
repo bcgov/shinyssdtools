@@ -19,11 +19,11 @@ Distributions (SSDs) using
 
 ## Utilization
 
-The most recent deployed version is available at
+The most recent version is available online at
 <https://bcgov-env.shinyapps.io/ssdtools/>.
 
-To install from [GitHub](https://github.com/bcgov/shinyssdtools) and run
-the development version locally use
+To install the development version from
+[GitHub](https://github.com/bcgov/shinyssdtools) and deploy locally use
 
 ``` r
 # install.packages("devtools")
@@ -64,7 +64,7 @@ Please note that this project is released with a [Contributor Code of
 Conduct](https://github.com/bcgov/shinyssdtools/blob/master/.github/CONTRIBUTING.md).
 By participating in this project you agree to abide by its terms.
 
-## Deployment
+## Deploying to shinyapps.io
 
 ### Manually
 

@@ -26,9 +26,9 @@ knitr::opts_chunk$set(
 
 ## Utilization
 
-The most recent deployed version is available at <https://bcgov-env.shinyapps.io/ssdtools/>.
+The most recent version is available online at <https://bcgov-env.shinyapps.io/ssdtools/>.
 
-To install from [GitHub](https://github.com/bcgov/shinyssdtools) and run the development version locally use
+To install the development version from [GitHub](https://github.com/bcgov/shinyssdtools) and deploy locally use
 
 ``` r
 # install.packages("devtools")
@@ -60,7 +60,7 @@ If you would like to contribute, please see our [CONTRIBUTING](CONTRIBUTING.md) 
 
 Please note that this project is released with a [Contributor Code of Conduct](https://github.com/bcgov/shinyssdtools/blob/master/.github/CONTRIBUTING.md). By participating in this project you agree to abide by its terms.
 
-## Deployment
+## Deploying to shinyapps.io
 
 ### Manually
 
@@ -69,7 +69,8 @@ Run the `deploy-app.R` script in the scripts directory (after setting the accoun
 ### Automatically
 
 If your `shinyapps.io` account name is the same as your GitHub account name simply make a commit in the master or dev branch and include `deploy app` in the message 
-(after setting `SHINYAPPS_TOKEN` and `SHINYAPPS_SECRET` in your repository GitHub secrets). This triggers the `deploy-app.yml` GitHub action.
+(after setting `SHINYAPPS_TOKEN` and `SHINYAPPS_SECRET` in your repository GitHub secrets). 
+This triggers the `deploy-app.yml` GitHub action.
 
 ## License
 
