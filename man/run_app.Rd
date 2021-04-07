@@ -3,14 +3,14 @@
 \name{run_app}
 \alias{run_app}
 \alias{run_ssdtools_app}
-\title{Run Shiny Application}
+\title{Run Shiny ssdtools Application}
 \usage{
 run_app()
 
 run_ssdtools_app()
 }
 \description{
-Run Shiny Application
+Run Shiny ssdtools Application
 }
 \section{Functions}{
 \itemize{
