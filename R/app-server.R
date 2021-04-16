@@ -1036,10 +1036,12 @@ app_server <- function(input, output, session) {
   
   output$ui_about <- renderUI({
     ver <- paste("ssdtools version:", utils::packageVersion("ssdtools"))
+    sver <- paste("shinyssdtools version:", utils::packageVersion("shinyssdtools"))
     if (translation.value$lang == "English"){
       return({
         tagList(
           p(ver),
+          p(sver),
           includeMarkdown(system.file("extdata/about-en.md", package = "shinyssdtools"))
         )
       })
@@ -1047,6 +1049,7 @@ app_server <- function(input, output, session) {
       return({
         tagList(
           p(ver),
+          p(sver),
           includeMarkdown(system.file("extdata/about-fr.md", package = "shinyssdtools"))
         )
       })
