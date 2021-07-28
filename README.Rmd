@@ -33,6 +33,7 @@ To install the development version from [GitHub](https://github.com/bcgov/shinys
 ``` r
 # install.packages("devtools")
 devtools::install_github("bcgov/shinyssdtools")
+library(shinyssdtools)
 shinyssdtools::run_app()
 ```
 
