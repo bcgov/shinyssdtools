@@ -75,23 +75,24 @@
   <div class="contents col-md-9">
 <div id="shinyssdtools" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#shinyssdtools" class="anchor"></a>shinyssdtools</h1></div>
+<a href="#shinyssdtools" class="anchor" aria-hidden="true"></a>shinyssdtools</h1></div>
 <!-- badges: start -->
 
 <p><code>shinyssdtools</code> is a shiny application for fitting Species Sensitivity Distributions (SSDs) using <a href="https://github.com/bcgov/ssdtools" class="external-link"><code>ssdtools</code></a>.</p>
 <div id="utilization" class="section level2">
 <h2 class="hasAnchor">
-<a href="#utilization" class="anchor"></a>Utilization</h2>
+<a href="#utilization" class="anchor" aria-hidden="true"></a>Utilization</h2>
 <p>The most recent version is available online at <a href="https://bcgov-env.shinyapps.io/ssdtools/" class="external-link uri">https://bcgov-env.shinyapps.io/ssdtools/</a>.</p>
 <p>To install the development version from <a href="https://github.com/bcgov/shinyssdtools" class="external-link">GitHub</a> and deploy locally use</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"bcgov/shinyssdtools"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bcgov/shinyssdtools" class="external-link">shinyssdtools</a></span><span class="op">)</span>
 <span class="fu">shinyssdtools</span><span class="fu">::</span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="features" class="section level2">
 <h2 class="hasAnchor">
-<a href="#features" class="anchor"></a>Features</h2>
+<a href="#features" class="anchor" aria-hidden="true"></a>Features</h2>
 <p>In addition to being a Graphical User Interface to the core functionality in the <a href="https://github.com/bcgov/ssdtools" class="external-link"><code>ssdtools</code></a> package, <code>shinyssdtools</code> also provides</p>
 <ul>
 <li>a bilingual (English/French) interface;</li>
@@ -101,38 +102,38 @@
 </div>
 <div id="information" class="section level2">
 <h2 class="hasAnchor">
-<a href="#information" class="anchor"></a>Information</h2>
+<a href="#information" class="anchor" aria-hidden="true"></a>Information</h2>
 <p>For more information including how to cite <code>shinyssdtools</code> see <a href="https://doi.org/10.21105/joss.02848" class="external-link">Dalgarno (2021)</a>.</p>
 <p>For a review of <code>ssdtools</code> and <code>shinysddtools</code> in the context of other SSD software packages see <a href="https://onlinelibrary.wiley.com/doi/10.1002/etc.4925" class="external-link">Fox et al. (2021)</a>.</p>
 </div>
 <div id="assistance" class="section level2">
 <h2 class="hasAnchor">
-<a href="#assistance" class="anchor"></a>Assistance</h2>
+<a href="#assistance" class="anchor" aria-hidden="true"></a>Assistance</h2>
 <p>To report bugs/issues/feature requests, please file an <a href="https://github.com/bcgov/shinyssdtools/issues/" class="external-link">issue</a>.</p>
 </div>
 <div id="contribution" class="section level2">
 <h2 class="hasAnchor">
-<a href="#contribution" class="anchor"></a>Contribution</h2>
+<a href="#contribution" class="anchor" aria-hidden="true"></a>Contribution</h2>
 <p>If you would like to contribute, please see our <a href="CONTRIBUTING.html">CONTRIBUTING</a> guidelines.</p>
 <p>Please note that this project is released with a <a href="https://github.com/bcgov/shinyssdtools/blob/master/.github/CONTRIBUTING.md" class="external-link">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
 </div>
 <div id="deploying-to-shinyappsio" class="section level2">
 <h2 class="hasAnchor">
-<a href="#deploying-to-shinyappsio" class="anchor"></a>Deploying to shinyapps.io</h2>
+<a href="#deploying-to-shinyappsio" class="anchor" aria-hidden="true"></a>Deploying to shinyapps.io</h2>
 <div id="manually" class="section level3">
 <h3 class="hasAnchor">
-<a href="#manually" class="anchor"></a>Manually</h3>
+<a href="#manually" class="anchor" aria-hidden="true"></a>Manually</h3>
 <p>Run the <code>deploy-app.R</code> script in the scripts directory (after setting the account argument to be your <code>shinyapps.io</code> account name).</p>
 </div>
 <div id="automatically" class="section level3">
 <h3 class="hasAnchor">
-<a href="#automatically" class="anchor"></a>Automatically</h3>
+<a href="#automatically" class="anchor" aria-hidden="true"></a>Automatically</h3>
 <p>If your <code>shinyapps.io</code> account name is the same as your GitHub account name simply make a commit in the master or dev branch and include <code>deploy app</code> in the message (after setting <code>SHINYAPPS_TOKEN</code> and <code>SHINYAPPS_SECRET</code> in your repository GitHub secrets). This triggers the <code>deploy-app.yml</code> GitHub action.</p>
 </div>
 </div>
 <div id="license" class="section level2">
 <h2 class="hasAnchor">
-<a href="#license" class="anchor"></a>License</h2>
+<a href="#license" class="anchor" aria-hidden="true"></a>License</h2>
 <p>The code is released under the Apache License 2.0</p>
 <p>Copyright 2021 Province of British Columbia</p>
 <p>Licensed under the Apache License, Version 2.0 (the “LICENSE”); you may not use this file except in compliance with the License. You may obtain a copy of the License at</p>
