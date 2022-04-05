@@ -41,6 +41,11 @@ translations <- dplyr::bind_rows(
     id = "ui_1table1",
     english = "hi",
     french = "nope"
+  ),
+  dplyr::tibble(
+    id = "ui_2rescale",
+    english = "Rescale data prior to fitting",
+    french = "Rescale data prior to fitting"
   )
 )
 
@@ -51,7 +56,7 @@ boron.data <- readr::read_csv(system.file(package = "shinyssdtools", "extdata/bo
 pal <- RColorBrewer::brewer.pal.info
 pals <- pal[which(pal$category == "qual"), ] %>% row.names()
 
-extra.dists <- c("gompertz", "lgumbel", "weibull")
-default.dists <- c("llogis", "gamma", "lnorm")
+default.dists <- ssdtools::ssd_dists_bcanz()
+extra.dists <- setdiff(ssdtools::ssd_dists_all(), default.dists)
 
 usethis::use_data(boron.data, translations, pals, default.dists, extra.dists, internal = TRUE, overwrite = TRUE)

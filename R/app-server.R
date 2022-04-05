@@ -251,7 +251,8 @@ app_server <- function(input, output, session) {
     x <- try(ssdtools::ssd_fit_dists(data,
                                      left = conc,
                                      dists = input$selectDist,
-                                     silent = TRUE
+                                     silent = TRUE, 
+                                     rescale = input$rescale
     ), silent = TRUE)
     if (inherits(x, "try-error")) {
       x <- NULL
@@ -855,6 +856,12 @@ app_server <- function(input, output, session) {
                 choices = column_names(),
                 selected = guess_conc()
     )
+  })
+  
+  output$ui_2rescale <- renderUI({
+    checkboxInput("rescale",
+                  label = tr("ui_2rescale", trans()), 
+                  value = TRUE)
   })
   
   output$ui_2plot <- renderUI({

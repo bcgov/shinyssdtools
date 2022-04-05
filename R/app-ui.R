@@ -81,6 +81,7 @@ app_ui <- function() {
             wellPanel(
               uiOutput("selectConc"),
               uiOutput("ui_2select"),
+              uiOutput("ui_2rescale"),
               br(),
               uiOutput("ui_2png"),
               div(
