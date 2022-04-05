@@ -39,13 +39,23 @@ translations <- dplyr::bind_rows(
   ),
   dplyr::tibble(
     id = "ui_1table1",
-    english = "hi",
-    french = "nope"
+    english = "Table",
+    french = "Table"
   ),
   dplyr::tibble(
     id = "ui_2rescale",
     english = "Rescale data prior to fitting",
     french = "Rescale data prior to fitting"
+  ),
+  dplyr::tibble(
+    id = "ui_2at_boundary_ok",
+    english = "Exclude distributions with a parameter value at a boundary",
+    french = "Exclude distributions with a parameter value at a boundary"
+  ),
+  dplyr::tibble(
+    id = "ui_2computable",
+    english = "Exclude distributions without computable standard errors",
+    french = "Exclude distributions without computable standard errors"
   )
 )
 

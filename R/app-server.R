@@ -252,6 +252,12 @@ app_server <- function(input, output, session) {
                                      left = conc,
                                      dists = input$selectDist,
                                      silent = TRUE, 
+                                     reweight = FALSE,
+                                     min_pmix = 0, 
+                                     nrow = 6L,
+                                     computable = input$computable,
+                                     # need to get inverse of at_boundary_ok value due to wording of label
+                                     at_boundary_ok = !input$at_boundary_ok,
                                      rescale = input$rescale
     ), silent = TRUE)
     if (inherits(x, "try-error")) {
@@ -861,6 +867,18 @@ app_server <- function(input, output, session) {
   output$ui_2rescale <- renderUI({
     checkboxInput("rescale",
                   label = tr("ui_2rescale", trans()), 
+                  value = TRUE)
+  })
+  
+  output$ui_2at_boundary_ok <- renderUI({
+    checkboxInput("at_boundary_ok",
+                  label = tr("ui_2at_boundary_ok", trans()), 
+                  value = TRUE)
+  })
+  
+  output$ui_2computable <- renderUI({
+    checkboxInput("computable",
+                  label = tr("ui_2computable", trans()), 
                   value = TRUE)
   })
   

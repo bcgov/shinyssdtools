@@ -82,6 +82,8 @@ app_ui <- function() {
               uiOutput("selectConc"),
               uiOutput("ui_2select"),
               uiOutput("ui_2rescale"),
+              uiOutput("ui_2at_boundary_ok"),
+              uiOutput("ui_2computable"),
               br(),
               uiOutput("ui_2png"),
               div(
