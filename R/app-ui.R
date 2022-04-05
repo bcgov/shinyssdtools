@@ -28,7 +28,7 @@ app_ui <- function() {
       actionButton("fr", "French", class = "msw-button")
     ))),
     navbarPage(
-      title = uiOutput("ui_navtitle"),
+      title = uiOutput("ui_navtitle"), windowTitle = "shinyssdtools",
       tabPanel(
         title = span(tagList(icon("table"), inline(uiOutput("ui_nav1")))),
         fluidRow(
