@@ -61,7 +61,7 @@ translations <- dplyr::bind_rows(
 
 checkr::check_key(translations, "id")
 
-boron.data <- readr::read_csv(system.file(package = "shinyssdtools", "extdata/boron-data.csv"))
+boron.data <- ssddata::ccme_boron
 
 pal <- RColorBrewer::brewer.pal.info
 pals <- pal[which(pal$category == "qual"), ] %>% row.names()
