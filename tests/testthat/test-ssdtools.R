@@ -1,6 +1,6 @@
 test_that("ssd_hp and ssd_hc output table includes all dists", {
   ### complete output table issue #33
-  y <- ssdtools::ssd_fit_dists(ssdtools::boron_data)
+  y <- ssdtools::ssd_fit_dists(ssddata::ccme_boron)
 
   pred_hc <- ssd_hc_ave(y, 5, 10L)
   expect_identical(pred_hc$dist, c("average", "llogis", "gamma", "lnorm"))
