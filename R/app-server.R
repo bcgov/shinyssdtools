@@ -604,7 +604,7 @@ app_server <- function(input, output, session) {
     c4 <- "# this is the output of dput, which is used to create a data.frame from data entered in interactive spreadsheet"
     hot <- paste0("data <- ", utils::capture.output(dput(clean_data())) %>% glue::glue_collapse())
     upload <- paste0("data <- read_csv(file = '", input$uploadData$name, "')")
-    demo <- "data <- ssdtools::boron_data"
+    demo <- "data <- ssddata::ccme_boron"
     c3 <- "# fix unacceptable column names"
     name <- "colnames(data) <- make.names(colnames(data))"
     if (upload.values$upload_state == "hot") {
