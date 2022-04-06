@@ -622,11 +622,17 @@ app_server <- function(input, output, session) {
     req(check_fit() == "")
     c1 <- "# fit distributions"
     fit <- paste0(
-      "dist <- ssdtools::ssd_fit_dists(data, left = '", input$selectConc %>% make.names(),
-      "', dists = c(", paste0("'", input$selectDist, "'", collapse = ", "), "))"
+      "dist <- ssd_fit_dists(data, left = '", 
+      input$selectConc %>% make.names(),
+      "', dists = c(", 
+      paste0("'", input$selectDist, "'", collapse = ", "), ")",
+      ", silent = TRUE, reweight = FALSE, min_pmix = 0, nrow = 6L, computable = ",
+      input$computable,
+      ", at_boundary_ok = ", !input$at_boundary_ok,
+      ", rescale = ", input$rescale, ")"
     )
     c2 <- "# plot distributions"
-    plot <- "ssdtools::ssd_plot_cdf(dist)"
+    plot <- "ssd_plot_cdf(dist)"
     c3 <- "# goodness of fit table"
     table <- "ssd_gof(dist)"
     HTML(paste(c1, fit, c2, plot, c3, table, sep = "<br/>"))
