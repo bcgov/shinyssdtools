@@ -632,7 +632,7 @@ app_server <- function(input, output, session) {
       ", rescale = ", input$rescale, ")"
     )
     c2 <- "# plot distributions"
-    plot <- "ssd_plot_cdf(dist)"
+    plot <- "ssd_plot_cdf(dist, delta = Inf)"
     c3 <- "# goodness of fit table"
     table <- "ssd_gof(dist)"
     HTML(paste(c1, fit, c2, plot, c3, table, sep = "<br/>"))

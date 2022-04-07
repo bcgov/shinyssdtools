@@ -1,5 +1,5 @@
 plot_distributions <- function(x, ylab, lang) {
-  gp <- ssdtools::ssd_plot_cdf(x, ylab = ylab)
+  gp <- ssdtools::ssd_plot_cdf(x, ylab = ylab, delta = Inf)
   if (lang == "French") {
     suppressMessages({
       gp <- gp + ggplot2::scale_y_continuous(labels = function(x) paste0(x * 100, " %"), 
