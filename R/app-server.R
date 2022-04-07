@@ -691,7 +691,12 @@ app_server <- function(input, output, session) {
       paste0(form, "(dist, ", arg, " = "), thresh, "L, ci = TRUE",
       ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L)"
     )
-    HTML(paste(c1, c2, conf, sep = "<br/>"))
+    conf2 <- paste0(
+      paste0(form, "(dist, ", arg, " = "), thresh, "L, ci = TRUE, average = FALSE",
+      ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L)"
+    )
+    bind <- paste0("rbind(", conf, ", ", conf2, ")")
+    HTML(paste(c1, c2, bind, sep = "<br/>"))
   })
   
   output$codeSaveFit <- renderUI({
