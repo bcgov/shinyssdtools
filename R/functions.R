@@ -43,10 +43,14 @@ estimate_hp <- function(x, conc) {
 }
 
 ssd_hc_ave <- function(x, percent, nboot) {
+  seed <- .Random.seed[3]
+  set.seed(seed)
   ave <- ssdtools::ssd_hc(x,
     percent = percent, ci = TRUE,
     average = TRUE, nboot = nboot
   )
+  
+  set.seed(seed)
   dist <- ssdtools::ssd_hc(x,
     percent = percent, ci = TRUE,
     average = FALSE, nboot = nboot
@@ -56,10 +60,14 @@ ssd_hc_ave <- function(x, percent, nboot) {
 }
 
 ssd_hp_ave <- function(x, conc, nboot) {
+  seed <- .Random.seed[3]
+  set.seed(seed)
   ave <- ssdtools::ssd_hp(x,
     conc = conc, ci = TRUE,
     average = TRUE, nboot = nboot
   )
+  
+  set.seed(seed)
   dist <- ssdtools::ssd_hp(x,
     conc = conc, ci = TRUE,
     average = FALSE, nboot = nboot
