@@ -28,7 +28,7 @@ app_ui <- function() {
       actionButton("fr", "French", class = "msw-button")
     ))),
     navbarPage(
-      title = uiOutput("ui_navtitle"),
+      title = uiOutput("ui_navtitle"), windowTitle = "shinyssdtools",
       tabPanel(
         title = span(tagList(icon("table"), inline(uiOutput("ui_nav1")))),
         fluidRow(
@@ -81,6 +81,9 @@ app_ui <- function() {
             wellPanel(
               uiOutput("selectConc"),
               uiOutput("ui_2select"),
+              uiOutput("ui_2rescale"),
+              uiOutput("ui_2at_boundary_ok"),
+              uiOutput("ui_2computable"),
               br(),
               uiOutput("ui_2png"),
               div(
@@ -138,8 +141,8 @@ app_ui <- function() {
               uiOutput("ui_3bshint"),
               br(),
               uiOutput("ui_thresh_type"),
-              inline(uiOutput("ui_3thresh")),
-              inline(uiOutput("ui_3samples")),
+              uiOutput("ui_3thresh"),
+              uiOutput("ui_3samples"),
               br(),
               uiOutput("selectLabel"),
               uiOutput("selectColour"),

@@ -251,7 +251,14 @@ app_server <- function(input, output, session) {
     x <- try(ssdtools::ssd_fit_dists(data,
                                      left = conc,
                                      dists = input$selectDist,
-                                     silent = TRUE
+                                     silent = TRUE, 
+                                     reweight = FALSE,
+                                     min_pmix = 0, 
+                                     nrow = 6L,
+                                     computable = input$computable,
+                                     # need to get inverse of at_boundary_ok value due to wording of label
+                                     at_boundary_ok = !input$at_boundary_ok,
+                                     rescale = input$rescale
     ), silent = TRUE)
     if (inherits(x, "try-error")) {
       x <- NULL
@@ -597,7 +604,7 @@ app_server <- function(input, output, session) {
     c4 <- "# this is the output of dput, which is used to create a data.frame from data entered in interactive spreadsheet"
     hot <- paste0("data <- ", utils::capture.output(dput(clean_data())) %>% glue::glue_collapse())
     upload <- paste0("data <- read_csv(file = '", input$uploadData$name, "')")
-    demo <- "data <- ssdtools::boron_data"
+    demo <- "data <- ssddata::ccme_boron"
     c3 <- "# fix unacceptable column names"
     name <- "colnames(data) <- make.names(colnames(data))"
     if (upload.values$upload_state == "hot") {
@@ -615,11 +622,17 @@ app_server <- function(input, output, session) {
     req(check_fit() == "")
     c1 <- "# fit distributions"
     fit <- paste0(
-      "dist <- ssdtools::ssd_fit_dists(data, left = '", input$selectConc %>% make.names(),
-      "', dists = c(", paste0("'", input$selectDist, "'", collapse = ", "), "))"
+      "dist <- ssd_fit_dists(data, left = '", 
+      input$selectConc %>% make.names(),
+      "', dists = c(", 
+      paste0("'", input$selectDist, "'", collapse = ", "), ")",
+      ", silent = TRUE, reweight = FALSE, min_pmix = 0, nrow = 6L, computable = ",
+      input$computable,
+      ", at_boundary_ok = ", !input$at_boundary_ok,
+      ", rescale = ", input$rescale, ")"
     )
     c2 <- "# plot distributions"
-    plot <- "ssdtools::ssd_plot_cdf(dist)"
+    plot <- "ssd_plot_cdf(dist, delta = Inf)"
     c3 <- "# goodness of fit table"
     table <- "ssd_gof(dist)"
     HTML(paste(c1, fit, c2, plot, c3, table, sep = "<br/>"))
@@ -678,7 +691,12 @@ app_server <- function(input, output, session) {
       paste0(form, "(dist, ", arg, " = "), thresh, "L, ci = TRUE",
       ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L)"
     )
-    HTML(paste(c1, c2, conf, sep = "<br/>"))
+    conf2 <- paste0(
+      paste0(form, "(dist, ", arg, " = "), thresh, "L, ci = TRUE, average = FALSE",
+      ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L)"
+    )
+    bind <- paste0("rbind(", conf, ", ", conf2, ")")
+    HTML(paste(c1, c2, bind, sep = "<br/>"))
   })
   
   output$codeSaveFit <- renderUI({
@@ -855,6 +873,24 @@ app_server <- function(input, output, session) {
                 choices = column_names(),
                 selected = guess_conc()
     )
+  })
+  
+  output$ui_2rescale <- renderUI({
+    checkboxInput("rescale",
+                  label = tr("ui_2rescale", trans()), 
+                  value = TRUE)
+  })
+  
+  output$ui_2at_boundary_ok <- renderUI({
+    checkboxInput("at_boundary_ok",
+                  label = tr("ui_2at_boundary_ok", trans()), 
+                  value = TRUE)
+  })
+  
+  output$ui_2computable <- renderUI({
+    checkboxInput("computable",
+                  label = tr("ui_2computable", trans()), 
+                  value = TRUE)
   })
   
   output$ui_2plot <- renderUI({

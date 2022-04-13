@@ -13,7 +13,7 @@ license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://op
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.02848/status.svg)](https://doi.org/10.21105/joss.02848)
 <!-- badges: end -->
 
-`shinyssdtools` is a shiny application for fitting Species Sensitivity
+`shinyssdtools` is a Shiny application for fitting Species Sensitivity
 Distributions (SSDs) using
 [`ssdtools`](https://github.com/bcgov/ssdtools).
 
