@@ -2,7 +2,7 @@
 
 # shinyssdtools 0.1.0 (2022-04-13)
 
-- Same as previous version.
+- Updates for compatibility with ssdtools CRAN version 1.0.1
 
 
 # shinyssdtools 0.0.3.9001 (2021-04-03)
