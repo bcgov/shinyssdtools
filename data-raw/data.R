@@ -39,19 +39,34 @@ translations <- dplyr::bind_rows(
   ),
   dplyr::tibble(
     id = "ui_1table1",
-    english = "hi",
-    french = "nope"
+    english = "Table",
+    french = "Table"
+  ),
+  dplyr::tibble(
+    id = "ui_2rescale",
+    english = "Rescale data prior to fitting",
+    french = "Rescale data prior to fitting"
+  ),
+  dplyr::tibble(
+    id = "ui_2at_boundary_ok",
+    english = "Exclude distributions with a parameter value at a boundary",
+    french = "Exclude distributions with a parameter value at a boundary"
+  ),
+  dplyr::tibble(
+    id = "ui_2computable",
+    english = "Exclude distributions without computable standard errors",
+    french = "Exclude distributions without computable standard errors"
   )
 )
 
 checkr::check_key(translations, "id")
 
-boron.data <- readr::read_csv(system.file(package = "shinyssdtools", "extdata/boron-data.csv"))
+boron.data <- ssddata::ccme_boron
 
 pal <- RColorBrewer::brewer.pal.info
 pals <- pal[which(pal$category == "qual"), ] %>% row.names()
 
-extra.dists <- c("gompertz", "lgumbel", "weibull")
-default.dists <- c("llogis", "gamma", "lnorm")
+default.dists <- ssdtools::ssd_dists_bcanz()
+extra.dists <- setdiff(ssdtools::ssd_dists_all(), default.dists)
 
 usethis::use_data(boron.data, translations, pals, default.dists, extra.dists, internal = TRUE, overwrite = TRUE)

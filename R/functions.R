@@ -43,27 +43,41 @@ estimate_hp <- function(x, conc) {
 }
 
 ssd_hc_ave <- function(x, percent, nboot) {
-  ave <- ssdtools::ssd_hc(x,
-    percent = percent, ci = TRUE,
-    average = TRUE, nboot = nboot
-  )
+
   dist <- ssdtools::ssd_hc(x,
-    percent = percent, ci = TRUE,
-    average = FALSE, nboot = nboot
+                           percent = percent, ci = TRUE,
+                           average = FALSE, nboot = nboot
   )
+
+  if(length(x) == 1){
+    ave <- dist
+    ave$dist <- "average"
+  } else {
+    ave <- ssdtools::ssd_hc(x,
+                            percent = percent, ci = TRUE,
+                            average = TRUE, nboot = nboot)
+  }
+  
   dplyr::bind_rows(ave, dist) %>%
-    dplyr::mutate_at(c("est", "se", "ucl", "lcl"), ~ signif(., 3))
+    dplyr::mutate_at(c("est", "se", "ucl", "lcl", "wt"), ~ signif(., 3))
 }
 
 ssd_hp_ave <- function(x, conc, nboot) {
-  ave <- ssdtools::ssd_hp(x,
-    conc = conc, ci = TRUE,
-    average = TRUE, nboot = nboot
-  )
+
   dist <- ssdtools::ssd_hp(x,
     conc = conc, ci = TRUE,
     average = FALSE, nboot = nboot
   )
+  
+  if(length(x) == 1){
+    ave <- dist
+    ave$dist <- "average"
+  } else {
+    ave <- ssdtools::ssd_hp(x,
+                            conc = conc, ci = TRUE,
+                            average = TRUE, nboot = nboot)
+  }
+  
   dplyr::bind_rows(ave, dist) %>%
-    dplyr::mutate_at(c("est", "se", "ucl", "lcl"), ~ signif(., 3))
+    dplyr::mutate_at(c("est", "se", "ucl", "lcl", "wt"), ~ signif(., 3))
 }
