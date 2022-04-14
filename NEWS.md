@@ -2,7 +2,7 @@
 
 # shinyssdtools 0.1.1 (2022-04-14)
 
-- Same as previous version.
+- Update deployment script.
 
 
 # shinyssdtools 0.1.0.9000 (2022-04-13)
