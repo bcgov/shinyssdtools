@@ -1,5 +1,15 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# shinyssdtools 0.1.1 (2022-04-14)
+
+- Update deployment script.
+
+
+# shinyssdtools 0.1.0.9000 (2022-04-13)
+
+- Same as previous version.
+
+
 # shinyssdtools 0.1.0 (2022-04-13)
 
 - Updates for compatibility with ssdtools CRAN version 1.0.1

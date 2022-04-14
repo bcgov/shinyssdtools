@@ -1,6 +1,6 @@
 Package: shinyssdtools
 Title: ssdtools Shiny App
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     c(person(given = "Seb",
              family = "Dalgarno",
@@ -32,6 +32,7 @@ Imports:
     glue,
     lifecycle,
     magrittr,
+    markdown,
     RColorBrewer,
     readr,
     rhandsontable,

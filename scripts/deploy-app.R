@@ -1,15 +1,18 @@
-#deploy to bcgov test site
+# install latest ssdtools dev version
+remotes::install_github("bcgov/ssdtools@e028ebce646c9fe", force = TRUE)
+
+# deploy to bcgov test site
 rsconnect::deployApp(account = "bcgov-env", appName = "shinyssdtools_test", 
                      forceUpdate = TRUE)
 
-#deploy to bcgov live site
+# deploy to bcgov live site
 rsconnect::deployApp(account = "bcgov-env", appName = "ssdtools", 
                      forceUpdate = TRUE)
 
-#deploy to poissonconsulting test site
+# deploy to poissonconsulting test site
 rsconnect::deployApp(account = "poissonconsulting", appName = "shinyssdtools-dev", 
                      forceUpdate = TRUE)
 
-#deploy to poissonconsulting live site
+# deploy to poissonconsulting live site
 rsconnect::deployApp(account = "poissonconsulting", appName = "shinyssdtools", 
                      forceUpdate = TRUE)
