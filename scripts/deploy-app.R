@@ -1,3 +1,6 @@
+# install latest ssdtools dev version
+remotes::install_github("bcgov/ssdtools", force = TRUE)
+
 #deploy to bcgov test site
 rsconnect::deployApp(account = "bcgov-env", appName = "shinyssdtools_test", 
                      forceUpdate = TRUE)
