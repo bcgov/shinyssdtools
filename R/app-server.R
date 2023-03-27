@@ -590,12 +590,13 @@ app_server <- function(input, output, session) {
     l1 <- "install.packages('ssdtools')"
     l2 <- "library(ssdtools)"
     l3 <- "library(ggplot2)"
+    l4 <- "library(dplyr)"
     if (upload.values$upload_state == "upload") {
-      l4 <- "library(readr)"
+      l5 <- "library(readr)"
     } else {
-      l4 <- NULL
+      l5 <- NULL
     }
-    HTML(paste(l1, l2, l3, l4, sep = "<br/>"))
+    HTML(paste(l1, l2, l3, l4, l5, sep = "<br/>"))
   })
   
   output$codeData <- renderUI({
@@ -695,7 +696,7 @@ app_server <- function(input, output, session) {
       paste0(form, "(dist, ", arg, " = "), thresh, "L, ci = TRUE, average = FALSE",
       ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L)"
     )
-    bind <- paste0("rbind(", conf, ", ", conf2, ")")
+    bind <- paste0("dplyr::bind_rows(", conf, ", ", conf2, ")")
     HTML(paste(c1, c2, bind, sep = "<br/>"))
   })
   
