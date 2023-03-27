@@ -335,7 +335,7 @@ app_server <- function(input, output, session) {
       data[[shape]]
     }
     
-    validate(need(is.null(shape_data) | shape_data %>% is.character(), message = tr("ui_hintsym", trans())))
+    validate(need(is.null(shape_data) | is.character(shape_data) | is.factor(shape_data), message = tr("ui_hintsym", trans())))
     
     plot_predictions(data, pred,
                      conc = conc, label = label, colour = colour,
