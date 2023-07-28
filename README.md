@@ -7,7 +7,7 @@
 
 [![Lifecycle:
 maturing](https://img.shields.io/badge/Lifecycle-Maturing-007EC6)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
-[![R-CMD-check](https://github.com/bcgov/shinyssdtools/workflows/R-CMD-check/badge.svg)](https://github.com/bcgov/shinyssdtools/actions)
+[![R-CMD-check](https://github.com/bcgov/shinyssdtools/workflows/R-CMD-check/badge.svg)](https://github.com/bcgov/shinyssdtools/actions/workflows/R-CMD-check.yaml)
 [![Apache
 license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.02848/status.svg)](https://doi.org/10.21105/joss.02848)
@@ -38,9 +38,9 @@ In addition to being a Graphical User Interface to the core
 functionality in the [`ssdtools`](https://github.com/bcgov/ssdtools)
 package, `shinyssdtools` also provides
 
--   a bilingual (English/French) interface;
--   generation of R scripts for reproducibility;
--   customization and downloads of plots and tables
+- a bilingual (English/French) interface;
+- generation of R scripts for reproducibility;
+- customization and downloads of plots and tables
 
 ## Information
 
@@ -101,10 +101,9 @@ limitations under the License.
 ------------------------------------------------------------------------
 
 <a rel="LICENSE" href="https://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons Licence"
-style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br /><span
-xmlns:dct="http://purl.org/dc/terms/"
-property="dct:title">ssdtools</span> by <span
-xmlns:cc="http://creativecommons.org/ns#"
+style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/"
+property="dct:title">ssdtools</span> by
+<span xmlns:cc="http://creativecommons.org/ns#"
 property="cc:attributionName">the Province of British Columbia </span>
 is licensed under a
 <a rel="LICENSE" href="https://creativecommons.org/licenses/by/4.0/">
