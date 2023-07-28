@@ -5,7 +5,7 @@ account: poissonconsulting
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3888468
-bundleId: 5799613
+bundleId: 7045196
 url: https://poissonconsulting.shinyapps.io/shinyssdtools-dev/
-when: 1649962183.3366
-lastSyncTime: 1649962183.33661
+when: 1680566136.20795
+lastSyncTime: 1680566136.20797
