@@ -1,5 +1,9 @@
-# install latest ssdtools dev version
-remotes::install_github("bcgov/ssdtools@e028ebce646c9fe", force = TRUE)
+# install cran ssdtools
+pak::pak("ssdtools")
+# get cran versions of poisson pkgs
+pak::pak("err")
+pak::pak("universals")
+pak::pak("chk")
 
 # deploy to bcgov test site
 rsconnect::deployApp(account = "bcgov-env", appName = "shinyssdtools_test", 
