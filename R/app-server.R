@@ -324,7 +324,7 @@ app_server <- function(input, output, session) {
     } else {
       input$selectShape %>% make.names()
     }
-    percent <- if (!input$checkHc || is.null(thresh_rv$percent) || input$thresh_type == "Concentration") {
+    percent <- if (!input$checkHc || is.null(thresh_rv$percent)) {
       NULL
     } else {
       round(thresh_rv$percent)
