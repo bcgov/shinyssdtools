@@ -1,17 +1,15 @@
-plot_distributions <- function(x, ylab, xlab, lang) {
+plot_distributions <- function(x, ylab, xlab) {
   gp <- ssdtools::ssd_plot_cdf(x, ylab = ylab, xlab = xlab, delta = Inf)
-  if (lang == "French") {
-    suppressMessages({
-      gp <- gp + ggplot2::scale_y_continuous(labels = function(x) paste0(x * 100, " %"), 
-                                             name = ylab)
-      }) 
-  }
+  suppressMessages({
+    gp <- gp + ggplot2::scale_y_continuous(labels = function(x) paste0(x * 100), 
+                                     name = ylab)
+  }) 
   gp
 }
 
 plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
                              label_adjust, xaxis, yaxis, title, xmax, palette,
-                             legend_colour, legend_shape, lang) {
+                             legend_colour, legend_shape) {
   gp <- ssdtools::ssd_plot(x, pred,
     left = conc, label = label,
     color = colour, shape = shape, hc = percent, ci = FALSE,
@@ -30,10 +28,10 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
     ggplot2::expand_limits(x = xmax) +
     ggplot2::scale_color_brewer(palette = palette, name = legend_colour) +
     ggplot2::scale_shape(name = legend_shape)
-  if (lang == "French") {
-    suppressMessages({
-      gp <- gp + ggplot2::scale_y_continuous(labels = function(x) paste0(x * 100, " %"), name = yaxis)
-    }) 
-  }
+  
+  suppressMessages({
+    gp <- gp + ggplot2::scale_y_continuous(labels = function(x) paste0(x * 100), 
+                                           name = yaxis)
+  }) 
   gp
 }

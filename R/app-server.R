@@ -269,7 +269,7 @@ app_server <- function(input, output, session) {
   plot_dist <- reactive({
     req(fit_dist())
     dist <- fit_dist()
-    plot_distributions(dist, ylab = input$yaxis2, xlab = input$xaxis2, lang = translation.value$lang)
+    plot_distributions(dist, ylab = input$yaxis2, xlab = input$xaxis2)
   })
   
   table_gof <- reactive({
@@ -348,7 +348,7 @@ app_server <- function(input, output, session) {
                      label_adjust = shift_label, xaxis = input$xaxis,
                      yaxis = input$yaxis, title = input$title, xmax = input$xMax,
                      palette = input$selectPalette, legend_colour = input$legendColour,
-                     legend_shape = input$legendShape, lang = translation.value$lang
+                     legend_shape = input$legendShape
     )
   })
   
