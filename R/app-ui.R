@@ -164,8 +164,8 @@ app_ui <- function() {
                 splitLayout(
                   uiOutput("uiXmax"),
                   numericInput("adjustLabel",
-                               value = 1.3, label = "Adjust label",
-                               min = 1, max = 10, step = 0.1
+                               value = 1.05, label = "Shift label",
+                               min = 0, max = 10, step = 0.1
                   )
                 ),
                 inline(uiOutput("ui_checkHc"))

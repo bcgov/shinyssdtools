@@ -300,6 +300,7 @@ app_server <- function(input, output, session) {
     req(input$selectShape)
     req(input$selectConc)
     req(input$thresh_type)
+    req(input$adjustLabel)
     
     if (input$thresh == 0 | input$thresh > 99) {
       return()
@@ -337,10 +338,14 @@ app_server <- function(input, output, session) {
     
     validate(need(is.null(shape_data) | is.character(shape_data) | is.factor(shape_data), message = tr("ui_hintsym", trans())))
     
+    shift_label <- input$adjustLabel
+    if(shift_label < 1){
+      shift_label <- 1
+    }
     plot_predictions(data, pred,
                      conc = conc, label = label, colour = colour,
                      shape = shape, percent = percent,
-                     label_adjust = input$adjustLabel, xaxis = input$xaxis,
+                     label_adjust = shift_label, xaxis = input$xaxis,
                      yaxis = input$yaxis, title = input$title, xmax = input$xMax,
                      palette = input$selectPalette, legend_colour = input$legendColour,
                      legend_shape = input$legendShape, lang = translation.value$lang
