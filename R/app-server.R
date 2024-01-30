@@ -442,7 +442,7 @@ app_server <- function(input, output, session) {
     checkboxInput("checkHc", label = tr("ui_checkHc", trans()), value = TRUE)
   })
   
-  # --- render fit results
+  # --- render fit results ----
   output$ui_distplot <- renderUI({
     plotOutput("distPlot1")
   })
@@ -462,7 +462,7 @@ app_server <- function(input, output, session) {
     req(fit_fail() != "")
     HTML(paste0("<font color='grey'>", paste(fit_fail(), tr("ui_hintfail", trans())), "</font>"))
   })
-  # --- render predict results
+  # --- render predict results ----
   output$modelAveragePlot <- renderPlot({
     suppressWarnings(waiter::waiter_show())
     x <- plot_model_average()
@@ -498,7 +498,7 @@ app_server <- function(input, output, session) {
     )
   })
   
-  # --- render UI
+  # --- render UI ----
   shinyjs::onclick("linkFormatPredict", shinyjs::toggle("divFormatPredict", anim = TRUE, animType = "slide", time = 0.2))
   shinyjs::onclick("linkPngFormatPredict", shinyjs::toggle("divPngFormatPredict", anim = TRUE, animType = "slide", time = 0.2))
   shinyjs::onclick("linkFormatFit", shinyjs::toggle("divFormatFit", anim = TRUE, animType = "slide", time = 0.2))
@@ -517,7 +517,7 @@ app_server <- function(input, output, session) {
     numericInput("xMin", label = "X-axis min", min = 1, value = min(data[[conc]], na.rm = TRUE))
   })
   
-  # --- download handlers
+  # --- download handlers ----
   output$dlFitPlot <- downloadHandler(
     filename = function() {
       "ssdtools_distFitPlot.png"
@@ -582,7 +582,7 @@ app_server <- function(input, output, session) {
     }
   )
   
-  # --- render code
+  # --- render code ----
   output$codeHead <- renderUI({
     if (upload.values$upload_state == "hot" && is.na(read_data()$Concentration[1])) {
       return()

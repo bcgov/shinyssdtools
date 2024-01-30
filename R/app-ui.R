@@ -29,6 +29,8 @@ app_ui <- function() {
     ))),
     navbarPage(
       title = uiOutput("ui_navtitle"), windowTitle = "shinyssdtools",
+
+# data tab ----------------------------------------------------------------
       tabPanel(
         title = span(tagList(icon("table"), inline(uiOutput("ui_nav1")))),
         fluidRow(
@@ -72,6 +74,7 @@ app_ui <- function() {
           uiOutput("ui_1note1")
         )
       ),
+# fit tab -----------------------------------------------------------------
       tabPanel(
         title = span(tagList(icon("stats", lib = "glyphicon"), inline(uiOutput("ui_nav2")))),
         fluidRow(
@@ -130,6 +133,7 @@ app_ui <- function() {
           )
         )
       ),
+# predict tab -------------------------------------------------------------
       tabPanel(
         title = span(tagList(icon("calculator"), inline(uiOutput("ui_nav3")))),
         fluidRow(
@@ -236,6 +240,8 @@ app_ui <- function() {
           )
         )
       ),
+
+# R code tab ------------------------------------------------------------------
       tabPanel(
         title = span(tagList(icon("code"), inline(uiOutput("ui_nav4")))),
         br(),
