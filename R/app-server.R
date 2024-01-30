@@ -945,8 +945,9 @@ app_server <- function(input, output, session) {
   })
   
   output$ui_thresh_type <- renderUI({
+    thresh_label <- tr("ui_3threshlabel", trans())
     thresh <- tr("ui_3thresh", trans())
-    radioButtons("thresh_type", thresh,
+    radioButtons("thresh_type", thresh_label,
                  choices = c(thresh, "Concentration"),
                  selected = thresh, inline = TRUE
     )
