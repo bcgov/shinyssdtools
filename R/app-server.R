@@ -269,7 +269,7 @@ app_server <- function(input, output, session) {
   plot_dist <- reactive({
     req(fit_dist())
     dist <- fit_dist()
-    plot_distributions(dist, ylab = tr("ui_2ploty", trans()), lang = translation.value$lang)
+    plot_distributions(dist, ylab = input$yaxis2, xlab = input$xaxis2, lang = translation.value$lang)
   })
   
   table_gof <- reactive({
@@ -899,6 +899,14 @@ app_server <- function(input, output, session) {
                   value = TRUE)
   })
   
+  output$ui_2xlab <- renderUI({
+    textInput("xaxis2", value = "Concentration", label = tr("ui_3xlab", trans()))
+  })
+  
+  output$ui_2ylab <- renderUI({
+    textInput("yaxis2", value = tr("ui_2ploty", trans()), label = tr("ui_3ylab", trans()))
+  })
+  
   output$ui_2plot <- renderUI({
     h4(tr("ui_2plot", trans()))
   })
@@ -1012,7 +1020,7 @@ app_server <- function(input, output, session) {
   })
   
   output$ui_3ylab <- renderUI({
-    textInput("yaxis", value = "Percent of Species Affected", label = tr("ui_3ylab", trans()))
+    textInput("yaxis", value = tr("ui_2ploty", trans()), label = tr("ui_3ylab", trans()))
   })
   
   output$ui_3title <- renderUI({
