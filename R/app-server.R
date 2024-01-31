@@ -197,7 +197,7 @@ app_server <- function(input, output, session) {
   })
   
   code_hc <- reactive({
-    if (!input$checkHc || input$thresh_type == "Concentration") {
+    if (!input$checkHc) {
       return("NULL")
     }
     paste0(round(thresh_rv$percent), "L")
@@ -302,10 +302,6 @@ app_server <- function(input, output, session) {
     req(input$thresh_type)
     req(input$adjustLabel)
     
-    if (input$thresh == 0 | input$thresh > 99) {
-      return()
-    }
-    
     data <- names_data()
     pred <- predict_hc()
     conc <- input$selectConc %>% make.names()
@@ -358,7 +354,7 @@ app_server <- function(input, output, session) {
     withProgress(value = 0, message = "Getting Confidence Limits...", {
       incProgress(0.4)
       nboot <- as.integer(gsub("(,|\\s)", "", input$bootSamp))
-      if (input$thresh_type == "Concentration") {
+      if (input$thresh_type != "Concentration") {
         y <- ssd_hp_ave(dist, conc = thresh_rv$conc, nboot = nboot)
       } else {
         y <- ssd_hc_ave(dist, percent = thresh_rv$percent, nboot = nboot)
@@ -477,12 +473,18 @@ app_server <- function(input, output, session) {
   
   output$estHc <- renderUI({
     req(input$thresh_type)
-    percent <- paste0("<b>", thresh_rv$percent, "</b>")
+    percent <- thresh_rv$percent
+    percent_pc <- 100 - as.numeric(percent)
+    percent_bold <- paste0("<b>", thresh_rv$percent, "</b>")
     conc <- paste0("<b>", thresh_rv$conc, "</b>")
-    if (input$thresh_type == "Concentration") {
-      return(HTML(glue::glue(tr("ui_3hc2", trans()), percent = percent, conc = conc)))
+    if (input$thresh_type != "Concentration") {
+      return(HTML(glue::glue(tr("ui_3hc2", trans()), percent = percent_bold, conc = conc)))
     }
-    HTML(glue::glue(tr("ui_3hc", trans()), percent = percent, conc = conc))
+    div(
+      HTML(glue::glue("HC{percent}/PC{percent_pc}: {conc}", percent = percent, conc = conc)),
+      br(),
+      HTML(glue::glue(tr("ui_3hc", trans()), percent = percent_bold, conc = conc))
+    )
   })
   
   output$clTable <- DT::renderDataTable({
@@ -491,7 +493,7 @@ app_server <- function(input, output, session) {
   
   output$describeCl <- renderText({
     desc1 <- paste(tr("ui_3cldesc1", trans()), paste0("<b>", thresh_rv$percent, "</b>"))
-    if (input$thresh_type == "Concentration") {
+    if (input$thresh_type != "Concentration") {
       desc1 <- paste(tr("ui_3cldesc11", trans()), paste0("<b>", thresh_rv$conc, "</b>"))
     }
     HTML(
@@ -686,7 +688,7 @@ app_server <- function(input, output, session) {
     form <- "ssd_hc"
     arg <- "percent"
     thresh <- thresh_rv$percent
-    if (input$thresh_type == "Concentration") {
+    if (input$thresh_type != "Concentration") {
       form <- "ssd_hp"
       arg <- "conc"
       thresh <- thresh_rv$conc
@@ -948,25 +950,43 @@ app_server <- function(input, output, session) {
     thresh_label <- tr("ui_3threshlabel", trans())
     thresh <- tr("ui_3thresh", trans())
     radioButtons("thresh_type", thresh_label,
-                 choices = c(thresh, "Concentration"),
-                 selected = thresh, inline = TRUE
+                 choices = c("Concentration", thresh),
+                 selected = "Concentration", inline = TRUE
     )
   })
   
   output$ui_3thresh <- renderUI({
     req(input$thresh_type)
-    if (input$thresh_type == "Concentration") {
+    if (input$thresh_type != "Concentration") {
       return(numericInput("conc",
-                          label = tr("ui_3conc", trans()),
+                          label = "Affected by concentration",
                           value = 1, min = 0,
                           max = 100, step = 0.1, width = "100px"
       ))
     }
-    numericInput("thresh",
-                 label = tr("ui_3thresh", trans()),
-                 value = 5, min = 0,
-                 max = 99, step = 5, width = "100px"
+    div(
+      inline(selectInput("thresh",
+                          label = "Affecting % species",
+                         choices = c(1, 5, 10, 20),
+                         selected = 5, width = "100px"
+      )),
+      inline(selectInput("thresh_pc",
+                          label = "Protecting % species",
+                         choices = c(99, 95, 90, 80),
+                         selected = 95, width = "100px"
+      ))
     )
+    
+  })
+  
+  observeEvent(input$thresh, {
+    thresh_pc <- 100 - as.numeric(input$thresh)
+    updateSelectInput(session, "thresh_pc", selected = isolate(thresh_pc))
+  })
+  
+  observeEvent(input$thresh_pc, {
+    thresh <- 100 - as.numeric(input$thresh_pc)
+    updateSelectInput(session, "thresh", selected = isolate(thresh))
   })
   
   output$ui_3samples <- renderUI({
@@ -990,7 +1010,7 @@ app_server <- function(input, output, session) {
   observe({
     x <- fit_dist()
     req(input$thresh_type)
-    if (input$thresh_type == "Concentration") {
+    if (input$thresh_type != "Concentration") {
       req(input$conc)
       conc <- input$conc
       thresh <- signif(estimate_hp(x, conc), 3)
@@ -1001,7 +1021,7 @@ app_server <- function(input, output, session) {
       thresh_rv$percent <- thresh
     } else {
       req(input$thresh)
-      thresh <- input$thresh
+      thresh <- as.numeric(input$thresh)
       thresh_rv$percent <- thresh
       conc <- signif(estimate_hc(x, thresh), 3)
       thresh_rv$conc <- conc
