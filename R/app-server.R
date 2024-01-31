@@ -449,10 +449,9 @@ app_server <- function(input, output, session) {
   })
   output$distPlot1 <- renderPlot({
     req(plot_dist())
-    suppressWarnings(waiter::waiter_show())
-    x <- plot_dist()
-    suppressWarnings(waiter::waiter_hide())
-    x
+    
+    waiter::waiter_show(id = "distPlot1", html = waiter::spin_2(), color = "white", hide_on_render = TRUE)
+    plot_dist()
   })
   
   output$gofTable <- DT::renderDataTable({
@@ -465,10 +464,8 @@ app_server <- function(input, output, session) {
   })
   # --- render predict results ----
   output$modelAveragePlot <- renderPlot({
-    suppressWarnings(waiter::waiter_show())
-    x <- plot_model_average()
-    suppressWarnings(waiter::waiter_hide())
-    x
+    waiter::waiter_show(id = "modelAveragePlot", html = waiter::spin_2(), color = "white", hide_on_render = TRUE)
+    plot_model_average()
   })
   
   output$estHc <- renderUI({
