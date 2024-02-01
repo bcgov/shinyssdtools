@@ -35,18 +35,19 @@ zero_range <- function(x, tol = .Machine$double.eps^0.5) {
 }
 
 estimate_hc <- function(x, percent) {
-  ssdtools::ssd_hc(x, percent = percent, nboot = 10L)$est
+  ssdtools::ssd_hc(x, proportion = percent/100, nboot = 10L, multi_est = TRUE, multi_ci = FALSE)$est
 }
 
 estimate_hp <- function(x, conc) {
-  ssdtools::ssd_hp(x = x, conc = conc, nboot = 10L)$est
+  ssdtools::ssd_hp(x = x, conc = conc, nboot = 10L, multi_est = TRUE, multi_ci = FALSE)$est
 }
 
 ssd_hc_ave <- function(x, percent, nboot) {
 
   dist <- ssdtools::ssd_hc(x,
-                           percent = percent, ci = TRUE,
-                           average = FALSE, nboot = nboot
+                           proportion = percent/100, ci = TRUE,
+                           average = FALSE, nboot = nboot, 
+                           multi_est = TRUE, multi_ci = FALSE
   )
 
   if(length(x) == 1){
@@ -54,8 +55,9 @@ ssd_hc_ave <- function(x, percent, nboot) {
     ave$dist <- "average"
   } else {
     ave <- ssdtools::ssd_hc(x,
-                            percent = percent, ci = TRUE,
-                            average = TRUE, nboot = nboot)
+                            proportion = percent/100, ci = TRUE,
+                            average = TRUE, nboot = nboot,
+                            multi_est = TRUE, multi_ci = FALSE)
   }
   
   dplyr::bind_rows(ave, dist) %>%
@@ -75,7 +77,8 @@ ssd_hp_ave <- function(x, conc, nboot) {
   } else {
     ave <- ssdtools::ssd_hp(x,
                             conc = conc, ci = TRUE,
-                            average = TRUE, nboot = nboot)
+                            average = TRUE, nboot = nboot,
+                            multi_est = TRUE, multi_ci = FALSE)
   }
   
   dplyr::bind_rows(ave, dist) %>%

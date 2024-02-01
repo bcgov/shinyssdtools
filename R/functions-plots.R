@@ -12,7 +12,7 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
                              legend_colour, legend_shape) {
   gp <- ssdtools::ssd_plot(x, pred,
     left = conc, label = label,
-    color = colour, shape = shape, hc = percent, ci = FALSE,
+    color = colour, shape = shape, hc = percent/100, ci = FALSE,
     shift_x = label_adjust %>% as.numeric(),
     xlab = xaxis, ylab = yaxis
   ) +
@@ -25,7 +25,7 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
       axis.text = ggplot2::element_text(color = "black"),
       legend.key = ggplot2::element_rect(fill = NA, colour = NA)
     ) +
-    ggplot2::expand_limits(x = xmax) +
+    ggplot2::expand_limits(x = c(10, xmax)) +
     ggplot2::scale_color_brewer(palette = palette, name = legend_colour) +
     ggplot2::scale_shape(name = legend_shape)
   

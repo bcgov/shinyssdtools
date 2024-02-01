@@ -200,7 +200,7 @@ app_server <- function(input, output, session) {
     if (!input$checkHc) {
       return("NULL")
     }
-    paste0(round(thresh_rv$percent), "L")
+    thresh_rv$percent/100
   })
   
   # --- get values
@@ -301,6 +301,7 @@ app_server <- function(input, output, session) {
     req(input$selectConc)
     req(input$thresh_type)
     req(input$adjustLabel)
+    req(thresh_rv$percent)
     
     data <- names_data()
     pred <- predict_hc()
@@ -683,8 +684,8 @@ app_server <- function(input, output, session) {
     req(check_fit() == "")
     req(check_pred() == "")
     form <- "ssd_hc"
-    arg <- "percent"
-    thresh <- thresh_rv$percent
+    arg <- "proportion"
+    thresh <- thresh_rv$percent/100
     if (input$thresh_type != "Concentration") {
       form <- "ssd_hp"
       arg <- "conc"
@@ -693,12 +694,12 @@ app_server <- function(input, output, session) {
     c1 <- "# get confidence limits"
     c2 <- paste("# use the nboot argument in", form, "to set the number of bootstrap samples")
     conf <- paste0(
-      paste0(form, "(dist, ", arg, " = "), thresh, "L, ci = TRUE",
-      ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L)"
+      paste0(form, "(dist, ", arg, " = "), thresh, ", ci = TRUE",
+      ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L, multi_est = TRUE, multi_ci = FALSE)"
     )
     conf2 <- paste0(
-      paste0(form, "(dist, ", arg, " = "), thresh, "L, ci = TRUE, average = FALSE",
-      ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L)"
+      paste0(form, "(dist, ", arg, " = "), thresh, ", ci = TRUE, average = FALSE",
+      ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L, multi_est = TRUE, multi_ci = FALSE)"
     )
     bind <- paste0("dplyr::bind_rows(", conf, ", ", conf2, ")")
     HTML(paste(c1, c2, bind, sep = "<br/>"))
