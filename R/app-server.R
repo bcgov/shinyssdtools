@@ -368,12 +368,12 @@ app_server <- function(input, output, session) {
     if (translation.value$lang == "English") {
       df <- data.frame(
         n = c("500", "1,000", "5,000", "10,000"),
-        time = c("5 seconds", "10 seconds", "20 seconds", "45 seconds")
+        time = c("10 seconds", "20 seconds", "2 minutes", "5 minutes")
       )
     } else {
       df <- data.frame(
         n = c("500", "1 000", "5 000", "10 000"),
-        time = c("5 secondes", "10 secondes", "20 secondes", "45 secondes")
+        time = c("10 secondes", "20 secondes", "2 minutes", "5 minutes")
       )
     }
     
