@@ -35,7 +35,7 @@ zero_range <- function(x, tol = .Machine$double.eps^0.5) {
 }
 
 estimate_hc <- function(x, percent) {
-  ssdtools::ssd_hc(x, proportion = percent/100, nboot = 10L, multi_est = TRUE, multi_ci = FALSE)$est
+  ssdtools::ssd_hc(x, proportion = percent / 100, nboot = 10L, multi_est = TRUE, multi_ci = FALSE)$est
 }
 
 estimate_hp <- function(x, conc) {
@@ -43,44 +43,44 @@ estimate_hp <- function(x, conc) {
 }
 
 ssd_hc_ave <- function(x, percent, nboot) {
-
   dist <- ssdtools::ssd_hc(x,
-                           proportion = percent/100, ci = TRUE,
-                           average = FALSE, nboot = nboot, 
-                           multi_est = TRUE, multi_ci = FALSE
+    proportion = percent / 100, ci = TRUE,
+    average = FALSE, nboot = nboot,
+    multi_est = TRUE, multi_ci = FALSE
   )
 
-  if(length(x) == 1){
+  if (length(x) == 1) {
     ave <- dist
     ave$dist <- "average"
   } else {
     ave <- ssdtools::ssd_hc(x,
-                            proportion = percent/100, ci = TRUE,
-                            average = TRUE, nboot = nboot,
-                            multi_est = TRUE, multi_ci = FALSE)
+      proportion = percent / 100, ci = TRUE,
+      average = TRUE, nboot = nboot,
+      multi_est = TRUE, multi_ci = FALSE
+    )
   }
-  
+
   dplyr::bind_rows(ave, dist) %>%
     dplyr::mutate_at(c("est", "se", "ucl", "lcl", "wt"), ~ signif(., 3))
 }
 
 ssd_hp_ave <- function(x, conc, nboot) {
-
   dist <- ssdtools::ssd_hp(x,
     conc = conc, ci = TRUE,
     average = FALSE, nboot = nboot
   )
-  
-  if(length(x) == 1){
+
+  if (length(x) == 1) {
     ave <- dist
     ave$dist <- "average"
   } else {
     ave <- ssdtools::ssd_hp(x,
-                            conc = conc, ci = TRUE,
-                            average = TRUE, nboot = nboot,
-                            multi_est = TRUE, multi_ci = FALSE)
+      conc = conc, ci = TRUE,
+      average = TRUE, nboot = nboot,
+      multi_est = TRUE, multi_ci = FALSE
+    )
   }
-  
+
   dplyr::bind_rows(ave, dist) %>%
     dplyr::mutate_at(c("est", "se", "ucl", "lcl", "wt"), ~ signif(., 3))
 }

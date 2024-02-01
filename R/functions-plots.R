@@ -1,9 +1,11 @@
 plot_distributions <- function(x, ylab, xlab) {
   gp <- ssdtools::ssd_plot_cdf(x, ylab = ylab, xlab = xlab, delta = Inf)
   suppressMessages({
-    gp <- gp + ggplot2::scale_y_continuous(labels = function(x) paste0(x * 100), 
-                                     name = ylab)
-  }) 
+    gp <- gp + ggplot2::scale_y_continuous(
+      labels = function(x) paste0(x * 100),
+      name = ylab
+    )
+  })
   gp
 }
 
@@ -12,7 +14,7 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
                              legend_colour, legend_shape) {
   gp <- ssdtools::ssd_plot(x, pred,
     left = conc, label = label,
-    color = colour, shape = shape, hc = percent/100, ci = FALSE,
+    color = colour, shape = shape, hc = percent / 100, ci = FALSE,
     shift_x = label_adjust %>% as.numeric(),
     xlab = xaxis, ylab = yaxis
   ) +
@@ -28,10 +30,12 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
     ggplot2::expand_limits(x = c(10, xmax)) +
     ggplot2::scale_color_brewer(palette = palette, name = legend_colour) +
     ggplot2::scale_shape(name = legend_shape)
-  
+
   suppressMessages({
-    gp <- gp + ggplot2::scale_y_continuous(labels = function(x) paste0(x * 100), 
-                                           name = yaxis)
-  }) 
+    gp <- gp + ggplot2::scale_y_continuous(
+      labels = function(x) paste0(x * 100),
+      name = yaxis
+    )
+  })
   gp
 }

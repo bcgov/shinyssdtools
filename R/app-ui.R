@@ -23,14 +23,14 @@ app_ui <- function() {
     ),
     div(class = "div-link", HTML(paste0(
       actionButton("en", "English",
-                   class = "msw-button"
+        class = "msw-button"
       ), "/",
       actionButton("fr", "French", class = "msw-button")
     ))),
     navbarPage(
       title = uiOutput("ui_navtitle"), windowTitle = "shinyssdtools",
 
-# data tab ----------------------------------------------------------------
+      # data tab ----------------------------------------------------------------
       tabPanel(
         title = span(tagList(icon("table"), inline(uiOutput("ui_nav1")))),
         fluidRow(
@@ -53,7 +53,7 @@ app_ui <- function() {
               uiOutput("ui_1csvhelp")
             )),
             uiOutput("ui_1csvupload"),
-            
+
             # input data in DataTable
             inline(uiOutput("ui_1table1")),
             inline(actionLink("infoHands", icon = icon("info-circle"), label = NULL)),
@@ -74,7 +74,7 @@ app_ui <- function() {
           uiOutput("ui_1note1")
         )
       ),
-# fit tab -----------------------------------------------------------------
+      # fit tab -----------------------------------------------------------------
       tabPanel(
         title = span(tagList(icon("stats", lib = "glyphicon"), inline(uiOutput("ui_nav2")))),
         fluidRow(
@@ -135,7 +135,7 @@ app_ui <- function() {
           )
         )
       ),
-# predict tab -------------------------------------------------------------
+      # predict tab -------------------------------------------------------------
       tabPanel(
         title = span(tagList(icon("calculator"), inline(uiOutput("ui_nav3")))),
         fluidRow(
@@ -166,8 +166,8 @@ app_ui <- function() {
                 splitLayout(
                   uiOutput("uiXmax"),
                   numericInput("adjustLabel",
-                               value = 1.05, label = "Shift label",
-                               min = 0, max = 10, step = 0.1
+                    value = 1.05, label = "Shift label",
+                    min = 0, max = 10, step = 0.1
                   )
                 ),
                 inline(uiOutput("ui_checkHc"))
@@ -243,7 +243,7 @@ app_ui <- function() {
         )
       ),
 
-# R code tab ------------------------------------------------------------------
+      # R code tab ------------------------------------------------------------------
       tabPanel(
         title = span(tagList(icon("code"), inline(uiOutput("ui_nav4")))),
         br(),
