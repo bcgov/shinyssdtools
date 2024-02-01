@@ -30,10 +30,7 @@ Imports:
     DT,
     ggplot2,
     glue,
-    lifecycle,
     magrittr,
-    markdown,
-    RColorBrewer,
     readr,
     rhandsontable,
     shiny,
@@ -43,16 +40,16 @@ Imports:
 Suggests: 
     covr,
     knitr,
+    markdown,
+    RColorBrewer,
     rmarkdown,
     rsconnect,
     testthat,
     ssddata
 VignetteBuilder: 
     knitr
-RdMacros: 
-    lifecycle
 Encoding: UTF-8
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3

@@ -14,6 +14,6 @@ Run Shiny ssdtools Application
 }
 \section{Functions}{
 \itemize{
-\item \code{run_ssdtools_app}: 
-}}
+\item \code{run_ssdtools_app()}: 
 
+}}
