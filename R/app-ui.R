@@ -89,14 +89,14 @@ app_ui <- function() {
               uiOutput("ui_2computable"),
               uiOutput("ui_2xlab"),
               uiOutput("ui_2ylab"),
-              br(),
+              uiOutput("ui_2size"),
               uiOutput("ui_2png"),
               div(
                 id = "divFormatFit",
                 br(),
-                uiOutput("ui_2width"),
-                uiOutput("ui_2height"),
-                uiOutput("ui_2dpi")
+                inline(uiOutput("ui_2width")),
+                inline(uiOutput("ui_2height")),
+                inline(uiOutput("ui_2dpi"))
               )
             )
           ),
@@ -163,6 +163,10 @@ app_ui <- function() {
                 uiOutput("ui_3title"),
                 uiOutput("uiLegendColour"),
                 uiOutput("uiLegendShape"),
+                splitLayout(
+                  uiOutput("ui_3size"),
+                  uiOutput("ui_3sizeLabel")
+                ),
                 uiOutput("ui_checkHc"),
                 splitLayout(
                   uiOutput("uiAdjustLabel"),
@@ -172,10 +176,10 @@ app_ui <- function() {
                 uiOutput("uiXlog"),
                 uiOutput("uiXbreaks"),
               ),
-              br(), br(),
               uiOutput("ui_3pngopts"),
               div(
                 id = "divPngFormatPredict",
+                br(),
                 inline(uiOutput("ui_3width")),
                 inline(uiOutput("ui_3height")),
                 inline(uiOutput("ui_3dpi"))

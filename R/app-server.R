@@ -268,7 +268,7 @@ app_server <- function(input, output, session) {
   plot_dist <- reactive({
     req(fit_dist())
     dist <- fit_dist()
-    plot_distributions(dist, ylab = input$yaxis2, xlab = input$xaxis2)
+    plot_distributions(dist, ylab = input$yaxis2, xlab = input$xaxis2, text_size = input$size2)
   })
 
   table_gof <- reactive({
@@ -361,7 +361,8 @@ app_server <- function(input, output, session) {
       label_adjust = shift_label, xaxis = input$xaxis,
       yaxis = input$yaxis, title = input$title, xmax = xmax, xmin = xmin,
       palette = input$selectPalette, legend_colour = input$legendColour,
-      legend_shape = input$legendShape, trans = trans
+      legend_shape = input$legendShape, trans = trans, text_size = input$size3,
+      label_size = input$sizeLabel3
     ))
   })
 
@@ -454,6 +455,18 @@ app_server <- function(input, output, session) {
 
   output$uiLegendShape <- renderUI({
     textInput("legendShape", label = tr("ui_3shape", trans()), value = input$selectShape)
+  })
+  
+  output$ui_3size <- renderUI({
+    numericInput("size3", label = "Text size", value = 12, min = 1, max = 100)
+  })
+  
+  output$ui_3sizeLabel <- renderUI({
+    numericInput("sizeLabel3", label = "Label size", value = 3, min = 1, max = 10)
+  })
+  
+  output$ui_2size <- renderUI({
+    numericInput("size2", label = "Text size", value = 12, min = 1, max = 100)
   })
 
   output$ui_checkHc <- renderUI({
