@@ -458,15 +458,15 @@ app_server <- function(input, output, session) {
   })
   
   output$ui_3size <- renderUI({
-    numericInput("size3", label = "Text size", value = 12, min = 1, max = 100)
+    numericInput("size3", label = tr("ui_size", trans()), value = 12, min = 1, max = 100)
   })
   
   output$ui_3sizeLabel <- renderUI({
-    numericInput("sizeLabel3", label = "Label size", value = 3, min = 1, max = 10)
+    numericInput("sizeLabel3", label = tr("ui_sizeLabel", trans()), value = 3, min = 1, max = 10)
   })
   
   output$ui_2size <- renderUI({
-    numericInput("size2", label = "Text size", value = 12, min = 1, max = 100)
+    numericInput("size2", label = tr("ui_size", trans()), value = 12, min = 1, max = 100)
   })
 
   output$ui_checkHc <- renderUI({
@@ -539,7 +539,7 @@ app_server <- function(input, output, session) {
 
   output$uiAdjustLabel <- renderUI({
     numericInput("adjustLabel",
-                 value = 1.05, label = "Shift label",
+                 value = 1.05, label = tr("ui_adjustLabel", trans()),
                  min = 0, max = 10, step = 0.1
     )
   })
@@ -548,18 +548,18 @@ app_server <- function(input, output, session) {
     req(input$selectConc)
     conc <- input$selectConc
     data <- clean_data()
-    numericInput("xMax", label = "X-axis max", min = 1, value = NULL)
+    numericInput("xMax", label = tr("ui_xmax", trans()), min = 1, value = NULL)
   })
 
   output$uiXmin <- renderUI({
     req(input$selectConc)
     conc <- input$selectConc
     data <- clean_data()
-    numericInput("xMin", label = "X-axis min", min = 1, value = NULL)
+    numericInput("xMin", label = tr("ui_xmin", trans()), min = 1, value = NULL)
   })
   
   output$uiXlog <- renderUI({
-    checkboxInput("xlog", "Log x-axis", value = TRUE)
+    checkboxInput("xlog", tr("ui_xlog", trans()), value = TRUE)
   })
   
   output$uiXbreaks <- renderUI({

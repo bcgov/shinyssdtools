@@ -56,6 +56,36 @@ translations <- dplyr::bind_rows(
     id = "ui_2computable",
     english = "Exclude distributions without computable standard errors",
     french = "Exclusion des distributions sans erreurs types calculables"
+  ),
+  dplyr::tibble(
+    id = "ui_xmax",
+    english = "X-axis maximum",
+    french = "Maximum de l'axe des X"
+  ),
+  dplyr::tibble(
+    id = "ui_xmin",
+    english = "X-axis maximum",
+    french = "Minimum de l'axe des X"
+  ),
+  dplyr::tibble(
+    id = "ui_xlog",
+    english = "Log x-axis",
+    french = "Logarithme de l'axe des X"
+  ),
+  dplyr::tibble(
+    id = "ui_sizeLabel",
+    english = "Label size",
+    french = "Taille de l'étiquette"
+  ),
+  dplyr::tibble(
+    id = "ui_size",
+    english = "Text size",
+    french = "Taille du texte"
+  ),
+  dplyr::tibble(
+    id = "ui_adjustLabel",
+    english = "Shift label",
+    french = "Ajuster l'étiquette"
   )
 )
 
