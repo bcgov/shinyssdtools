@@ -11,9 +11,9 @@ plot_distributions <- function(x, ylab, xlab) {
 
 plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
                              label_adjust, xaxis, yaxis, title, xmax, palette,
-                             legend_colour, legend_shape) {
+                             legend_colour, legend_shape, xbreaks) {
   gp <- ssdtools::ssd_plot(x, pred,
-    left = conc, label = label,
+    left = conc, label = label, xbreaks = xbreaks,
     color = colour, shape = shape, hc = percent / 100, ci = FALSE,
     shift_x = label_adjust %>% as.numeric(),
     xlab = xaxis, ylab = yaxis

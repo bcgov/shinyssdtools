@@ -301,6 +301,7 @@ app_server <- function(input, output, session) {
     req(input$thresh_type)
     req(input$adjustLabel)
     req(thresh_rv$percent)
+    req(input$xbreaks)
 
     data <- names_data()
     pred <- predict_hc()
@@ -340,7 +341,7 @@ app_server <- function(input, output, session) {
     }
     plot_predictions(data, pred,
       conc = conc, label = label, colour = colour,
-      shape = shape, percent = percent,
+      shape = shape, percent = percent, xbreaks = as.numeric(input$xbreaks),
       label_adjust = shift_label, xaxis = input$xaxis,
       yaxis = input$yaxis, title = input$title, xmax = input$xMax,
       palette = input$selectPalette, legend_colour = input$legendColour,
@@ -507,6 +508,13 @@ app_server <- function(input, output, session) {
   shinyjs::onclick("linkPngFormatPredict", shinyjs::toggle("divPngFormatPredict", anim = TRUE, animType = "slide", time = 0.2))
   shinyjs::onclick("linkFormatFit", shinyjs::toggle("divFormatFit", anim = TRUE, animType = "slide", time = 0.2))
 
+  output$uiAdjustLabel <- renderUI({
+    numericInput("adjustLabel",
+                 value = 1.05, label = "Shift label",
+                 min = 0, max = 10, step = 0.1
+    )
+  })
+  
   output$uiXmax <- renderUI({
     req(input$selectConc)
     conc <- input$selectConc
@@ -519,6 +527,19 @@ app_server <- function(input, output, session) {
     conc <- input$selectConc
     data <- clean_data()
     numericInput("xMin", label = "X-axis min", min = 1, value = min(data[[conc]], na.rm = TRUE))
+  })
+  
+  output$uiXbreaks <- renderUI({
+    req(names_data())
+    req(thresh_rv$conc)
+    data <- names_data()
+    scale <- scales::trans_breaks("log10", function(x) 10^x)
+    y <- sort(signif(c(scale(data[[input$selectConc]]), thresh_rv$conc), 3))
+    selectizeInput("xbreaks", "X-axis breaks", 
+                   options = list(create = TRUE, plugins = list('remove_button')),
+                   choices = y, 
+                   selected = y,
+                   multiple = TRUE)
   })
 
   # --- download handlers ----

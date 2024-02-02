@@ -164,12 +164,11 @@ app_ui <- function() {
                 uiOutput("uiLegendColour"),
                 uiOutput("uiLegendShape"),
                 splitLayout(
+                  uiOutput("uiXmin"),
                   uiOutput("uiXmax"),
-                  numericInput("adjustLabel",
-                    value = 1.05, label = "Shift label",
-                    min = 0, max = 10, step = 0.1
-                  )
+                  uiOutput("uiAdjustLabel"),
                 ),
+                uiOutput("uiXbreaks"),
                 inline(uiOutput("ui_checkHc"))
               ),
               br(), br(),
