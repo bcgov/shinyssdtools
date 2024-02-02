@@ -176,10 +176,9 @@ app_ui <- function() {
               uiOutput("ui_3pngopts"),
               div(
                 id = "divPngFormatPredict",
-                br(),
-                uiOutput("ui_3width"),
-                uiOutput("ui_3height"),
-                uiOutput("ui_3dpi")
+                inline(uiOutput("ui_3width")),
+                inline(uiOutput("ui_3height")),
+                inline(uiOutput("ui_3dpi"))
               ),
               class = "wellpanel"
             )
