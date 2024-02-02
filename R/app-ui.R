@@ -163,13 +163,14 @@ app_ui <- function() {
                 uiOutput("ui_3title"),
                 uiOutput("uiLegendColour"),
                 uiOutput("uiLegendShape"),
+                uiOutput("ui_checkHc"),
                 splitLayout(
-                  uiOutput("uiXmin"),
-                  uiOutput("uiXmax"),
                   uiOutput("uiAdjustLabel"),
+                  uiOutput("uiXmin"),
+                  uiOutput("uiXmax")
                 ),
+                uiOutput("uiXlog"),
                 uiOutput("uiXbreaks"),
-                inline(uiOutput("ui_checkHc"))
               ),
               br(), br(),
               uiOutput("ui_3pngopts"),

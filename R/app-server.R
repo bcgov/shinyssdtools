@@ -339,14 +339,30 @@ app_server <- function(input, output, session) {
     if (shift_label < 1) {
       shift_label <- 1
     }
-    plot_predictions(data, pred,
+    
+    xmax <- NA
+    if(!is.null(input$xMax)){
+      xmax <- input$xMax
+    }
+    
+    xmin <- NA
+    if(!is.null(input$xMin)){
+      xmin <- input$xMin
+    }
+    
+    trans <- "log10"
+    if(!input$xlog){
+      trans <- "identity"
+    }
+
+    silent_plot(plot_predictions(data, pred,
       conc = conc, label = label, colour = colour,
       shape = shape, percent = percent, xbreaks = as.numeric(input$xbreaks),
       label_adjust = shift_label, xaxis = input$xaxis,
-      yaxis = input$yaxis, title = input$title, xmax = input$xMax,
+      yaxis = input$yaxis, title = input$title, xmax = xmax, xmin = xmin,
       palette = input$selectPalette, legend_colour = input$legendColour,
-      legend_shape = input$legendShape
-    )
+      legend_shape = input$legendShape, trans = trans
+    ))
   })
 
   # --- get confidence intervals
@@ -503,7 +519,7 @@ app_server <- function(input, output, session) {
     )
   })
 
-  # --- render UI ----
+    # --- render UI ----
   shinyjs::onclick("linkFormatPredict", shinyjs::toggle("divFormatPredict", anim = TRUE, animType = "slide", time = 0.2))
   shinyjs::onclick("linkPngFormatPredict", shinyjs::toggle("divPngFormatPredict", anim = TRUE, animType = "slide", time = 0.2))
   shinyjs::onclick("linkFormatFit", shinyjs::toggle("divFormatFit", anim = TRUE, animType = "slide", time = 0.2))
@@ -519,14 +535,18 @@ app_server <- function(input, output, session) {
     req(input$selectConc)
     conc <- input$selectConc
     data <- clean_data()
-    numericInput("xMax", label = "X-axis max", min = 1, value = max(data[[conc]], na.rm = TRUE))
+    numericInput("xMax", label = "X-axis max", min = 1, value = NULL)
   })
 
   output$uiXmin <- renderUI({
     req(input$selectConc)
     conc <- input$selectConc
     data <- clean_data()
-    numericInput("xMin", label = "X-axis min", min = 1, value = min(data[[conc]], na.rm = TRUE))
+    numericInput("xMin", label = "X-axis min", min = 1, value = NULL)
+  })
+  
+  output$uiXlog <- renderUI({
+    checkboxInput("xlog", "Log x-axis", value = TRUE)
   })
   
   output$uiXbreaks <- renderUI({
