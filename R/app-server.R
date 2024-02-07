@@ -934,7 +934,7 @@ app_server <- function(input, output, session) {
   output$ui_2rescale <- renderUI({
     checkboxInput("rescale",
       label = tr("ui_2rescale", trans()),
-      value = TRUE
+      value = FALSE
     )
   })
 
