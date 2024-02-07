@@ -34,7 +34,7 @@ translations <- dplyr::bind_rows(
   ),
   dplyr::tibble(
     id = "ui_3hc2",
-    english = "The model averaged estimate of the threshold for a concentration of {conc} is {percent} % of species",
+    english = "The model averaged estimate of the fraction affected by a concentration of {conc} is {percent} % of species",
     french = "L'estimation par inférence multimodèle du seuil pour une concentration de {conc} est de {percent} % des espèces."
   ),
   dplyr::tibble(
@@ -64,7 +64,7 @@ translations <- dplyr::bind_rows(
   ),
   dplyr::tibble(
     id = "ui_xmin",
-    english = "X-axis maximum",
+    english = "X-axis minimum",
     french = "Minimum de l'axe des X"
   ),
   dplyr::tibble(
@@ -86,6 +86,11 @@ translations <- dplyr::bind_rows(
     id = "ui_adjustLabel",
     english = "Shift label",
     french = "Ajuster l'étiquette"
+  ),
+  dplyr::tibble(
+    id = "ui_xbreaks",
+    english = "X-axis ticks",
+    french = "Graduations sur l'axe X"
   )
 )
 
