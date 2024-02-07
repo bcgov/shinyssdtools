@@ -1016,14 +1016,16 @@ app_server <- function(input, output, session) {
       ))
     }
     div(
-      inline(selectInput("thresh",
+      inline(selectizeInput("thresh",
         label = "affecting % species",
         choices = c(1, 5, 10, 20),
+        options = list(create = TRUE, createFilter = "^[1-9][0-9]?$|^99$"),
         selected = 5, width = "100px"
       )),
-      inline(selectInput("thresh_pc",
+      inline(selectizeInput("thresh_pc",
         label = "protecting % species",
         choices = c(99, 95, 90, 80),
+        options = list(create = TRUE, createFilter = "^[1-9][0-9]?$|^99$"),
         selected = 95, width = "100px"
       ))
     )
@@ -1031,12 +1033,14 @@ app_server <- function(input, output, session) {
 
   observeEvent(input$thresh, {
     thresh_pc <- 100 - as.numeric(input$thresh)
-    updateSelectInput(session, "thresh_pc", selected = isolate(thresh_pc))
+    choices <- unique(c(99, 95, 90, 80, thresh_pc))
+    updateSelectizeInput(session, "thresh_pc", choices = choices, selected = isolate(thresh_pc))
   })
 
   observeEvent(input$thresh_pc, {
     thresh <- 100 - as.numeric(input$thresh_pc)
-    updateSelectInput(session, "thresh", selected = isolate(thresh))
+    choices <- c(1, 5, 10, 20, thresh)
+    updateSelectizeInput(session, "thresh", choices = choices, selected = isolate(thresh))
   })
 
   output$ui_3samples <- renderUI({
