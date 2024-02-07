@@ -745,11 +745,11 @@ app_server <- function(input, output, session) {
     c2 <- paste("# use the nboot argument in", form, "to set the number of bootstrap samples")
     conf <- paste0(
       paste0(form, "(dist, ", arg, " = "), thresh, ", ci = TRUE",
-      ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L, multi_est = TRUE, multi_ci = FALSE)"
+      ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L, min_pboot = 0.8, multi_est = TRUE, multi_ci = FALSE)"
     )
     conf2 <- paste0(
       paste0(form, "(dist, ", arg, " = "), thresh, ", ci = TRUE, average = FALSE",
-      ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L, multi_est = TRUE, multi_ci = FALSE)"
+      ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L, min_pboot = 0.8, multi_est = TRUE, multi_ci = FALSE)"
     )
     bind <- paste0("dplyr::bind_rows(", conf, ", ", conf2, ")")
     HTML(paste(c1, c2, bind, sep = "<br/>"))
