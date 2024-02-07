@@ -545,16 +545,10 @@ app_server <- function(input, output, session) {
   })
   
   output$uiXmax <- renderUI({
-    req(input$selectConc)
-    conc <- input$selectConc
-    data <- clean_data()
     numericInput("xMax", label = tr("ui_xmax", trans()), min = 1, value = NULL)
   })
 
   output$uiXmin <- renderUI({
-    req(input$selectConc)
-    conc <- input$selectConc
-    data <- clean_data()
     numericInput("xMin", label = tr("ui_xmin", trans()), min = 1, value = NULL)
   })
   
@@ -566,9 +560,12 @@ app_server <- function(input, output, session) {
     req(names_data())
     req(thresh_rv$conc)
     data <- names_data()
+    conc <- input$selectConc %>% make.names()
+
     scale <- scales::trans_breaks("log10", function(x) 10^x)
-    y <- sort(signif(c(scale(data[[input$selectConc]]), thresh_rv$conc), 3))
-    selectizeInput("xbreaks", "X-axis breaks", 
+    y <- sort(signif(c(scale(data[[conc]]), thresh_rv$conc), 3))
+
+    selectizeInput("xbreaks", tr("ui_xbreaks", trans()), 
                    options = list(create = TRUE, plugins = list('remove_button')),
                    choices = y, 
                    selected = y,
@@ -1013,19 +1010,19 @@ app_server <- function(input, output, session) {
     req(input$thresh_type)
     if (input$thresh_type != "Concentration") {
       return(numericInput("conc",
-        label = "Affected by concentration",
+        label = "by concentration",
         value = 1, min = 0,
         max = 100, step = 0.1, width = "100px"
       ))
     }
     div(
       inline(selectInput("thresh",
-        label = "Affecting % species",
+        label = "affecting % species",
         choices = c(1, 5, 10, 20),
         selected = 5, width = "100px"
       )),
       inline(selectInput("thresh_pc",
-        label = "Protecting % species",
+        label = "protecting % species",
         choices = c(99, 95, 90, 80),
         selected = 95, width = "100px"
       ))
