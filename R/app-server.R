@@ -824,13 +824,13 @@ app_server <- function(input, output, session) {
       tagList(
         textInput("toxicant", "Toxicant name"),
         shinyWidgets::dropdownButton(status = "primary",
-                                     label = "Download",
+                                     label = "Download Report",
                                      inline = TRUE,
                                      circle = FALSE,
                                      icon = icon("download"),
-                                     dl_button("dl_pdf", "Report PDF"),
-                                     dl_button("dl_html", "Report HTML"),
-                                     dl_button("dl_rmd", "Report RMD")
+                                     dl_button("dl_pdf", "PDF file"),
+                                     dl_button("dl_html", "HTML file"),
+                                     dl_button("dl_rmd", "Rmd file")
         ))
     })
   
