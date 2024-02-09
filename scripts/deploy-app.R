@@ -1,5 +1,5 @@
 # install cran ssdtools
-pak::pak("ssdtools")
+remotes::install_github("poissonconsulting/ssdtools")
 # get cran versions of poisson pkgs
 pak::pak("err")
 pak::pak("universals")

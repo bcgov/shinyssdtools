@@ -34,7 +34,7 @@ translations <- dplyr::bind_rows(
   ),
   dplyr::tibble(
     id = "ui_3hc2",
-    english = "The model averaged estimate of the threshold for a concentration of {conc} is {percent} % of species",
+    english = "The model averaged estimate of the fraction affected by a concentration of {conc} is {percent} % of species",
     french = "L'estimation par inférence multimodèle du seuil pour une concentration de {conc} est de {percent} % des espèces."
   ),
   dplyr::tibble(
@@ -45,17 +45,52 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_2rescale",
     english = "Rescale data prior to fitting",
-    french = "Rescale data prior to fitting"
+    french = "Rééchelonnement des données avant d'ajuster"
   ),
   dplyr::tibble(
     id = "ui_2at_boundary_ok",
     english = "Exclude distributions with a parameter value at a boundary",
-    french = "Exclude distributions with a parameter value at a boundary"
+    french = "Exclusion des distributions avec un valeur de paramètre à limite"
   ),
   dplyr::tibble(
     id = "ui_2computable",
     english = "Exclude distributions without computable standard errors",
-    french = "Exclude distributions without computable standard errors"
+    french = "Exclusion des distributions sans erreurs types calculables"
+  ),
+  dplyr::tibble(
+    id = "ui_xmax",
+    english = "X-axis maximum",
+    french = "Maximum de l'axe des X"
+  ),
+  dplyr::tibble(
+    id = "ui_xmin",
+    english = "X-axis minimum",
+    french = "Minimum de l'axe des X"
+  ),
+  dplyr::tibble(
+    id = "ui_xlog",
+    english = "Log x-axis",
+    french = "Logarithme de l'axe des X"
+  ),
+  dplyr::tibble(
+    id = "ui_sizeLabel",
+    english = "Label size",
+    french = "Taille de l'étiquette"
+  ),
+  dplyr::tibble(
+    id = "ui_size",
+    english = "Text size",
+    french = "Taille du texte"
+  ),
+  dplyr::tibble(
+    id = "ui_adjustLabel",
+    english = "Shift label",
+    french = "Ajuster l'étiquette"
+  ),
+  dplyr::tibble(
+    id = "ui_xbreaks",
+    english = "X-axis ticks",
+    french = "Graduations sur l'axe X"
   )
 )
 

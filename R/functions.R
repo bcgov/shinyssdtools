@@ -35,49 +35,53 @@ zero_range <- function(x, tol = .Machine$double.eps^0.5) {
 }
 
 estimate_hc <- function(x, percent) {
-  ssdtools::ssd_hc(x, percent = percent, nboot = 10L)$est
+  ssdtools::ssd_hc(x, proportion = percent / 100, nboot = 10L, min_pboot = 0.8, multi_est = TRUE, multi_ci = FALSE)$est
 }
 
 estimate_hp <- function(x, conc) {
-  ssdtools::ssd_hp(x = x, conc = conc, nboot = 10L)$est
+  ssdtools::ssd_hp(x = x, conc = conc, nboot = 10L, min_pboot = 0.8, multi_est = TRUE, multi_ci = FALSE)$est
 }
 
 ssd_hc_ave <- function(x, percent, nboot) {
-
   dist <- ssdtools::ssd_hc(x,
-                           percent = percent, ci = TRUE,
-                           average = FALSE, nboot = nboot
+    proportion = percent / 100, ci = TRUE,
+    average = FALSE, nboot = nboot, min_pboot = 0.8,
+    multi_est = TRUE, multi_ci = FALSE
   )
 
-  if(length(x) == 1){
+  if (length(x) == 1) {
     ave <- dist
     ave$dist <- "average"
   } else {
     ave <- ssdtools::ssd_hc(x,
-                            percent = percent, ci = TRUE,
-                            average = TRUE, nboot = nboot)
+      proportion = percent / 100, ci = TRUE,
+      average = TRUE, nboot = nboot, min_pboot = 0.8,
+      multi_est = TRUE, multi_ci = FALSE
+    )
   }
-  
+
   dplyr::bind_rows(ave, dist) %>%
     dplyr::mutate_at(c("est", "se", "ucl", "lcl", "wt"), ~ signif(., 3))
 }
 
 ssd_hp_ave <- function(x, conc, nboot) {
-
   dist <- ssdtools::ssd_hp(x,
     conc = conc, ci = TRUE,
-    average = FALSE, nboot = nboot
+    average = FALSE, nboot = nboot, min_pboot = 0.8
   )
-  
-  if(length(x) == 1){
+
+  if (length(x) == 1) {
     ave <- dist
     ave$dist <- "average"
   } else {
     ave <- ssdtools::ssd_hp(x,
-                            conc = conc, ci = TRUE,
-                            average = TRUE, nboot = nboot)
+      conc = conc, ci = TRUE,
+      average = TRUE, nboot = nboot,
+      multi_est = TRUE, multi_ci = FALSE,
+      min_pboot = 0.8
+    )
   }
-  
+
   dplyr::bind_rows(ave, dist) %>%
     dplyr::mutate_at(c("est", "se", "ucl", "lcl", "wt"), ~ signif(., 3))
 }
