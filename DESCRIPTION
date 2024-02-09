@@ -35,6 +35,7 @@ Imports:
     rhandsontable,
     shiny,
     shinyjs,
+    shinyWidgets,
     stats,
     waiter
 Suggests: 
