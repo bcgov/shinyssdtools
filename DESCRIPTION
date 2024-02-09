@@ -47,7 +47,7 @@ Suggests:
     markdown,
     RColorBrewer,
     rsconnect,
-    testthat,
+    testthat (>= 3.0.0),
     ssddata
 VignetteBuilder: 
     knitr
@@ -56,3 +56,4 @@ Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
+Config/testthat/edition: 3
