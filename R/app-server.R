@@ -273,9 +273,10 @@ app_server <- function(input, output, session) {
   table_gof <- reactive({
     req(fit_dist())
     dist <- fit_dist()
-    gof <- ssdtools::ssd_gof(dist) %>%
+    gof <- 
+      ssdtools::ssd_gof(dist) %>%
       dplyr::mutate_if(is.numeric, ~ signif(., 3)) %>%
-      dplyr::arrange(desc(weight))
+      dplyr::arrange(dplyr::desc(.data$weight))
     names(gof) <- gsub("weight", tr("ui_2weight", trans()), names(gof))
     gof
   })
