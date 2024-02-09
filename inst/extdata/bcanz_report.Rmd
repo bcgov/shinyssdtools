@@ -23,36 +23,32 @@ library(dplyr)
 This report was generated through the [ssdtools Shiny app](https://bcgov-env.shinyapps.io/ssdtools)
 which fits species sensitivity distributions to concentration data. The app is built from the R package [ssdtools](https://cran.r-project.org/web/packages/ssdtools/), and shares the same functionality.  
 
-**Toxicant:** `r params$toxicant`.  
-**Report rendered:** `r format(Sys.Date(), "%d/%m/%Y")`.  
-**Input distributions:** `r params$dists`.  
+**Toxicant:** `r params$toxicant`   
+**Report created:** `r format(Sys.Date(), "%d/%m/%Y")`  
+**Input distributions:** `r params$dists`  
 **ssdtools version:** `r utils::packageVersion("ssdtools")`
 
 \newpage
 
 # Fit of all distributions
-```{r}
-fit_plot <- params$fit_plot
-fit_plot +
-  theme_classic() 
+```{r, message=FALSE, warning=FALSE}
+params$fit_plot
 ```
 
 # Goodness of fit table
-```{r}
-params$gof_table |>
-  kable()
+```{r, message=FALSE, warning=FALSE}
+kable(params$gof_table) 
 ```
 
 \newpage
 
 # Model averaged fit
-```{r}
-params$model_average_plot +
-  theme_classic()
+```{r, message=FALSE, warning=FALSE}
+params$model_average_plot 
 ```
 
 # Estimated hazard concentrations
-```{r}
+```{r, message=FALSE, warning=FALSE}
 avehc <- ssd_hc(params$fit_dist, proportion = c(0.01, 0.05, 0.1, 0.2), ci = TRUE, nboot = params$nboot, min_pboot = 0)
 avehc |>
   dplyr::select(proportion, est, se, lcl, ucl, nboot, pboot) |>
@@ -62,7 +58,7 @@ avehc |>
 \newpage
 
 # Data
-```{r}
+```{r, message=FALSE, warning=FALSE}
 kable(params$data)
 ```
 
