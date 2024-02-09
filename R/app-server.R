@@ -293,6 +293,14 @@ app_server <- function(input, output, session) {
     dist <- fit_dist()
     stats::predict(dist, nboot = 10, ci = FALSE)
   })
+  
+  transformation <- reactive({
+    trans <- "log10"
+    if(!input$xlog){
+      trans <- "identity"
+    }
+    trans
+  })
 
   plot_model_average <- reactive({
     req(input$thresh)
@@ -352,10 +360,7 @@ app_server <- function(input, output, session) {
       xmin <- input$xMin
     }
     
-    trans <- "log10"
-    if(!input$xlog){
-      trans <- "identity"
-    }
+   trans <- transformation()
 
     silent_plot(plot_predictions(data, pred,
       conc = conc, label = label, colour = colour,
@@ -678,6 +683,9 @@ app_server <- function(input, output, session) {
 
   output$codeFit <- renderUI({
     req(check_fit() == "")
+    ylab <- input$yaxis2
+    xlab <- input$xaxis2
+    text_size <- input$size2
     c1 <- "# fit distributions"
     fit <- paste0(
       "dist <- ssd_fit_dists(data, left = '",
@@ -690,7 +698,13 @@ app_server <- function(input, output, session) {
       ", rescale = ", input$rescale, ")"
     )
     c2 <- "# plot distributions"
-    plot <- "ssd_plot_cdf(dist, delta = Inf)"
+    plot <- paste0("ssd_plot_cdf(dist, ylab = '", ylab, "', xlab = '", xlab, "', delta = Inf) + 
+                   <br/> theme_classic() + <br/> ",
+                   "theme(axis.text = ggplot2::element_text(color = 'black', size = ", text_size, "), <br/>
+          axis.title = ggplot2::element_text(size = ", text_size, "), <br/>
+          legend.text = ggplot2::element_text(size = ", text_size, "), <br/>
+          legend.title = ggplot2::element_text(size = ", text_size, ")) <br/>")
+                   
     c3 <- "# goodness of fit table"
     table <- "ssd_gof(dist)"
     HTML(paste(c1, fit, c2, plot, c3, table, sep = "<br/>"))
@@ -700,10 +714,16 @@ app_server <- function(input, output, session) {
     req(check_fit() == "")
     req(check_pred() == "")
     req(input$selectLabel)
-    xmax <- ifelse(is.null(input$xMax), "NULL", input$xMax)
+    xmax <- ifelse(is.null(input$xMax), "NA", input$xMax)
+    xmin <- ifelse(is.null(input$xMin), "NA", input$xMin)
     legend.colour <- ifelse(is.null(input$legendColour), "NULL", paste0("'", input$legendColour, "'"))
     legend.shape <- ifelse(is.null(input$legendShape) || input$legendShape == "-none-", "NULL", paste0("'", input$legendShape, "'"))
-
+    text_size <- input$size3
+    xlab <- input$xaxis
+    ylab <- input$yaxis
+    title <- input$title
+    trans <- transformation()
+    xbreaks <- input$xbreaks
     c1 <- "# plot model average"
     c2 <- "# to add confidence intervals set ci = TRUE in predict and ssd_plot"
     c3 <- "# we recommend using nboot = 10000 in predict, although this may take several minutes to run"
@@ -715,17 +735,16 @@ app_server <- function(input, output, session) {
       ", shape = ", code_shape(),
       ", hc = ", code_hc(),
       ", ci = FALSE, <br/>shift_x = ", input$adjustLabel,
-      ", xlab = '", input$xaxis,
-      "', ylab = '", input$yaxis,
-      "') + <br/> ggtitle('", input$title,
-      "') +<br/> theme(panel.border = element_blank(),<br/>
-                     panel.grid.major = element_blank(),<br/>
-                     panel.grid.minor = element_blank(),<br/>
-                     panel.background = element_rect(fill = NA, colour='black'),<br/>
-                     axis.text = element_text(color = 'black'),<br/>
-                     legend.key = element_rect(fill = NA, colour = NA)) +<br/>
-                     expand_limits(x = ", xmax, ") +<br/>
-                     scale_color_brewer(palette = '", input$selectPalette, "', name = ", legend.colour, ") +<br/>
+      ", ylab = '", ylab,
+      "') + <br/> ggtitle('", title,
+      "') + <br/> theme_classic() + <br/>",
+      "theme(axis.text = ggplot2::element_text(color = 'black', size = ", text_size, "), <br/>
+          axis.title = ggplot2::element_text(size = ", text_size, "), <br/>
+          legend.text = ggplot2::element_text(size = ", text_size, "), <br/>
+          legend.title = ggplot2::element_text(size = ", text_size, ")) + <br/>",
+      "coord_trans(x = '", trans, "') + <br/>",
+      "scale_x_continuous(name = '", xlab, "', breaks = c(", paste(xbreaks, collapse = ", "), "), limits = c(", xmin, ", ", xmax, "), labels = comma_signif) + <br/>",
+      "scale_color_brewer(palette = '", input$selectPalette, "', name = ", legend.colour, ") +<br/>
                      scale_shape(name = ", legend.shape, ")"
     )
     HTML(paste(c1, c2, c3, pred, plot, sep = "<br/>"))
