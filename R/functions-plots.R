@@ -40,7 +40,7 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
     ) +
     ggplot2::coord_trans(x = trans) +
     ggplot2::scale_x_continuous(name = xaxis, breaks = xbreaks, 
-                                limits = c(xmin, xmax), labels = comma_signif) +
+                                limits = c(xmin, xmax), labels = ssdtools::comma_signif) +
     ggplot2::scale_color_brewer(palette = palette, name = legend_colour) +
     ggplot2::scale_shape(name = legend_shape)
 
