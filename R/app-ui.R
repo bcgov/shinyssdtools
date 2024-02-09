@@ -125,7 +125,7 @@ app_ui <- function() {
             )),
             br(), br(),
             htmlOutput("fitFail"),
-            uiOutput("ui_distplot"),
+            plotOutput("distPlot1"),
             br(),
             conditionalPanel(
               condition = "output.gofTable",
