@@ -273,7 +273,7 @@ app_server <- function(input, output, session) {
   table_gof <- reactive({
     req(fit_dist())
     dist <- fit_dist()
-    gof <- ssdtools::ssd_gof(dist) %>% 
+    gof <- ssdtools::ssd_gof(dist) %>%
       dplyr::mutate_if(is.numeric, ~ signif(., 3)) %>%
       dplyr::arrange(desc(weight))
     names(gof) <- gsub("weight", tr("ui_2weight", trans()), names(gof))
@@ -292,10 +292,10 @@ app_server <- function(input, output, session) {
     dist <- fit_dist()
     stats::predict(dist, nboot = 10, ci = FALSE)
   })
-  
+
   transformation <- reactive({
     trans <- "log10"
-    if(!input$xlog){
+    if (!input$xlog) {
       trans <- "identity"
     }
     trans
@@ -348,18 +348,18 @@ app_server <- function(input, output, session) {
     if (shift_label < 1) {
       shift_label <- 1
     }
-    
+
     xmax <- NA
-    if(!is.null(input$xMax)){
+    if (!is.null(input$xMax)) {
       xmax <- input$xMax
     }
-    
+
     xmin <- NA
-    if(!is.null(input$xMin)){
+    if (!is.null(input$xMin)) {
       xmin <- input$xMin
     }
-    
-   trans <- transformation()
+
+    trans <- transformation()
 
     silent_plot(plot_predictions(data, pred,
       conc = conc, label = label, colour = colour,
@@ -462,15 +462,15 @@ app_server <- function(input, output, session) {
   output$uiLegendShape <- renderUI({
     textInput("legendShape", label = tr("ui_3shape", trans()), value = input$selectShape)
   })
-  
+
   output$ui_3size <- renderUI({
     numericInput("size3", label = tr("ui_size", trans()), value = 12, min = 1, max = 100)
   })
-  
+
   output$ui_3sizeLabel <- renderUI({
     numericInput("sizeLabel3", label = tr("ui_sizeLabel", trans()), value = 3, min = 1, max = 10)
   })
-  
+
   output$ui_2size <- renderUI({
     numericInput("size2", label = tr("ui_size", trans()), value = 12, min = 1, max = 100)
   })
@@ -533,18 +533,18 @@ app_server <- function(input, output, session) {
     )
   })
 
-    # --- render UI ----
+  # --- render UI ----
   shinyjs::onclick("linkFormatPredict", shinyjs::toggle("divFormatPredict", anim = TRUE, animType = "slide", time = 0.2))
   shinyjs::onclick("linkPngFormatPredict", shinyjs::toggle("divPngFormatPredict", anim = TRUE, animType = "slide", time = 0.2))
   shinyjs::onclick("linkFormatFit", shinyjs::toggle("divFormatFit", anim = TRUE, animType = "slide", time = 0.2))
 
   output$uiAdjustLabel <- renderUI({
     numericInput("adjustLabel",
-                 value = 1.05, label = tr("ui_adjustLabel", trans()),
-                 min = 0, max = 10, step = 0.1
+      value = 1.05, label = tr("ui_adjustLabel", trans()),
+      min = 0, max = 10, step = 0.1
     )
   })
-  
+
   output$uiXmax <- renderUI({
     numericInput("xMax", label = tr("ui_xmax", trans()), min = 1, value = NULL)
   })
@@ -552,11 +552,11 @@ app_server <- function(input, output, session) {
   output$uiXmin <- renderUI({
     numericInput("xMin", label = tr("ui_xmin", trans()), min = 1, value = NULL)
   })
-  
+
   output$uiXlog <- renderUI({
     checkboxInput("xlog", tr("ui_xlog", trans()), value = TRUE)
   })
-  
+
   output$uiXbreaks <- renderUI({
     req(names_data())
     req(thresh_rv$conc)
@@ -566,11 +566,12 @@ app_server <- function(input, output, session) {
     scale <- scales::trans_breaks("log10", function(x) 10^x)
     y <- sort(signif(c(scale(data[[conc]]), thresh_rv$conc), 3))
 
-    selectizeInput("xbreaks", tr("ui_xbreaks", trans()), 
-                   options = list(create = TRUE, plugins = list('remove_button')),
-                   choices = y, 
-                   selected = y,
-                   multiple = TRUE)
+    selectizeInput("xbreaks", tr("ui_xbreaks", trans()),
+      options = list(create = TRUE, plugins = list("remove_button")),
+      choices = y,
+      selected = y,
+      multiple = TRUE
+    )
   })
 
   # --- download handlers ----
@@ -692,13 +693,15 @@ app_server <- function(input, output, session) {
       ", rescale = ", input$rescale, ")"
     )
     c2 <- "# plot distributions"
-    plot <- paste0("ssd_plot_cdf(dist, ylab = '", ylab, "', xlab = '", xlab, "', delta = Inf) + 
+    plot <- paste0(
+      "ssd_plot_cdf(dist, ylab = '", ylab, "', xlab = '", xlab, "', delta = Inf) +
                    <br/> theme_classic() + <br/> ",
-                   "theme(axis.text = ggplot2::element_text(color = 'black', size = ", text_size, "), <br/>
+      "theme(axis.text = ggplot2::element_text(color = 'black', size = ", text_size, "), <br/>
           axis.title = ggplot2::element_text(size = ", text_size, "), <br/>
           legend.text = ggplot2::element_text(size = ", text_size, "), <br/>
-          legend.title = ggplot2::element_text(size = ", text_size, ")) <br/>")
-                   
+          legend.title = ggplot2::element_text(size = ", text_size, ")) <br/>"
+    )
+
     c3 <- "# goodness of fit table"
     table <- "ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ signif(., 3))"
     HTML(paste(c1, fit, c2, plot, c3, table, sep = "<br/>"))
@@ -830,31 +833,35 @@ app_server <- function(input, output, session) {
   observeEvent(input$hot, {
     upload.values$upload_state <- "hot"
   })
-  
+
   ###### download handlers -------
   output$ui_report_download <- renderUI({
     req(plot_model_average())
-      tagList(
-        textInput("toxicant", "Toxicant name"),
-        shinyWidgets::dropdownButton(status = "primary",
-                                     label = "Download Report",
-                                     inline = TRUE,
-                                     circle = FALSE,
-                                     icon = icon("download"),
-                                     dl_button("dl_pdf", "PDF file"),
-                                     dl_button("dl_html", "HTML file"),
-                                     dl_button("dl_rmd", "Rmd file")
-        ))
-    })
-  
+    tagList(
+      textInput("toxicant", "Toxicant name"),
+      shinyWidgets::dropdownButton(
+        status = "primary",
+        label = "Download Report",
+        inline = TRUE,
+        circle = FALSE,
+        icon = icon("download"),
+        dl_button("dl_pdf", "PDF file"),
+        dl_button("dl_html", "HTML file"),
+        dl_button("dl_rmd", "Rmd file")
+      )
+    )
+  })
+
   output$dl_rmd <- downloadHandler(
     filename = "bcanz_report.Rmd",
     content = function(file) {
-      file.copy(system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"), 
-                file)
+      file.copy(
+        system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"),
+        file
+      )
     }
   )
-  
+
   params_list <- reactive({
     req(plot_model_average())
     toxicant <- input$toxicant
@@ -865,48 +872,56 @@ app_server <- function(input, output, session) {
     gof_table <- table_gof()
     model_average_plot <- plot_model_average()
     nboot <- as.integer(gsub("(,|\\s)", "", input$bootSamp))
-    params <- list(toxicant = toxicant, data = data, dists = dists, 
-                   fit_plot = fit_plot, fit_dist = fit_dist, gof_table = gof_table, 
-                   model_average_plot = model_average_plot, nboot = nboot)
+    params <- list(
+      toxicant = toxicant, data = data, dists = dists,
+      fit_plot = fit_plot, fit_dist = fit_dist, gof_table = gof_table,
+      model_average_plot = model_average_plot, nboot = nboot
+    )
     params
   })
-  
+
   output$dl_pdf <- downloadHandler(
     filename = "bcanz_report.pdf",
     content = function(file) {
       withProgress(message = "Generating report ...", value = 0.5, {
-        temp_report <- file.path(tempdir(),"bcanz_report.Rmd")
-        file.copy(system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"), 
-                  temp_report)
+        temp_report <- file.path(tempdir(), "bcanz_report.Rmd")
+        file.copy(
+          system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"),
+          temp_report
+        )
         params <- params_list()
-        rmarkdown::render(temp_report, output_format = "pdf_document",
-                          output_file = file,
-                          params = params, 
-                          envir = new.env(parent = globalenv()), 
-                          encoding = "utf-8"
+        rmarkdown::render(temp_report,
+          output_format = "pdf_document",
+          output_file = file,
+          params = params,
+          envir = new.env(parent = globalenv()),
+          encoding = "utf-8"
         )
       })
     }
   )
-  
+
   output$dl_html <- downloadHandler(
     filename = "bcanz_report.html",
     content = function(file) {
       withProgress(message = "Generating report ...", value = 0.5, {
-      temp_report <- file.path(tempdir(),"bcanz_report.Rmd")
-      file.copy(system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"), 
-                file)
-      params <- params_list()
-      rmarkdown::render(temp_report, output_format = "html_document", 
-                        output_file = file,
-                        params = params, 
-                        envir = new.env(parent = globalenv()), 
-                        encoding = "utf-8"
-      )
+        temp_report <- file.path(tempdir(), "bcanz_report.Rmd")
+        file.copy(
+          system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"),
+          file
+        )
+        params <- params_list()
+        rmarkdown::render(temp_report,
+          output_format = "html_document",
+          output_file = file,
+          params = params,
+          envir = new.env(parent = globalenv()),
+          encoding = "utf-8"
+        )
       })
     }
   )
-  
+
   ########### Render UI Translations -------------------
   output$ui_1choose <- renderUI({
     h4(tr("ui_1choose", trans()))
@@ -1249,7 +1264,7 @@ app_server <- function(input, output, session) {
   output$ui_4help <- renderUI({
     helpText(tr("ui_4help", trans()))
   })
-  
+
   output$ui_5format <- renderUI({
     radioButtons("report_format", "Report format")
   })

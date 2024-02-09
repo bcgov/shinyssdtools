@@ -1,4 +1,4 @@
-silent_plot <- function(x){
+silent_plot <- function(x) {
   suppressMessages(suppressWarnings(print(x)))
 }
 
