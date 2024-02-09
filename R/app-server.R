@@ -700,7 +700,7 @@ app_server <- function(input, output, session) {
           legend.title = ggplot2::element_text(size = ", text_size, ")) <br/>")
                    
     c3 <- "# goodness of fit table"
-    table <- "ssd_gof(dist)"
+    table <- "ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ signif(., 3))"
     HTML(paste(c1, fit, c2, plot, c3, table, sep = "<br/>"))
   })
 
