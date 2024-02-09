@@ -266,7 +266,6 @@ app_server <- function(input, output, session) {
   })
 
   plot_dist <- reactive({
-    req(fit_dist())
     dist <- fit_dist()
     plot_distributions(dist, ylab = input$yaxis2, xlab = input$xaxis2, text_size = input$size2)
   })
@@ -481,12 +480,7 @@ app_server <- function(input, output, session) {
   })
 
   # --- render fit results ----
-  output$ui_distplot <- renderUI({
-    plotOutput("distPlot1")
-  })
   output$distPlot1 <- renderPlot({
-    req(plot_dist())
-
     waiter::waiter_show(id = "distPlot1", html = waiter::spin_2(), color = "white", hide_on_render = TRUE)
     plot_dist()
   })
