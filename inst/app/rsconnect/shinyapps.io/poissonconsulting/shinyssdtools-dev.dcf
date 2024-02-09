@@ -1,9 +1,10 @@
 name: shinyssdtools-dev
 title:
-username:
+username: poissonconsulting
 account: poissonconsulting
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3888468
-bundleId: 8222457
+bundleId: 8239441
 url: https://poissonconsulting.shinyapps.io/shinyssdtools-dev/
+version: 1
