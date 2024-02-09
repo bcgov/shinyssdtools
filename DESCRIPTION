@@ -30,9 +30,11 @@ Imports:
     DT,
     ggplot2,
     glue,
+    knitr,
     magrittr,
     readr,
     rhandsontable,
+    rmarkdown,
     shiny,
     shinyjs,
     shinyWidgets,
@@ -40,10 +42,8 @@ Imports:
     waiter
 Suggests: 
     covr,
-    knitr,
     markdown,
     RColorBrewer,
-    rmarkdown,
     rsconnect,
     testthat,
     ssddata
