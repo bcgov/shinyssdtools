@@ -1,9 +1,13 @@
 plot_distributions <- function(x, ylab, xlab, text_size) {
   gp <- ssdtools::ssd_plot_cdf(x, ylab = ylab, xlab = xlab, delta = Inf)
-  gp <- gp + ggplot2::theme(axis.text = ggplot2::element_text(size = text_size), 
+  gp <- 
+    gp + 
+    ggplot2::theme_classic() +
+    ggplot2::theme(axis.text = ggplot2::element_text(size = text_size), 
                             axis.title = ggplot2::element_text(size = text_size),
                             legend.title = ggplot2::element_text(size = text_size),
-                            legend.text = ggplot2::element_text(size = text_size))
+                            legend.text = ggplot2::element_text(size = text_size)) 
+    
   suppressMessages({
     gp <- gp + ggplot2::scale_y_continuous(
       labels = function(x) paste0(x * 100),
@@ -27,16 +31,12 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
     xlab = xaxis, ylab = yaxis
   ) +
     ggplot2::ggtitle(title) +
+    ggplot2::theme_classic() +
     ggplot2::theme(
-      panel.border = ggplot2::element_blank(),
-      panel.grid.major = ggplot2::element_blank(),
-      panel.grid.minor = ggplot2::element_blank(),
-      panel.background = ggplot2::element_rect(fill = NA, colour = "black"),
       axis.text = ggplot2::element_text(color = "black", size = text_size),
       axis.title = ggplot2::element_text(size = text_size),
       legend.text = ggplot2::element_text(size = text_size),
       legend.title = ggplot2::element_text(size = text_size),
-      legend.key = ggplot2::element_rect(fill = NA, colour = NA)
     ) +
     ggplot2::coord_trans(x = trans) +
     ggplot2::scale_x_continuous(name = xaxis, breaks = xbreaks, 
