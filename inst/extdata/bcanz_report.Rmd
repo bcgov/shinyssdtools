@@ -15,7 +15,6 @@ params:
 knitr::opts_chunk$set(echo = FALSE)
 library(ssdtools)
 library(ggplot2)
-library(tidyverse)
 library(knitr)
 library(dplyr)
 ```
