@@ -6,10 +6,9 @@
 \alias{shinyssdtools-package}
 \title{shinyssdtools: ssdtools Shiny App}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Shiny application for fitting species
-    sensitivity distributions using ssdtools.
+Shiny application for fitting species sensitivity distributions using ssdtools.
 }
 \seealso{
 Useful links:
@@ -20,15 +19,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Joe Thorley \email{joe@poissonconsulting.ca} (\href{https://orcid.org/0000-0002-7683-4592}{ORCID}) [contributor]
-
-Authors:
-\itemize{
-  \item Seb Dalgarno \email{seb@northbeachconsulting.ca} (\href{https://orcid.org/0000-0002-3658-4517}{ORCID})
-}
+\strong{Maintainer}: Seb Dalgarno \email{seb@poissonconsulting.ca} (\href{https://orcid.org/0000-0002-3658-4517}{ORCID})
 
 Other contributors:
 \itemize{
+  \item Joe Thorley \email{joe@poissonconsulting.ca} (\href{https://orcid.org/0000-0002-7683-4592}{ORCID}) [contributor]
   \item Ayla Pearson \email{ayla@poissonconsulting.ca} (\href{https://orcid.org/0000-0001-7388-1222}{ORCID}) [contributor]
 }
 

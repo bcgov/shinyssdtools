@@ -14,7 +14,7 @@ app_ui <- function() {
   tagList(
     tags$head(tags$title("shinyssdtools")),
     shinyjs::useShinyjs(),
-    waiter::use_waiter(),
+    waiter::useWaiter(),
     add_external_resources(),
     tags$style(
       type = "text/css",
@@ -23,12 +23,14 @@ app_ui <- function() {
     ),
     div(class = "div-link", HTML(paste0(
       actionButton("en", "English",
-                   class = "msw-button"
+        class = "msw-button"
       ), "/",
       actionButton("fr", "French", class = "msw-button")
     ))),
     navbarPage(
       title = uiOutput("ui_navtitle"), windowTitle = "shinyssdtools",
+
+      # data tab ----------------------------------------------------------------
       tabPanel(
         title = span(tagList(icon("table"), inline(uiOutput("ui_nav1")))),
         fluidRow(
@@ -51,7 +53,7 @@ app_ui <- function() {
               uiOutput("ui_1csvhelp")
             )),
             uiOutput("ui_1csvupload"),
-            
+
             # input data in DataTable
             inline(uiOutput("ui_1table1")),
             inline(actionLink("infoHands", icon = icon("info-circle"), label = NULL)),
@@ -72,6 +74,7 @@ app_ui <- function() {
           uiOutput("ui_1note1")
         )
       ),
+      # fit tab -----------------------------------------------------------------
       tabPanel(
         title = span(tagList(icon("stats", lib = "glyphicon"), inline(uiOutput("ui_nav2")))),
         fluidRow(
@@ -84,14 +87,16 @@ app_ui <- function() {
               uiOutput("ui_2rescale"),
               uiOutput("ui_2at_boundary_ok"),
               uiOutput("ui_2computable"),
-              br(),
+              uiOutput("ui_2xlab"),
+              uiOutput("ui_2ylab"),
+              uiOutput("ui_2size"),
               uiOutput("ui_2png"),
               div(
                 id = "divFormatFit",
                 br(),
-                uiOutput("ui_2width"),
-                uiOutput("ui_2height"),
-                uiOutput("ui_2dpi")
+                inline(uiOutput("ui_2width")),
+                inline(uiOutput("ui_2height")),
+                inline(uiOutput("ui_2dpi"))
               )
             )
           ),
@@ -130,6 +135,7 @@ app_ui <- function() {
           )
         )
       ),
+      # predict tab -------------------------------------------------------------
       tabPanel(
         title = span(tagList(icon("calculator"), inline(uiOutput("ui_nav3")))),
         fluidRow(
@@ -158,22 +164,25 @@ app_ui <- function() {
                 uiOutput("uiLegendColour"),
                 uiOutput("uiLegendShape"),
                 splitLayout(
-                  uiOutput("uiXmax"),
-                  numericInput("adjustLabel",
-                               value = 1.3, label = "Adjust label",
-                               min = 1, max = 10, step = 0.1
-                  )
+                  uiOutput("ui_3size"),
+                  uiOutput("ui_3sizeLabel")
                 ),
-                inline(uiOutput("ui_checkHc"))
+                uiOutput("ui_checkHc"),
+                splitLayout(
+                  uiOutput("uiAdjustLabel"),
+                  uiOutput("uiXmin"),
+                  uiOutput("uiXmax")
+                ),
+                uiOutput("uiXlog"),
+                uiOutput("uiXbreaks"),
               ),
-              br(), br(),
               uiOutput("ui_3pngopts"),
               div(
                 id = "divPngFormatPredict",
                 br(),
-                uiOutput("ui_3width"),
-                uiOutput("ui_3height"),
-                uiOutput("ui_3dpi")
+                inline(uiOutput("ui_3width")),
+                inline(uiOutput("ui_3height")),
+                inline(uiOutput("ui_3dpi"))
               ),
               class = "wellpanel"
             )
@@ -236,6 +245,12 @@ app_ui <- function() {
           )
         )
       ),
+      tabPanel(
+        title = "4. BCANZ Report",
+        br(),
+        uiOutput("ui_report_download")
+      ),
+      # R code tab ------------------------------------------------------------------
       tabPanel(
         title = span(tagList(icon("code"), inline(uiOutput("ui_nav4")))),
         br(),
