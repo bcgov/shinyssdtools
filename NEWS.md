@@ -1,5 +1,11 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# shinyssdtools 0.2.0 (2024-02-09)
+
+- Updates for compatibility with ssdtools CRAN version 2.0.0
+- Add BCANZ Report tab to generate PDF/HTML report from Rmd
+- Tweaks to Fit/Predict plot formatting and user options
+
 # shinyssdtools 0.1.1 (2022-04-14)
 
 - Update deployment script.
