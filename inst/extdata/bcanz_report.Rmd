@@ -1,0 +1,68 @@
+---
+title: "ssdtools BCANZ Report"
+params:
+  toxicant: NA
+  dists: NA
+  fit_dist: NA
+  fit_plot: NA
+  gof_table: NA
+  model_average_plot: NA
+  data: NA
+  nboot: NA
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(ssdtools)
+library(ggplot2)
+library(tidyverse)
+library(knitr)
+library(dplyr)
+```
+
+This report was generated through the [ssdtools Shiny app](https://bcgov-env.shinyapps.io/ssdtools)
+which fits species sensitivity distributions to concentration data. The app is built from the R package [ssdtools](https://cran.r-project.org/web/packages/ssdtools/), and shares the same functionality.  
+
+**Toxicant:** `r params$toxicant`.  
+**Report rendered:** `r format(Sys.Date(), "%d/%m/%Y")`.  
+**Input distributions:** `r params$dists`.  
+**ssdtools version:** `r utils::packageVersion("ssdtools")`
+
+\newpage
+
+# Fit of all distributions
+```{r}
+fit_plot <- params$fit_plot
+fit_plot +
+  theme_classic() 
+```
+
+# Goodness of fit table
+```{r}
+params$gof_table |>
+  kable()
+```
+
+\newpage
+
+# Model averaged fit
+```{r}
+params$model_average_plot +
+  theme_classic()
+```
+
+# Estimated hazard concentrations
+```{r}
+avehc <- ssd_hc(params$fit_dist, proportion = c(0.01, 0.05, 0.1, 0.2), ci = TRUE, nboot = params$nboot, min_pboot = 0)
+avehc |>
+  dplyr::select(proportion, est, se, lcl, ucl, nboot, pboot) |>
+  kable(digits = 3)
+```
+
+\newpage
+
+# Data
+```{r}
+kable(params$data)
+```
+

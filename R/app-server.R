@@ -274,7 +274,9 @@ app_server <- function(input, output, session) {
   table_gof <- reactive({
     req(fit_dist())
     dist <- fit_dist()
-    gof <- ssdtools::ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ signif(., 3))
+    gof <- ssdtools::ssd_gof(dist) %>% 
+      dplyr::mutate_if(is.numeric, ~ signif(., 3)) %>%
+      dplyr::arrange(desc(weight))
     names(gof) <- gsub("weight", tr("ui_2weight", trans()), names(gof))
     gof
   })
@@ -815,7 +817,83 @@ app_server <- function(input, output, session) {
   observeEvent(input$hot, {
     upload.values$upload_state <- "hot"
   })
-
+  
+  ###### download handlers -------
+  output$ui_report_download <- renderUI({
+    req(plot_model_average())
+      tagList(
+        textInput("toxicant", "Toxicant name"),
+        shinyWidgets::dropdownButton(status = "primary",
+                                     label = "Download",
+                                     inline = TRUE,
+                                     circle = FALSE,
+                                     icon = icon("download"),
+                                     dl_button("dl_pdf", "Report PDF"),
+                                     dl_button("dl_html", "Report HTML"),
+                                     dl_button("dl_rmd", "Report RMD")
+        ))
+    })
+  
+  output$dl_rmd <- downloadHandler(
+    filename = "bcanz_report.Rmd",
+    content = function(file) {
+      file.copy(system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"), 
+                file)
+    }
+  )
+  
+  params_list <- reactive({
+    req(plot_model_average())
+    toxicant <- input$toxicant
+    data <- names_data()
+    dists <- input$selectDist
+    fit_plot <- plot_dist()
+    fit_dist <- fit_dist()
+    gof_table <- table_gof()
+    model_average_plot <- plot_model_average()
+    nboot <- as.integer(gsub("(,|\\s)", "", input$bootSamp))
+    params <- list(toxicant = toxicant, data = data, dists = dists, 
+                   fit_plot = fit_plot, fit_dist = fit_dist, gof_table = gof_table, 
+                   model_average_plot = model_average_plot, nboot = nboot)
+    params
+  })
+  
+  output$dl_pdf <- downloadHandler(
+    filename = "bcanz_report.pdf",
+    content = function(file) {
+      withProgress(message = "Generating report ...", value = 0.5, {
+        temp_report <- file.path(tempdir(),"bcanz_report.Rmd")
+        file.copy(system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"), 
+                  temp_report)
+        params <- params_list()
+        rmarkdown::render(temp_report, output_format = "pdf_document",
+                          output_file = file,
+                          params = params, 
+                          envir = new.env(parent = globalenv()), 
+                          encoding = "utf-8"
+        )
+      })
+    }
+  )
+  
+  output$dl_html <- downloadHandler(
+    filename = "bcanz_report.html",
+    content = function(file) {
+      withProgress(message = "Generating report ...", value = 0.5, {
+      temp_report <- file.path(tempdir(),"bcanz_report.Rmd")
+      file.copy(system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"), 
+                file)
+      params <- params_list()
+      rmarkdown::render(temp_report, output_format = "html_document", 
+                        output_file = file,
+                        params = params, 
+                        envir = new.env(parent = globalenv()), 
+                        encoding = "utf-8"
+      )
+      })
+    }
+  )
+  
   ########### Render UI Translations -------------------
   output$ui_1choose <- renderUI({
     h4(tr("ui_1choose", trans()))
@@ -1157,6 +1235,10 @@ app_server <- function(input, output, session) {
 
   output$ui_4help <- renderUI({
     helpText(tr("ui_4help", trans()))
+  })
+  
+  output$ui_5format <- renderUI({
+    radioButtons("report_format", "Report format")
   })
 
   output$ui_about <- renderUI({

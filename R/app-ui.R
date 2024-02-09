@@ -245,7 +245,11 @@ app_ui <- function() {
           )
         )
       ),
-
+      tabPanel(
+        title = "4. BCANZ Report",
+        br(),
+        uiOutput("ui_report_download")
+      ),
       # R code tab ------------------------------------------------------------------
       tabPanel(
         title = span(tagList(icon("code"), inline(uiOutput("ui_nav4")))),
