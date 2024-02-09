@@ -26,7 +26,7 @@ which fits species sensitivity distributions to concentration data. The app is b
 **Report created:** `r format(Sys.Date(), "%d/%m/%Y")`  
 **Input distributions:** `r params$dists`  
 **ssdtools version:** `r utils::packageVersion("ssdtools")`  
-**R version:** `r gsub("R version ", "", R.version$version.string)`. 
+**R version:** `r gsub("R version ", "", R.version$version.string)`   
 
 \newpage
 
