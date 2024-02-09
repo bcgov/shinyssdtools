@@ -245,8 +245,9 @@ app_ui <- function() {
           )
         )
       ),
+      # Report ------------------
       tabPanel(
-        title = "4. BCANZ Report",
+        title = span(tagList(icon("file-lines"), inline("4. BCANZ Report"))),
         br(),
         uiOutput("ui_report_download")
       ),
