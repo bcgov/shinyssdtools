@@ -376,16 +376,15 @@ app_server <- function(input, output, session) {
   # --- get confidence intervals
   table_cl <- eventReactive(input$getCl, {
     dist <- fit_dist()
-    withProgress(value = 0, message = "Getting Confidence Limits...", {
-      incProgress(0.4)
+    waiter::waiter_show(html = waiting_screen_cl, color = "rgba(44,62,80, 1)")
       nboot <- as.integer(gsub("(,|\\s)", "", input$bootSamp))
       if (input$thresh_type != "Concentration") {
         y <- ssd_hp_ave(dist, conc = thresh_rv$conc, nboot = nboot)
       } else {
         y <- ssd_hc_ave(dist, percent = thresh_rv$percent, nboot = nboot)
       }
-      y
-    })
+    waiter::waiter_hide()
+    y
   })
 
   estimate_time <- reactive({
@@ -852,6 +851,20 @@ app_server <- function(input, output, session) {
       )
     )
   })
+  
+  waiting_screen_report <- tagList(
+    waiter::spin_flower(),
+    tagList(h3("Generating report ..."),
+            br(),
+            h4("This may take a minute, depending on the number of bootstrap samples selected in the Predict tab.")) 
+  ) 
+  
+  waiting_screen_cl <- tagList(
+    waiter::spin_flower(),
+    tagList(h3("Getting Confidence Limits..."),
+            br(),
+            h4("This may take a minute, depending on the number of bootstrap samples selected.")) 
+  ) 
 
   output$dl_rmd <- downloadHandler(
     filename = "bcanz_report.Rmd",
@@ -884,7 +897,8 @@ app_server <- function(input, output, session) {
   output$dl_pdf <- downloadHandler(
     filename = "bcanz_report.pdf",
     content = function(file) {
-      withProgress(message = "Generating report ...", value = 0.5, {
+      waiter::waiter_show(html = waiting_screen_report, color = "rgba(44,62,80, 1)")
+      
         temp_report <- file.path(tempdir(), "bcanz_report.Rmd")
         file.copy(
           system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"),
@@ -898,14 +912,15 @@ app_server <- function(input, output, session) {
           envir = new.env(parent = globalenv()),
           encoding = "utf-8"
         )
-      })
+        waiter::waiter_hide()
     }
   )
 
   output$dl_html <- downloadHandler(
     filename = "bcanz_report.html",
     content = function(file) {
-      withProgress(message = "Generating report ...", value = 0.5, {
+      waiter::waiter_show(html = waiting_screen, color = "rgba(44,62,80, 1)")
+      
         temp_report <- file.path(tempdir(), "bcanz_report.Rmd")
         file.copy(
           system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"),
@@ -919,7 +934,7 @@ app_server <- function(input, output, session) {
           envir = new.env(parent = globalenv()),
           encoding = "utf-8"
         )
-      })
+    waiter::waiter_hide()
     }
   )
 
