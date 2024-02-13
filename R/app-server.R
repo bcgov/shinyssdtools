@@ -909,7 +909,7 @@ app_server <- function(input, output, session) {
         temp_report <- file.path(tempdir(), "bcanz_report.Rmd")
         file.copy(
           system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"),
-          file
+          temp_report
         )
         params <- params_list()
         rmarkdown::render(temp_report,
