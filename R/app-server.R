@@ -698,7 +698,7 @@ app_server <- function(input, output, session) {
     )
     c2 <- "# plot distributions"
     plot <- paste0(
-      "ssd_plot_cdf(dist, ylab = '", ylab, "', xlab = '", xlab, "', delta = Inf) +
+      "ssd_plot_cdf(dist, ylab = '", ylab, "', xlab = '", xlab, "', delta = Inf, average = NA) +
                    <br/> theme_classic() + <br/> ",
       "theme(axis.text = ggplot2::element_text(color = 'black', size = ", text_size, "), <br/>
           axis.title = ggplot2::element_text(size = ", text_size, "), <br/>

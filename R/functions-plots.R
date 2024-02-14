@@ -1,5 +1,6 @@
 plot_distributions <- function(x, ylab, xlab, text_size) {
-  gp <- ssdtools::ssd_plot_cdf(x, ylab = ylab, xlab = xlab, delta = Inf)
+  gp <- ssdtools::ssd_plot_cdf(x, ylab = ylab, xlab = xlab, 
+                               delta = Inf, average = NA)
   gp <-
     gp +
     ggplot2::theme_classic() +
