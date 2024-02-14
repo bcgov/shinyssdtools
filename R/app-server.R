@@ -376,7 +376,7 @@ app_server <- function(input, output, session) {
   # --- get confidence intervals
   table_cl <- eventReactive(input$getCl, {
     dist <- fit_dist()
-    waiter::waiter_show(html = waiting_screen_cl, color = "rgba(44,62,80, 1)")
+    waiter::waiter_show(html = waiting_screen_cl(), color = "rgba(44,62,80, 1)")
       nboot <- as.integer(gsub("(,|\\s)", "", input$bootSamp))
       if (input$thresh_type != "Concentration") {
         y <- ssd_hp_ave(dist, conc = thresh_rv$conc, nboot = nboot)
@@ -519,7 +519,7 @@ app_server <- function(input, output, session) {
     DT::datatable(table_cl(), options = list(dom = "t"))
   })
 
-  output$describeCl <- renderText({
+  describe_cl <- reactive({
     desc1 <- paste(tr("ui_3cldesc1", trans()), paste0("<b>", thresh_rv$percent, "</b>"))
     if (input$thresh_type != "Concentration") {
       desc1 <- paste(tr("ui_3cldesc11", trans()), paste0("<b>", thresh_rv$conc, "</b>"))
@@ -527,10 +527,14 @@ app_server <- function(input, output, session) {
     HTML(
       desc1, tr("ui_3cldesc2", trans()),
       paste0("<b>", input$bootSamp, ".</b>"),
+      "<br/>", 
       tr("ui_3cldesc3", trans()),
       paste0("<b>", estimate_time(), "</b>"),
       tr("ui_3cldesc4", trans())
     )
+  })
+  output$describeCl <- renderText({
+    describe_cl()
   })
 
   # --- render UI ----
@@ -859,12 +863,14 @@ app_server <- function(input, output, session) {
             h4("This may take a minute, depending on the number of bootstrap samples selected in the Predict tab.")) 
   ) 
   
-  waiting_screen_cl <- tagList(
-    waiter::spin_flower(),
-    tagList(h3("Getting Confidence Limits..."),
-            br(),
-            h4("This may take a minute, depending on the number of bootstrap samples selected.")) 
-  ) 
+  waiting_screen_cl <- reactive({
+    tagList(
+      waiter::spin_flower(),
+      tagList(h3(paste(tr("ui_3cl", trans()), "...")),
+              br(),
+              describe_cl())
+    ) 
+  }) 
 
   output$dl_rmd <- downloadHandler(
     filename = "bcanz_report.Rmd",
@@ -919,7 +925,7 @@ app_server <- function(input, output, session) {
   output$dl_html <- downloadHandler(
     filename = "bcanz_report.html",
     content = function(file) {
-      waiter::waiter_show(html = waiting_screen, color = "rgba(44,62,80, 1)")
+      waiter::waiter_show(html = waiting_screen_report, color = "rgba(44,62,80, 1)")
       
         temp_report <- file.path(tempdir(), "bcanz_report.Rmd")
         file.copy(
