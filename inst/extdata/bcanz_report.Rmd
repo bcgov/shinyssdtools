@@ -59,7 +59,7 @@ avehc |>
 
 \newpage
 
-# Data
+# Input data
 ```{r, message=FALSE, warning=FALSE}
 kable(params$data)
 ```
