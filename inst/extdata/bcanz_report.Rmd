@@ -57,7 +57,7 @@ avehc |>
   dplyr::select(HCx, PCx, est, se, lcl, ucl, nboot, pboot) |>
   kable(digits = 3)
 ```
-Table 2. The estimated hazardous/protective concentrations. 'HCx' is the % species affected; 'PCx' is the % species protected; 'est' is the model-averaged estimate of the concentration; 'se' is the bootstrap based standard error of the estimate; 'lcl' and 'ucl' are the bootstrapped based lower and upper 95% confidence limits; 'nboot' is the number of bootstrap samples; 'pboot' is the proportion of bootstrap samples that converged. The model-averaged estimate(s) are calculated by treating the distributions as a single mixture distribution. Distributions with an absolute AIC difference greater than a delta of by default 9.21 have considerably less support (weight < 0.01) and are excluded prior to bootstrapping.
+Table 2. The estimated hazardous/protective concentrations. 'HCx' is the % species affected; 'PCx' is the % species protected; 'est' is the model-averaged estimate of the concentration; 'se' is the bootstrap based standard error of the estimate; 'lcl' and 'ucl' are the bootstrapped-based lower and upper 95% confidence limits; 'nboot' is the number of bootstrap samples; 'pboot' is the proportion of bootstrap samples that converged. The model-averaged estimate(s) are calculated by treating the distributions as a single mixture distribution. Distributions with an absolute AIC difference greater than a delta of by default 9.21 have considerably less support (weight < 0.01) and are excluded prior to bootstrapping.
 
 \newpage
 
