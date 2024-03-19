@@ -39,6 +39,7 @@ params$fit_plot
 ```{r, message=FALSE, warning=FALSE}
 kable(params$gof_table) 
 ```
+Table 1. The goodness of fit statistics. 'dist' is the distribution name; 'ad' is the Anderson-Darling statistic; 'ks' is the Kolmogorov-Smirnov statistic; 'cvm' is the Cramer-von Mises statistic; 'aic' is the Akaike's Information Criterion; 'aicc' is the Akaike's Information Criterion corrected for sample size; 'bic' is the Bayesian Information Criterion; 'delta' is the Information Criterion differences; 'weight' is the Information Criterion weights. 'delta' and 'weight' are based on 'aic' for censored data and 'aicc' for non-censored data. 
 
 \newpage
 
@@ -56,6 +57,7 @@ avehc |>
   dplyr::select(HCx, PCx, est, se, lcl, ucl, nboot, pboot) |>
   kable(digits = 3)
 ```
+Table 2. The estimated hazardous/protective concentrations. 'HCx' is the % species affected; 'PCx' is the % species protected; 'est' is the model-averaged estimate of the concentration; 'se' is the bootstrap based standard error of the estimate; 'lcl' and 'ucl' are the bootstrapped based lower and upper 95% confidence limits; 'nboot' is the number of bootstrap samples; 'pboot' is the proportion of bootstrap samples that converged. The model-averaged estimate(s) are calculated by treating the distributions as a single mixture distribution. Distributions with an absolute AIC difference greater than a delta of by default 9.21 have considerably less support (weight < 0.01) and are excluded prior to bootstrapping.
 
 \newpage
 
