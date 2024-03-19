@@ -22,7 +22,8 @@ plot_distributions <- function(x, ylab, xlab, text_size) {
 
 plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
                              label_adjust, xaxis, yaxis, title, xmin, xmax, palette,
-                             legend_colour, legend_shape, xbreaks, trans, text_size, label_size) {
+                             legend_colour, legend_shape, xbreaks, trans, text_size, 
+                             label_size, conc_value) {
   proportion <- percent / 100
   if (!length(proportion)) {
     proportion <- NULL
@@ -45,7 +46,21 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
     ggplot2::coord_trans(x = trans) +
     ggplot2::scale_x_continuous(
       name = xaxis, breaks = xbreaks,
-      limits = c(xmin, xmax), labels = ssdtools::comma_signif
+      limits = c(xmin, xmax), 
+      guide = guide_axis(n.dodge = 2),
+      labels = function(lab) {
+        do.call(
+          expression,
+          lapply(paste(lab), function(x){
+            if(x == paste(conc_value)){
+              y <- bquote(bold(.(x)))
+            } else {
+              y <- x
+            }
+            y
+          } 
+        ))
+      }
     ) +
     ggplot2::scale_color_brewer(palette = palette, name = legend_colour) +
     ggplot2::scale_shape(name = legend_shape)

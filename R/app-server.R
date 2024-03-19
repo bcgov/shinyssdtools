@@ -311,6 +311,7 @@ app_server <- function(input, output, session) {
     req(input$thresh_type)
     req(input$adjustLabel)
     req(thresh_rv$percent)
+    req(thresh_rv$conc)
     req(input$xbreaks)
 
     data <- names_data()
@@ -364,12 +365,12 @@ app_server <- function(input, output, session) {
 
     silent_plot(plot_predictions(data, pred,
       conc = conc, label = label, colour = colour,
-      shape = shape, percent = percent, xbreaks = as.numeric(input$xbreaks),
+      shape = shape, percent = percent, xbreaks = sort(as.numeric(input$xbreaks)),
       label_adjust = shift_label, xaxis = input$xaxis,
       yaxis = input$yaxis, title = input$title, xmax = xmax, xmin = xmin,
       palette = input$selectPalette, legend_colour = input$legendColour,
       legend_shape = input$legendShape, trans = trans, text_size = input$size3,
-      label_size = input$sizeLabel3
+      label_size = input$sizeLabel3, conc_value = thresh_rv$conc
     ))
   })
 
