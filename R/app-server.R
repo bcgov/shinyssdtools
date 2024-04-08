@@ -740,13 +740,13 @@ app_server <- function(input, output, session) {
       ", hc = ", code_hc(),
       ", ci = FALSE, <br/>shift_x = ", input$adjustLabel,
       ", ylab = '", ylab,
+      ", trans = '", trans,
       "') + <br/> ggtitle('", title,
       "') + <br/> theme_classic() + <br/>",
       "theme(axis.text = ggplot2::element_text(color = 'black', size = ", text_size, "), <br/>
           axis.title = ggplot2::element_text(size = ", text_size, "), <br/>
           legend.text = ggplot2::element_text(size = ", text_size, "), <br/>
           legend.title = ggplot2::element_text(size = ", text_size, ")) + <br/>",
-      "coord_trans(x = '", trans, "') + <br/>",
       "scale_x_continuous(name = '", xlab, "', breaks = c(", paste(xbreaks, collapse = ", "), "), limits = c(", xmin, ", ", xmax, "), labels = comma_signif) + <br/>",
       "scale_color_brewer(palette = '", input$selectPalette, "', name = ", legend.colour, ") +<br/>
                      scale_shape(name = ", legend.shape, ")"

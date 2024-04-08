@@ -45,7 +45,7 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
                            left = conc, label = label, xbreaks = xbreaks, size = label_size,
                            color = colour, shape = shape, hc = proportion, ci = FALSE,
                            shift_x = label_adjust %>% as.numeric(),
-                           xlab = xaxis, ylab = yaxis
+                           xlab = xaxis, ylab = yaxis, trans = trans
   ) +
     ggplot2::ggtitle(title) +
     ggplot2::theme_classic() +
@@ -56,7 +56,6 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
       legend.text = ggplot2::element_text(size = text_size),
       legend.title = ggplot2::element_text(size = text_size),
     ) +
-    ggplot2::coord_trans(x = trans) +
     ggplot2::scale_x_continuous(
       name = xaxis, breaks = xbreaks,
       limits = c(xmin, xmax), 
