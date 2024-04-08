@@ -267,7 +267,9 @@ app_server <- function(input, output, session) {
 
   plot_dist <- reactive({
     dist <- fit_dist()
-    plot_distributions(dist, ylab = input$yaxis2, xlab = input$xaxis2, text_size = input$size2)
+    plot_distributions(dist, ylab = input$yaxis2, 
+                       xlab = append_unit(input$xaxis2, input$selectUnit), 
+                       text_size = input$size2)
   })
 
   table_gof <- reactive({
@@ -366,7 +368,7 @@ app_server <- function(input, output, session) {
     silent_plot(plot_predictions(data, pred,
       conc = conc, label = label, colour = colour,
       shape = shape, percent = percent, xbreaks = sort(as.numeric(input$xbreaks)),
-      label_adjust = shift_label, xaxis = input$xaxis,
+      label_adjust = shift_label, xaxis = append_unit(input$xaxis, input$selectUnit),
       yaxis = input$yaxis, title = input$title, xmax = xmax, xmin = xmin,
       palette = input$selectPalette, legend_colour = input$legendColour,
       legend_shape = input$legendShape, trans = trans, text_size = input$size3,
@@ -1052,11 +1054,19 @@ app_server <- function(input, output, session) {
     numericInput("selectDpi2", label = tr("ui_2dpi", trans()), min = 50, max = 3000, step = 50, value = 300)
   })
 
-  output$selectConc <- renderUI({
+  output$ui_conc <- renderUI({
     selectInput("selectConc",
       label = label_mandatory(tr("ui_2conc", trans())),
       choices = column_names(),
       selected = guess_conc()
+    )
+  })
+  
+  output$ui_unit <- renderUI({
+    selectInput("selectUnit",
+                label = tr("ui_2unit", trans()),
+                choices = units(),
+                selected = units()[1]
     )
   })
 
