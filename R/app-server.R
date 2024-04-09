@@ -740,7 +740,7 @@ app_server <- function(input, output, session) {
       ", hc = ", code_hc(),
       ", ci = FALSE, <br/>shift_x = ", input$adjustLabel,
       ", ylab = '", ylab,
-      ", trans = '", trans,
+      "', trans = '", trans,
       "') + <br/> ggtitle('", title,
       "') + <br/> theme_classic() + <br/>",
       "theme(axis.text = ggplot2::element_text(color = 'black', size = ", text_size, "), <br/>
