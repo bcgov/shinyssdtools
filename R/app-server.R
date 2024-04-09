@@ -1326,8 +1326,8 @@ app_server <- function(input, output, session) {
 
   output$ui_userguide <- renderUI({
     if (translation.value$lang == "English") {
-      return(includeMarkdown(system.file(package = "shinyssdtools", "extdata/user-en.md")))
+      return(includeHTML(system.file(package = "shinyssdtools", "extdata/user-en.html")))
     }
-    includeMarkdown(system.file(package = "shinyssdtools", "extdata/user-fr.md"))
+    includeHTML(system.file(package = "shinyssdtools", "extdata/user-fr.html"))
   })
 }
