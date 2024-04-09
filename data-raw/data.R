@@ -91,6 +91,11 @@ translations <- dplyr::bind_rows(
     id = "ui_xbreaks",
     english = "X-axis ticks",
     french = "Graduations sur l'axe X"
+  ),
+  dplyr::tibble(
+    id = "ui_2unit",
+    english = "Select units",
+    french = "Sélectionner les unités"
   )
 )
 
