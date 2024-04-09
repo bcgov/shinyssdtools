@@ -32,6 +32,7 @@ Imports:
     glue,
     knitr,
     magrittr,
+    markdown,
     readr,
     rhandsontable,
     rlang,
@@ -44,7 +45,6 @@ Imports:
     waiter
 Suggests: 
     covr,
-    markdown,
     RColorBrewer,
     rsconnect,
     testthat (>= 3.0.0),

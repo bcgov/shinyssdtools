@@ -267,7 +267,9 @@ app_server <- function(input, output, session) {
 
   plot_dist <- reactive({
     dist <- fit_dist()
-    plot_distributions(dist, ylab = input$yaxis2, xlab = input$xaxis2, text_size = input$size2)
+    plot_distributions(dist, ylab = input$yaxis2, 
+                       xlab = append_unit(input$xaxis2, input$selectUnit), 
+                       text_size = input$size2)
   })
 
   table_gof <- reactive({
@@ -311,6 +313,7 @@ app_server <- function(input, output, session) {
     req(input$thresh_type)
     req(input$adjustLabel)
     req(thresh_rv$percent)
+    req(thresh_rv$conc)
     req(input$xbreaks)
 
     data <- names_data()
@@ -364,28 +367,27 @@ app_server <- function(input, output, session) {
 
     silent_plot(plot_predictions(data, pred,
       conc = conc, label = label, colour = colour,
-      shape = shape, percent = percent, xbreaks = as.numeric(input$xbreaks),
-      label_adjust = shift_label, xaxis = input$xaxis,
+      shape = shape, percent = percent, xbreaks = sort(as.numeric(input$xbreaks)),
+      label_adjust = shift_label, xaxis = append_unit(input$xaxis, input$selectUnit),
       yaxis = input$yaxis, title = input$title, xmax = xmax, xmin = xmin,
       palette = input$selectPalette, legend_colour = input$legendColour,
       legend_shape = input$legendShape, trans = trans, text_size = input$size3,
-      label_size = input$sizeLabel3
+      label_size = input$sizeLabel3, conc_value = thresh_rv$conc
     ))
   })
 
   # --- get confidence intervals
   table_cl <- eventReactive(input$getCl, {
     dist <- fit_dist()
-    withProgress(value = 0, message = "Getting Confidence Limits...", {
-      incProgress(0.4)
+    waiter::waiter_show(html = waiting_screen_cl(), color = "rgba(44,62,80, 1)")
       nboot <- as.integer(gsub("(,|\\s)", "", input$bootSamp))
       if (input$thresh_type != "Concentration") {
         y <- ssd_hp_ave(dist, conc = thresh_rv$conc, nboot = nboot)
       } else {
         y <- ssd_hc_ave(dist, percent = thresh_rv$percent, nboot = nboot)
       }
-      y
-    })
+    waiter::waiter_hide()
+    y
   })
 
   estimate_time <- reactive({
@@ -520,7 +522,7 @@ app_server <- function(input, output, session) {
     DT::datatable(table_cl(), options = list(dom = "t"))
   })
 
-  output$describeCl <- renderText({
+  describe_cl <- reactive({
     desc1 <- paste(tr("ui_3cldesc1", trans()), paste0("<b>", thresh_rv$percent, "</b>"))
     if (input$thresh_type != "Concentration") {
       desc1 <- paste(tr("ui_3cldesc11", trans()), paste0("<b>", thresh_rv$conc, "</b>"))
@@ -528,10 +530,14 @@ app_server <- function(input, output, session) {
     HTML(
       desc1, tr("ui_3cldesc2", trans()),
       paste0("<b>", input$bootSamp, ".</b>"),
+      "<br/>", 
       tr("ui_3cldesc3", trans()),
       paste0("<b>", estimate_time(), "</b>"),
       tr("ui_3cldesc4", trans())
     )
+  })
+  output$describeCl <- renderText({
+    describe_cl()
   })
 
   # --- render UI ----
@@ -695,7 +701,7 @@ app_server <- function(input, output, session) {
     )
     c2 <- "# plot distributions"
     plot <- paste0(
-      "ssd_plot_cdf(dist, ylab = '", ylab, "', xlab = '", xlab, "', delta = Inf) +
+      "ssd_plot_cdf(dist, ylab = '", ylab, "', xlab = '", xlab, "', delta = Inf, average = NA) +
                    <br/> theme_classic() + <br/> ",
       "theme(axis.text = ggplot2::element_text(color = 'black', size = ", text_size, "), <br/>
           axis.title = ggplot2::element_text(size = ", text_size, "), <br/>
@@ -734,13 +740,13 @@ app_server <- function(input, output, session) {
       ", hc = ", code_hc(),
       ", ci = FALSE, <br/>shift_x = ", input$adjustLabel,
       ", ylab = '", ylab,
+      "', trans = '", trans,
       "') + <br/> ggtitle('", title,
       "') + <br/> theme_classic() + <br/>",
       "theme(axis.text = ggplot2::element_text(color = 'black', size = ", text_size, "), <br/>
           axis.title = ggplot2::element_text(size = ", text_size, "), <br/>
           legend.text = ggplot2::element_text(size = ", text_size, "), <br/>
           legend.title = ggplot2::element_text(size = ", text_size, ")) + <br/>",
-      "coord_trans(x = '", trans, "') + <br/>",
       "scale_x_continuous(name = '", xlab, "', breaks = c(", paste(xbreaks, collapse = ", "), "), limits = c(", xmin, ", ", xmax, "), labels = comma_signif) + <br/>",
       "scale_color_brewer(palette = '", input$selectPalette, "', name = ", legend.colour, ") +<br/>
                      scale_shape(name = ", legend.shape, ")"
@@ -852,6 +858,22 @@ app_server <- function(input, output, session) {
       )
     )
   })
+  
+  waiting_screen_report <- tagList(
+    waiter::spin_flower(),
+    tagList(h3("Generating report ..."),
+            br(),
+            h4("This may take a minute, depending on the number of bootstrap samples selected in the Predict tab.")) 
+  ) 
+  
+  waiting_screen_cl <- reactive({
+    tagList(
+      waiter::spin_flower(),
+      tagList(h3(paste(tr("ui_3cl", trans()), "...")),
+              br(),
+              describe_cl())
+    ) 
+  }) 
 
   output$dl_rmd <- downloadHandler(
     filename = "bcanz_report.Rmd",
@@ -884,7 +906,8 @@ app_server <- function(input, output, session) {
   output$dl_pdf <- downloadHandler(
     filename = "bcanz_report.pdf",
     content = function(file) {
-      withProgress(message = "Generating report ...", value = 0.5, {
+      waiter::waiter_show(html = waiting_screen_report, color = "rgba(44,62,80, 1)")
+      
         temp_report <- file.path(tempdir(), "bcanz_report.Rmd")
         file.copy(
           system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"),
@@ -898,18 +921,19 @@ app_server <- function(input, output, session) {
           envir = new.env(parent = globalenv()),
           encoding = "utf-8"
         )
-      })
+        waiter::waiter_hide()
     }
   )
 
   output$dl_html <- downloadHandler(
     filename = "bcanz_report.html",
     content = function(file) {
-      withProgress(message = "Generating report ...", value = 0.5, {
+      waiter::waiter_show(html = waiting_screen_report, color = "rgba(44,62,80, 1)")
+      
         temp_report <- file.path(tempdir(), "bcanz_report.Rmd")
         file.copy(
           system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"),
-          file
+          temp_report
         )
         params <- params_list()
         rmarkdown::render(temp_report,
@@ -919,7 +943,7 @@ app_server <- function(input, output, session) {
           envir = new.env(parent = globalenv()),
           encoding = "utf-8"
         )
-      })
+    waiter::waiter_hide()
     }
   )
 
@@ -1030,11 +1054,19 @@ app_server <- function(input, output, session) {
     numericInput("selectDpi2", label = tr("ui_2dpi", trans()), min = 50, max = 3000, step = 50, value = 300)
   })
 
-  output$selectConc <- renderUI({
+  output$ui_conc <- renderUI({
     selectInput("selectConc",
       label = label_mandatory(tr("ui_2conc", trans())),
       choices = column_names(),
       selected = guess_conc()
+    )
+  })
+  
+  output$ui_unit <- renderUI({
+    selectInput("selectUnit",
+                label = tr("ui_2unit", trans()),
+                choices = units(),
+                selected = units()[1]
     )
   })
 
@@ -1294,8 +1326,8 @@ app_server <- function(input, output, session) {
 
   output$ui_userguide <- renderUI({
     if (translation.value$lang == "English") {
-      return(includeMarkdown(system.file(package = "shinyssdtools", "extdata/user-en.md")))
+      return(includeHTML(system.file(package = "shinyssdtools", "extdata/user-en.html")))
     }
-    includeMarkdown(system.file(package = "shinyssdtools", "extdata/user-fr.md"))
+    includeHTML(system.file(package = "shinyssdtools", "extdata/user-fr.html"))
   })
 }
