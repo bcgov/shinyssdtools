@@ -21,12 +21,12 @@ app_ui <- function() {
       ".shiny-output-error { visibility: hidden; }",
       ".shiny-output-error:before { visibility: hidden; }"
     ),
-    div(class = "div-link", HTML(paste0(
-      actionButton("en", "English",
-        class = "msw-button"
-      ), "/",
-      actionButton("fr", "French", class = "msw-button")
-    ))),
+    # div(class = "div-link", HTML(paste0(
+    #   actionButton("en", "English",
+    #     class = "msw-button"
+    #   ), "/",
+    #   actionButton("fr", "French", class = "msw-button")
+    # ))),
     navbarPage(
       title = uiOutput("ui_navtitle"), windowTitle = "shinyssdtools",
 
