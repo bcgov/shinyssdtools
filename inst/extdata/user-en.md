@@ -1,7 +1,7 @@
-This app **fits species sensitivity distributions to concentration data**. The app is built from the R package [ssdtools](https://github.com/bcgov/ssdtools), and shares the same functionality.
+This app **fits species sensitivity distributions to concentration data**. The app is built from the R package [ssdtools](https://github.com/bcgov/ssdtools), and shares the same functionality. More information on ssdtools methods can be found in [articles on the website](https://bcgov.github.io/ssdtools/articles/).
 
 
-*Hint: Find and click the info icons  throughout the app to find more information on a particular input.*  
+*Hint: Find and click the info icons throughout the app to find more information on a particular input.*  
 
 ### Step 1: Provide data 
 
@@ -39,54 +39,30 @@ There are three options to provide data to the app:
     
 Finally, preview the data provided in the table on the right hand side of the tab.  
 
-<center>
-![Provide data in tab `1. Data`](https://media.giphy.com/media/fjyG7Wbgp1RKV8sS9s/giphy.gif)
-</center>
-
 ### Step 2: Fit distributions 
 
 1. Specify **which column contains concentration values**. The app attempts to guess which column contains concentration values based on data column names. This may need to be corrected.
-2. **Select or deselect distributions to fit the data**.  Note that if two or more models have overlapping fits then support for this model shape will be over inflated in the model averaged parameters.  Please see the article [here](https://bcgov.github.io/ssdtools/articles/distributions.html) for more information.  The outputs may take a moment to update.
-3. Format the plot using inputs in the sidebar and **download plot and goodness of fit table** as png and csv files, respectively.
-
-<center>
-![Fit distributions in tab `2. Fit`](https://media.giphy.com/media/yIjxGcFKt0zK2vj38j/giphy.gif)
-</center>
+2. **Select or deselect distributions to fit the data**.  The fitted distributions plot includes the model average estimates. Note that if two or more models have overlapping fits then support for this model shape will be over inflated in the model averaged parameters.  Please see the article [here](https://bcgov.github.io/ssdtools/articles/distributions.html) for more information.  The outputs may take a moment to update.
+3. Format the plot using inputs in the sidebar and **download plot and goodness of fit table** as png and csv files, respectively. Select units to display them in the x-axis title. 
 
 Additional information about the **goodness of fit table**:
 The columns in the goodness of fit table are the distribution (dist), the Anderson-Darling statistic (ad), the Kolmogorov-Smirnov statistic (ks), the Cramer-von Mises statistic (cvm), Akaike’s Information Criterion (aic), Akaike’s Information Criterion corrected for sample size (aicc), Bayesian Information Criterion (bic), the AICc difference (delta) and the AICc based Akaike weight (weight). The prediction is the model averaged (using aicc) estimate of the fit. The percent hazard concentration is the concentration of the chemical which is predicted to affect that percent of the species tested.
 
 ### Step 3: Predict hazard concentration or percent of species effected
-1. Select the **threshold % species affected** to calculate **estimated hazard concentration** OR select **concentration** to calculate the percentage of species affected by a specified concentration. This affects the plot (dotted line), text displayed below the plot and calculations of confidence limits.  
-2. Select the number of **bootstrap samples used to calculate confidence limits**. The recommended number of samples is 10,000, although this can take around 3 minutes to process. Select lower number of bootstrap samples to reduce processing time.  
-
-<center>
-
-Bootstrap Samples &nbsp;&nbsp; | Estimated Processing Time
---- | ---
-10,000 &nbsp; | 45 seconds
-5,000 &nbsp;| 20 seconds 
-1,000 &nbsp;| 10 seconds
-500 &nbsp;| 5 seconds
-
-</center>
+1. There are two options: Estimate the **Concentration** affecting/protecting a selected fraction of species (%) OR estimate the fraction of species (%) affected by a selected concentration. This affects the plot (dotted line), text displayed below the plot and calculations of confidence limits. 
+2. Select the number of **bootstrap samples used to calculate confidence limits**. The recommended number of samples is 10,000, although this can take some time to process. Select a lower number of bootstrap samples to reduce processing time.  Distributions are treated as constituting a single mixture distribution (as opposed to taking the mean) for calculation of model averaged estimates. Distributions are not treated as constituting a single distribution for calculating confidence intervals as this increases processing time considerably. 
 
 3. Since confidence limits take time to calculate, they are not calculated automatically; you must press the `Get CL` button.
-4. **Format plot** using various inputs in sidebar and **download plot and table** as png and csv file, respectively.
+4. **Format plot** using various inputs in sidebar and **download plot and table** as png and csv file, respectively. There are options to adjust the x-axis breaks (i.e., labels), x-axis limits and whether to display results on a log-scale. 
 
-<center>
-![Get hazard concentration estimates and confidence limits in tab `3. Predict`](https://media.giphy.com/media/xKb9nQsPFlqTCGzUgF/giphy.gif)
-</center>
+### Step 4: Get BCANZ report
+Generate a report in HTML or PDF format including the fitted distribution plot, goodness of fit table, model-averaged fit plot and table of estimated hazardous/protective concentrations. Any options selected in the app will be incorporated into the report. 
 
-### Step 4: Get R code
+### Step 5: Get R code
 
 Copy R code to reproduce outputs programmatically. Code is dynamically generated based on user inputs and functions executed within the app (e.g., code for generating confidence limits will appear after 'Get CL' button is clicked). 
 
-<center>
-![Get R code to reproduce results programmatically in tab `R Code`](https://media.giphy.com/media/XIgsL03rRnEfn8nNas/giphy.gif)
-</center>
-
-To generate a graph with confidence bands, copy the R code and paste in R.  Then set ci = TRUE in the predict and ssd_plot functions.
+To generate a graph with confidence intervals, copy the R code and paste in R.  Then set ci = TRUE in the predict and ssd_plot functions.
 
  
 
