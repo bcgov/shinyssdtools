@@ -1310,7 +1310,7 @@ app_server <- function(input, output, session) {
         tagList(
           p(ver),
           p(sver),
-          includeMarkdown(system.file("extdata/about-en.md", package = "shinyssdtools"))
+          includeHTML(system.file("extdata/about-en.html", package = "shinyssdtools"))
         )
       })
     } else {
@@ -1318,7 +1318,7 @@ app_server <- function(input, output, session) {
         tagList(
           p(ver),
           p(sver),
-          includeMarkdown(system.file("extdata/about-fr.md", package = "shinyssdtools"))
+          includeHTML(system.file("extdata/about-fr.html", package = "shinyssdtools"))
         )
       })
     }
