@@ -845,16 +845,16 @@ app_server <- function(input, output, session) {
   output$ui_report_download <- renderUI({
     req(plot_model_average())
     tagList(
-      textInput("toxicant", "Toxicant name"),
+      textInput("toxicant", tr("ui_4toxname", trans())),
       shinyWidgets::dropdownButton(
         status = "primary",
-        label = "Download Report",
+        label = tr("ui_4download", trans()),
         inline = TRUE,
         circle = FALSE,
         icon = icon("download"),
-        dl_button("dl_pdf", "PDF file"),
-        dl_button("dl_html", "HTML file"),
-        dl_button("dl_rmd", "Rmd file")
+        dl_button("dl_pdf", tr("ui_4pdf", trans())),
+        dl_button("dl_html", tr("ui_4html", trans())),
+        dl_button("dl_rmd", tr("ui_4rmd", trans()))
       )
     )
   })

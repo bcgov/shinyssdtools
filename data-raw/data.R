@@ -111,6 +111,31 @@ translations <- dplyr::bind_rows(
     id = "ui_3protecting",
     english = "protecting % species",
     french = "protégeant % des espèces"
+  ),
+  dplyr::tibble(
+    id = "ui_4toxname",
+    english = "Toxicant name",
+    french = "Nom de la substance"
+  ),
+  dplyr::tibble(
+    id = "ui_4download",
+    english = "Download Report",
+    french = "Télécharger le Rapport"
+  ),
+  dplyr::tibble(
+    id = "ui_4pdf",
+    english = "PDF file",
+    french = "Fichier PDF"
+  ),
+  dplyr::tibble(
+    id = "ui_4html",
+    english = "HTML file",
+    french = "Fichier HTML"
+  ),
+  dplyr::tibble(
+    id = "ui_4rmd",
+    english = "RMD file",
+    french = "Fichier RMD"
   )
 )
 
