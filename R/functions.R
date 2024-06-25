@@ -35,11 +35,11 @@ zero_range <- function(x, tol = .Machine$double.eps^0.5) {
 }
 
 estimate_hc <- function(x, percent) {
-  ssdtools::ssd_hc(x, proportion = percent / 100, nboot = 10L, min_pboot = 0.8, multi_est = TRUE, multi_ci = FALSE)$est
+  ssdtools::ssd_hc(x, proportion = percent / 100, nboot = 10L, min_pboot = 0.8, multi_est = TRUE)$est
 }
 
 estimate_hp <- function(x, conc) {
-  ssdtools::ssd_hp(x = x, conc = conc, nboot = 10L, min_pboot = 0.8, multi_est = TRUE, multi_ci = FALSE)$est
+  ssdtools::ssd_hp(x = x, conc = conc, nboot = 10L, min_pboot = 0.8, multi_est = TRUE)$est
 }
 
 ssd_hc_ave <- function(x, percent, nboot) {
