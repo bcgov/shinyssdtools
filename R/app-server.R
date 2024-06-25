@@ -1149,20 +1149,20 @@ app_server <- function(input, output, session) {
     req(input$thresh_type)
     if (input$thresh_type != "Concentration") {
       return(numericInput("conc",
-        label = "by concentration",
+        label = tr("ui_3byconc", trans()),
         value = 1, min = 0,
         max = 100, step = 0.1, width = "100px"
       ))
     }
     div(
       inline(selectizeInput("thresh",
-        label = "affecting % species",
+        label = tr("ui_3affecting", trans()),
         choices = c(1, 5, 10, 20),
         options = list(create = TRUE, createFilter = "^[1-9][0-9]?$|^99$"),
         selected = 5, width = "100px"
       )),
       inline(selectizeInput("thresh_pc",
-        label = "protecting % species",
+        label = tr("ui_3protecting", trans()),
         choices = c(99, 95, 90, 80),
         options = list(create = TRUE, createFilter = "^[1-9][0-9]?$|^99$"),
         selected = 95, width = "100px"

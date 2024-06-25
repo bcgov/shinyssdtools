@@ -96,10 +96,25 @@ translations <- dplyr::bind_rows(
     id = "ui_2unit",
     english = "Select units",
     french = "Sélectionner les unités"
+  ),
+  dplyr::tibble(
+    id = "ui_3byconc",
+    english = "by concentration",
+    french = "par concentration"
+  ),
+  dplyr::tibble(
+    id = "ui_3affecting",
+    english = "affecting % species",
+    french = "affectant % des espèces"
+  ),
+  dplyr::tibble(
+    id = "ui_3protecting",
+    english = "protecting % species",
+    french = "protégeant % des espèces"
   )
 )
 
-checkr::check_key(translations, "id")
+chk::check_key(translations, "id")
 
 boron.data <- ssddata::ccme_boron
 
