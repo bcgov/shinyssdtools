@@ -70,7 +70,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_xlog",
     english = "Log x-axis",
-    french = "Logarithme de l'axe des X"
+    french = "Log de l'axe X"
   ),
   dplyr::tibble(
     id = "ui_sizeLabel",
@@ -85,12 +85,12 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_adjustLabel",
     english = "Shift label",
-    french = "Ajuster l'étiquette"
+    french = "étiquette de changement"
   ),
   dplyr::tibble(
     id = "ui_xbreaks",
     english = "X-axis ticks",
-    french = "Graduations sur l'axe X"
+    french = "Repères de l'axe des X"
   ),
   dplyr::tibble(
     id = "ui_2unit",
