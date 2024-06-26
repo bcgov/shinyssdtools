@@ -146,6 +146,31 @@ translations <- dplyr::bind_rows(
     id = "ui_4genbody",
     english = "This may take a minute, depending on the number of bootstrap samples selected in the Predict tab.",
     french = "Cela peut prendre une minute, en fonction du nombre d'échantillons bootstrap sélectionné dans l'onglet « Predict »."
+  ),
+  dplyr::tibble(
+    id = "ui_1htconc",
+    english = "Concentration",
+    french = "Concentration"
+  ),
+  dplyr::tibble(
+    id = "ui_1htspp",
+    english = "Species",
+    french = "Espèce"
+  ),
+  dplyr::tibble(
+    id = "ui_1htgrp",
+    english = "Group",
+    french = "Groupe"
+  ),
+  dplyr::tibble(
+    id = "ui_1htchm",
+    english = "Chemical",
+    french = "Produit Chimique"
+  ),
+  dplyr::tibble(
+    id = "ui_1htunt",
+    english = "Units",
+    french = "Unités"
   )
 )
 

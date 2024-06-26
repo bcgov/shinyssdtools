@@ -40,18 +40,35 @@ app_server <- function(input, output, session) {
     upload_state = NULL
   )
 
+  demo_data <- reactive({
+    df <- boron.data
+    conc <- tr("ui_1htconc", trans())
+    spp <- tr("ui_1htspp", trans())
+    grp <- tr("ui_1htgrp", trans())
+    chm <- tr("ui_1htchm", trans())
+    unt <- tr("ui_1htunt", trans())
+    
+    colnames(df) <- c(chm, spp, conc, grp, unt)
+    df
+  })
+  
   #  read/create handson table
   hot.values <- reactiveValues()
   hot_data <- reactive({
+    conc <- tr("ui_1htconc", trans())
+    spp <- tr("ui_1htspp", trans())
+    grp <- tr("ui_1htgrp", trans())
+    
     if (!is.null(input$hot)) {
       DF <- rhandsontable::hot_to_r(input$hot)
+      colnames(DF) <- c(conc, spp, grp)
       DF <- dplyr::mutate_if(DF, is.factor, as.character)
     } else {
       if (is.null(hot.values[["DF"]])) {
-        DF <- data.frame(
-          Concentration = rep(NA_real_, 10),
-          Species = rep(NA_character_, 10),
-          Group = rep(NA_character_, 10)
+        DF <- tibble(
+          !!conc := rep(NA_real_, 10),
+          !!spp := rep(NA_character_, 10),
+          !!grp := rep(NA_character_, 10)
         )
       } else {
         DF <- hot.values[["DF"]]
@@ -72,7 +89,7 @@ app_server <- function(input, output, session) {
       }
       return(readr::read_csv(data$datapath))
     } else if (upload.values$upload_state == "demo") {
-      return(boron.data)
+      return(demo_data())
     } else if (upload.values$upload_state == "hot") {
       return(hot_data())
     }
