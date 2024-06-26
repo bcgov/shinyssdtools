@@ -1,6 +1,5 @@
 This app **fits species sensitivity distributions to concentration data**. The app is built from the R package [ssdtools](https://github.com/bcgov/ssdtools), and shares the same functionality. More information on ssdtools methods can be found in [articles on the website](https://bcgov.github.io/ssdtools/articles/).
 
-
 *Hint: Find and click the info icons throughout the app to find more information on a particular input.*  
 
 ### Step 1: Provide data 
