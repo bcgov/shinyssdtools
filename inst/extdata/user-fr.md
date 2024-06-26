@@ -53,9 +53,6 @@ Les colonnes du tableau sont la distribution (dist), la statistique d’Anderson
 
 3. Les intervalles de confiance ne sont pas calculés automatiquement car cela prend un certain temps. Il faut cliquer sur le bouton `Obtenir bornes`.
 4. **Le graphique peut être mis en forme** à l’aide des entrées disponibles dans la barre latérale et **le graphique et le tableau peuvent être téléchargés** respectivement dans des fichiers .png et .csv.
-    - Si l’étiquette des espèces n’est pas entièrement visible sur le graphique, ajuster l’axe des X et la position des étiquettes en utilisant la fonction étiquette 'X-axis max' et 'Adjust label'.
-    - L’éventail de couleurs provient de [ColorBrewer](http://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3).
-    - Si vous utilisez la même variable pour la couleur et la forme, fournir le même titre de légende permettra de combiner les deux en une seule légende. 
 
 ### Étape 4: Obtenir le BCANZ rapport
 Générer un rapport au format HTML ou PDF comprenant le tracé de la distribution ajustée, le tableau de qualité de l'ajustement, le tracé de l'ajustement moyen du modèle et le tableau des concentrations dangereuses/protectrices estimées. Toutes les options sélectionnées dans l'application seront incorporées dans le rapport.

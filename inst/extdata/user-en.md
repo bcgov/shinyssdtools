@@ -52,7 +52,7 @@ The columns in the goodness of fit table are the distribution (dist), the Anders
 2. Select the number of **bootstrap samples used to calculate confidence limits**. The recommended number of samples is 10,000, although this can take some time to process. Select a lower number of bootstrap samples to reduce processing time.  Distributions are treated as constituting a single mixture distribution (as opposed to taking the mean) for calculation of model averaged estimates. Distributions are not treated as constituting a single distribution for calculating confidence intervals as this increases processing time considerably. 
 
 3. Since confidence limits take time to calculate, they are not calculated automatically; you must press the `Get CL` button.
-4. **Format plot** using various inputs in sidebar and **download plot and table** as png and csv file, respectively. There are options to adjust the x-axis breaks (i.e., labels), x-axis limits and whether to display results on a log-scale. 
+4. **Format plot** using various inputs in sidebar and **download plot and table** as png and csv file, respectively.
 
 ### Step 4: Get BCANZ report
 Generate a report in HTML or PDF format including the fitted distribution plot, goodness of fit table, model-averaged fit plot and table of estimated hazardous/protective concentrations. Any options selected in the app will be incorporated into the report. 
