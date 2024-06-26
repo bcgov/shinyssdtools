@@ -859,12 +859,14 @@ app_server <- function(input, output, session) {
     )
   })
   
-  waiting_screen_report <- tagList(
-    waiter::spin_flower(),
-    tagList(h3("Generating report ..."),
-            br(),
-            h4("This may take a minute, depending on the number of bootstrap samples selected in the Predict tab.")) 
-  ) 
+  waiting_screen_report <- reactive({
+    tagList(
+      waiter::spin_flower(),
+      tagList(h3(tr("ui_4gentitle", trans())),
+              br(),
+              h4(tr("ui_4genbody", trans())))
+    )
+  })  
   
   waiting_screen_cl <- reactive({
     tagList(
@@ -906,7 +908,7 @@ app_server <- function(input, output, session) {
   output$dl_pdf <- downloadHandler(
     filename = "bcanz_report.pdf",
     content = function(file) {
-      waiter::waiter_show(html = waiting_screen_report, color = "rgba(44,62,80, 1)")
+      waiter::waiter_show(html = waiting_screen_report(), color = "rgba(44,62,80, 1)")
       
         temp_report <- file.path(tempdir(), "bcanz_report.Rmd")
         file.copy(
@@ -928,7 +930,7 @@ app_server <- function(input, output, session) {
   output$dl_html <- downloadHandler(
     filename = "bcanz_report.html",
     content = function(file) {
-      waiter::waiter_show(html = waiting_screen_report, color = "rgba(44,62,80, 1)")
+      waiter::waiter_show(html = waiting_screen_report(), color = "rgba(44,62,80, 1)")
       
         temp_report <- file.path(tempdir(), "bcanz_report.Rmd")
         file.copy(

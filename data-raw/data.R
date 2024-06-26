@@ -136,6 +136,16 @@ translations <- dplyr::bind_rows(
     id = "ui_4rmd",
     english = "RMD file",
     french = "Fichier RMD"
+  ),
+  dplyr::tibble(
+    id = "ui_4gentitle",
+    english = "Generating report ...",
+    french = "Génération du rapport en cours ... "
+  ),
+  dplyr::tibble(
+    id = "ui_4genbody",
+    english = "This may take a minute, depending on the number of bootstrap samples selected in the Predict tab.",
+    french = "Cela peut prendre une minute, en fonction du nombre d'échantillons bootstrap sélectionné dans l'onglet « Predict »."
   )
 )
 
