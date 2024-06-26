@@ -45,17 +45,17 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_2rescale",
     english = "Rescale data prior to fitting",
-    french = "Rééchelonnement des données avant d'ajuster"
+    french = "Redimensionner les données avant l'ajustement"
   ),
   dplyr::tibble(
     id = "ui_2at_boundary_ok",
     english = "Exclude distributions with a parameter value at a boundary",
-    french = "Exclusion des distributions avec un valeur de paramètre à limite"
+    french = "Exclure les distributions avec une valeur paramétrique à une limite"
   ),
   dplyr::tibble(
     id = "ui_2computable",
     english = "Exclude distributions without computable standard errors",
-    french = "Exclusion des distributions sans erreurs types calculables"
+    french = "Exclure les distributions sans erreur-type calculable"
   ),
   dplyr::tibble(
     id = "ui_xmax",
