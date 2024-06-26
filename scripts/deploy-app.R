@@ -1,4 +1,4 @@
-# install cran ssdtools
+# install ssdtools
 remotes::install_github("poissonconsulting/ssdtools")
 # get cran versions of poisson pkgs
 pak::pak("err")
@@ -7,6 +7,7 @@ pak::pak("chk")
 
 # build user guide/about
 rmarkdown::render("inst/extdata/user-en.md", output_format = "html_fragment")
+rmarkdown::render("inst/extdata/user-fr.md", output_format = "html_fragment")
 rmarkdown::render("inst/extdata/about-en.md", output_format = "html_fragment")
 rmarkdown::render("inst/extdata/about-fr.md", output_format = "html_fragment")
 
