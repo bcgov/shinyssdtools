@@ -40,7 +40,7 @@ Enfin, visualiser les données fournies dans le tableau à droite de l'onglet.
 ### Étape 2: Ajustement des distributions 
 
 1. Spécifier **quelle est la colonne qui contient les valeurs de concentrations**. L’application tente de deviner quelle est la colonne contenant les valeurs de concentrations à l’aide des noms des colonnes. Cela peut toutefois nécessiter une correction. 
-2. **Sélectionner (ou désélectionner) les distributions à ajuster aux données.** Le graphique des distributions ajustées comprend les estimations moyennes du modèle. Il est à noter que s’il y a un chevauchement dans l’ajustement de deux ou plusieurs fonctions de distribution, il y a aura alors une exagération de la forme de cet ajustement dans l’inférence multimodèle. Consultez cet article (https://bcgov.github.io/ssdtools/articles/distributions.html) pour plus d’information.  La fonction peut prendre quelques secondes pour se mettre à jour. 
+2. **Sélectionner (ou désélectionner) les distributions à ajuster aux données.** Le graphique des distributions ajustées comprend les estimations moyennes du modèle. Il est à noter que s’il y a un chevauchement dans l’ajustement de deux ou plusieurs fonctions de distribution, il y a aura alors une exagération de la forme de cet ajustement dans l’inférence multimodèle. Consultez [cet article](https://bcgov.github.io/ssdtools/articles/distributions.html) pour plus d’information.  La fonction peut prendre quelques secondes pour se mettre à jour. 
 3. Mettre en forme le tracé du graphique à l’aide des entrées de la barre latérale et **télécharger le graphique et le tableau de l'évaluation de la qualité de l’ajustement des courbes de distribution** sous forme de fichiers .png et .csv respectivement. Sélectionner les unités pour les afficher dans le titre de l'axe des x.
 
 Information additionnelle sur **le tableau de l'évaluation de la qualité de l’ajustement des courbes de distribution**:
@@ -61,7 +61,7 @@ Générer un rapport au format HTML ou PDF comprenant le tracé de la distributi
 
 Copier le code R pour reproduire la programmation. Le code est ajouté après chaque exécution dans l’application (par exemple : le code qui génère l’estimation des bornes de l’intervalle de confiance apparaitra après que `Obtenir bornes` aura été cliqué.  
 
-Pour générer un graphique avec l’intervalle de confiance, copier le code R et le coller dans R. Par la suite, régler ci = TRUE dans les fonctions d’estimation et de ssd_plot (predict and ssd_plot functions). 
+Pour générer un graphique avec l’intervalle de confiance, copier le code R et le coller dans R. Par la suite, régler `ci = TRUE` dans les fonctions d’estimation et de `ssd_plot`. 
  
 
 
