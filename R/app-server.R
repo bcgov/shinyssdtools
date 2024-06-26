@@ -66,9 +66,10 @@ app_server <- function(input, output, session) {
     } else {
       if (is.null(hot.values[["DF"]])) {
         DF <- tibble(
-          !!conc := rep(NA_real_, 10),
-          !!spp := rep(NA_character_, 10),
-          !!grp := rep(NA_character_, 10)
+          # english on startup 
+          "Concentration" = rep(NA_real_, 10),
+          "Species" = rep(NA_character_, 10),
+          "Group" = rep(NA_character_, 10)
         )
       } else {
         DF <- hot.values[["DF"]]
