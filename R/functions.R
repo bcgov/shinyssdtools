@@ -46,7 +46,7 @@ ssd_hc_ave <- function(x, percent, nboot) {
   dist <- ssdtools::ssd_hc(x,
     proportion = percent / 100, ci = TRUE,
     average = FALSE, nboot = nboot, min_pboot = 0.8,
-    multi_est = TRUE, multi_ci = FALSE
+    multi_est = TRUE
   )
 
   if (length(x) == 1) {
@@ -56,7 +56,7 @@ ssd_hc_ave <- function(x, percent, nboot) {
     ave <- ssdtools::ssd_hc(x,
       proportion = percent / 100, ci = TRUE,
       average = TRUE, nboot = nboot, min_pboot = 0.8,
-      multi_est = TRUE, multi_ci = FALSE
+      multi_est = TRUE
     )
   }
 
@@ -77,7 +77,7 @@ ssd_hp_ave <- function(x, conc, nboot) {
     ave <- ssdtools::ssd_hp(x,
       conc = conc, ci = TRUE,
       average = TRUE, nboot = nboot,
-      multi_est = TRUE, multi_ci = FALSE,
+      multi_est = TRUE,
       min_pboot = 0.8
     )
   }
