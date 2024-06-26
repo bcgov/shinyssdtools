@@ -65,7 +65,7 @@ app_server <- function(input, output, session) {
       DF <- dplyr::mutate_if(DF, is.factor, as.character)
     } else {
       if (is.null(hot.values[["DF"]])) {
-        DF <- tibble(
+        DF <- data.frame(
           # english on startup 
           "Concentration" = rep(NA_real_, 10),
           "Species" = rep(NA_character_, 10),
