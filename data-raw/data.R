@@ -149,8 +149,8 @@ translations <- dplyr::bind_rows(
   ),
   dplyr::tibble(
     id = "ui_1htconc",
-    english = "Concentration",
-    french = "Concentration"
+    english = "Conc",
+    french = "Conc"
   ),
   dplyr::tibble(
     id = "ui_1htspp",
