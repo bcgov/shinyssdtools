@@ -50,7 +50,7 @@ params$model_average_plot
 
 # Estimated hazardous/protective concentration
 ```{r, message=FALSE, warning=FALSE}
-avehc <- ssd_hc(params$fit_dist, proportion = c(0.01, 0.05, 0.1, 0.2), ci = TRUE, nboot = params$nboot, min_pboot = 0.8, multi_est = TRUE, multi_ci = FALSE)
+avehc <- ssd_hc(params$fit_dist, proportion = c(0.01, 0.05, 0.1, 0.2), ci = TRUE, nboot = params$nboot, min_pboot = 0.8)
 avehc |>
   mutate(HCx = proportion*100,
          PCx = (1 - proportion) * 100) |> 

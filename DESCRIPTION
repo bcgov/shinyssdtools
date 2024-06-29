@@ -32,7 +32,7 @@ Imports:
     glue,
     knitr,
     magrittr,
-    markdown,
+    purrr,
     readr,
     rhandsontable,
     rlang,
