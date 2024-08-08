@@ -85,7 +85,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_adjustLabel",
     english = "Shift label",
-    french = "étiquette de changement"
+    french = "Étiquette de changement"
   ),
   dplyr::tibble(
     id = "ui_xbreaks",
