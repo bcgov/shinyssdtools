@@ -1,6 +1,11 @@
-This app fits species sensitivity distributions to concentration data. The app is built from the R package ssdtools, and shares the same functionality. Changes and upgrades in ssdtools will result in changes to this app. It is recommended that when reporting the HC5 estimates generated using this app that the version of ssdtools and the name of the distributions fit to the dataset are listed.
+This app fits species sensitivity distributions to concentration data. 
+The app is built from the R package ssdtools, and shares the same functionality. 
+Changes and upgrades in ssdtools will result in changes to this app. 
+It is recommended that when reporting the HC5 estimates generated using this app that the version of ssdtools and the name of the distributions fit to the dataset are listed.
 
-The columns in the goodness of fit table are the distribution (dist), the Anderson-Darling statistic (ad), the Kolmogorov-Smirnov statistic (ks), the Cramer-von Mises statistic (cvm), Akaike's Information Criterion (aic), Akaike's Information Criterion corrected for sample size (aicc), Bayesian Information Criterion (bic), the AICc difference (delta) and the AICc based Akaike weight (weight). The prediction is the model averaged (using aicc) estimate of the fit. The percent hazard concentration is the concentration of the chemical which is predicted to affect that percent of the species tested.
+The columns in the goodness of fit table are the distribution (dist), the Anderson-Darling statistic (ad), the Kolmogorov-Smirnov statistic (ks), the Cramer-von Mises statistic (cvm), Akaike's Information Criterion (aic), Akaike's Information Criterion corrected for sample size (aicc), Bayesian Information Criterion (bic), the AICc difference (delta) and the AICc based Akaike weight (weight). 
+The prediction is the model averaged (using aicc) estimate of the fit. 
+The percent hazard concentration is the concentration of the chemical which is predicted to affect that percent of the species tested.
 
 To cite package ssdtools in publications use:
 Thorley, J. and Schwarz C., (2018). ssdtools: An R package to fit Species Sensitivity Distributions. Journal of Open Source Software, 3(31), 1082. https://doi.org/10.21105/joss.01082
