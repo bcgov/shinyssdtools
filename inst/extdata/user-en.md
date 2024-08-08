@@ -1,6 +1,5 @@
 This app **fits species sensitivity distributions to concentration data**. The app is built from the R package [ssdtools](https://github.com/bcgov/ssdtools), and shares the same functionality. More information on ssdtools methods can be found in [articles on the website](https://bcgov.github.io/ssdtools/articles/).
 
-
 *Hint: Find and click the info icons throughout the app to find more information on a particular input.*  
 
 ### Step 1: Provide data 
@@ -53,16 +52,16 @@ The columns in the goodness of fit table are the distribution (dist), the Anders
 2. Select the number of **bootstrap samples used to calculate confidence limits**. The recommended number of samples is 10,000, although this can take some time to process. Select a lower number of bootstrap samples to reduce processing time.  Distributions are treated as constituting a single mixture distribution (as opposed to taking the mean) for calculation of model averaged estimates. Distributions are not treated as constituting a single distribution for calculating confidence intervals as this increases processing time considerably. 
 
 3. Since confidence limits take time to calculate, they are not calculated automatically; you must press the `Get CL` button.
-4. **Format plot** using various inputs in sidebar and **download plot and table** as png and csv file, respectively. There are options to adjust the x-axis breaks (i.e., labels), x-axis limits and whether to display results on a log-scale. 
+4. **Format plot** using various inputs in sidebar and **download plot and table** as png and csv file, respectively.
 
 ### Step 4: Get BCANZ report
 Generate a report in HTML or PDF format including the fitted distribution plot, goodness of fit table, model-averaged fit plot and table of estimated hazardous/protective concentrations. Any options selected in the app will be incorporated into the report. 
 
 ### Step 5: Get R code
 
-Copy R code to reproduce outputs programmatically. Code is dynamically generated based on user inputs and functions executed within the app (e.g., code for generating confidence limits will appear after 'Get CL' button is clicked). 
+Copy R code to reproduce outputs programmatically. Code is dynamically generated based on user inputs and functions executed within the app (e.g., code for generating confidence limits will appear after `Get CL` button is clicked). 
 
-To generate a graph with confidence intervals, copy the R code and paste in R.  Then set ci = TRUE in the predict and ssd_plot functions.
+To generate a graph with confidence intervals, copy the R code and paste in R.  Then set `ci = TRUE` in the predict and `ssd_plot` functions.
 
  
 
