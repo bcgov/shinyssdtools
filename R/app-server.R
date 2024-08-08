@@ -896,10 +896,10 @@ app_server <- function(input, output, session) {
   }) 
 
   output$dl_rmd <- downloadHandler(
-    filename = "bcanz_report.Rmd",
+    filename = tr("ui_bcanz_file", trans()),
     content = function(file) {
       file.copy(
-        system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"),
+        system.file(package = "shinyssdtools", file.path("extdata", tr("ui_bcanz_file", trans()))),
         file
       )
     }
@@ -924,13 +924,13 @@ app_server <- function(input, output, session) {
   })
 
   output$dl_pdf <- downloadHandler(
-    filename = "bcanz_report.pdf",
+    filename = paste0(tr("ui_bcanz_filename", trans()), ".pdf"),
     content = function(file) {
       waiter::waiter_show(html = waiting_screen_report(), color = "rgba(44,62,80, 1)")
       
-        temp_report <- file.path(tempdir(), "bcanz_report.Rmd")
+        temp_report <- file.path(tempdir(), tr("ui_bcanz_file", trans()))
         file.copy(
-          system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"),
+          system.file(package = "shinyssdtools", file.path("extdata", tr("ui_bcanz_file", trans()))),
           temp_report
         )
         params <- params_list()
@@ -946,15 +946,15 @@ app_server <- function(input, output, session) {
   )
 
   output$dl_html <- downloadHandler(
-    filename = "bcanz_report.html",
+    filename = paste0(tr("ui_bcanz_filename", trans()), ".html"),
     content = function(file) {
       waiter::waiter_show(html = waiting_screen_report(), color = "rgba(44,62,80, 1)")
       
-        temp_report <- file.path(tempdir(), "bcanz_report.Rmd")
-        file.copy(
-          system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"),
-          temp_report
-        )
+      temp_report <- file.path(tempdir(), tr("ui_bcanz_file", trans()))
+      file.copy(
+        system.file(package = "shinyssdtools", file.path("extdata", tr("ui_bcanz_file", trans()))),
+        temp_report
+      )
         params <- params_list()
         rmarkdown::render(temp_report,
           output_format = "html_document",

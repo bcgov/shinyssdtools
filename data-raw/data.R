@@ -171,6 +171,16 @@ translations <- dplyr::bind_rows(
     id = "ui_1htunt",
     english = "Units",
     french = "Unités"
+  ),
+  dplyr::tibble(
+    id = "ui_bcanz_file",
+    english = "bcanz_report.Rmd",
+    french = "bcanz_report_fr.Rmd"
+  ),
+  dplyr::tibble(
+    id = "ui_bcanz_filename",
+    english = "bcanz_report",
+    french = "rapport_bcanz"
   )
 )
 
