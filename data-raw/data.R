@@ -45,17 +45,17 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_2rescale",
     english = "Rescale data prior to fitting",
-    french = "Rééchelonnement des données avant d'ajuster"
+    french = "Redimensionner les données avant l'ajustement"
   ),
   dplyr::tibble(
     id = "ui_2at_boundary_ok",
     english = "Exclude distributions with a parameter value at a boundary",
-    french = "Exclusion des distributions avec un valeur de paramètre à limite"
+    french = "Exclure les distributions avec une valeur paramétrique à une limite"
   ),
   dplyr::tibble(
     id = "ui_2computable",
     english = "Exclude distributions without computable standard errors",
-    french = "Exclusion des distributions sans erreurs types calculables"
+    french = "Exclure les distributions sans erreur-type calculable"
   ),
   dplyr::tibble(
     id = "ui_xmax",
@@ -70,7 +70,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_xlog",
     english = "Log x-axis",
-    french = "Logarithme de l'axe des X"
+    french = "Log de l'axe X"
   ),
   dplyr::tibble(
     id = "ui_sizeLabel",
@@ -85,21 +85,106 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_adjustLabel",
     english = "Shift label",
-    french = "Ajuster l'étiquette"
+    french = "Étiquette de changement"
   ),
   dplyr::tibble(
     id = "ui_xbreaks",
     english = "X-axis ticks",
-    french = "Graduations sur l'axe X"
+    french = "Repères de l'axe des X"
   ),
   dplyr::tibble(
     id = "ui_2unit",
     english = "Select units",
     french = "Sélectionner les unités"
+  ),
+  dplyr::tibble(
+    id = "ui_3byconc",
+    english = "by concentration",
+    french = "par concentration"
+  ),
+  dplyr::tibble(
+    id = "ui_3affecting",
+    english = "affecting % species",
+    french = "affectant % des espèces"
+  ),
+  dplyr::tibble(
+    id = "ui_3protecting",
+    english = "protecting % species",
+    french = "protégeant % des espèces"
+  ),
+  dplyr::tibble(
+    id = "ui_4toxname",
+    english = "Toxicant name",
+    french = "Nom de la substance"
+  ),
+  dplyr::tibble(
+    id = "ui_4download",
+    english = "Download Report",
+    french = "Télécharger le Rapport"
+  ),
+  dplyr::tibble(
+    id = "ui_4pdf",
+    english = "PDF file",
+    french = "Fichier PDF"
+  ),
+  dplyr::tibble(
+    id = "ui_4html",
+    english = "HTML file",
+    french = "Fichier HTML"
+  ),
+  dplyr::tibble(
+    id = "ui_4rmd",
+    english = "RMD file",
+    french = "Fichier RMD"
+  ),
+  dplyr::tibble(
+    id = "ui_4gentitle",
+    english = "Generating report ...",
+    french = "Génération du rapport en cours ... "
+  ),
+  dplyr::tibble(
+    id = "ui_4genbody",
+    english = "This may take a minute, depending on the number of bootstrap samples selected in the Predict tab.",
+    french = "Cela peut prendre une minute, en fonction du nombre d'échantillons bootstrap sélectionné dans l'onglet « Predict »."
+  ),
+  dplyr::tibble(
+    id = "ui_1htconc",
+    english = "Conc",
+    french = "Conc"
+  ),
+  dplyr::tibble(
+    id = "ui_1htspp",
+    english = "Species",
+    french = "Espèce"
+  ),
+  dplyr::tibble(
+    id = "ui_1htgrp",
+    english = "Group",
+    french = "Groupe"
+  ),
+  dplyr::tibble(
+    id = "ui_1htchm",
+    english = "Chemical",
+    french = "Produit Chimique"
+  ),
+  dplyr::tibble(
+    id = "ui_1htunt",
+    english = "Units",
+    french = "Unités"
+  ),
+  dplyr::tibble(
+    id = "ui_bcanz_file",
+    english = "bcanz_report.Rmd",
+    french = "bcanz_report_fr.Rmd"
+  ),
+  dplyr::tibble(
+    id = "ui_bcanz_filename",
+    english = "bcanz_report",
+    french = "rapport_bcanz"
   )
 )
 
-checkr::check_key(translations, "id")
+chk::check_key(translations, "id")
 
 boron.data <- ssddata::ccme_boron
 

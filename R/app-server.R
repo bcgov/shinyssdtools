@@ -40,18 +40,36 @@ app_server <- function(input, output, session) {
     upload_state = NULL
   )
 
+  demo_data <- reactive({
+    df <- boron.data
+    conc <- tr("ui_1htconc", trans())
+    spp <- tr("ui_1htspp", trans())
+    grp <- tr("ui_1htgrp", trans())
+    chm <- tr("ui_1htchm", trans())
+    unt <- tr("ui_1htunt", trans())
+    
+    colnames(df) <- c(chm, spp, conc, grp, unt)
+    df
+  })
+  
   #  read/create handson table
   hot.values <- reactiveValues()
   hot_data <- reactive({
+    conc <- tr("ui_1htconc", trans())
+    spp <- tr("ui_1htspp", trans())
+    grp <- tr("ui_1htgrp", trans())
+    
     if (!is.null(input$hot)) {
       DF <- rhandsontable::hot_to_r(input$hot)
+      colnames(DF) <- c(conc, spp, grp)
       DF <- dplyr::mutate_if(DF, is.factor, as.character)
     } else {
       if (is.null(hot.values[["DF"]])) {
         DF <- data.frame(
-          Concentration = rep(NA_real_, 10),
-          Species = rep(NA_character_, 10),
-          Group = rep(NA_character_, 10)
+          # english on startup 
+          "Concentration" = rep(NA_real_, 10),
+          "Species" = rep(NA_character_, 10),
+          "Group" = rep(NA_character_, 10)
         )
       } else {
         DF <- hot.values[["DF"]]
@@ -72,7 +90,7 @@ app_server <- function(input, output, session) {
       }
       return(readr::read_csv(data$datapath))
     } else if (upload.values$upload_state == "demo") {
-      return(boron.data)
+      return(demo_data())
     } else if (upload.values$upload_state == "hot") {
       return(hot_data())
     }
@@ -770,11 +788,11 @@ app_server <- function(input, output, session) {
     c2 <- paste("# use the nboot argument in", form, "to set the number of bootstrap samples")
     conf <- paste0(
       paste0(form, "(dist, ", arg, " = "), thresh, ", ci = TRUE",
-      ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L, min_pboot = 0.8, multi_est = TRUE, multi_ci = FALSE)"
+      ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L, min_pboot = 0.8)"
     )
     conf2 <- paste0(
       paste0(form, "(dist, ", arg, " = "), thresh, ", ci = TRUE, average = FALSE",
-      ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L, min_pboot = 0.8, multi_est = TRUE, multi_ci = FALSE)"
+      ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L, min_pboot = 0.8)"
     )
     bind <- paste0("dplyr::bind_rows(", conf, ", ", conf2, ")")
     HTML(paste(c1, c2, bind, sep = "<br/>"))
@@ -845,26 +863,28 @@ app_server <- function(input, output, session) {
   output$ui_report_download <- renderUI({
     req(plot_model_average())
     tagList(
-      textInput("toxicant", "Toxicant name"),
+      textInput("toxicant", tr("ui_4toxname", trans())),
       shinyWidgets::dropdownButton(
         status = "primary",
-        label = "Download Report",
+        label = tr("ui_4download", trans()),
         inline = TRUE,
         circle = FALSE,
         icon = icon("download"),
-        dl_button("dl_pdf", "PDF file"),
-        dl_button("dl_html", "HTML file"),
-        dl_button("dl_rmd", "Rmd file")
+        dl_button("dl_pdf", tr("ui_4pdf", trans())),
+        dl_button("dl_html", tr("ui_4html", trans())),
+        dl_button("dl_rmd", tr("ui_4rmd", trans()))
       )
     )
   })
   
-  waiting_screen_report <- tagList(
-    waiter::spin_flower(),
-    tagList(h3("Generating report ..."),
-            br(),
-            h4("This may take a minute, depending on the number of bootstrap samples selected in the Predict tab.")) 
-  ) 
+  waiting_screen_report <- reactive({
+    tagList(
+      waiter::spin_flower(),
+      tagList(h3(tr("ui_4gentitle", trans())),
+              br(),
+              h4(tr("ui_4genbody", trans())))
+    )
+  })  
   
   waiting_screen_cl <- reactive({
     tagList(
@@ -876,10 +896,10 @@ app_server <- function(input, output, session) {
   }) 
 
   output$dl_rmd <- downloadHandler(
-    filename = "bcanz_report.Rmd",
+    filename = tr("ui_bcanz_file", trans()),
     content = function(file) {
       file.copy(
-        system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"),
+        system.file(package = "shinyssdtools", file.path("extdata", tr("ui_bcanz_file", trans()))),
         file
       )
     }
@@ -904,13 +924,13 @@ app_server <- function(input, output, session) {
   })
 
   output$dl_pdf <- downloadHandler(
-    filename = "bcanz_report.pdf",
+    filename = paste0(tr("ui_bcanz_filename", trans()), ".pdf"),
     content = function(file) {
-      waiter::waiter_show(html = waiting_screen_report, color = "rgba(44,62,80, 1)")
+      waiter::waiter_show(html = waiting_screen_report(), color = "rgba(44,62,80, 1)")
       
-        temp_report <- file.path(tempdir(), "bcanz_report.Rmd")
+        temp_report <- file.path(tempdir(), tr("ui_bcanz_file", trans()))
         file.copy(
-          system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"),
+          system.file(package = "shinyssdtools", file.path("extdata", tr("ui_bcanz_file", trans()))),
           temp_report
         )
         params <- params_list()
@@ -926,15 +946,15 @@ app_server <- function(input, output, session) {
   )
 
   output$dl_html <- downloadHandler(
-    filename = "bcanz_report.html",
+    filename = paste0(tr("ui_bcanz_filename", trans()), ".html"),
     content = function(file) {
-      waiter::waiter_show(html = waiting_screen_report, color = "rgba(44,62,80, 1)")
+      waiter::waiter_show(html = waiting_screen_report(), color = "rgba(44,62,80, 1)")
       
-        temp_report <- file.path(tempdir(), "bcanz_report.Rmd")
-        file.copy(
-          system.file(package = "shinyssdtools", "extdata/bcanz_report.Rmd"),
-          temp_report
-        )
+      temp_report <- file.path(tempdir(), tr("ui_bcanz_file", trans()))
+      file.copy(
+        system.file(package = "shinyssdtools", file.path("extdata", tr("ui_bcanz_file", trans()))),
+        temp_report
+      )
         params <- params_list()
         rmarkdown::render(temp_report,
           output_format = "html_document",
@@ -1149,20 +1169,20 @@ app_server <- function(input, output, session) {
     req(input$thresh_type)
     if (input$thresh_type != "Concentration") {
       return(numericInput("conc",
-        label = "by concentration",
+        label = tr("ui_3byconc", trans()),
         value = 1, min = 0,
         max = 100, step = 0.1, width = "100px"
       ))
     }
     div(
       inline(selectizeInput("thresh",
-        label = "affecting % species",
+        label = tr("ui_3affecting", trans()),
         choices = c(1, 5, 10, 20),
         options = list(create = TRUE, createFilter = "^[1-9][0-9]?$|^99$"),
         selected = 5, width = "100px"
       )),
       inline(selectizeInput("thresh_pc",
-        label = "protecting % species",
+        label = tr("ui_3protecting", trans()),
         choices = c(99, 95, 90, 80),
         options = list(create = TRUE, createFilter = "^[1-9][0-9]?$|^99$"),
         selected = 95, width = "100px"
@@ -1310,7 +1330,7 @@ app_server <- function(input, output, session) {
         tagList(
           p(ver),
           p(sver),
-          includeMarkdown(system.file("extdata/about-en.md", package = "shinyssdtools"))
+          includeHTML(system.file("extdata/about-en.html", package = "shinyssdtools"))
         )
       })
     } else {
@@ -1318,7 +1338,7 @@ app_server <- function(input, output, session) {
         tagList(
           p(ver),
           p(sver),
-          includeMarkdown(system.file("extdata/about-fr.md", package = "shinyssdtools"))
+          includeHTML(system.file("extdata/about-fr.html", package = "shinyssdtools"))
         )
       })
     }
