@@ -1,0 +1,68 @@
+using C++ compiler: ‘Apple clang version 15.0.0 (clang-1500.3.9.4)’
+using SDK: ‘MacOSX14.4.sdk’
+In file included from P_2_rcFun_R_GlobalEnv7.cpp:8:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/nimble/EigenTypedefs.h:24:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Dense:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Core:382:
+/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/src/Core/util/ReenableStupidWarnings.h:14:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
+    #pragma clang diagnostic pop
+                             ^
+In file included from P_2_rcFun_R_GlobalEnv7.cpp:8:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/nimble/EigenTypedefs.h:24:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Dense:2:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/LU:45:
+/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/src/Core/util/ReenableStupidWarnings.h:14:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
+    #pragma clang diagnostic pop
+                             ^
+In file included from P_2_rcFun_R_GlobalEnv7.cpp:8:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/nimble/EigenTypedefs.h:24:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Dense:3:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Cholesky:12:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Jacobi:29:
+/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/src/Core/util/ReenableStupidWarnings.h:14:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
+    #pragma clang diagnostic pop
+                             ^
+In file included from P_2_rcFun_R_GlobalEnv7.cpp:8:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/nimble/EigenTypedefs.h:24:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Dense:3:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Cholesky:43:
+/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/src/Core/util/ReenableStupidWarnings.h:14:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
+    #pragma clang diagnostic pop
+                             ^
+In file included from P_2_rcFun_R_GlobalEnv7.cpp:8:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/nimble/EigenTypedefs.h:24:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Dense:4:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/QR:15:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Householder:27:
+/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/src/Core/util/ReenableStupidWarnings.h:14:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
+    #pragma clang diagnostic pop
+                             ^
+In file included from P_2_rcFun_R_GlobalEnv7.cpp:8:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/nimble/EigenTypedefs.h:24:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Dense:4:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/QR:48:
+/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/src/Core/util/ReenableStupidWarnings.h:14:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
+    #pragma clang diagnostic pop
+                             ^
+In file included from P_2_rcFun_R_GlobalEnv7.cpp:8:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/nimble/EigenTypedefs.h:24:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Dense:5:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/SVD:48:
+/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/src/Core/util/ReenableStupidWarnings.h:14:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
+    #pragma clang diagnostic pop
+                             ^
+In file included from P_2_rcFun_R_GlobalEnv7.cpp:8:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/nimble/EigenTypedefs.h:24:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Dense:6:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Geometry:57:
+/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/src/Core/util/ReenableStupidWarnings.h:14:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
+    #pragma clang diagnostic pop
+                             ^
+In file included from P_2_rcFun_R_GlobalEnv7.cpp:8:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/nimble/EigenTypedefs.h:24:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Dense:7:
+In file included from /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/Eigenvalues:58:
+/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/nimble/include/Eigen/src/Core/util/ReenableStupidWarnings.h:14:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
+    #pragma clang diagnostic pop
+                             ^
+9 warnings generated.
