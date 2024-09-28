@@ -709,7 +709,7 @@ app_server <- function(input, output, session) {
       input$selectConc %>% make.names(),
       "', dists = c(",
       paste0("'", input$selectDist, "'", collapse = ", "), ")",
-      ", silent = TRUE, reweight = FALSE, min_pmix = 0, nrow = 6L, computable = ",
+      ", silent = TRUE, reweight = FALSE, computable = ",
       input$computable,
       ", at_boundary_ok = ", !input$at_boundary_ok,
       ", rescale = ", input$rescale, ")"
