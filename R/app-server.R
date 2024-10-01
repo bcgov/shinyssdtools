@@ -1091,20 +1091,6 @@ app_server <- function(input, output, session) {
     )
   })
 
-  output$ui_2at_boundary_ok <- renderUI({
-    checkboxInput("at_boundary_ok",
-      label = tr("ui_2at_boundary_ok", trans()),
-      value = TRUE
-    )
-  })
-
-  output$ui_2computable <- renderUI({
-    checkboxInput("computable",
-      label = tr("ui_2computable", trans()),
-      value = TRUE
-    )
-  })
-
   output$ui_2xlab <- renderUI({
     textInput("xaxis2", value = "Concentration", label = tr("ui_3xlab", trans()))
   })
