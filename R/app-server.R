@@ -706,9 +706,7 @@ app_server <- function(input, output, session) {
       input$selectConc %>% make.names(),
       "', dists = c(",
       paste0("'", input$selectDist, "'", collapse = ", "), ")",
-      ", silent = TRUE, reweight = FALSE, computable = ",
-      input$computable,
-      ", at_boundary_ok = ", !input$at_boundary_ok,
+      ", silent = TRUE, reweight = FALSE",
       ", rescale = ", input$rescale, ")"
     )
     c2 <- "# plot distributions"
