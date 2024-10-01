@@ -747,7 +747,7 @@ app_server <- function(input, output, session) {
     c1 <- "# plot model average"
     c2 <- "# to add confidence intervals set ci = TRUE in predict and ssd_plot"
     c3 <- "# we recommend using nboot = 10000 in predict, although this may take several minutes to run"
-    pred <- "pred <- predict(dist)"
+    pred <- paste0("pred <- predict(dist, proportion = c(1:99, ", thresh_rv$percent, ")/100)")
     plot <- paste0(
       "ssd_plot(data, pred, left = '", input$selectConc %>% make.names(),
       "', label = ", code_label(),
