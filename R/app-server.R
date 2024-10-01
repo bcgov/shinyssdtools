@@ -269,9 +269,6 @@ app_server <- function(input, output, session) {
       left = conc,
       dists = input$selectDist,
       silent = TRUE,
-      computable = input$computable, # FIXME: drop this argument and use default
-      # need to get inverse of at_boundary_ok value due to wording of label
-      at_boundary_ok = !input$at_boundary_ok, # FIXME: drop this argument and use default
       rescale = input$rescale
     ), silent = TRUE)
     if (inherits(x, "try-error")) {
