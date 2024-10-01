@@ -269,9 +269,6 @@ app_server <- function(input, output, session) {
       left = conc,
       dists = input$selectDist,
       silent = TRUE,
-      computable = input$computable, # FIXME: drop this argument and use default
-      # need to get inverse of at_boundary_ok value due to wording of label
-      at_boundary_ok = !input$at_boundary_ok, # FIXME: drop this argument and use default
       rescale = input$rescale
     ), silent = TRUE)
     if (inherits(x, "try-error")) {
@@ -713,9 +710,7 @@ app_server <- function(input, output, session) {
       input$selectConc %>% make.names(),
       "', dists = c(",
       paste0("'", input$selectDist, "'", collapse = ", "), ")",
-      ", silent = TRUE, reweight = FALSE, computable = ",
-      input$computable,
-      ", at_boundary_ok = ", !input$at_boundary_ok,
+      ", silent = TRUE, reweight = FALSE",
       ", rescale = ", input$rescale, ")"
     )
     c2 <- "# plot distributions"
@@ -1095,20 +1090,6 @@ app_server <- function(input, output, session) {
     checkboxInput("rescale",
       label = tr("ui_2rescale", trans()),
       value = FALSE
-    )
-  })
-
-  output$ui_2at_boundary_ok <- renderUI({
-    checkboxInput("at_boundary_ok",
-      label = tr("ui_2at_boundary_ok", trans()),
-      value = TRUE
-    )
-  })
-
-  output$ui_2computable <- renderUI({
-    checkboxInput("computable",
-      label = tr("ui_2computable", trans()),
-      value = TRUE
     )
   })
 
