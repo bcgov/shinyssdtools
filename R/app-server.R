@@ -308,7 +308,7 @@ app_server <- function(input, output, session) {
   # --- predict and model average
   predict_hc <- reactive({
     dist <- fit_dist()
-    stats::predict(dist, nboot = 10, ci = FALSE)
+    stats::predict(dist)
   })
 
   transformation <- reactive({
@@ -746,7 +746,7 @@ app_server <- function(input, output, session) {
     c1 <- "# plot model average"
     c2 <- "# to add confidence intervals set ci = TRUE in predict and ssd_plot"
     c3 <- "# we recommend using nboot = 10000 in predict, although this may take several minutes to run"
-    pred <- "pred <- predict(dist, nboot = 10L, ci = FALSE)"
+    pred <- "pred <- predict(dist)"
     plot <- paste0(
       "ssd_plot(data, pred, left = '", input$selectConc %>% make.names(),
       "', label = ", code_label(),
