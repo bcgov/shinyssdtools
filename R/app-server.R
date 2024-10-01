@@ -681,22 +681,18 @@ app_server <- function(input, output, session) {
   })
 
   output$codeData <- renderUI({
-    c1 <- "# read dataset"
-    c2 <- "# the file argument of read_csv() assumes the file is in your working directory. You may need to change the file path to correctly read your dataset."
-    c4 <- "# this is the output of dput, which is used to create a data.frame from data entered in interactive spreadsheet"
     hot <- paste0("data <- ", utils::capture.output(dput(clean_data())) %>% glue::glue_collapse())
     upload <- paste0("data <- read_csv(file = '", input$uploadData$name, "')")
     demo <- "data <- ssddata::ccme_boron"
-    c3 <- "# fix unacceptable column names"
     name <- "colnames(data) <- make.names(colnames(data))"
     if (upload.values$upload_state == "hot") {
-      return(HTML(paste(c1, c4, hot, c3, name, sep = "<br/>")))
+      return(HTML(paste(hot, name, sep = "<br/>")))
     }
     if (upload.values$upload_state == "upload") {
-      return(HTML(paste(c1, c2, upload, c3, name, sep = "<br/>")))
+      return(HTML(paste(upload, name, sep = "<br/>")))
     }
     if (upload.values$upload_state == "demo") {
-      return(HTML(paste(c1, demo, c3, name, sep = "<br/>")))
+      return(HTML(paste(demo, name, sep = "<br/>")))
     }
   })
 
@@ -705,7 +701,6 @@ app_server <- function(input, output, session) {
     ylab <- input$yaxis2
     xlab <- input$xaxis2
     text_size <- input$size2
-    c1 <- "# fit distributions"
     fit <- paste0(
       "dist <- ssd_fit_dists(data, left = '",
       input$selectConc %>% make.names(),
@@ -714,7 +709,6 @@ app_server <- function(input, output, session) {
       ", silent = TRUE, reweight = FALSE",
       ", rescale = ", input$rescale, ")"
     )
-    c2 <- "# plot distributions"
     plot <- paste0(
       "ssd_plot_cdf(dist, ylab = '", ylab, "', xlab = '", xlab, "', delta = Inf, average = NA) +
                    <br/> theme_classic() + <br/> ",
@@ -724,9 +718,8 @@ app_server <- function(input, output, session) {
           legend.title = ggplot2::element_text(size = ", text_size, ")) <br/>"
     )
 
-    c3 <- "# goodness of fit table"
     table <- "ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ signif(., 3))"
-    HTML(paste(c1, fit, c2, plot, c3, table, sep = "<br/>"))
+    HTML(paste(fit, plot, table, sep = "<br/>"))
   })
 
   output$codePredPlot <- renderUI({
@@ -743,9 +736,6 @@ app_server <- function(input, output, session) {
     title <- input$title
     trans <- transformation()
     xbreaks <- input$xbreaks
-    c1 <- "# plot model average"
-    c2 <- "# to add confidence intervals set ci = TRUE in predict and ssd_plot"
-    c3 <- "# we recommend using nboot = 10000 in predict, although this may take several minutes to run"
     pred <- paste0("pred <- predict(dist, proportion = c(1:99, ", thresh_rv$percent, ")/100)")
     plot <- paste0(
       "ssd_plot(data, pred, left = '", input$selectConc %>% make.names(),
@@ -766,7 +756,7 @@ app_server <- function(input, output, session) {
       "scale_color_brewer(palette = '", input$selectPalette, "', name = ", legend.colour, ") +<br/>
                      scale_shape(name = ", legend.shape, ")"
     )
-    HTML(paste(c1, c2, c3, pred, plot, sep = "<br/>"))
+    HTML(paste(pred, plot, sep = "<br/>"))
   })
 
   output$codePredCl <- renderUI({
@@ -781,8 +771,7 @@ app_server <- function(input, output, session) {
       arg <- "conc"
       thresh <- thresh_rv$conc
     }
-    c1 <- "# get confidence limits"
-    c2 <- paste("# use the nboot argument in", form, "to set the number of bootstrap samples")
+ 
     conf <- paste0(
       paste0(form, "(dist, ", arg, " = "), thresh, ", ci = TRUE",
       ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L, min_pboot = 0.8)"
@@ -792,13 +781,11 @@ app_server <- function(input, output, session) {
       ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L, min_pboot = 0.8)"
     )
     bind <- paste0("dplyr::bind_rows(", conf, ", ", conf2, ")")
-    HTML(paste(c1, c2, bind, sep = "<br/>"))
+    HTML(paste(bind, sep = "<br/>"))
   })
 
   output$codeSaveFit <- renderUI({
     req(check_fit() == "")
-    c1 <- "# save plot"
-    c2 <- "# width and height are in inches, dpi (dots per inch) sets resolution"
     save <- paste0(
       "ggsave('fit_dist_plot.png',
                     width = ", get_width2(),
@@ -806,15 +793,13 @@ app_server <- function(input, output, session) {
       " , dpi = ", get_dpi2(),
       ")"
     )
-    HTML(paste(c1, c2, save, sep = "<br/>"))
+    HTML(paste(save, sep = "<br/>"))
   })
 
   output$codeSavePred <- renderUI({
     req(check_fit() == "")
     req(check_pred() == "")
     req(input$selectLabel)
-    c1 <- "# save plot"
-    c2 <- "# width and height are in inches, dpi (dots per inch) sets resolution"
     save <- paste0(
       "ggsave('model_average_plot.png',
                     width = ", get_width(),
@@ -822,7 +807,7 @@ app_server <- function(input, output, session) {
       " , dpi = ", get_dpi(),
       ")"
     )
-    HTML(paste(c1, c2, save, sep = "<br/>"))
+    HTML(paste(save, sep = "<br/>"))
   })
 
   ########### Observers --------------------
