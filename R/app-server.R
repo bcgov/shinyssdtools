@@ -352,7 +352,7 @@ app_server <- function(input, output, session) {
     percent <- if (!input$checkHc || is.null(thresh_rv$percent)) {
       NULL
     } else {
-      round(thresh_rv$percent)
+      thresh_rv$percent
     }
 
     shape_data <- if (is.null(shape)) {
