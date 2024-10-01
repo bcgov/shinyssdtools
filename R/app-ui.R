@@ -85,8 +85,6 @@ app_ui <- function() {
               uiOutput("ui_conc"),
               uiOutput("ui_2select"),
               uiOutput("ui_2rescale"),
-              uiOutput("ui_2at_boundary_ok"),
-              uiOutput("ui_2computable"),
               uiOutput("ui_2xlab"),
               uiOutput("ui_2ylab"),
               uiOutput("ui_unit"),

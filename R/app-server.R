@@ -269,12 +269,6 @@ app_server <- function(input, output, session) {
       left = conc,
       dists = input$selectDist,
       silent = TRUE,
-      reweight = FALSE,
-      min_pmix = 0,
-      nrow = 6L,
-      computable = input$computable,
-      # need to get inverse of at_boundary_ok value due to wording of label
-      at_boundary_ok = !input$at_boundary_ok,
       rescale = input$rescale
     ), silent = TRUE)
     if (inherits(x, "try-error")) {
@@ -311,7 +305,8 @@ app_server <- function(input, output, session) {
   # --- predict and model average
   predict_hc <- reactive({
     dist <- fit_dist()
-    stats::predict(dist, nboot = 10, ci = FALSE)
+    req(thresh_rv$percent)
+    stats::predict(dist, proportion = c(1:99, thresh_rv$percent)/100)
   })
 
   transformation <- reactive({
@@ -355,7 +350,7 @@ app_server <- function(input, output, session) {
     percent <- if (!input$checkHc || is.null(thresh_rv$percent)) {
       NULL
     } else {
-      round(thresh_rv$percent)
+      thresh_rv$percent
     }
 
     shape_data <- if (is.null(shape)) {
@@ -382,6 +377,10 @@ app_server <- function(input, output, session) {
     }
 
     trans <- transformation()
+    big.mark <- ","
+    if(translation.value$lang == "French"){
+      big.mark <- " "
+    }
 
     silent_plot(plot_predictions(data, pred,
       conc = conc, label = label, colour = colour,
@@ -390,7 +389,7 @@ app_server <- function(input, output, session) {
       yaxis = input$yaxis, title = input$title, xmax = xmax, xmin = xmin,
       palette = input$selectPalette, legend_colour = input$legendColour,
       legend_shape = input$legendShape, trans = trans, text_size = input$size3,
-      label_size = input$sizeLabel3, conc_value = thresh_rv$conc
+      label_size = input$sizeLabel3, conc_value = thresh_rv$conc, big.mark = big.mark
     ))
   })
 
@@ -707,9 +706,7 @@ app_server <- function(input, output, session) {
       input$selectConc %>% make.names(),
       "', dists = c(",
       paste0("'", input$selectDist, "'", collapse = ", "), ")",
-      ", silent = TRUE, reweight = FALSE, min_pmix = 0, nrow = 6L, computable = ",
-      input$computable,
-      ", at_boundary_ok = ", !input$at_boundary_ok,
+      ", silent = TRUE, reweight = FALSE",
       ", rescale = ", input$rescale, ")"
     )
     plot <- paste0(
@@ -739,7 +736,7 @@ app_server <- function(input, output, session) {
     title <- input$title
     trans <- transformation()
     xbreaks <- input$xbreaks
-    pred <- "pred <- predict(dist, nboot = 10L, ci = FALSE)"
+    pred <- paste0("pred <- predict(dist, proportion = c(1:99, ", thresh_rv$percent, ")/100)")
     plot <- paste0(
       "ssd_plot(data, pred, left = '", input$selectConc %>% make.names(),
       "', label = ", code_label(),
@@ -1079,20 +1076,6 @@ app_server <- function(input, output, session) {
     checkboxInput("rescale",
       label = tr("ui_2rescale", trans()),
       value = FALSE
-    )
-  })
-
-  output$ui_2at_boundary_ok <- renderUI({
-    checkboxInput("at_boundary_ok",
-      label = tr("ui_2at_boundary_ok", trans()),
-      value = TRUE
-    )
-  })
-
-  output$ui_2computable <- renderUI({
-    checkboxInput("computable",
-      label = tr("ui_2computable", trans()),
-      value = TRUE
     )
   })
 
