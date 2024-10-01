@@ -269,12 +269,9 @@ app_server <- function(input, output, session) {
       left = conc,
       dists = input$selectDist,
       silent = TRUE,
-      reweight = FALSE,
-      min_pmix = 0,
-      nrow = 6L,
-      computable = input$computable,
+      computable = input$computable, # FIXME: drop this argument and use default
       # need to get inverse of at_boundary_ok value due to wording of label
-      at_boundary_ok = !input$at_boundary_ok,
+      at_boundary_ok = !input$at_boundary_ok, # FIXME: drop this argument and use default
       rescale = input$rescale
     ), silent = TRUE)
     if (inherits(x, "try-error")) {
@@ -311,7 +308,7 @@ app_server <- function(input, output, session) {
   # --- predict and model average
   predict_hc <- reactive({
     dist <- fit_dist()
-    stats::predict(dist, nboot = 10, ci = FALSE)
+    stats::predict(dist)
   })
 
   transformation <- reactive({
@@ -712,7 +709,7 @@ app_server <- function(input, output, session) {
       input$selectConc %>% make.names(),
       "', dists = c(",
       paste0("'", input$selectDist, "'", collapse = ", "), ")",
-      ", silent = TRUE, reweight = FALSE, min_pmix = 0, nrow = 6L, computable = ",
+      ", silent = TRUE, reweight = FALSE, computable = ",
       input$computable,
       ", at_boundary_ok = ", !input$at_boundary_ok,
       ", rescale = ", input$rescale, ")"
@@ -749,7 +746,7 @@ app_server <- function(input, output, session) {
     c1 <- "# plot model average"
     c2 <- "# to add confidence intervals set ci = TRUE in predict and ssd_plot"
     c3 <- "# we recommend using nboot = 10000 in predict, although this may take several minutes to run"
-    pred <- "pred <- predict(dist, nboot = 10L, ci = FALSE)"
+    pred <- "pred <- predict(dist)"
     plot <- paste0(
       "ssd_plot(data, pred, left = '", input$selectConc %>% make.names(),
       "', label = ", code_label(),
