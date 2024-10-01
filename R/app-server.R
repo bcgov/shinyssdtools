@@ -305,7 +305,8 @@ app_server <- function(input, output, session) {
   # --- predict and model average
   predict_hc <- reactive({
     dist <- fit_dist()
-    stats::predict(dist)
+    req(thresh_rv$percent)
+    stats::predict(dist, proportion = c(1:99, thresh_rv$percent)/100)
   })
 
   transformation <- reactive({
@@ -349,7 +350,7 @@ app_server <- function(input, output, session) {
     percent <- if (!input$checkHc || is.null(thresh_rv$percent)) {
       NULL
     } else {
-      round(thresh_rv$percent)
+      thresh_rv$percent
     }
 
     shape_data <- if (is.null(shape)) {
@@ -745,7 +746,7 @@ app_server <- function(input, output, session) {
     c1 <- "# plot model average"
     c2 <- "# to add confidence intervals set ci = TRUE in predict and ssd_plot"
     c3 <- "# we recommend using nboot = 10000 in predict, although this may take several minutes to run"
-    pred <- "pred <- predict(dist)"
+    pred <- paste0("pred <- predict(dist, proportion = c(1:99, ", thresh_rv$percent, ")/100)")
     plot <- paste0(
       "ssd_plot(data, pred, left = '", input$selectConc %>% make.names(),
       "', label = ", code_label(),
