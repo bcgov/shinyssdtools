@@ -1,3 +1,11 @@
+label_comma <- function(x, digits = 3, big.mark = ",") {
+  x <- signif(x, digits = digits)
+  y <- as.character(x)
+  bol <- !is.na(x) & as.numeric(x) >= 1000
+  y[bol] <- stringr::str_replace_all(y[bol], "(\\d{1,1})(\\d{3,3}(?<=\\.|$))", paste0("\\1", big.mark, "\\2"))
+  y
+}
+
 plot_distributions <- function(x, ylab, xlab, text_size) {
   gp <- ssdtools::ssd_plot_cdf(x, ylab = ylab, xlab = xlab, 
                                delta = Inf, average = NA)
@@ -34,7 +42,7 @@ bold_conc <- function(conc, breaks) {
 plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
                              label_adjust, xaxis, yaxis, title, xmin, xmax, palette,
                              legend_colour, legend_shape, xbreaks, trans, text_size, 
-                             label_size, conc_value) {
+                             label_size, conc_value, big.mark) {
   proportion <- percent / 100
   if (!length(proportion)) {
     proportion <- NULL
@@ -62,11 +70,12 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
       labels = function(lab) {
         do.call(
           expression,
-          lapply(paste(lab), function(x){
-            if(x == paste(conc_value)){
-              y <- paste0("\n", x)
+          lapply(lab, function(x){
+            mark <- label_comma(x, big.mark = big.mark)
+            if(x == conc_value){
+              y <- paste0("\n", mark)
             } else {
-              y <- x
+              y <- mark
             }
             y
           } 
