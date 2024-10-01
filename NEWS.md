@@ -1,4 +1,12 @@
-<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
+
+# shinyssdtools 0.2.0.9000 (2024-10-01)
+
+- More patches for compatibility with ssdtools CRAN version 2.0.0
+- Removed at_boundary_ok and computable UI inputs
+- Fixed bug in predict plot dotted line caused by rounding estimated hazard concentration 
+- Improved plot axis labels (i.e., in both French and English versions)
+
 
 # shinyssdtools 0.2.0 (2024-02-09)
 
@@ -29,5 +37,4 @@
 # shinyssdtools 0.0.3.9000 (2021-04-02)
 
 - Internal changes only.
-
 
