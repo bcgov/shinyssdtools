@@ -379,6 +379,10 @@ app_server <- function(input, output, session) {
     }
 
     trans <- transformation()
+    big.mark <- ","
+    if(translation.value$lang == "French"){
+      big.mark <- " "
+    }
 
     silent_plot(plot_predictions(data, pred,
       conc = conc, label = label, colour = colour,
@@ -387,7 +391,7 @@ app_server <- function(input, output, session) {
       yaxis = input$yaxis, title = input$title, xmax = xmax, xmin = xmin,
       palette = input$selectPalette, legend_colour = input$legendColour,
       legend_shape = input$legendShape, trans = trans, text_size = input$size3,
-      label_size = input$sizeLabel3, conc_value = thresh_rv$conc
+      label_size = input$sizeLabel3, conc_value = thresh_rv$conc, big.mark = big.mark
     ))
   })
 
