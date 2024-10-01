@@ -308,7 +308,8 @@ app_server <- function(input, output, session) {
   # --- predict and model average
   predict_hc <- reactive({
     dist <- fit_dist()
-    stats::predict(dist)
+    req(thresh_rv$percent)
+    stats::predict(dist, proportion = c(1:99, thresh_rv$percent)/100)
   })
 
   transformation <- reactive({
