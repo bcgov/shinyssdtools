@@ -1,6 +1,6 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# shinyssdtools 0.2.0.9000 (2024-10-01)
+# shinyssdtools 0.3.0 (2024-10-01)
 
 - More patches for compatibility with ssdtools CRAN version 2.0.0
 - Removed at_boundary_ok and computable UI inputs
