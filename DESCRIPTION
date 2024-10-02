@@ -42,6 +42,7 @@ Imports:
     shinyjs,
     shinyWidgets,
     stats,
+    stringr,
     waiter
 Suggests: 
     covr,
