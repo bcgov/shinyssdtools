@@ -47,18 +47,18 @@ app_server <- function(input, output, session) {
     grp <- tr("ui_1htgrp", trans())
     chm <- tr("ui_1htchm", trans())
     unt <- tr("ui_1htunt", trans())
-    
+
     colnames(df) <- c(chm, spp, conc, grp, unt)
     df
   })
-  
+
   #  read/create handson table
   hot.values <- reactiveValues()
   hot_data <- reactive({
     conc <- tr("ui_1htconc", trans())
     spp <- tr("ui_1htspp", trans())
     grp <- tr("ui_1htgrp", trans())
-    
+
     if (!is.null(input$hot)) {
       DF <- rhandsontable::hot_to_r(input$hot)
       colnames(DF) <- c(conc, spp, grp)
@@ -66,7 +66,7 @@ app_server <- function(input, output, session) {
     } else {
       if (is.null(hot.values[["DF"]])) {
         DF <- data.frame(
-          # english on startup 
+          # english on startup
           "Concentration" = rep(NA_real_, 10),
           "Species" = rep(NA_character_, 10),
           "Group" = rep(NA_character_, 10)
@@ -279,15 +279,17 @@ app_server <- function(input, output, session) {
 
   plot_dist <- reactive({
     dist <- fit_dist()
-    plot_distributions(dist, ylab = input$yaxis2, 
-                       xlab = append_unit(input$xaxis2, input$selectUnit), 
-                       text_size = input$size2)
+    plot_distributions(dist,
+      ylab = input$yaxis2,
+      xlab = append_unit(input$xaxis2, input$selectUnit),
+      text_size = input$size2
+    )
   })
 
   table_gof <- reactive({
     req(fit_dist())
     dist <- fit_dist()
-    gof <- 
+    gof <-
       ssdtools::ssd_gof(dist) %>%
       dplyr::mutate_if(is.numeric, ~ signif(., 3)) %>%
       dplyr::arrange(dplyr::desc(.data$weight))
@@ -306,7 +308,7 @@ app_server <- function(input, output, session) {
   predict_hc <- reactive({
     dist <- fit_dist()
     req(thresh_rv$percent)
-    stats::predict(dist, proportion = c(1:99, thresh_rv$percent)/100)
+    stats::predict(dist, proportion = c(1:99, thresh_rv$percent) / 100)
   })
 
   transformation <- reactive({
@@ -378,7 +380,7 @@ app_server <- function(input, output, session) {
 
     trans <- transformation()
     big.mark <- ","
-    if(translation.value$lang == "French"){
+    if (translation.value$lang == "French") {
       big.mark <- " "
     }
 
@@ -397,12 +399,12 @@ app_server <- function(input, output, session) {
   table_cl <- eventReactive(input$getCl, {
     dist <- fit_dist()
     waiter::waiter_show(html = waiting_screen_cl(), color = "rgba(44,62,80, 1)")
-      nboot <- as.integer(gsub("(,|\\s)", "", input$bootSamp))
-      if (input$thresh_type != "Concentration") {
-        y <- ssd_hp_ave(dist, conc = thresh_rv$conc, nboot = nboot)
-      } else {
-        y <- ssd_hc_ave(dist, percent = thresh_rv$percent, nboot = nboot)
-      }
+    nboot <- as.integer(gsub("(,|\\s)", "", input$bootSamp))
+    if (input$thresh_type != "Concentration") {
+      y <- ssd_hp_ave(dist, conc = thresh_rv$conc, nboot = nboot)
+    } else {
+      y <- ssd_hc_ave(dist, percent = thresh_rv$percent, nboot = nboot)
+    }
     waiter::waiter_hide()
     y
   })
@@ -547,7 +549,7 @@ app_server <- function(input, output, session) {
     HTML(
       desc1, tr("ui_3cldesc2", trans()),
       paste0("<b>", input$bootSamp, ".</b>"),
-      "<br/>", 
+      "<br/>",
       tr("ui_3cldesc3", trans()),
       paste0("<b>", estimate_time(), "</b>"),
       tr("ui_3cldesc4", trans())
@@ -771,7 +773,7 @@ app_server <- function(input, output, session) {
       arg <- "conc"
       thresh <- thresh_rv$conc
     }
- 
+
     conf <- paste0(
       paste0(form, "(dist, ", arg, " = "), thresh, ", ci = TRUE",
       ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L, min_pboot = 0.8)"
@@ -858,24 +860,28 @@ app_server <- function(input, output, session) {
       )
     )
   })
-  
+
   waiting_screen_report <- reactive({
     tagList(
       waiter::spin_flower(),
-      tagList(h3(tr("ui_4gentitle", trans())),
-              br(),
-              h4(tr("ui_4genbody", trans())))
+      tagList(
+        h3(tr("ui_4gentitle", trans())),
+        br(),
+        h4(tr("ui_4genbody", trans()))
+      )
     )
-  })  
-  
+  })
+
   waiting_screen_cl <- reactive({
     tagList(
       waiter::spin_flower(),
-      tagList(h3(paste(tr("ui_3cl", trans()), "...")),
-              br(),
-              describe_cl())
-    ) 
-  }) 
+      tagList(
+        h3(paste(tr("ui_3cl", trans()), "...")),
+        br(),
+        describe_cl()
+      )
+    )
+  })
 
   output$dl_rmd <- downloadHandler(
     filename = tr("ui_bcanz_file", trans()),
@@ -909,21 +915,21 @@ app_server <- function(input, output, session) {
     filename = paste0(tr("ui_bcanz_filename", trans()), ".pdf"),
     content = function(file) {
       waiter::waiter_show(html = waiting_screen_report(), color = "rgba(44,62,80, 1)")
-      
-        temp_report <- file.path(tempdir(), tr("ui_bcanz_file", trans()))
-        file.copy(
-          system.file(package = "shinyssdtools", file.path("extdata", tr("ui_bcanz_file", trans()))),
-          temp_report
-        )
-        params <- params_list()
-        rmarkdown::render(temp_report,
-          output_format = "pdf_document",
-          output_file = file,
-          params = params,
-          envir = new.env(parent = globalenv()),
-          encoding = "utf-8"
-        )
-        waiter::waiter_hide()
+
+      temp_report <- file.path(tempdir(), tr("ui_bcanz_file", trans()))
+      file.copy(
+        system.file(package = "shinyssdtools", file.path("extdata", tr("ui_bcanz_file", trans()))),
+        temp_report
+      )
+      params <- params_list()
+      rmarkdown::render(temp_report,
+        output_format = "pdf_document",
+        output_file = file,
+        params = params,
+        envir = new.env(parent = globalenv()),
+        encoding = "utf-8"
+      )
+      waiter::waiter_hide()
     }
   )
 
@@ -931,21 +937,21 @@ app_server <- function(input, output, session) {
     filename = paste0(tr("ui_bcanz_filename", trans()), ".html"),
     content = function(file) {
       waiter::waiter_show(html = waiting_screen_report(), color = "rgba(44,62,80, 1)")
-      
+
       temp_report <- file.path(tempdir(), tr("ui_bcanz_file", trans()))
       file.copy(
         system.file(package = "shinyssdtools", file.path("extdata", tr("ui_bcanz_file", trans()))),
         temp_report
       )
-        params <- params_list()
-        rmarkdown::render(temp_report,
-          output_format = "html_document",
-          output_file = file,
-          params = params,
-          envir = new.env(parent = globalenv()),
-          encoding = "utf-8"
-        )
-    waiter::waiter_hide()
+      params <- params_list()
+      rmarkdown::render(temp_report,
+        output_format = "html_document",
+        output_file = file,
+        params = params,
+        envir = new.env(parent = globalenv()),
+        encoding = "utf-8"
+      )
+      waiter::waiter_hide()
     }
   )
 
@@ -1063,12 +1069,12 @@ app_server <- function(input, output, session) {
       selected = guess_conc()
     )
   })
-  
+
   output$ui_unit <- renderUI({
     selectInput("selectUnit",
-                label = tr("ui_2unit", trans()),
-                choices = units(),
-                selected = units()[1]
+      label = tr("ui_2unit", trans()),
+      choices = units(),
+      selected = units()[1]
     )
   })
 
