@@ -48,16 +48,6 @@ translations <- dplyr::bind_rows(
     french = "Redimensionner les données avant l'ajustement"
   ),
   dplyr::tibble(
-    id = "ui_2at_boundary_ok",
-    english = "Exclude distributions with a parameter value at a boundary",
-    french = "Exclure les distributions avec une valeur paramétrique à une limite"
-  ),
-  dplyr::tibble(
-    id = "ui_2computable",
-    english = "Exclude distributions without computable standard errors",
-    french = "Exclure les distributions sans erreur-type calculable"
-  ),
-  dplyr::tibble(
     id = "ui_xmax",
     english = "X-axis maximum",
     french = "Maximum de l'axe des X"

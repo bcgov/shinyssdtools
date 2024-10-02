@@ -47,18 +47,18 @@ app_server <- function(input, output, session) {
     grp <- tr("ui_1htgrp", trans())
     chm <- tr("ui_1htchm", trans())
     unt <- tr("ui_1htunt", trans())
-    
+
     colnames(df) <- c(chm, spp, conc, grp, unt)
     df
   })
-  
+
   #  read/create handson table
   hot.values <- reactiveValues()
   hot_data <- reactive({
     conc <- tr("ui_1htconc", trans())
     spp <- tr("ui_1htspp", trans())
     grp <- tr("ui_1htgrp", trans())
-    
+
     if (!is.null(input$hot)) {
       DF <- rhandsontable::hot_to_r(input$hot)
       colnames(DF) <- c(conc, spp, grp)
@@ -66,7 +66,7 @@ app_server <- function(input, output, session) {
     } else {
       if (is.null(hot.values[["DF"]])) {
         DF <- data.frame(
-          # english on startup 
+          # english on startup
           "Concentration" = rep(NA_real_, 10),
           "Species" = rep(NA_character_, 10),
           "Group" = rep(NA_character_, 10)
@@ -269,12 +269,6 @@ app_server <- function(input, output, session) {
       left = conc,
       dists = input$selectDist,
       silent = TRUE,
-      reweight = FALSE,
-      min_pmix = 0,
-      nrow = 6L,
-      computable = input$computable,
-      # need to get inverse of at_boundary_ok value due to wording of label
-      at_boundary_ok = !input$at_boundary_ok,
       rescale = input$rescale
     ), silent = TRUE)
     if (inherits(x, "try-error")) {
@@ -285,15 +279,17 @@ app_server <- function(input, output, session) {
 
   plot_dist <- reactive({
     dist <- fit_dist()
-    plot_distributions(dist, ylab = input$yaxis2, 
-                       xlab = append_unit(input$xaxis2, input$selectUnit), 
-                       text_size = input$size2)
+    plot_distributions(dist,
+      ylab = input$yaxis2,
+      xlab = append_unit(input$xaxis2, input$selectUnit),
+      text_size = input$size2
+    )
   })
 
   table_gof <- reactive({
     req(fit_dist())
     dist <- fit_dist()
-    gof <- 
+    gof <-
       ssdtools::ssd_gof(dist) %>%
       dplyr::mutate_if(is.numeric, ~ signif(., 3)) %>%
       dplyr::arrange(dplyr::desc(.data$weight))
@@ -311,7 +307,8 @@ app_server <- function(input, output, session) {
   # --- predict and model average
   predict_hc <- reactive({
     dist <- fit_dist()
-    stats::predict(dist, nboot = 10, ci = FALSE)
+    req(thresh_rv$percent)
+    stats::predict(dist, proportion = c(1:99, thresh_rv$percent) / 100)
   })
 
   transformation <- reactive({
@@ -355,7 +352,7 @@ app_server <- function(input, output, session) {
     percent <- if (!input$checkHc || is.null(thresh_rv$percent)) {
       NULL
     } else {
-      round(thresh_rv$percent)
+      thresh_rv$percent
     }
 
     shape_data <- if (is.null(shape)) {
@@ -382,6 +379,10 @@ app_server <- function(input, output, session) {
     }
 
     trans <- transformation()
+    big.mark <- ","
+    if (translation.value$lang == "French") {
+      big.mark <- " "
+    }
 
     silent_plot(plot_predictions(data, pred,
       conc = conc, label = label, colour = colour,
@@ -390,7 +391,7 @@ app_server <- function(input, output, session) {
       yaxis = input$yaxis, title = input$title, xmax = xmax, xmin = xmin,
       palette = input$selectPalette, legend_colour = input$legendColour,
       legend_shape = input$legendShape, trans = trans, text_size = input$size3,
-      label_size = input$sizeLabel3, conc_value = thresh_rv$conc
+      label_size = input$sizeLabel3, conc_value = thresh_rv$conc, big.mark = big.mark
     ))
   })
 
@@ -398,12 +399,12 @@ app_server <- function(input, output, session) {
   table_cl <- eventReactive(input$getCl, {
     dist <- fit_dist()
     waiter::waiter_show(html = waiting_screen_cl(), color = "rgba(44,62,80, 1)")
-      nboot <- as.integer(gsub("(,|\\s)", "", input$bootSamp))
-      if (input$thresh_type != "Concentration") {
-        y <- ssd_hp_ave(dist, conc = thresh_rv$conc, nboot = nboot)
-      } else {
-        y <- ssd_hc_ave(dist, percent = thresh_rv$percent, nboot = nboot)
-      }
+    nboot <- as.integer(gsub("(,|\\s)", "", input$bootSamp))
+    if (input$thresh_type != "Concentration") {
+      y <- ssd_hp_ave(dist, conc = thresh_rv$conc, nboot = nboot)
+    } else {
+      y <- ssd_hc_ave(dist, percent = thresh_rv$percent, nboot = nboot)
+    }
     waiter::waiter_hide()
     y
   })
@@ -548,7 +549,7 @@ app_server <- function(input, output, session) {
     HTML(
       desc1, tr("ui_3cldesc2", trans()),
       paste0("<b>", input$bootSamp, ".</b>"),
-      "<br/>", 
+      "<br/>",
       tr("ui_3cldesc3", trans()),
       paste0("<b>", estimate_time(), "</b>"),
       tr("ui_3cldesc4", trans())
@@ -682,22 +683,18 @@ app_server <- function(input, output, session) {
   })
 
   output$codeData <- renderUI({
-    c1 <- "# read dataset"
-    c2 <- "# the file argument of read_csv() assumes the file is in your working directory. You may need to change the file path to correctly read your dataset."
-    c4 <- "# this is the output of dput, which is used to create a data.frame from data entered in interactive spreadsheet"
     hot <- paste0("data <- ", utils::capture.output(dput(clean_data())) %>% glue::glue_collapse())
     upload <- paste0("data <- read_csv(file = '", input$uploadData$name, "')")
     demo <- "data <- ssddata::ccme_boron"
-    c3 <- "# fix unacceptable column names"
     name <- "colnames(data) <- make.names(colnames(data))"
     if (upload.values$upload_state == "hot") {
-      return(HTML(paste(c1, c4, hot, c3, name, sep = "<br/>")))
+      return(HTML(paste(hot, name, sep = "<br/>")))
     }
     if (upload.values$upload_state == "upload") {
-      return(HTML(paste(c1, c2, upload, c3, name, sep = "<br/>")))
+      return(HTML(paste(upload, name, sep = "<br/>")))
     }
     if (upload.values$upload_state == "demo") {
-      return(HTML(paste(c1, demo, c3, name, sep = "<br/>")))
+      return(HTML(paste(demo, name, sep = "<br/>")))
     }
   })
 
@@ -706,18 +703,14 @@ app_server <- function(input, output, session) {
     ylab <- input$yaxis2
     xlab <- input$xaxis2
     text_size <- input$size2
-    c1 <- "# fit distributions"
     fit <- paste0(
       "dist <- ssd_fit_dists(data, left = '",
       input$selectConc %>% make.names(),
       "', dists = c(",
       paste0("'", input$selectDist, "'", collapse = ", "), ")",
-      ", silent = TRUE, reweight = FALSE, min_pmix = 0, nrow = 6L, computable = ",
-      input$computable,
-      ", at_boundary_ok = ", !input$at_boundary_ok,
+      ", silent = TRUE, reweight = FALSE",
       ", rescale = ", input$rescale, ")"
     )
-    c2 <- "# plot distributions"
     plot <- paste0(
       "ssd_plot_cdf(dist, ylab = '", ylab, "', xlab = '", xlab, "', delta = Inf, average = NA) +
                    <br/> theme_classic() + <br/> ",
@@ -727,9 +720,8 @@ app_server <- function(input, output, session) {
           legend.title = ggplot2::element_text(size = ", text_size, ")) <br/>"
     )
 
-    c3 <- "# goodness of fit table"
     table <- "ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ signif(., 3))"
-    HTML(paste(c1, fit, c2, plot, c3, table, sep = "<br/>"))
+    HTML(paste(fit, plot, table, sep = "<br/>"))
   })
 
   output$codePredPlot <- renderUI({
@@ -746,10 +738,7 @@ app_server <- function(input, output, session) {
     title <- input$title
     trans <- transformation()
     xbreaks <- input$xbreaks
-    c1 <- "# plot model average"
-    c2 <- "# to add confidence intervals set ci = TRUE in predict and ssd_plot"
-    c3 <- "# we recommend using nboot = 10000 in predict, although this may take several minutes to run"
-    pred <- "pred <- predict(dist, nboot = 10L, ci = FALSE)"
+    pred <- paste0("pred <- predict(dist, proportion = c(1:99, ", thresh_rv$percent, ")/100)")
     plot <- paste0(
       "ssd_plot(data, pred, left = '", input$selectConc %>% make.names(),
       "', label = ", code_label(),
@@ -769,7 +758,7 @@ app_server <- function(input, output, session) {
       "scale_color_brewer(palette = '", input$selectPalette, "', name = ", legend.colour, ") +<br/>
                      scale_shape(name = ", legend.shape, ")"
     )
-    HTML(paste(c1, c2, c3, pred, plot, sep = "<br/>"))
+    HTML(paste(pred, plot, sep = "<br/>"))
   })
 
   output$codePredCl <- renderUI({
@@ -784,8 +773,7 @@ app_server <- function(input, output, session) {
       arg <- "conc"
       thresh <- thresh_rv$conc
     }
-    c1 <- "# get confidence limits"
-    c2 <- paste("# use the nboot argument in", form, "to set the number of bootstrap samples")
+
     conf <- paste0(
       paste0(form, "(dist, ", arg, " = "), thresh, ", ci = TRUE",
       ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L, min_pboot = 0.8)"
@@ -795,13 +783,11 @@ app_server <- function(input, output, session) {
       ", nboot = ", input$bootSamp %>% gsub(",", "", .) %>% as.integer(), "L, min_pboot = 0.8)"
     )
     bind <- paste0("dplyr::bind_rows(", conf, ", ", conf2, ")")
-    HTML(paste(c1, c2, bind, sep = "<br/>"))
+    HTML(paste(bind, sep = "<br/>"))
   })
 
   output$codeSaveFit <- renderUI({
     req(check_fit() == "")
-    c1 <- "# save plot"
-    c2 <- "# width and height are in inches, dpi (dots per inch) sets resolution"
     save <- paste0(
       "ggsave('fit_dist_plot.png',
                     width = ", get_width2(),
@@ -809,15 +795,13 @@ app_server <- function(input, output, session) {
       " , dpi = ", get_dpi2(),
       ")"
     )
-    HTML(paste(c1, c2, save, sep = "<br/>"))
+    HTML(paste(save, sep = "<br/>"))
   })
 
   output$codeSavePred <- renderUI({
     req(check_fit() == "")
     req(check_pred() == "")
     req(input$selectLabel)
-    c1 <- "# save plot"
-    c2 <- "# width and height are in inches, dpi (dots per inch) sets resolution"
     save <- paste0(
       "ggsave('model_average_plot.png',
                     width = ", get_width(),
@@ -825,7 +809,7 @@ app_server <- function(input, output, session) {
       " , dpi = ", get_dpi(),
       ")"
     )
-    HTML(paste(c1, c2, save, sep = "<br/>"))
+    HTML(paste(save, sep = "<br/>"))
   })
 
   ########### Observers --------------------
@@ -876,24 +860,28 @@ app_server <- function(input, output, session) {
       )
     )
   })
-  
+
   waiting_screen_report <- reactive({
     tagList(
       waiter::spin_flower(),
-      tagList(h3(tr("ui_4gentitle", trans())),
-              br(),
-              h4(tr("ui_4genbody", trans())))
+      tagList(
+        h3(tr("ui_4gentitle", trans())),
+        br(),
+        h4(tr("ui_4genbody", trans()))
+      )
     )
-  })  
-  
+  })
+
   waiting_screen_cl <- reactive({
     tagList(
       waiter::spin_flower(),
-      tagList(h3(paste(tr("ui_3cl", trans()), "...")),
-              br(),
-              describe_cl())
-    ) 
-  }) 
+      tagList(
+        h3(paste(tr("ui_3cl", trans()), "...")),
+        br(),
+        describe_cl()
+      )
+    )
+  })
 
   output$dl_rmd <- downloadHandler(
     filename = tr("ui_bcanz_file", trans()),
@@ -927,21 +915,21 @@ app_server <- function(input, output, session) {
     filename = paste0(tr("ui_bcanz_filename", trans()), ".pdf"),
     content = function(file) {
       waiter::waiter_show(html = waiting_screen_report(), color = "rgba(44,62,80, 1)")
-      
-        temp_report <- file.path(tempdir(), tr("ui_bcanz_file", trans()))
-        file.copy(
-          system.file(package = "shinyssdtools", file.path("extdata", tr("ui_bcanz_file", trans()))),
-          temp_report
-        )
-        params <- params_list()
-        rmarkdown::render(temp_report,
-          output_format = "pdf_document",
-          output_file = file,
-          params = params,
-          envir = new.env(parent = globalenv()),
-          encoding = "utf-8"
-        )
-        waiter::waiter_hide()
+
+      temp_report <- file.path(tempdir(), tr("ui_bcanz_file", trans()))
+      file.copy(
+        system.file(package = "shinyssdtools", file.path("extdata", tr("ui_bcanz_file", trans()))),
+        temp_report
+      )
+      params <- params_list()
+      rmarkdown::render(temp_report,
+        output_format = "pdf_document",
+        output_file = file,
+        params = params,
+        envir = new.env(parent = globalenv()),
+        encoding = "utf-8"
+      )
+      waiter::waiter_hide()
     }
   )
 
@@ -949,21 +937,21 @@ app_server <- function(input, output, session) {
     filename = paste0(tr("ui_bcanz_filename", trans()), ".html"),
     content = function(file) {
       waiter::waiter_show(html = waiting_screen_report(), color = "rgba(44,62,80, 1)")
-      
+
       temp_report <- file.path(tempdir(), tr("ui_bcanz_file", trans()))
       file.copy(
         system.file(package = "shinyssdtools", file.path("extdata", tr("ui_bcanz_file", trans()))),
         temp_report
       )
-        params <- params_list()
-        rmarkdown::render(temp_report,
-          output_format = "html_document",
-          output_file = file,
-          params = params,
-          envir = new.env(parent = globalenv()),
-          encoding = "utf-8"
-        )
-    waiter::waiter_hide()
+      params <- params_list()
+      rmarkdown::render(temp_report,
+        output_format = "html_document",
+        output_file = file,
+        params = params,
+        envir = new.env(parent = globalenv()),
+        encoding = "utf-8"
+      )
+      waiter::waiter_hide()
     }
   )
 
@@ -1081,12 +1069,12 @@ app_server <- function(input, output, session) {
       selected = guess_conc()
     )
   })
-  
+
   output$ui_unit <- renderUI({
     selectInput("selectUnit",
-                label = tr("ui_2unit", trans()),
-                choices = units(),
-                selected = units()[1]
+      label = tr("ui_2unit", trans()),
+      choices = units(),
+      selected = units()[1]
     )
   })
 
@@ -1094,20 +1082,6 @@ app_server <- function(input, output, session) {
     checkboxInput("rescale",
       label = tr("ui_2rescale", trans()),
       value = FALSE
-    )
-  })
-
-  output$ui_2at_boundary_ok <- renderUI({
-    checkboxInput("at_boundary_ok",
-      label = tr("ui_2at_boundary_ok", trans()),
-      value = TRUE
-    )
-  })
-
-  output$ui_2computable <- renderUI({
-    checkboxInput("computable",
-      label = tr("ui_2computable", trans()),
-      value = TRUE
     )
   })
 

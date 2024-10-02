@@ -24,7 +24,7 @@ inline <- function(x) {
 hint <- function(x)
   HTML(paste0("<font color='grey'>", x, "</font>"))
 
-zero_range <- function(x, tol = .Machine$double.eps ^ 0.5) {
+zero_range <- function(x, tol = .Machine$double.eps^0.5) {
   if (length(x) == 1) {
     return(TRUE)
   }
@@ -33,19 +33,11 @@ zero_range <- function(x, tol = .Machine$double.eps ^ 0.5) {
 }
 
 estimate_hc <- function(x, percent) {
-  ssdtools::ssd_hc(x,
-                   proportion = percent / 100,
-                   nboot = 10L,
-                   min_pboot = 0.8)$est
+  ssdtools::ssd_hc(x, proportion = percent / 100)$est
 }
 
 estimate_hp <- function(x, conc) {
-  ssdtools::ssd_hp(
-    x = x,
-    conc = conc,
-    nboot = 10L,
-    min_pboot = 0.8
-  )$est
+  ssdtools::ssd_hp(x, conc = conc)$est
 }
 
 ssd_hc_ave <- function(x, percent, nboot) {
@@ -57,7 +49,7 @@ ssd_hc_ave <- function(x, percent, nboot) {
     nboot = nboot,
     min_pboot = 0.8
   )
-  
+
   if (length(x) == 1) {
     ave <- dist
     ave$dist <- "average"
@@ -71,7 +63,7 @@ ssd_hc_ave <- function(x, percent, nboot) {
       min_pboot = 0.8
     )
   }
-  
+
   dplyr::bind_rows(ave, dist) %>%
     dplyr::mutate_at(c("est", "se", "ucl", "lcl", "wt"), ~ signif(., 3))
 }
@@ -85,7 +77,7 @@ ssd_hp_ave <- function(x, conc, nboot) {
     nboot = nboot,
     min_pboot = 0.8
   )
-  
+
   if (length(x) == 1) {
     ave <- dist
     ave$dist <- "average"
@@ -99,7 +91,7 @@ ssd_hp_ave <- function(x, conc, nboot) {
       min_pboot = 0.8
     )
   }
-  
+
   dplyr::bind_rows(ave, dist) %>%
     dplyr::mutate_at(c("est", "se", "ucl", "lcl", "wt"), ~ signif(., 3))
 }
