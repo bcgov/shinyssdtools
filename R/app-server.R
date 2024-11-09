@@ -589,7 +589,10 @@ app_server <- function(input, output, session) {
     data <- names_data()
     conc <- input$selectConc %>% make.names()
 
-    scale <- scales::trans_breaks("log10", function(x) 10^x)
+    scale <- scales::trans_breaks("identity", function(x) x)
+    trans <- transformation()
+    if(trans == "log10")
+      scale <- scales::trans_breaks("log10", function(x) 10^x)
     y <- sort(signif(c(scale(data[[conc]]), thresh_rv$conc), 3))
 
     selectizeInput("xbreaks", tr("ui_xbreaks", trans()),
