@@ -24,14 +24,12 @@ plot_distributions <- function(x, ylab, xlab, text_size) {
 }
 
 bold_conc <- function(conc, breaks) {
-  if (conc %in% breaks) {
-    b_pos <- purrr::map_int(conc, ~ which(. == breaks))
-    b_vec <- rep("plain", length(breaks))
-    b_vec[b_pos] <- "bold"
-  } else {
-    b_vec <- rep("plain", length(breaks))
-  }
-  b_vec
+  ifelse(breaks == conc, "bold", "plain")
+}
+
+gp_xbreaks <- function(gp){
+  breaks <- ggplot2::ggplot_build(gp)$layout$panel_params[[1]]$x$breaks
+  as.numeric(na.omit(breaks))
 }
 
 plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
@@ -42,7 +40,6 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
   if (!length(proportion)) {
     proportion <- NULL
   }
-  boldc <- bold_conc(conc_value, xbreaks)
 
   gp <- ssdtools::ssd_plot(x, pred,
     left = conc, label = label, xbreaks = xbreaks, size = label_size,
@@ -50,15 +47,6 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
     shift_x = label_adjust %>% as.numeric(),
     xlab = xaxis, ylab = yaxis, trans = trans
   ) +
-    ggplot2::ggtitle(title) +
-    ggplot2::theme_classic() +
-    ggplot2::theme(
-      axis.text = ggplot2::element_text(color = "black", size = text_size),
-      axis.text.x = ggplot2::element_text(face = boldc),
-      axis.title = ggplot2::element_text(size = text_size),
-      legend.text = ggplot2::element_text(size = text_size),
-      legend.title = ggplot2::element_text(size = text_size),
-    ) +
     ggplot2::scale_x_continuous(
       name = xaxis, breaks = xbreaks,
       limits = c(xmin, xmax),
@@ -67,7 +55,7 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
           expression,
           lapply(lab, function(x) {
             mark <- label_comma(x, big.mark = big.mark)
-            if (x == conc_value) {
+            if (!is.na(x) & x == conc_value) {
               y <- paste0("\n", mark)
             } else {
               y <- mark
@@ -79,6 +67,22 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
     ) +
     ggplot2::scale_color_brewer(palette = palette, name = legend_colour) +
     ggplot2::scale_shape(name = legend_shape)
+  
+  # get breaks again for bold face as limits convert some to NA 
+  actual_breaks <- gp_xbreaks(gp)
+  
+  gp <- 
+    gp +
+    ggplot2::ggtitle(title) +
+    ggplot2::theme_classic() +
+    ggplot2::theme(
+      axis.text = ggplot2::element_text(color = "black", size = text_size),
+      axis.text.x = ggplot2::element_text(face =  bold_conc(conc_value, actual_breaks)),
+      axis.title = ggplot2::element_text(size = text_size),
+      legend.text = ggplot2::element_text(size = text_size),
+      legend.title = ggplot2::element_text(size = text_size),
+    ) 
+   
 
   gp
 }
