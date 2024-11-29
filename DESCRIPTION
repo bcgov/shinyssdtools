@@ -32,7 +32,6 @@ Imports:
     glue,
     knitr,
     magrittr,
-    purrr,
     readr,
     rhandsontable,
     rlang,
@@ -50,8 +49,6 @@ Suggests:
     rsconnect,
     testthat (>= 3.0.0),
     ssddata
-VignetteBuilder: 
-    knitr
 Encoding: UTF-8
 Language: en-US
 LazyData: true
