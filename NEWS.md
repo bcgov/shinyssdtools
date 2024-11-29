@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# shinyssdtools 0.3.2 (2024-11-28)
+
+- Adding TESTING.md file for steps on how to manually test app.
+- Internal changes.
+
 # shinyssdtools 0.3.1 (2024-11-08)
 
 - Fix prediction plot x-axis label/breaks bugs 

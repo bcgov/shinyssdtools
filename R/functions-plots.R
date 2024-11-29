@@ -29,7 +29,7 @@ bold_conc <- function(conc, breaks) {
 
 gp_xbreaks <- function(gp){
   breaks <- ggplot2::ggplot_build(gp)$layout$panel_params[[1]]$x$breaks
-  as.numeric(na.omit(breaks))
+  as.numeric(stats::na.omit(breaks))
 }
 
 plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
