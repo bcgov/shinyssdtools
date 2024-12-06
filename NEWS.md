@@ -2,8 +2,7 @@
 
 # shinyssdtools 0.3.2 (2024-12-05)
 
-- Internal changes only.
-
+- Added label size to rendered code for prediction plot. 
 
 # shinyssdtools 0.3.1 (2024-11-08)
 
