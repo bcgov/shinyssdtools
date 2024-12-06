@@ -745,8 +745,9 @@ app_server <- function(input, output, session) {
     plot <- paste0(
       "ssd_plot(data, pred, left = '", input$selectConc %>% make.names(),
       "', label = ", code_label(),
-      ", color = ", code_colour(),
       ", shape = ", code_shape(),
+      ", color = ", code_colour(),
+      ", size = ", input$sizeLabel3,
       ", hc = ", code_hc(),
       ", ci = FALSE, <br/>shift_x = ", input$adjustLabel,
       ", ylab = '", ylab,
