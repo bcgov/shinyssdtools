@@ -48,13 +48,13 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
   gp <- ssdtools::ssd_plot(x, pred = pred,
     left = conc, label = label, shape = shape, color = colour,
     label_size = label_size, xlab = xaxis, ylab = yaxis,
-    ci = FALSE, hc = proportion, shift_x = label_adjust %>% as.numeric(),
+    ci = FALSE, hc = proportion, shift_x = as.numeric(label_adjust),
     big.mark = big.mark, trans = trans, xlimits = xlimits, 
     xbreaks = xbreaks, text_size = text_size
   ) +
     ggplot2::scale_color_brewer(palette = palette, name = legend_colour) +
-    ggplot2::scale_shape(name = legend_shape)
+    ggplot2::scale_shape(name = legend_shape) +
+    ggplot2::theme_bw()
    
-
   gp
 }
