@@ -307,8 +307,7 @@ app_server <- function(input, output, session) {
   # --- predict and model average
   predict_hc <- reactive({
     dist <- fit_dist()
-    req(thresh_rv$percent)
-    stats::predict(dist, proportion = c(1:99, thresh_rv$percent) / 100)
+    stats::predict(dist, proportion = unique(c(1:99, thresh_rv$percent)) / 100)
   })
 
   transformation <- reactive({
@@ -317,6 +316,26 @@ app_server <- function(input, output, session) {
       trans <- "identity"
     }
     trans
+  })
+  
+  plot_model_average_xbreaks <- reactive({
+    req(predict_hc())
+    req(names_data())
+    req(input$selectConc)
+    req(input$selectLabel)
+    req(thresh_rv$conc)
+    pred <- predict_hc()
+    data <- names_data()
+    conc <- thresh_rv$conc
+    percent <- thresh_rv$percent
+    conc_col <- make.names(input$selectConc) 
+    label_col <- ifelse(input$selectLabel == "-none-", NULL, make.names(input$selectLabel)) 
+
+    gp <- ssdtools::ssd_plot(data, pred = pred, 
+                             left = conc_col, label = label_col,
+                             hc = percent/100)
+    xbreaks <- gp_xbreaks(gp)
+    xbreaks[xbreaks != conc]
   })
 
   plot_model_average <- reactive({
@@ -329,7 +348,6 @@ app_server <- function(input, output, session) {
     req(input$adjustLabel)
     req(thresh_rv$percent)
     req(thresh_rv$conc)
-    req(input$xbreaks)
 
     data <- names_data()
     pred <- predict_hc()
@@ -386,7 +404,7 @@ app_server <- function(input, output, session) {
 
     silent_plot(plot_predictions(data, pred,
       conc = conc, label = label, colour = colour,
-      shape = shape, percent = percent, xbreaks = sort(as.numeric(input$xbreaks)),
+      shape = shape, percent = percent, xbreaks = as.numeric(input$xbreaks),
       label_adjust = shift_label, xaxis = append_unit(input$xaxis, input$selectUnit),
       yaxis = input$yaxis, title = input$title, xmax = xmax, xmin = xmin,
       palette = input$selectPalette, legend_colour = input$legendColour,
@@ -584,21 +602,11 @@ app_server <- function(input, output, session) {
   })
 
   output$uiXbreaks <- renderUI({
-    req(names_data())
-    req(thresh_rv$conc)
-    data <- names_data()
-    conc <- input$selectConc %>% make.names()
-
-    scale <- scales::trans_breaks("identity", function(x) x)
-    trans <- transformation()
-    if(trans == "log10")
-      scale <- scales::trans_breaks("log10", function(x) 10^x)
-    y <- sort(signif(c(scale(data[[conc]]), thresh_rv$conc), 3))
-
+    xbreaks <- plot_model_average_xbreaks()
     selectizeInput("xbreaks", tr("ui_xbreaks", trans()),
       options = list(create = TRUE, plugins = list("remove_button")),
-      choices = y,
-      selected = y,
+      choices = xbreaks,
+      selected = xbreaks,
       multiple = TRUE
     )
   })
