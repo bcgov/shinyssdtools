@@ -54,7 +54,7 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
   ) +
     ggplot2::scale_color_brewer(palette = palette, name = legend_colour) +
     ggplot2::scale_shape(name = legend_shape) +
-    ggplot2::theme_bw()
+    ggplot2::theme_classic()
    
   gp
 }
