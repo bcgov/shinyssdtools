@@ -739,35 +739,38 @@ app_server <- function(input, output, session) {
     req(check_fit() == "")
     req(check_pred() == "")
     req(input$selectLabel)
-    xmax <- ifelse(is.null(input$xMax), "NA", input$xMax)
-    xmin <- ifelse(is.null(input$xMin), "NA", input$xMin)
-    legend.colour <- ifelse(is.null(input$legendColour), "NULL", paste0("'", input$legendColour, "'"))
+    xmax <- input$xMax
+    xmin <- input$xMin
+    xlimits <- ifelse(is.na(xmin) & is.na(xmax), "NULL",  paste0("c(", xmin, ", ", xmax, ")"))
+    legend.colour <- ifelse(is.null(input$legendColour) || input$legendColour == "-none-", "NULL", paste0("'", input$legendColour, "'"))
     legend.shape <- ifelse(is.null(input$legendShape) || input$legendShape == "-none-", "NULL", paste0("'", input$legendShape, "'"))
     text_size <- input$size3
     xlab <- input$xaxis
     ylab <- input$yaxis
     title <- input$title
+    big.mark <- ifelse(translation.value$lang == "French", " ", ",")
     trans <- transformation()
     xbreaks <- input$xbreaks
-    pred <- paste0("pred <- predict(dist, proportion = c(1:99, ", thresh_rv$percent, ")/100)")
+    xbreaks <- paste0("c(", paste(xbreaks, collapse = ", "), ")")
+    pred <- paste0("pred <- predict(dist, proportion = unique(c(1:99, ", thresh_rv$percent, ")/100))")
     plot <- paste0(
-      "ssd_plot(data, pred, left = '", input$selectConc %>% make.names(),
+      "ssd_plot(data, pred, left = '", make.names(input$selectConc),
       "', label = ", code_label(),
       ", shape = ", code_shape(),
       ", color = ", code_colour(),
-      ", size = ", input$sizeLabel3,
-      ", hc = ", code_hc(),
-      ", ci = FALSE, <br/>shift_x = ", input$adjustLabel,
+      ",  <br/>label_size = ", input$sizeLabel3,
       ", ylab = '", ylab,
+      "', xlab = '", xlab,
+      "', ci = FALSE, shift_x = ", input$adjustLabel,
+      ", hc = ", code_hc(),
+      ", <br/>big.mark = '", big.mark,
       "', trans = '", trans,
-      "') + <br/> ggtitle('", title,
-      "') + <br/> theme_classic() + <br/>",
-      "theme(axis.text = ggplot2::element_text(color = 'black', size = ", text_size, "), <br/>
-          axis.title = ggplot2::element_text(size = ", text_size, "), <br/>
-          legend.text = ggplot2::element_text(size = ", text_size, "), <br/>
-          legend.title = ggplot2::element_text(size = ", text_size, ")) + <br/>",
-      "scale_x_continuous(name = '", xlab, "', breaks = c(", paste(xbreaks, collapse = ", "), "), limits = c(", xmin, ", ", xmax, "), labels = comma_signif) + <br/>",
-      "scale_color_brewer(palette = '", input$selectPalette, "', name = ", legend.colour, ") +<br/>
+      "', xlimits = ", xlimits,
+      ", xbreaks = ", xbreaks,
+      ", text_size = ", text_size,
+      ", theme_classic = TRUE",
+      ") + <br/> ggtitle('", title,
+      "') + <br/>scale_color_brewer(palette = '", input$selectPalette, "', name = ", legend.colour, ") +<br/>
                      scale_shape(name = ", legend.shape, ")"
     )
     HTML(paste(pred, plot, sep = "<br/>"))
