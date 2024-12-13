@@ -2,10 +2,9 @@
 
 # shinyssdtools 0.3.3 (2024-12-12)
 
-- Merge pull request #52 from poissonconsulting/plot_prediction.
-
-  update to new ssd_plot args and render code
-
+- Update plotting functions to match new arguments in ssdtools.
+- Code rendering is now simplified as most plot 'add-ons' have been incorporated into `ssd_plot()`.
+- French big.mark fixed.
 
 # shinyssdtools 0.3.2 (2024-12-05)
 
