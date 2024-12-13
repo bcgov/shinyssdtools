@@ -1,6 +1,6 @@
 Package: shinyssdtools
 Title: ssdtools Shiny App
-Version: 0.3.2
+Version: 0.3.4
 Authors@R: 
     c(person(given = "Seb",
              family = "Dalgarno",
