@@ -1,21 +1,9 @@
-label_comma <- function(x, digits = 3, big.mark = ",") {
-  x <- signif(x, digits = digits)
-  y <- as.character(x)
-  bol <- !is.na(x) & as.numeric(x) >= 1000
-  y[bol] <- stringr::str_replace_all(y[bol], "(\\d{1,1})(\\d{3,3}(?<=\\.|$))", paste0("\\1", big.mark, "\\2"))
-  y
-}
-
 plot_distributions <- function(x, ylab, xlab, text_size) {
   gp <- ssdtools::ssd_plot_cdf(x,
     ylab = ylab, xlab = xlab,
     delta = Inf, average = NA, theme_classic = TRUE, text_size = text_size
   )
   gp
-}
-
-bold_conc <- function(conc, breaks) {
-  ifelse(breaks == conc, "bold", "plain")
 }
 
 gp_xbreaks <- function(gp){
