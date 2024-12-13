@@ -317,7 +317,7 @@ app_server <- function(input, output, session) {
     }
     trans
   })
-  
+
   plot_model_average_xbreaks <- reactive({
     req(predict_hc())
     req(names_data())
@@ -328,12 +328,14 @@ app_server <- function(input, output, session) {
     data <- names_data()
     conc <- thresh_rv$conc
     percent <- thresh_rv$percent
-    conc_col <- make.names(input$selectConc) 
-    label_col <- ifelse(input$selectLabel == "-none-", NULL, make.names(input$selectLabel)) 
+    conc_col <- make.names(input$selectConc)
+    label_col <- ifelse(input$selectLabel == "-none-", NULL, make.names(input$selectLabel))
 
-    gp <- ssdtools::ssd_plot(data, pred = pred, 
-                             left = conc_col, label = label_col,
-                             hc = percent/100)
+    gp <- ssdtools::ssd_plot(data,
+      pred = pred,
+      left = conc_col, label = label_col,
+      hc = percent / 100
+    )
     xbreaks <- gp_xbreaks(gp)
     xbreaks[xbreaks != conc]
   })
@@ -723,8 +725,8 @@ app_server <- function(input, output, session) {
       ", rescale = ", input$rescale, ")"
     )
     plot <- paste0(
-      "ssd_plot_cdf(dist, ylab = '", ylab, "', xlab = '", xlab, 
-      "', delta = Inf, <br/>average = NA, theme_classic = TRUE, text_size = ", 
+      "ssd_plot_cdf(dist, ylab = '", ylab, "', xlab = '", xlab,
+      "', delta = Inf, <br/>average = NA, theme_classic = TRUE, text_size = ",
       text_size, ") <br/>"
     )
 
@@ -738,7 +740,7 @@ app_server <- function(input, output, session) {
     req(input$selectLabel)
     xmax <- input$xMax
     xmin <- input$xMin
-    xlimits <- ifelse(is.na(xmin) & is.na(xmax), "NULL",  paste0("c(", xmin, ", ", xmax, ")"))
+    xlimits <- ifelse(is.na(xmin) & is.na(xmax), "NULL", paste0("c(", xmin, ", ", xmax, ")"))
     legend.colour <- ifelse(is.null(input$legendColour) || input$legendColour == "-none-", "NULL", paste0("'", input$legendColour, "'"))
     legend.shape <- ifelse(is.null(input$legendShape) || input$legendShape == "-none-", "NULL", paste0("'", input$legendShape, "'"))
     text_size <- input$size3
