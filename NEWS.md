@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# shinyssdtools 0.3.3 (2024-12-12)
+
+- Merge pull request #52 from poissonconsulting/plot_prediction.
+
+  update to new ssd_plot args and render code
+
+
 # shinyssdtools 0.3.2 (2024-12-05)
 
 - Added label size to rendered code for prediction plot. 
