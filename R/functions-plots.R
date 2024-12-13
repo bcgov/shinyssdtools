@@ -9,17 +9,8 @@ label_comma <- function(x, digits = 3, big.mark = ",") {
 plot_distributions <- function(x, ylab, xlab, text_size) {
   gp <- ssdtools::ssd_plot_cdf(x,
     ylab = ylab, xlab = xlab,
-    delta = Inf, average = NA
+    delta = Inf, average = NA, theme_classic = TRUE, text_size = text_size
   )
-  gp <-
-    gp +
-    ggplot2::theme_classic() +
-    ggplot2::theme(
-      axis.text = ggplot2::element_text(size = text_size),
-      axis.title = ggplot2::element_text(size = text_size),
-      legend.title = ggplot2::element_text(size = text_size),
-      legend.text = ggplot2::element_text(size = text_size)
-    )
   gp
 }
 

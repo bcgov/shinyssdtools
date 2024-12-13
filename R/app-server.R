@@ -723,12 +723,9 @@ app_server <- function(input, output, session) {
       ", rescale = ", input$rescale, ")"
     )
     plot <- paste0(
-      "ssd_plot_cdf(dist, ylab = '", ylab, "', xlab = '", xlab, "', delta = Inf, average = NA) +
-                   <br/> theme_classic() + <br/> ",
-      "theme(axis.text = ggplot2::element_text(color = 'black', size = ", text_size, "), <br/>
-          axis.title = ggplot2::element_text(size = ", text_size, "), <br/>
-          legend.text = ggplot2::element_text(size = ", text_size, "), <br/>
-          legend.title = ggplot2::element_text(size = ", text_size, ")) <br/>"
+      "ssd_plot_cdf(dist, ylab = '", ylab, "', xlab = '", xlab, 
+      "', delta = Inf, <br/>average = NA, theme_classic = TRUE, text_size = ", 
+      text_size, ") <br/>"
     )
 
     table <- "ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ signif(., 3))"
