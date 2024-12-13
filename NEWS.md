@@ -1,14 +1,19 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# shinyssdtools 0.3.3 (2024-12-12)
+# shinyssdtools 0.3.4 (2024-12-12)
 
 - Update plotting functions to match new arguments in ssdtools.
 - Code rendering is now simplified as most plot 'add-ons' have been incorporated into `ssd_plot()`.
 - French big.mark fixed.
 
-# shinyssdtools 0.3.2 (2024-12-05)
+# shinyssdtools 0.3.3 (2024-12-05)
 
 - Added label size to rendered code for prediction plot. 
+
+# shinyssdtools 0.3.2 (2024-11-28)
+
+- Adding TESTING.md file for steps on how to manually test app.
+- Internal changes.
 
 # shinyssdtools 0.3.1 (2024-11-08)
 
