@@ -1,5 +1,5 @@
 # install ssdtools
-install.packages("ssdtools")
+# install.packages("ssdtools")
 # get cran versions of poisson pkgs
 pak::pak("universals")
 pak::pak("chk")
