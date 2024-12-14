@@ -8,7 +8,7 @@ plot_distributions <- function(x, ylab, xlab, text_size) {
 
 gp_xbreaks <- function(gp) {
   breaks <- ggplot2::ggplot_build(gp)$layout$panel_params[[1]]$x$breaks
-  sort(signif(as.numeric(na.omit(breaks)), 3))
+  sort(signif(as.numeric(stats::na.omit(breaks)), 3))
 }
 
 plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
