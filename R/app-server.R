@@ -307,8 +307,7 @@ app_server <- function(input, output, session) {
   # --- predict and model average
   predict_hc <- reactive({
     dist <- fit_dist()
-    req(thresh_rv$percent)
-    stats::predict(dist, proportion = c(1:99, thresh_rv$percent) / 100)
+    stats::predict(dist, proportion = unique(c(1:99, thresh_rv$percent)) / 100)
   })
 
   transformation <- reactive({
@@ -317,6 +316,28 @@ app_server <- function(input, output, session) {
       trans <- "identity"
     }
     trans
+  })
+
+  plot_model_average_xbreaks <- reactive({
+    req(predict_hc())
+    req(names_data())
+    req(input$selectConc)
+    req(input$selectLabel)
+    req(thresh_rv$conc)
+    pred <- predict_hc()
+    data <- names_data()
+    conc <- thresh_rv$conc
+    percent <- thresh_rv$percent
+    conc_col <- make.names(input$selectConc)
+    label_col <- ifelse(input$selectLabel == "-none-", NULL, make.names(input$selectLabel))
+
+    gp <- ssdtools::ssd_plot(data,
+      pred = pred,
+      left = conc_col, label = label_col,
+      hc = percent / 100
+    )
+    xbreaks <- gp_xbreaks(gp)
+    xbreaks[xbreaks != conc]
   })
 
   plot_model_average <- reactive({
@@ -329,7 +350,6 @@ app_server <- function(input, output, session) {
     req(input$adjustLabel)
     req(thresh_rv$percent)
     req(thresh_rv$conc)
-    req(input$xbreaks)
 
     data <- names_data()
     pred <- predict_hc()
@@ -386,7 +406,7 @@ app_server <- function(input, output, session) {
 
     silent_plot(plot_predictions(data, pred,
       conc = conc, label = label, colour = colour,
-      shape = shape, percent = percent, xbreaks = sort(as.numeric(input$xbreaks)),
+      shape = shape, percent = percent, xbreaks = as.numeric(input$xbreaks),
       label_adjust = shift_label, xaxis = append_unit(input$xaxis, input$selectUnit),
       yaxis = input$yaxis, title = input$title, xmax = xmax, xmin = xmin,
       palette = input$selectPalette, legend_colour = input$legendColour,
@@ -584,21 +604,11 @@ app_server <- function(input, output, session) {
   })
 
   output$uiXbreaks <- renderUI({
-    req(names_data())
-    req(thresh_rv$conc)
-    data <- names_data()
-    conc <- input$selectConc %>% make.names()
-
-    scale <- scales::trans_breaks("identity", function(x) x)
-    trans <- transformation()
-    if(trans == "log10")
-      scale <- scales::trans_breaks("log10", function(x) 10^x)
-    y <- sort(signif(c(scale(data[[conc]]), thresh_rv$conc), 3))
-
+    xbreaks <- plot_model_average_xbreaks()
     selectizeInput("xbreaks", tr("ui_xbreaks", trans()),
       options = list(create = TRUE, plugins = list("remove_button")),
-      choices = y,
-      selected = y,
+      choices = xbreaks,
+      selected = xbreaks,
       multiple = TRUE
     )
   })
@@ -715,12 +725,9 @@ app_server <- function(input, output, session) {
       ", rescale = ", input$rescale, ")"
     )
     plot <- paste0(
-      "ssd_plot_cdf(dist, ylab = '", ylab, "', xlab = '", xlab, "', delta = Inf, average = NA) +
-                   <br/> theme_classic() + <br/> ",
-      "theme(axis.text = ggplot2::element_text(color = 'black', size = ", text_size, "), <br/>
-          axis.title = ggplot2::element_text(size = ", text_size, "), <br/>
-          legend.text = ggplot2::element_text(size = ", text_size, "), <br/>
-          legend.title = ggplot2::element_text(size = ", text_size, ")) <br/>"
+      "ssd_plot_cdf(dist, ylab = '", ylab, "', xlab = '", xlab,
+      "', delta = Inf, <br/>average = NA, theme_classic = TRUE, text_size = ",
+      text_size, ") <br/>"
     )
 
     table <- "ssd_gof(dist) %>% dplyr::mutate_if(is.numeric, ~ signif(., 3))"
@@ -731,34 +738,38 @@ app_server <- function(input, output, session) {
     req(check_fit() == "")
     req(check_pred() == "")
     req(input$selectLabel)
-    xmax <- ifelse(is.null(input$xMax), "NA", input$xMax)
-    xmin <- ifelse(is.null(input$xMin), "NA", input$xMin)
-    legend.colour <- ifelse(is.null(input$legendColour), "NULL", paste0("'", input$legendColour, "'"))
+    xmax <- input$xMax
+    xmin <- input$xMin
+    xlimits <- ifelse(is.na(xmin) & is.na(xmax), "NULL", paste0("c(", xmin, ", ", xmax, ")"))
+    legend.colour <- ifelse(is.null(input$legendColour) || input$legendColour == "-none-", "NULL", paste0("'", input$legendColour, "'"))
     legend.shape <- ifelse(is.null(input$legendShape) || input$legendShape == "-none-", "NULL", paste0("'", input$legendShape, "'"))
     text_size <- input$size3
     xlab <- input$xaxis
     ylab <- input$yaxis
     title <- input$title
+    big.mark <- ifelse(translation.value$lang == "French", " ", ",")
     trans <- transformation()
     xbreaks <- input$xbreaks
-    pred <- paste0("pred <- predict(dist, proportion = c(1:99, ", thresh_rv$percent, ")/100)")
+    xbreaks <- paste0("c(", paste(xbreaks, collapse = ", "), ")")
+    pred <- paste0("pred <- predict(dist, proportion = unique(c(1:99, ", thresh_rv$percent, ")/100))")
     plot <- paste0(
-      "ssd_plot(data, pred, left = '", input$selectConc %>% make.names(),
+      "ssd_plot(data, pred, left = '", make.names(input$selectConc),
       "', label = ", code_label(),
-      ", color = ", code_colour(),
       ", shape = ", code_shape(),
-      ", hc = ", code_hc(),
-      ", ci = FALSE, <br/>shift_x = ", input$adjustLabel,
+      ", color = ", code_colour(),
+      ",  <br/>label_size = ", input$sizeLabel3,
       ", ylab = '", ylab,
+      "', xlab = '", xlab,
+      "', ci = FALSE, shift_x = ", input$adjustLabel,
+      ", hc = ", code_hc(),
+      ", <br/>big.mark = '", big.mark,
       "', trans = '", trans,
-      "') + <br/> ggtitle('", title,
-      "') + <br/> theme_classic() + <br/>",
-      "theme(axis.text = ggplot2::element_text(color = 'black', size = ", text_size, "), <br/>
-          axis.title = ggplot2::element_text(size = ", text_size, "), <br/>
-          legend.text = ggplot2::element_text(size = ", text_size, "), <br/>
-          legend.title = ggplot2::element_text(size = ", text_size, ")) + <br/>",
-      "scale_x_continuous(name = '", xlab, "', breaks = c(", paste(xbreaks, collapse = ", "), "), limits = c(", xmin, ", ", xmax, "), labels = comma_signif) + <br/>",
-      "scale_color_brewer(palette = '", input$selectPalette, "', name = ", legend.colour, ") +<br/>
+      "', xlimits = ", xlimits,
+      ", xbreaks = ", xbreaks,
+      ", text_size = ", text_size,
+      ", theme_classic = TRUE",
+      ") + <br/> ggtitle('", title,
+      "') + <br/>scale_color_brewer(palette = '", input$selectPalette, "', name = ", legend.colour, ") +<br/>
                      scale_shape(name = ", legend.shape, ")"
     )
     HTML(paste(pred, plot, sep = "<br/>"))
