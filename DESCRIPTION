@@ -36,12 +36,10 @@ Imports:
     rhandsontable,
     rlang,
     rmarkdown,
-    scales,
     shiny,
     shinyjs,
     shinyWidgets,
     stats,
-    stringr,
     waiter
 Suggests: 
     covr,
