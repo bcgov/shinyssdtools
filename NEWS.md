@@ -2,8 +2,7 @@
 
 # shinyssdtools 0.3.5 (2024-12-18)
 
-- Merge branch 'main' of github.com:poissonconsulting/shinyssdtools.
-
+- Remove unused package dependencies of stringr and scales. 
 
 # shinyssdtools 0.3.4 (2024-12-12)
 
