@@ -1,6 +1,6 @@
 Package: shinyssdtools
 Title: ssdtools Shiny App
-Version: 0.3.4
+Version: 0.3.5
 Authors@R: 
     c(person(given = "Seb",
              family = "Dalgarno",
@@ -36,12 +36,10 @@ Imports:
     rhandsontable,
     rlang,
     rmarkdown,
-    scales,
     shiny,
     shinyjs,
     shinyWidgets,
     stats,
-    stringr,
     waiter
 Suggests: 
     covr,

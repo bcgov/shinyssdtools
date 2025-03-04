@@ -1,5 +1,9 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# shinyssdtools 0.3.5 (2024-12-18)
+
+- Remove unused package dependencies of stringr and scales. 
+
 # shinyssdtools 0.3.4 (2024-12-12)
 
 - Update plotting functions to match new arguments in ssdtools.

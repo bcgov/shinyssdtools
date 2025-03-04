@@ -57,7 +57,7 @@ Steps should be followed in order and be done in a single session from start to 
 		i. Plot should update with new label name 
 	l. Add plot title of Title 
 		i. Title should appear at top of plot
-	m. Change colour legend title Colour
+	m. Change colour legend title to Colour
 		i. Colour legend title should update
 	n. Change shape legend title to Shape
 		i. Shape legend title should update  
@@ -104,13 +104,12 @@ Steps should be followed in order and be done in a single session from start to 
 7. Go to About tab
 	a. Confirm formatting looks good
 	b. Check links point to right things 
-8. Go to About tab
+8. Go to User Guide tab
 	a. Confirm formatting looks good
 	b. Check links point to right things 
 9. Click on French button
-	a. About tab should turn into French
+	a. User Guide tab should turn into French
 	b. Go to the A propos tab 
 		i. It should be in French
 	c. Click on the English button
 		i. Should turn back to English 
-	10. Click on the Help tab
