@@ -869,8 +869,7 @@ app_server <- function(input, output, session) {
         circle = FALSE,
         icon = icon("download"),
         dl_button("dl_pdf", tr("ui_4pdf", trans())),
-        dl_button("dl_html", tr("ui_4html", trans())),
-        dl_button("dl_rmd", tr("ui_4rmd", trans()))
+        dl_button("dl_html", tr("ui_4html", trans()))
       )
     )
   })
@@ -896,16 +895,6 @@ app_server <- function(input, output, session) {
       )
     )
   })
-
-  output$dl_rmd <- downloadHandler(
-    filename = tr("ui_bcanz_file", trans()),
-    content = function(file) {
-      file.copy(
-        system.file(package = "shinyssdtools", file.path("extdata", tr("ui_bcanz_file", trans()))),
-        file
-      )
-    }
-  )
 
   params_list <- reactive({
     req(plot_model_average())
