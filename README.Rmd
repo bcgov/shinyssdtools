@@ -44,6 +44,7 @@ In addition to being a Graphical User Interface to the core functionality in the
 - a bilingual (English/French) interface;
 - generation of R scripts for reproducibility;
 - customization and downloads of plots and tables
+- Generation of html/pdf report
 
 ## Information
 
