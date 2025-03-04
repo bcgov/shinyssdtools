@@ -2,21 +2,9 @@
 
 # shinyssdtools 0.4.0 (2025-03-04)
 
-- PLACEHOLDER https://github.com/poissonconsulting/shinyssdtools/pull/56 (#56).
-
-- Merge.
-
-  Merge branch 'main' of github.com:poissonconsulting/shinyssdtools
-
-  # Conflicts:
-  # shinyssdtools.Rproj
-
-- Merge branch 'main' of github.com:poissonconsulting/shinyssdtools.
-
-- Merge pull request #52 from poissonconsulting/plot_prediction.
-
-  update to new ssd_plot args and render code
-
+- Update to CRAN ssdtools version 2.3.0.
+  - Remove invpareto from distribution options. 
+- Update citation to latest JOSS paper.
 
 # shinyssdtools 0.3.5 (2024-12-18)
 
