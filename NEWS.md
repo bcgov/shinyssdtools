@@ -1,5 +1,11 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# shinyssdtools 0.4.0 (2025-03-04)
+
+- Update to CRAN ssdtools version 2.3.0.
+  - Remove invpareto from distribution options. 
+- Update citation to latest JOSS paper.
+
 # shinyssdtools 0.3.5 (2024-12-18)
 
 - Remove unused package dependencies of stringr and scales. 

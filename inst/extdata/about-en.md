@@ -8,7 +8,7 @@ The prediction is the model averaged (using aicc) estimate of the fit.
 The percent hazard concentration is the concentration of the chemical which is predicted to affect that percent of the species tested.
 
 To cite package ssdtools in publications use:
-Thorley, J. and Schwarz C., (2018). ssdtools: An R package to fit Species Sensitivity Distributions. Journal of Open Source Software, 3(31), 1082. https://doi.org/10.21105/joss.01082
+Thorley, J., Fisher, R., Fox, D., and Schwarz, C. 2025. ssdtools v2: An R package to fit Species Sensitivity Distributions. JOSS 10(105): 7492. doi:10.21105/joss.07492.
 
 To cite the web app use:
 Seb Dalgarno (2018) ssdtools: A shiny web app to analyse species sensitivity distributions. Prepared by Poisson Consulting for the Ministry of the Environment, British Columbia. https://bcgov-env.shinyapps.io/ssdtools/
