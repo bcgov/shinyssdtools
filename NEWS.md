@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# shinyssdtools 0.4.1 (2025-04-02)
+
+- Merge pull request #187 from poissonconsulting/main.
+
+
 # shinyssdtools 0.4.0 (2025-03-04)
 
 - Update to CRAN ssdtools version 2.3.0.
