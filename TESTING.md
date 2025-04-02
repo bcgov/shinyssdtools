@@ -113,3 +113,4 @@ Steps should be followed in order and be done in a single session from start to 
 		i. It should be in French
 	c. Click on the English button
 		i. Should turn back to English 
+
