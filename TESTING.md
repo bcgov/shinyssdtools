@@ -95,10 +95,6 @@ Steps should be followed in order and be done in a single session from start to 
 			1) Waiting screen will appear
 			2) Confirm toxicant is listed in the top of the report
 			3) Confirm the formatting and information looks correct
-		iii. Select RMD file
-			1) Waiting screen will appear 
-			2) Confirm toxicant is listed in the top of the report
-			3) Confirm the formatting and information looks correct
 6. Go to R Code tab
 	a. Confirm R code is written and looks valid
 7. Go to About tab
