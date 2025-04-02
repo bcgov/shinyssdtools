@@ -2,8 +2,7 @@
 
 # shinyssdtools 0.4.1 (2025-04-02)
 
-- Merge pull request #187 from poissonconsulting/main.
-
+- Updated TESTING.md file. 
 
 # shinyssdtools 0.4.0 (2025-03-04)
 
