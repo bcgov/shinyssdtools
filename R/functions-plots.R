@@ -21,7 +21,7 @@ plot_predictions <- function(x, pred, conc, label, colour, shape, percent,
   }
 
   xlimits <- c(xmin, xmax)
-  if (is.na(xmin) & is.na(xmax)) {
+  if (is.na(xmin) && is.na(xmax)) {
     xlimits <- NULL
   }
 
