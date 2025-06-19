@@ -17,7 +17,6 @@ jobs:
     timeout-minutes: 60
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GITHUB_PAT: ${{ secrets.PRIVATE_ACTIONS_PAT }}
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
