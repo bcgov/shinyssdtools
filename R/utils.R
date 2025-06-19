@@ -22,7 +22,8 @@ units <- function() {
 }
 
 append_unit <- function(x, unit) {
-  if (unit == "")
+  if (unit == "") {
     return(x)
+  }
   paste0(x, " (", unit, ")")
 }
