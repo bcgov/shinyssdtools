@@ -15,7 +15,7 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-utils::globalVariables(c("."))
+utils::globalVariables(c(".", "at_bound", "computable", "log_lik", "aic", "aicc", "bic"))
 
 #' Safely try an expression and return NULL on error
 #' @param expr An R expression to evaluate
