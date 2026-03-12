@@ -21,3 +21,5 @@ inst/docs/
 
 .claude/settings.local.json
 tests/resources/
+
+french-translation-review/
