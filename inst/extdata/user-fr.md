@@ -36,7 +36,9 @@ Trois options sont disponibles pour déposer les données dans l'application:
 3. **Remplir le tableau interactif.**
     - Cliquer sur une cellule pour commencer à entrer les données. Faire un clic-droit pour ajouter ou supprimer des colonnes ou des rangées. Le nom des colonnes ne peut pas être modifiés. 
 
-Enfin, visualiser les données fournies dans le tableau à droite de l'onglet.
+Optionnellement, entrez un **nom de substance toxique** qui sera utilisé comme titre par défaut du graphique.
+
+Enfin, visualiser les données fournies dans le tableau à droite de l'onglet. Les données peuvent être téléchargées en format CSV ou XLSX.
 
 ### Étape 2: Ajustement des distributions 
 
@@ -48,7 +50,7 @@ Il est à noter que s'il y a un chevauchement dans l'ajustement de deux ou plusi
 Cliquez sur Mettre à jour l'ajustement pour mettre à jour les résultats après avoir modifié les distributions sélectionnées ou l'option de redimensionnement des données.
 3. **Sélectionner si les données doivent être redimensionnées**
 Ceci spécifie s'il faut laisser les valeurs de concentration inchangées (non coché) ou redimensionner les valeurs de concentration en divisant par la moyenne géométrique des valeurs finies positives minimales et maximales. Le redimensionnement offre une meilleure stabilité numérique dans les cas où les distributions ne parviennent pas à s'ajuster. Les estimations et les statistiques de qualité d'ajustement ne sont pas affectées.
-4. Mettre en forme le tracé du graphique à l'aide des entrées de la barre latérale et **télécharger le graphique et le tableau de l'évaluation de la qualité de l'ajustement des courbes de distribution** sous forme de fichiers .png et .csv respectivement. Sélectionner les unités à afficher sur l'axe des x du graphique. 
+4. Mettre en forme le tracé du graphique à l'aide des entrées de la barre latérale et **télécharger le graphique** en format PNG ou RDS et **le tableau de l'évaluation de la qualité de l'ajustement** en format CSV ou XLSX. Sélectionner les unités à afficher sur l'axe des x du graphique.
 
 Information additionnelle sur **le tableau de l'évaluation de la qualité de l'ajustement des courbes de distribution**:
 Les colonnes du tableau sont la distribution (dist), le nombre de paramètres (npars), le nombre d'observations (nobs), la log-vraisemblance (log_lik), le critère d'information d'Akaike (aic), le critère d'information d'Akaike corrigé pour la taille de l'échantillon (aicc), les différences des critères d'information (delta), les pondérations des critères d'information (wt), le critère d'information bayésien (bic), la statistique d'Anderson-Darling (ad), la statistique de Kolmogorov-Smirnov (ks), et la statistique de Cramer-von Mises (cvm). 
@@ -66,7 +68,7 @@ Les distributions ne sont pas traitées comme constituant une distribution uniqu
 
 3. Les intervalles de confiance ne sont pas calculés automatiquement car cela prend un certain temps. 
 Il faut cliquer sur le bouton `Obtenir bornes`.
-4. **Le graphique peut être mis en forme** à l'aide des entrées disponibles dans la barre latérale et **le graphique et le tableau peuvent être téléchargés** respectivement dans des fichiers .png et .csv.
+4. **Le graphique peut être mis en forme** à l'aide des entrées disponibles dans la barre latérale et **le graphique peut être téléchargé** en format PNG ou RDS et **le tableau des bornes de l'intervalle de confiance** en format CSV ou XLSX.
 
 ### Étape 4: Obtenir le rapport BCANZ
 Générer un rapport au format HTML ou PDF comprenant le tracé de la distribution ajustée, le tableau de qualité de l'ajustement, le tracé de l'ajustement moyen du modèle et le tableau des concentrations dangereuses/protectrices estimées. 

@@ -32,4 +32,6 @@ Trois options sont disponibles pour déposer les données dans l'application:
 3. **Remplir le tableau interactif.**
     - Cliquer sur une cellule pour commencer à entrer les données. Faire un clic-droit pour ajouter ou supprimer des colonnes ou des rangées. Le nom des colonnes ne peut pas être modifiés. 
 
-Enfin, visualiser les données fournies dans le tableau à droite de l'onglet.
+Optionnellement, entrez un **nom de substance toxique** qui sera utilisé comme titre par défaut du graphique.
+
+Enfin, visualiser les données fournies dans le tableau à droite de l'onglet. Les données peuvent être téléchargées en format CSV ou XLSX.

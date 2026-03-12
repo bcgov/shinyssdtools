@@ -7,4 +7,4 @@ Distributions are treated as constituting a single mixture distribution (as oppo
 Distributions are not treated as constituting a single distribution for calculating confidence intervals as this increases processing time considerably. 
 
 3. Since confidence limits take time to calculate, they are not calculated automatically; you must press the `Get CL` button.
-4. **Format plot** using various inputs in sidebar and **download plot and table** as png and csv file, respectively.
+4. **Format plot** using various inputs in sidebar and **download the plot** as PNG or RDS and the **confidence limits table** as CSV or XLSX.

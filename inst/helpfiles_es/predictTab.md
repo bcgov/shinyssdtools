@@ -7,4 +7,4 @@ Las distribuciones se tratan como una sola distribución de mezcla (en oposició
 Las distribuciones no se tratan como una sola distribución para calcular intervalos de confianza, ya que esto aumenta considerablemente el tiempo de procesamiento.
 
 3. Dado que los límites de confianza tardan en calcularse, no se calculan automáticamente; debe presionar el botón `Obtener CL`.
-4. **Formatee el gráfico** usando varias entradas en la barra lateral y **descargue el gráfico y la tabla** como archivos png y csv, respectivamente.
+4. **Formatee el gráfico** usando varias entradas en la barra lateral y **descargue el gráfico** en formato PNG o RDS y **la tabla de límites de confianza** en formato CSV o XLSX.

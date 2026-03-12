@@ -4,7 +4,7 @@
 * Data should be provided for **only one chemical** at a time.
 * Each species should have only one concentration value.
 * Data must have **at least one column** containing **at least 6 positive, non-missing concentration values**.
-* Any additional columns such as **species** or **group** are accepted but are not only used by plotting functions if two or more unique values.
+* Any additional columns such as **species** or **group** are accepted but are only used by plotting functions if there are two or more unique values.
 
 <center>
 
@@ -31,4 +31,6 @@ There are three options to provide data to the app:
 3. **Fill out the interactive table**. 
     - Species and Group columns are optional. Click on a cell to begin entering data. Right-click on the table to delete/insert rows or columns. Column names cannot be changed. 
     
-Finally, preview the data provided in the table on the right hand side of the tab.  
+Optionally, enter a **toxicant name** which will be used as the default plot title.
+
+Finally, preview the data provided in the table on the right hand side of the tab. The dataset can be downloaded as CSV or XLSX.

@@ -33,4 +33,6 @@ Hay tres opciones para proporcionar datos a la aplicación:
 3. **Completar la tabla interactiva**.
     - Las columnas de Especies y Grupo son opcionales. Haga clic en una celda para comenzar a ingresar datos. Haga clic derecho en la tabla para eliminar/insertar filas o columnas. Los nombres de las columnas no se pueden cambiar.
 
-Finalmente, obtenga una vista previa de los datos proporcionados en la tabla en el lado derecho de la pestaña.
+Opcionalmente, ingrese un **nombre de sustancia tóxica** que se utilizará como título predeterminado del gráfico.
+
+Finalmente, obtenga una vista previa de los datos proporcionados en la tabla en el lado derecho de la pestaña. Los datos se pueden descargar en formato CSV o XLSX.

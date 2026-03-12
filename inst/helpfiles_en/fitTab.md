@@ -9,7 +9,7 @@ Please see the article [here](https://bcgov.github.io/ssdtools/articles/distribu
 Click `Update fit` to update the outputs after changing selected distributions or data rescaling option. 
 3. **Select whether to rescale data**
 This specifies whether to leave the concentration values unchanged (unchecked) or to rescale concentration values by dividing by the geometric mean of the minimum and maximum positive finite values. Rescaling provides better numerical stability in cases where distributions are failing to fit. The estimates and goodness-of-fit statistics are unaffected. 
-4. Format the plot using inputs in the sidebar and **download plot and goodness of fit table** as png and csv files, respectively. Select units to display on the x-axis of the plot.
+4. Format the plot using inputs in the sidebar and **download the plot** as PNG or RDS and the **goodness of fit table** as CSV or XLSX. Select units to display on the x-axis of the plot.
 
 Additional information about the **goodness of fit table**:
 The columns in the goodness of fit table are the distribution (dist), the number of parameters (npars), the number of observations (nobs), the log-likelihood (log_lik), Akaike's Information Criterion (aic), Akaike's Information Criterion corrected for sample size (aicc), the Information Criterion differences (delta), the Information Criterion weights (wt), Bayesian Information Criterion (bic), the Anderson-Darling statistic (ad), the Kolmogorov-Smirnov statistic (ks), and the Cramer-von Mises statistic (cvm). 

@@ -94,7 +94,7 @@ build_helpfiles_for_language <- function(lang) {
         output = "Fit distributions"
       ),
       predictTab = list(
-        section = "Step 3: Predict hazard concentration or percent of species effected",
+        section = "Step 3: Predict hazard concentration or percent of species affected",
         output = "Estimate hazard concentration"
       ),
       reportTab = list(
@@ -120,8 +120,8 @@ build_helpfiles_for_language <- function(lang) {
         output = "Estimation de la concentration pr\u00e9sentant un risque"
       ),
       reportTab = list(
-        section = "\u00c9tape 4: Obtenir le BCANZ rapport",
-        output = "Obtenir le BCANZ rapport"
+        section = "\u00c9tape 4: Obtenir le rapport BCANZ",
+        output = "Obtenir le rapport BCANZ"
       ),
       rcodeTab = list(
         section = "\u00c9tape 5: Obtenir le code R",
