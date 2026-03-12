@@ -19,11 +19,7 @@
 # ==================================
 # Tests for reactive logic in mod_data_server using testServer
 
-# Helper to create mock translations
-
 # Demo Data Tests -------------------------------------------------------------
-test_translations <- shinyssdtools:::translations
-test_translations$trans <- test_translations[["english"]]
 
 # basic demo data functionality works ------------------------------------
 test_that("mod_data_server loads demo data when demo button clicked", {
@@ -41,7 +37,6 @@ test_that("mod_data_server loads demo data when demo button clicked", {
       session$setInputs(demoData = 1)
       session$flushReact()
 
-      print(has_data())
       expect_true(has_data())
 
       # Check data structure
@@ -118,7 +113,6 @@ test_that("demo data has French column names when language is French", {
       session$flushReact()
 
       data <- clean_data()
-      print(data)
       expect_true(is.data.frame(data))
       expect_equal(
         names(data),

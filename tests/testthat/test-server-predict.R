@@ -15,9 +15,6 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-test_translations <- shinyssdtools:::translations
-test_translations$trans <- test_translations[["english"]]
-
 test_data <- clean_ssd_data(boron.data)
 data_mod <- mock_data_module(data = test_data)
 
@@ -49,7 +46,6 @@ test_that("predictions are valid", {
       returned <- session$returned
 
       pred <- returned$predictions()
-      print(pred)
       expect_true(is.data.frame(pred))
       expect_true(nrow(pred) > 0)
       expect_true("est" %in% names(pred))

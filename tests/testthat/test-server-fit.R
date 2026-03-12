@@ -15,9 +15,6 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-test_translations <- shinyssdtools:::translations
-test_translations$trans <- test_translations[["english"]]
-
 test_data <- clean_ssd_data(boron.data)
 data_mod <- mock_data_module(data = test_data)
 

@@ -56,35 +56,6 @@ expect_snapshot_data <- function(x, name) {
   testthat::expect_snapshot_file(path, paste0(name, ".csv"))
 }
 
-# RDS Snapshot Helpers --------------------------------------------------------
-
-#' Save an R object to a temporary RDS file
-#'
-#' @param x Any R object
-#' @return Character path to the temporary RDS file
-save_rds <- function(x) {
-  path <- tempfile(fileext = ".rds")
-  saveRDS(x, path)
-  path
-}
-
-#' Expect an R object to match an RDS snapshot
-#'
-#' This is useful for complex S3 objects like fitdists where structure matters.
-#'
-#' @param x An R object to snapshot
-#' @param name The name for the snapshot file (without extension)
-#'
-#' @examples
-#' \dontrun{
-#' fit <- ssd_fit_bcanz(data)
-#' expect_snapshot_rds(fit, "boron_fit_default")
-#' }
-expect_snapshot_rds <- function(x, name) {
-  path <- save_rds(x)
-  testthat::expect_snapshot_file(path, paste0(name, ".rds"))
-}
-
 #' Expect a fitdists object to match snapshot
 #'
 #' Specialized helper for ssdtools fitdists objects that extracts key components
@@ -109,6 +80,14 @@ expect_snapshot_fit <- function(fit, name) {
 
   testthat::expect_snapshot_value(fit_summary, style = "json2", name = name)
 }
+
+# Shared Test Fixtures --------------------------------------------------------
+
+#' Standard English translations for testServer tests
+#'
+#' Use this instead of duplicating translation setup in each test file.
+test_translations <- shinyssdtools:::translations
+test_translations$trans <- test_translations[["english"]]
 
 # Mock Data Helpers -----------------------------------------------------------
 
@@ -210,34 +189,6 @@ set_test_seed <- function(seed = 12345) {
 }
 
 # AppDriver Helpers -----------------------------------------------------------
-
-#' Create an AppDriver with standard test settings
-#'
-#' @param name Character name for the test (used in snapshots)
-#' @param seed Integer seed for reproducibility (default: 12345)
-#' @param ... Additional arguments passed to AppDriver$new()
-#' @return An AppDriver instance
-#'
-#' @examples
-#' \dontrun{
-#' test_that("app loads", {
-#'   app <- create_test_app("app_loads")
-#'   expect_true(app$get_js("!!document.querySelector('.navbar')"))
-#'   app$stop()
-#' })
-#' }
-create_test_app <- function(name, seed = 12345, ...) {
-  shinytest2::AppDriver$new(
-    variant = shinytest2::platform_variant(),
-    name = name,
-    seed = seed,
-    height = 1080,
-    width = 1920,
-    wait = TRUE,
-    timeout = 20000,
-    ...
-  )
-}
 
 #' Wait for app to process data loading
 #'
@@ -343,42 +294,3 @@ create_workflow_app <- function(name) {
   app
 }
 
-# Data Comparison Helpers -----------------------------------------------------
-
-#' Compare two data frames with tolerance for numeric differences
-#'
-#' @param actual Actual data frame
-#' @param expected Expected data frame
-#' @param tolerance Numeric tolerance for comparisons (default: 1e-7)
-#' @return Logical indicating whether data frames match within tolerance
-compare_data_frames <- function(actual, expected, tolerance = 1e-7) {
-  if (!identical(names(actual), names(expected))) {
-    return(FALSE)
-  }
-
-  if (nrow(actual) != nrow(expected)) {
-    return(FALSE)
-  }
-
-  for (col in names(actual)) {
-    if (is.numeric(actual[[col]])) {
-      # Handle NA values
-      actual_col <- actual[[col]]
-      expected_col <- expected[[col]]
-      if (!identical(is.na(actual_col), is.na(expected_col))) {
-        return(FALSE)
-      }
-      # Compare non-NA values with tolerance
-      non_na <- !is.na(actual_col)
-      if (!all(abs(actual_col[non_na] - expected_col[non_na]) <= tolerance)) {
-        return(FALSE)
-      }
-    } else {
-      if (!identical(actual[[col]], expected[[col]])) {
-        return(FALSE)
-      }
-    }
-  }
-
-  TRUE
-}
