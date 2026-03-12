@@ -58,7 +58,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_navanalyse",
     english = "Analyse",
-    french = "Analyser",
+    french = "Analyse",
     spanish = "Analizar"
   ),
   dplyr::tibble(
@@ -100,7 +100,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_tabreport",
     english = "Get BCANZ report",
-    french = "Obtenir le BCANZ rapport",
+    french = "Obtenir le rapport BCANZ",
     spanish = "Obtener informe BCANZ"
   ),
   dplyr::tibble(
@@ -281,7 +281,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_3tabtitle",
     english = "3. Predict",
-    french = "3. Pr\u00e9diction",
+    french = "3. Estimation",
     spanish = "3. Predicci\u00f3n"
   ),
   dplyr::tibble(
@@ -353,7 +353,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_3help",
     english = "Click 'Get CL' to calculate the upper and lower confidence limits (CL) for the estimate.",
-    french = "Cliquer 'Obtenir bornes' pour obtenir les bornes inf\u00e9rieures et sup\u00e9rieures de l'intervalle de confiance  pour l\u2019estimation.",
+    french = "Cliquez sur 'Obtenir bornes' pour obtenir les bornes inf\u00e9rieures et sup\u00e9rieures de l'intervalle de confiance pour l\u2019estimation.",
     spanish = "Haga clic en 'Obtener LC' para calcular los l\u00edmites de confianza superior e inferior (LC) para la estimaci\u00f3n."
   ),
   dplyr::tibble(
@@ -401,13 +401,13 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_3includeci",
     english = "Include on model average plot",
-    french = "Inclure sur le graphique de la moyenne du mod\u00e8le",
+    french = "Inclure sur le graphique de l'inf\u00e9rence multimod\u00e8le",
     spanish = "Incluir en gr\u00e1fico de promedio del modelo"
   ),
   dplyr::tibble(
     id = "ui_3ribbonstyle",
     english = "Model averaged estimate and CL style",
-    french = "Style de l'estimation moyenne du mod\u00e8le et bornes",
+    french = "Style de l'estimation par inf\u00e9rence multimod\u00e8le et bornes",
     spanish = "Estilo de estimaci\u00f3n promediada del modelo y LC"
   ),
   dplyr::tibble(
@@ -521,7 +521,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_getreport",
     english = "Get Report",
-    french = "Obtenir Rapport",
+    french = "Obtenir le rapport",
     spanish = "Obtener Informe"
   ),
   dplyr::tibble(
@@ -556,7 +556,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_hintconcmiss",
     english = "Concentration must not be missing.",
-    french = "La concentration ne doit \u00eatre manquante.",
+    french = "La concentration ne doit pas \u00eatre manquante.",
     spanish = "La concentraci\u00f3n no debe faltar."
   ),
   dplyr::tibble(
@@ -574,7 +574,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_hintpos",
     english = "Concentration values must be positive.",
-    french = "Les valeurs de concentration doivent \u00eatre des  positives.\u00a0\u00a0",
+    french = "Les valeurs de concentration doivent \u00eatre positives.",
     spanish = "Los valores de concentraci\u00f3n deben ser positivos."
   ),
   dplyr::tibble(
@@ -586,7 +586,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_hintident",
     english = "Concentration values must not all be identical.",
-    french = "Les valeur de concentration ne doivent pas \u00eatre toutes identiques.",
+    french = "Les valeurs de concentration ne doivent pas \u00eatre toutes identiques.",
     spanish = "Los valores de concentraci\u00f3n no deben ser todos id\u00e9nticos."
   ),
   dplyr::tibble(
@@ -598,7 +598,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_hintdist",
     english = "At least one distribution must be selected.",
-    french = "Au moins une distribution doit  \u00eatre s\u00e9lectionn\u00e9e.\u00a0",
+    french = "Au moins une distribution doit \u00eatre s\u00e9lectionn\u00e9e.",
     spanish = "Se debe seleccionar al menos una distribuci\u00f3n."
   ),
   dplyr::tibble(
@@ -628,7 +628,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_hintcolour",
     english = "Colour variable cannot be numeric.",
-    french = "La colonne 'Colour' ne doit pas contenir de nombres.",
+    french = "La colonne 'Couleurs' ne doit pas contenir de nombres.",
     spanish = "La variable de color no puede ser num\u00e9rica."
   ),
   dplyr::tibble(
@@ -652,7 +652,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_hintboot",
     english = "Bootstrap samples must not be missing.",
-    french = "Les \u00e9chantillons bootstrap ne doivent pas \u00eatre manquants.",
+    french = "Les simulations bootstrap ne doivent pas \u00eatre manquantes.",
     spanish = "Las muestras bootstrap no deben faltar."
   ),
   dplyr::tibble(
@@ -812,7 +812,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_4genbody",
     english = "This may take a minute, depending on the number of bootstrap samples selected.",
-    french = "Cela peut prendre une minute, en fonction du nombre d'\u00e9chantillons bootstrap s\u00e9lectionn\u00e9.",
+    french = "Cela peut prendre une minute, en fonction du nombre de simulations bootstrap s\u00e9lectionn\u00e9.",
     spanish = "Esto puede tomar un minuto, dependiendo del n\u00famero de muestras bootstrap seleccionadas."
   ),
   dplyr::tibble(

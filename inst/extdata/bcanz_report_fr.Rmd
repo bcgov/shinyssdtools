@@ -79,7 +79,7 @@ params$pred_cl |>
 ```
 
 Tableau 2. L'estimation de la concentration présentant un risque ou une protection. 
-«HCx» est le % d'espèces affectées ; «PCx» est le % d'espèces protégées ; «est» est l'estimation de la concentration moyennée par le modèle ; «se» est l'erreur standard de l'estimation basée sur le bootstrap ; «lcl» et «ucl» sont les limites de confiance inférieure et supérieure de 95 % basées sur le bootstrap ; «nboot» est le nombre d'échantillons bootstrap ; «pboot» est la proportion d'échantillons bootstrap qui ont convergé. 
+«HCx» est le % d'espèces affectées ; «PCx» est le % d'espèces protégées ; «est» est l'estimation de la concentration moyennée par le modèle ; «se» est l'erreur standard de l'estimation basée sur le bootstrap ; «lcl» et «ucl» sont les limites de confiance inférieure et supérieure de 95 % basées sur le bootstrap ; «nboot» est le nombre d'simulations bootstrap ; «pboot» est la proportion d'simulations bootstrap qui ont convergé. 
 L'estimation moyenne du modèle est calculée en traitant la distribution comme une distribution de mélange unique et pondérée. 
 Les distributions dont la différence AIC absolue est supérieure à un delta par défaut de 9,21 (correspondant à un poids ne dépassant pas 0,01) sont exclues avant le bootstrap.
 
