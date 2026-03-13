@@ -31,7 +31,7 @@ Hay tres opciones para proporcionar datos a la aplicación:
 
 1. **Usar el conjunto de datos de demostración de boro**.
     - Vista previa rápida de la funcionalidad de la aplicación en un conjunto de datos que 'funciona'.
-    - Cita: [Consejo Canadiense de Ministros del Medio Ambiente. 2009. Directrices canadienses de calidad del agua para la protección de la vida acuática: Boro. En: Directrices de calidad ambiental canadienses, 2009, Consejo Canadiense de Ministros del Medio Ambiente, Winnipeg.](http://ceqg-rcqe.ccme.ca/download/en/324/)
+    - Cita: [Consejo Canadiense de Ministros del Medio Ambiente. 2009. Directrices canadienses de calidad del agua para la protección de la vida acuática: Boro. En: Directrices de calidad ambiental canadienses, 2009, Consejo Canadiense de Ministros del Medio Ambiente, Winnipeg.](https://ccme.ca/en/res/boron-en-canadian-water-quality-guidelines-for-the-protection-of-aquatic-life.pdf)
 2. **Cargar un archivo csv**.
     - No se aceptan formatos de archivo de Excel. Si tiene un archivo de Excel, intente exportar una hoja de cálculo a csv.
 3. **Completar la tabla interactiva**.

@@ -30,7 +30,7 @@ Trois options sont disponibles pour déposer les données dans l'application:
 
 1. **Utiliser les données démo du Bore.**
     - Permet de connaître rapidement les fonctions de l'application avec un ensemble «fonctionnel» de données.
-    - Citation: [Canadian Council of Ministers of the Environment. 2009. Canadian water quality guidelines for the protection of aquatic life: Boron. In: Canadian  environmental  quality guidelines, 2009, Canadian Council of  Ministers of the Environment, Winnipeg.](http://ceqg-rcqe.ccme.ca/download/en/324/)
+    - Citation: [Canadian Council of Ministers of the Environment. 2009. Canadian water quality guidelines for the protection of aquatic life: Boron. In: Canadian  environmental  quality guidelines, 2009, Canadian Council of  Ministers of the Environment, Winnipeg.](https://ccme.ca/en/res/boron-en-canadian-water-quality-guidelines-for-the-protection-of-aquatic-life.pdf)
 2. **Télécharger un fichier .csv**.
     - Le format Excel n'est pas accepté. Si vous avez un fichier Excel, il faut l'exporter dans une feuille de calcul .csv.
 3. **Remplir le tableau interactif.**
