@@ -19,7 +19,7 @@ La concentración de peligro porcentual es la concentración del químico que se
 Para informar un error, comportamiento inesperado o solicitar una función, presente un [problema de GitHub aquí](https://github.com/poissonconsulting/shinyssdtools/issues).
 
 Para citar el paquete ssdtools en publicaciones, use:
-Thorley, J., Fisher, R., Fox, D., and Schwarz, C. 2025. ssdtools v2: An R package to fit Species Sensitivity Distributions. JOSS 10(105): 7492. doi:10.21105/joss.07492.
+Thorley, J., Fisher, R., Fox, D., and Schwarz, C. 2025. [ssdtools v2: An R package to fit Species Sensitivity Distributions. JOSS 10(105): 7492.](https://joss.theoj.org/papers/10.21105/joss.07492) `doi:10.21105/joss.07492`.
 
 Para citar la aplicación web, use:
 Seb Dalgarno (2018) ssdtools: A shiny web app to analyse species sensitivity distributions. Prepared by Poisson Consulting for the Ministry of the Environment, British Columbia. `https://bcgov-env.shinyapps.io/ssdtools/`

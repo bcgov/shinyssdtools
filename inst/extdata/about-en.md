@@ -19,7 +19,7 @@ The percent hazard concentration is the concentration of the chemical which is p
 To report a bug, unexpected behaviour, or to request a feature, please file a [GitHub issue here](https://github.com/poissonconsulting/shinyssdtools/issues).
 
 To cite the ssdtools package in publications, use:
-Thorley, J., Fisher, R., Fox, D., and Schwarz, C. 2025. ssdtools v2: An R package to fit Species Sensitivity Distributions. JOSS 10(105): 7492. doi:10.21105/joss.07492.
+Thorley, J., Fisher, R., Fox, D., and Schwarz, C. 2025. [ssdtools v2: An R package to fit Species Sensitivity Distributions. JOSS 10(105): 7492.](https://joss.theoj.org/papers/10.21105/joss.07492) `doi:10.21105/joss.07492`.
 
 To cite the web app, use:
 Seb Dalgarno (2018) ssdtools: A shiny web app to analyse species sensitivity distributions. Prepared by Poisson Consulting for the Ministry of the Environment, British Columbia. `https://bcgov-env.shinyapps.io/ssdtools/`
