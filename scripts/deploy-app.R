@@ -15,15 +15,11 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-# install ssdtools
-# install.packages("ssdtools")
-# get cran versions of poisson pkgs
-pak::pak("universals")
-pak::pak("chk")
-remotes::install_github("poissonconsulting/ssdtools")
+# 1. Install dependencies from CRAN (not r-universe) to avoid dev versions
+install.packages("ssdtools", repos = "https://cran.r-project.org")
 renv::snapshot()
 
-# build user guide/about for all languages
+# 2. Build user guide/about HTML for all languages
 rmarkdown::render("inst/extdata/user-en.md", output_format = "html_fragment")
 rmarkdown::render("inst/extdata/user-fr.md", output_format = "html_fragment")
 rmarkdown::render("inst/extdata/user-es.md", output_format = "html_fragment")
@@ -31,33 +27,33 @@ rmarkdown::render("inst/extdata/about-en.md", output_format = "html_fragment")
 rmarkdown::render("inst/extdata/about-fr.md", output_format = "html_fragment")
 rmarkdown::render("inst/extdata/about-es.md", output_format = "html_fragment")
 
-# build helpfiles from user guides (single source of truth)
+# 3. Build helpfiles from user guides (single source of truth)
 source("scripts/build-helpfiles.R")
 
-# deploy to poissonconsulting test site
+# 4. Deploy to poissonconsulting test site
 rsconnect::deployApp(
   account = "poissonconsulting",
   appName = "shinyssdtools-dev",
   forceUpdate = TRUE
 )
 
-# deploy to poissonconsulting live site
+# 5. Deploy to poissonconsulting live site
 rsconnect::deployApp(
   account = "poissonconsulting",
   appName = "shinyssdtools",
   forceUpdate = TRUE
 )
 
-# deploy to bcgov test site
-rsconnect::deployApp(
-  account = "bcgov-env",
-  appName = "shinyssdtools_test",
-  forceUpdate = TRUE
-)
+# 6. Deploy to bcgov test site (requires bcgov-env account access)
+# rsconnect::deployApp(
+#   account = "bcgov-env",
+#   appName = "shinyssdtools_test",
+#   forceUpdate = TRUE
+# )
 
-# deploy to bcgov live site
-rsconnect::deployApp(
-  account = "bcgov-env",
-  appName = "ssdtools",
-  forceUpdate = TRUE
-)
+# 7. Deploy to bcgov live site (requires bcgov-env account access)
+# rsconnect::deployApp(
+#   account = "bcgov-env",
+#   appName = "ssdtools",
+#   forceUpdate = TRUE
+# )
