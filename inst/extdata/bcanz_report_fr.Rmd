@@ -61,8 +61,7 @@ kable(params$gof_table) %>%
   kable_styling(full_width = FALSE)
 ```
 
-Tableau 1 : Les statistiques de qualité de l'ajustement.
-'dist' est le nom de la distribution ; 'npars' est le nombre de paramètres ; 'nobs' est le nombre d'observations ; 'log_lik' est la log-vraisemblance ; 'aic' est le critère d'information d'Akaike ; 'aicc' est le critère d'information d'Akaike corrigé pour la taille de l'échantillon ; 'delta' est les différences des critères d'information ; 'wt' est les pondérations des critères d'information ; 'bic' est le critère d'information bayésien ; 'ad' est la statistique d'Anderson-Darling ; 'ks' est la statistique de Kolmogorov-Smirnov ; 'cvm' est la statistique de Cramer-von Mises. 'delta' et 'wt' sont basés sur 'aic' pour les données censurées et sur 'aicc' pour les données non censurées.
+Tableau 1 : Statistiques de qualité d'ajustement. « dist » est le nom de la distribution; « npars » est le nombre de paramètres; « nobs » est le nombre d'observations; « log_lik » est la log-vraisemblance; « aic » est le critère d'information d'Akaike; « aicc » est le critère d'information d'Akaike corrigé pour la taille de l'échantillon; « delta » correspond aux différences de critère d'information; « wt » correspond aux poids des critères d'information; « bic » est le critère d'information bayésien; « ad » est la statistique d'Anderson-Darling; « ks » est la statistique de Kolmogorov-Smirnov; « cvm » est la statistique de Cramér-von Mises. Les valeurs « delta » et « wt » sont basées sur « aic » pour les données censurées et sur « aicc » pour les données non censurées.
 
 \newpage
 

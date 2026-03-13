@@ -1,5 +1,4 @@
 ## Obtenir le code R
 
 
-Copier le code R pour reproduire la programmation. 
-Le code est ajouté après chaque exécution dans l'application (par exemple : le code qui génère l'estimation des bornes de l'intervalle de confiance apparaitra après que `Obtenir bornes` aura été cliqué.  
+Copiez le code R pour reproduire les résultats par programmation. Le code est généré dynamiquement en fonction des entrées de l'utilisateur et des fonctions exécutées dans l'application (par exemple, le code permettant de générer les limites de confiance apparaît après avoir cliqué sur le bouton « Obtenir les bornes »).  

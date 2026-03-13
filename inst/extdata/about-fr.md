@@ -1,18 +1,18 @@
-Cette application web ajuste les fonctions de distribution de la sensibilité des espèces aux données de concentration. 
-L'application est basée sur le progiciel R [ssdtools](https://bcgov.github.io/ssdtools/), et partage les mêmes fonctions. 
-Elle sera mise à jour et redéployée à la suite de toute modification pertinente apportée à ssdtools.
-Il est recommandé, lorsque l'estimation du HC5 généré par cette application est rapportée, d'inclure aussi la version de ssdtools et le nom des fonctions de distribution ajustées aux données.
+Cette application ajuste des distributions de sensibilité des espèces aux données de concentration.
+Elle est basée sur le progiciel R [ssdtools](https://bcgov.github.io/ssdtools/) et offre les mêmes fonctionnalités. 
+L'application sera mise à jour et redéployée à la suite de toute modification pertinente apportée à ssdtools.
+Lorsque vous rapportez les estimations de HC5 générées à l'aide de cette application, il est recommandé d'indiquer la version de ssdtools ainsi que le nom des distributions ajustées aux données.
 
 Pour plus d'informations sur les méthodes utilisées, consultez les articles de ssdtools :
 
 - [Distributions](https://bcgov.github.io/ssdtools/articles/distributions.html) - distributions de probabilité disponibles pour l'ajustement des DSE
-- [Inférence multimodèle](https://bcgov.github.io/ssdtools/articles/model-averaging.html) - comment les estimations moyennées des DSE sont calculées
-- [Intervalles de confiance](https://bcgov.github.io/ssdtools/articles/confidence-intervals.html) - méthodes de calcul des bornes d'incertitude sur les concentrations dangereuses
-- [Biais des petits échantillons](https://bcgov.github.io/ssdtools/articles/small-sample-bias.html) - considérations sur les biais lors de l'utilisation d'échantillons de petite taille
+- [Inférence multimodèle](https://bcgov.github.io/ssdtools/articles/model-averaging.html) - calcul des estimations de DSE moyennées entre modèles
+- [Intervalles de confiance](https://bcgov.github.io/ssdtools/articles/confidence-intervals.html) - méthodes de calcul des bornes d'incertitude des concentrations dangereuses
+- [Biais des petits échantillons](https://bcgov.github.io/ssdtools/articles/small-sample-bias.html) - considérations relatives aux biais lorsque la taille de l'échantillon est limitée
 - [Personnalisation des graphiques](https://bcgov.github.io/ssdtools/articles/customising-plots.html) - modification des graphiques de DSE
 - [FAQ](https://bcgov.github.io/ssdtools/articles/faqs.html) - questions fréquemment posées
 
-Les colonnes du tableau de l’évaluation de la qualité de l’ajustement des courbes de distribution sont la distribution (dist), le nombre de paramètres (npars), le nombre d’observations (nobs), la log-vraisemblance (log_lik), le critère d’information Akaike (aic), le critère d’information Akaike corrigé pour la taille de l’échantillon (aicc), la différence entre AICc (delta), la pondération des critères d’information AICc (wt), le critère d’information Bayésien (bic), la statistique d’Anderson-Darling (ad), la statistique de Kolmogorov-Smirnov (ks) et la statistique de Cramer-von Mises (cvm). 
+Les colonnes du tableau de l’évaluation de la qualité de l’ajustement sont : la distribution (dist), le nombre de paramètres (npars), le nombre d’observations (nobs), la log-vraisemblance (log_lik), le critère d’information Akaike (aic), le critère d’information Akaike corrigé pour la taille de l’échantillon (aicc), la différence d’AICc (delta), le poids d’Akaike fondé sur l’AICc (wt), le critère d’information Bayésien (bic), la statistique d’Anderson-Darling (ad), la statistique de Kolmogorov-Smirnov (ks) et la statistique de Cramer-von Mises (cvm). 
 L’estimation de la fonction de distribution finale est basée sur l’inférence multimodèle (à partir de l’AICc). 
 La concentration présentant un risque est la concentration estimée d’une substance affectant un centile (seuil) sélectionné de l’ensemble des espèces.
 

@@ -22,7 +22,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_navtitle",
     english = "Fit and Plot Species Sensitivity Distributions",
-    french = "Ajustement et Repr\u00e9sentation des courbes de Distribution de la Sensibilit\u00e9 des Esp\u00e8ces",
+    french = "Ajustement et tracer des distributions de sensibilit\u00e9 des esp\u00e8ces",
     spanish = "Ajuste y Gr\u00e1fico de Distribuciones de Sensibilidad de Especies"
   ),
   dplyr::tibble(
@@ -142,7 +142,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_1csv",
     english = "2. Upload CSV file",
-    french = "2. T\u00e9l\u00e9charger un fichier CSV",
+    french = "2. T\u00e9l\u00e9verser un fichier CSV",
     spanish = "2. Cargar archivo CSV"
   ),
   dplyr::tibble(
@@ -167,7 +167,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_1preview",
     english = "Preview chosen dataset",
-    french = "Pr\u00e9visualiser l'ensemble de donn\u00e9es",
+    french = "Aper\u00e7u de l'ensemble de donn\u00e9es s\u00e9lectionn\u00e9",
     spanish = "Vista previa del conjunto de datos elegido"
   ),
   dplyr::tibble(
@@ -527,7 +527,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_prevreport",
     english = "Preview report",
-    french = "Pr\u00e9visualiser le rapport",
+    french = "Aper\u00e7u du rapport",
     spanish = "Vista previa del informe"
   ),
   dplyr::tibble(
@@ -550,13 +550,13 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_hintconc0",
     english = "Concentration must not be 0.",
-    french = "La concentration ne doit pas \u00eatre z\u00e9ro.",
+    french = "La concentration ne doit pas \u00eatre \u00e0 z\u00e9ro.",
     spanish = "La concentraci\u00f3n no debe ser 0."
   ),
   dplyr::tibble(
     id = "ui_hintconcmiss",
     english = "Concentration must not be missing.",
-    french = "La concentration ne doit pas \u00eatre manquante.",
+    french = "La valeur de concentration ne doit pas \u00eatre vide.",
     spanish = "La concentraci\u00f3n no debe faltar."
   ),
   dplyr::tibble(
@@ -616,7 +616,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_hintpredict",
     english = "You have not successfully generated predictions yet. Run the 'Predict' tab first.",
-    french = "Aucune pr\u00e9diction n'a encore \u00e9t\u00e9 g\u00e9n\u00e9r\u00e9e avec succ\u00e8s. Ex\u00e9cuter d'abord l'onglet 'Estimation'.",
+    french = "Aucune pr\u00e9diction n'a encore \u00e9t\u00e9 g\u00e9n\u00e9r\u00e9e avec succ\u00e8s. Ex\u00e9cutez d'abord l'onglet \u00ab Estimation \u00bb.",
     spanish = "A\u00fan no ha generado predicciones con \u00e9xito. Ejecute primero la pesta\u00f1a 'Predicci\u00f3n'."
   ),
   dplyr::tibble(
@@ -628,7 +628,7 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_hintcolour",
     english = "Colour variable cannot be numeric.",
-    french = "La colonne 'Couleurs' ne doit pas contenir de nombres.",
+    french = "La variable de couleur ne peut pas \u00eatre num\u00e9rique.",
     spanish = "La variable de color no puede ser num\u00e9rica."
   ),
   dplyr::tibble(
@@ -640,19 +640,19 @@ translations <- dplyr::bind_rows(
   dplyr::tibble(
     id = "ui_hintthresh",
     english = "Affecting % species must not be missing.",
-    french = "Le % d'esp\u00e8ces affect\u00e9es ne doit pas \u00eatre manquant.",
+    french = "Le pourcentage d'esp\u00e8ces affect\u00e9es ne doit pas \u00eatre vide.",
     spanish = "El % de especies afectadas no debe faltar."
   ),
   dplyr::tibble(
     id = "ui_hintthreshpc",
     english = "Protecting % species must not be missing.",
-    french = "Le % d'esp\u00e8ces prot\u00e9g\u00e9es ne doit pas \u00eatre manquant.",
+    french = "Le pourcentage d'esp\u00e8ces prot\u00e9g\u00e9es ne doit pas \u00eatre vide.",
     spanish = "El % de especies protegidas no debe faltar."
   ),
   dplyr::tibble(
     id = "ui_hintboot",
     english = "Bootstrap samples must not be missing.",
-    french = "Les simulations bootstrap ne doivent pas \u00eatre manquantes.",
+    french = "Le nombre d'\u00e9chantillons bootstrap ne doit pas \u00eatre vide.",
     spanish = "Las muestras bootstrap no deben faltar."
   ),
   dplyr::tibble(

@@ -10,4 +10,4 @@ Les distributions ne sont pas traitées comme constituant une distribution uniqu
 
 3. Les intervalles de confiance ne sont pas calculés automatiquement car cela prend un certain temps. 
 Il faut cliquer sur le bouton `Obtenir bornes`.
-4. **Le graphique peut être mis en forme** à l'aide des entrées disponibles dans la barre latérale et **le graphique peut être téléchargé** en format PNG ou RDS et **le tableau des bornes de l'intervalle de confiance** en format CSV ou XLSX.
+4. Utilisez les options de la barre latérale pour mettre en forme le graphique, puis **téléchargez le graphique** au format PNG ou RDS ainsi que **le tableau des limites de confiance** aux formats CSV ou XLSX.

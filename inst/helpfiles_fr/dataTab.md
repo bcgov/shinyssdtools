@@ -3,7 +3,7 @@
 
 * Les données doivent être fournies pour **une substance chimique** à la fois.
 * Une seule valeur doit être entrée par espèce.
-* L'ensemble des données doit contenir **au moins une colonne** comportant au **minimum 6 concentrations positives et sans valeur manquante**.
+* L'ensemble de données doit contenir **au moins une colonne** comprenant au **minimum six valeurs de concentration positives et non manquantes**.
 * Des colonnes pour **les espèces et les groupes** taxonomiques peuvent également être ajoutées. Des étiquettes et des couleurs sont alors disponibles pour permettre leur identification dans le graphique.
 * Des colonnes additionnelles sont possibles mais elles ne sont reliées à aucune fonction. 
 
@@ -32,6 +32,6 @@ Trois options sont disponibles pour déposer les données dans l'application:
 3. **Remplir le tableau interactif.**
     - Cliquer sur une cellule pour commencer à entrer les données. Faire un clic-droit pour ajouter ou supprimer des colonnes ou des rangées. Le nom des colonnes ne peut pas être modifiés. 
 
-Optionnellement, entrez un **nom de substance toxique** qui sera utilisé comme titre par défaut du graphique.
+Vous pouvez également entrer le **nom du toxique**, qui sera utilisé comme titre par défaut du graphique.
 
-Enfin, visualiser les données fournies dans le tableau à droite de l'onglet. Les données peuvent être téléchargées en format CSV ou XLSX.
+Enfin, visualisez les données dans le tableau à droite de l'onglet. L'ensemble de données peut être téléchargé aux formats CSV ou XLSX.
