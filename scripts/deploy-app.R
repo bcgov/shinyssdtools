@@ -15,8 +15,19 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-# 1. Install dependencies from CRAN (not r-universe) to avoid dev versions
-install.packages("ssdtools", repos = "https://cran.r-project.org")
+# 1. Install all dependencies from CRAN (not r-universe) to avoid dev versions
+#    Local dev environment may have r-universe packages with ephemeral dev
+#    versions that shinyapps.io can't install.
+options(repos = c(CRAN = "https://cran.r-project.org"))
+desc <- read.dcf("DESCRIPTION", fields = c("Depends", "Imports"))
+pkgs <- trimws(unlist(strsplit(
+  paste(na.omit(as.character(desc)), collapse = ", "),
+  ","
+)))
+pkgs <- gsub("\\s*\\(.*\\)", "", pkgs)
+base_pkgs <- rownames(installed.packages(priority = c("base", "recommended")))
+pkgs <- pkgs[pkgs != "R" & nchar(pkgs) > 0 & !pkgs %in% base_pkgs]
+renv::rebuild(packages = pkgs)
 renv::snapshot()
 
 # 2. Build user guide/about HTML for all languages
