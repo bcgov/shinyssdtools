@@ -100,7 +100,6 @@ test_that("downloads work", {
   expect_match(predict_plot_path, "\\.png$")
   expect_gt(file.info(predict_plot_path)$size, 5000)
 
-  app$set_inputs(`predict_mod-includeCi` = TRUE)
   set_bootstrap_samples(app, "5")
   app$wait_for_idle(duration = 500)
   app$click("predict_mod-getCl")

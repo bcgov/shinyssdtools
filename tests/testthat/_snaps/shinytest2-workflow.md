@@ -75,7 +75,7 @@
             {
               "type": "logical",
               "attributes": {},
-              "value": [false]
+              "value": [true]
             },
             {
               "type": "character",

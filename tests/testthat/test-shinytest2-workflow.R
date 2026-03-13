@@ -95,7 +95,6 @@ test_that("workflow: data -> predict, plot and table render, state values", {
   thresh_type <- app$get_value(input = "predict_mod-threshType")
   expect_type(thresh_type, "character")
 
-  app$set_inputs(`predict_mod-includeCi` = TRUE)
   set_bootstrap_samples(app, "5")
   app$wait_for_idle()
   app$click("predict_mod-getCl")
