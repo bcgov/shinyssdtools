@@ -289,7 +289,7 @@ create_workflow_app <- function(name) {
     height = 1080,
     width = 1920,
     wait = TRUE,
-    timeout = 20000
+    timeout = 60000
   )
   app
 }
