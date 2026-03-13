@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">shinyssdtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.0</span>
       </span>
     </div>
 
@@ -47,6 +47,25 @@
       <small>Source: <a href="https://github.com/bcgov/shinyssdtools/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.5.0" id="shinyssdtools-050-2026-01-06">shinyssdtools 0.5.0 (2026-01-06)<a class="anchor" aria-label="anchor" href="#shinyssdtools-050-2026-01-06"></a></h2>
+<ul><li>Added comprehensive testing infrastructure with shinytest2 and testthat.</li>
+<li>Updated to CRAN ssdtools version 2.4.0.
+<ul><li>Changed <code><a href="https://bcgov.github.io/ssdtools/reference/ssd_fit_dists.html" class="external-link">ssd_fit_dists()</a></code> to <code><a href="https://bcgov.github.io/ssdtools/reference/ssd_fit_bcanz.html" class="external-link">ssd_fit_bcanz()</a></code> for BCANZ compliance.</li>
+<li>Updated <code><a href="https://bcgov.github.io/ssdtools/reference/ssd_gof.html" class="external-link">ssd_gof()</a></code> and <code><a href="https://bcgov.github.io/ssdtools/reference/ssd_hp.html" class="external-link">ssd_hp()</a></code> for deprecated argument changes.</li>
+</ul></li>
+<li>Major UI/UX improvements:
+<ul><li>Refactored app into modular architecture for better maintainability.</li>
+<li>Switched to <code>bslib</code> for modern UI components and improved layouts.</li>
+<li>Added “Update Fit” button to prevent unintended recalculations.</li>
+<li>Improved client-side translation system for instant language switching.</li>
+<li>Added option to include confidence limits on model-average plot with selectable ribbon/line style.</li>
+<li>Added HTML preview for BCANZ reports before download.</li>
+<li>Bootstrap samples now accept any value (not just preset options).</li>
+</ul></li>
+<li>Clarified minimum data requirements (6+ positive, non-missing values) with better error messages.</li>
+<li>Improved help text throughout app with <code>shinyhelper</code> icons.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.1" id="shinyssdtools-041-2025-04-02">shinyssdtools 0.4.1 (2025-04-02)<a class="anchor" aria-label="anchor" href="#shinyssdtools-041-2025-04-02"></a></h2>
 <ul><li>Updated TESTING.md file.</li>
@@ -132,7 +151,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
       </footer></div>
