@@ -301,3 +301,118 @@ ui_download_popover <- function(tab = "fit", ns) {
     placement = "bottom"
   )
 }
+
+#' Build GOF-style header tooltips named vector
+#' @param trans Translations reactive value
+#' @param lang Character string language code ("english", "french", "spanish")
+#' @return Named character vector mapping column names to tooltip descriptions
+#' @keywords internal
+gof_header_tooltips <- function(trans, lang = "english") {
+  # Descriptions sourced from inst/extdata/about-{lang}.md
+  tooltips <- switch(lang,
+    "french" = c(
+      dist = "Distribution",
+      npars = "Nombre de param\u00e8tres",
+      nobs = "Nombre d'observations",
+      log_lik = "Log-vraisemblance",
+      aic = "Crit\u00e8re d'information Akaike",
+      aicc = "Crit\u00e8re d'information Akaike corrig\u00e9 pour la taille de l'\u00e9chantillon",
+      delta = "Diff\u00e9rence entre AICc",
+      wt = "Pond\u00e9ration des crit\u00e8res d'information AICc",
+      weight = "Pond\u00e9ration des crit\u00e8res d'information AICc",
+      bic = "Crit\u00e8re d'information Bay\u00e9sien",
+      ad = "Statistique d'Anderson-Darling",
+      ks = "Statistique de Kolmogorov-Smirnov",
+      cvm = "Statistique de Cramer-von Mises",
+      est = "Concentration ou pourcentage estim\u00e9",
+      se = "Erreur type",
+      lcl = "Limite de confiance inf\u00e9rieure",
+      ucl = "Limite de confiance sup\u00e9rieure",
+      nboot = "Nombre d'\u00e9chantillons bootstrap",
+      pboot = "Proportion de bootstraps r\u00e9ussis",
+      samples = "Nombre d'\u00e9chantillons",
+      proportion = "Proportion d'esp\u00e8ces affect\u00e9es",
+      percent = "Pourcentage d'esp\u00e8ces affect\u00e9es"
+    ),
+    # Default: English
+    c(
+      dist = "Distribution",
+      npars = "Number of parameters",
+      nobs = "Number of observations",
+      log_lik = "Log-likelihood",
+      aic = "Akaike's Information Criterion",
+      aicc = "Akaike's Information Criterion corrected for sample size",
+      delta = "AICc difference",
+      wt = "AICc based Akaike weight",
+      weight = "AICc based Akaike weight",
+      bic = "Bayesian Information Criterion",
+      ad = "Anderson-Darling statistic",
+      ks = "Kolmogorov-Smirnov statistic",
+      cvm = "Cramer-von Mises statistic",
+      est = "Estimated concentration or percent",
+      se = "Standard error",
+      lcl = "Lower confidence limit",
+      ucl = "Upper confidence limit",
+      nboot = "Number of bootstrap samples",
+      pboot = "Proportion of successful bootstraps",
+      samples = "Number of samples",
+      proportion = "Proportion of species affected",
+      percent = "Percent of species affected"
+    )
+  )
+  wt_translated <- tr("ui_2weight", trans)
+  if (!wt_translated %in% names(tooltips)) {
+    tooltips[[wt_translated]] <- tooltips[["wt"]]
+  }
+  tooltips
+}
+
+#' Create DT headerCallback JS for column tooltips
+#' @param tooltips Named character vector mapping column names to tooltip text
+#' @return DT::JS object with headerCallback function
+#' @keywords internal
+dt_header_tooltip_callback <- function(tooltips) {
+  json <- as.character(jsonlite::toJSON(as.list(tooltips), auto_unbox = TRUE))
+  DT::JS(sprintf(
+    "function(thead, data, start, end, display) {
+      var tooltips = %s;
+      $(thead).find('th').each(function() {
+        var text = $(this).text().trim();
+        if (tooltips[text]) {
+          $(this).attr('title', tooltips[text]);
+          $(this).css('cursor', 'help');
+        }
+      });
+    }",
+    json
+  ))
+}
+
+#' Add weight column color bar to a DT datatable
+#' @param dt A DT datatable object
+#' @param data The data frame used to create the datatable
+#' @param trans Translations reactive value
+#' @return The DT datatable with color bar formatting on the weight column
+#' @keywords internal
+dt_weight_color_bar <- function(dt, data, trans) {
+  wt_col <- grep(
+    paste0("^wt$|^weight$|^", tr("ui_2weight", trans), "$"),
+    names(data),
+    value = TRUE
+  )[1]
+  if (!is.na(wt_col) && length(data[[wt_col]]) > 0 && any(!is.na(data[[wt_col]]))) {
+    wt_range <- range(data[[wt_col]], na.rm = TRUE)
+    dt <- DT::formatStyle(
+      dt,
+      wt_col,
+      background = DT::styleColorBar(
+        c(0, max(wt_range[2], 0.01)),
+        color = "#d4edda"
+      ),
+      backgroundSize = "98% 80%",
+      backgroundRepeat = "no-repeat",
+      backgroundPosition = "center"
+    )
+  }
+  dt
+}

@@ -121,7 +121,7 @@ mod_predict_ui <- function(id) {
                   `data-translate` = "ui_3includeci",
                   "Include on model average plot"
                 ),
-                value = FALSE
+                value = TRUE
               ),
               selectizeInput(
                 ns("bootSamp"),
@@ -729,7 +729,19 @@ mod_predict_server <- function(
     })
 
     output$tableCl <- DT::renderDataTable({
-      DT::datatable(table_cl(), options = list(dom = "t"))
+      cl <- table_cl()
+      trans <- translations()
+      header_tooltips <- gof_header_tooltips(trans, lang())
+
+      result <- DT::datatable(
+        cl,
+        options = list(
+          dom = "t",
+          headerCallback = dt_header_tooltip_callback(header_tooltips)
+        )
+      )
+
+      dt_weight_color_bar(result, cl, trans)
     })
 
     # Display protecting % as read-only calculated value

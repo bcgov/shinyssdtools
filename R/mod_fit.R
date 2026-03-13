@@ -59,9 +59,7 @@ mod_fit_ui <- function(id) {
               choices = c(default.dists, extra.dists),
               selected = default.dists,
               options = list(
-                "plugins" = list("remove_button"),
-                "create" = TRUE,
-                "persist" = FALSE
+                "plugins" = list("remove_button")
               )
             ),
             checkboxInput(
@@ -395,15 +393,23 @@ mod_fit_server <- function(
     )
 
     output$tableGof <- DT::renderDataTable({
+      gof <- table_gof()
+      trans <- translations()
+      header_tooltips <- gof_header_tooltips(trans, lang())
+
       result <- DT::datatable(
-        table_gof(),
+        gof,
         options = list(
           dom = "t",
           processing = FALSE,
           autoWidth = FALSE,
-          deferRender = TRUE
+          deferRender = TRUE,
+          headerCallback = dt_header_tooltip_callback(header_tooltips)
         )
       )
+
+      result <- dt_weight_color_bar(result, gof, trans)
+
       render_status$table_ready <- TRUE
       result
     })
