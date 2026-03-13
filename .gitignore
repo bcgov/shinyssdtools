@@ -2,11 +2,15 @@
 .Rhistory
 .RData
 .Ruserdata
+CLAUDE.md
+CLAUDE-TESTING.md
+CLAUDE-TRANSLATIONS.md
 
 .DS_Store
 .Renviron
 .RProfile
 .httr-oauth
+CLAUDE.md
 
 *.html
 
@@ -15,3 +19,7 @@ inst/docs/
 
 .vscode/
 
+.claude/settings.local.json
+tests/resources/
+
+french-translation-review/

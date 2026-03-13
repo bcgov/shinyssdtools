@@ -1,4 +1,20 @@
 
+<!--
+Copyright 2015-2025 Province of British Columbia
+Copyright 2021 Environment and Climate Change Canada
+Copyright 2023-2025 Australian Government Department of Climate Change,
+Energy, the Environment and Water
+&#10;   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+&#10;      https://www.apache.org/licenses/LICENSE-2.0
+&#10;   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # shinyssdtools
@@ -41,6 +57,7 @@ package, `shinyssdtools` also provides
 - a bilingual (English/French) interface;
 - generation of R scripts for reproducibility;
 - customization and downloads of plots and tables
+- Generation of html/pdf report
 
 ## Information
 
@@ -84,7 +101,9 @@ name simply make a commit in the master or dev branch and include
 
 The code is released under the Apache License 2.0
 
-Copyright 2021 Province of British Columbia
+Copyright 2015-2025 Province of British Columbia, 2021 Environment and
+Climate Change Canada, 2023-2025 Australian Government Department of
+Climate Change, Energy, the Environment and Water
 
 Licensed under the Apache License, Version 2.0 (the “LICENSE”); you may
 not use this file except in compliance with the License. You may obtain

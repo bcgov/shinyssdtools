@@ -1,3 +1,5 @@
+^renv$
+^renv\.lock$
 ^LICENSE\.md$
 ^README\.Rmd$
 ^.*\.Rproj$
@@ -18,7 +20,13 @@
 ^app\.R$
 ^paper$
 ^.vscode$
+^\.claude$
 ^compliance.yaml$
 ^\.github$
 ^scripts$
 ^TESTING\.md$
+^CLAUDE\.md$
+^CLAUDE-TESTING\.md$
+^CLAUDE-TRANSLATIONS\.md$
+^README\.html$
+^french-translation-review$

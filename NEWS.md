@@ -1,5 +1,22 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# shinyssdtools 0.5.0 (2026-01-06)
+
+- Added comprehensive testing infrastructure with shinytest2 and testthat.
+- Updated to CRAN ssdtools version 2.4.0.
+  - Changed `ssd_fit_dists()` to `ssd_fit_bcanz()` for BCANZ compliance.
+  - Updated `ssd_gof()` and `ssd_hp()` for deprecated argument changes.
+- Major UI/UX improvements:
+  - Refactored app into modular architecture for better maintainability.
+  - Switched to `bslib` for modern UI components and improved layouts.
+  - Added "Update Fit" button to prevent unintended recalculations.
+  - Improved client-side translation system for instant language switching.
+  - Added option to include confidence limits on model-average plot with selectable ribbon/line style.
+  - Added HTML preview for BCANZ reports before download.
+  - Bootstrap samples now accept any value (not just preset options).
+- Clarified minimum data requirements (6+ positive, non-missing values) with better error messages.
+- Improved help text throughout app with `shinyhelper` icons.
+
 # shinyssdtools 0.4.1 (2025-04-02)
 
 - Updated TESTING.md file. 

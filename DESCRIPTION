@@ -1,6 +1,6 @@
 Package: shinyssdtools
 Title: ssdtools Shiny App
-Version: 0.4.1
+Version: 0.5.0
 Authors@R: 
     c(person(given = "Seb",
              family = "Dalgarno",
@@ -23,33 +23,45 @@ License: Apache License | file LICENSE
 URL: https://github.com/bcgov/shinyssdtools
 BugReports: https://github.com/bcgov/shinyssdtools/issues
 Depends: 
-    R (>= 3.5),
-    ssdtools (>= 1.0.1)
+    R (>= 4.1.0),
+    ssdtools (>= 2.6.0)
 Imports:
+    bsicons,
+    bslib,
     dplyr,
     DT,
     ggplot2,
     glue,
+    jsonlite,
     knitr,
     magrittr,
+    rclipboard,
     readr,
     rhandsontable,
     rlang,
     rmarkdown,
     shiny,
+    shinyhelper,
     shinyjs,
-    shinyWidgets,
+    shinyvalidate,
     stats,
-    waiter
-Suggests: 
+    styler,
+    waiter,
+    writexl
+Suggests:
     covr,
+    kableExtra,
     RColorBrewer,
     rsconnect,
+    pkgload,
     testthat (>= 3.0.0),
-    ssddata
+    ssddata,
+    shinytest2,
+    vdiffr,
+    withr
 Encoding: UTF-8
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3.9000
 Config/testthat/edition: 3

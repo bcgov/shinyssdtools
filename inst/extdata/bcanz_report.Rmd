@@ -1,14 +1,32 @@
+<!--
+Copyright 2015-2025 Province of British Columbia
+Copyright 2021 Environment and Climate Change Canada
+Copyright 2023-2025 Australian Government Department of Climate Change,
+Energy, the Environment and Water
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
 ---
 title: "ssdtools BCANZ Report"
 params:
   toxicant: NA
   dists: NA
-  fit_dist: NA
   fit_plot: NA
   gof_table: NA
   model_average_plot: NA
+  pred_cl: NA
   data: NA
-  nboot: NA
 ---
 
 ```{r setup, include=FALSE}
@@ -17,6 +35,7 @@ library(ssdtools)
 library(ggplot2)
 library(knitr)
 library(dplyr)
+library(kableExtra)
 ```
 
 This report was generated through the [ssdtools Shiny app](https://bcgov-env.shinyapps.io/ssdtools)
@@ -24,9 +43,10 @@ which fits species sensitivity distributions to concentration data.
 The app is built from the R package [ssdtools](https://cran.r-project.org/web/packages/ssdtools/), and shares the same functionality.  
 
 **Toxicant:** `r params$toxicant`   
-**Report created:** `r format(Sys.Date(), "%d/%m/%Y")`  
+**Report created:** `r format(Sys.Date(), "%Y-%m-%d")`    
 **Input distributions:** `r params$dists`  
 **ssdtools version:** `r utils::packageVersion("ssdtools")`  
+**shinyssdtools version:** `r utils::packageVersion("shinyssdtools")`  
 **R version:** `r gsub("R version ", "", R.version$version.string)`   
 
 \newpage
@@ -38,10 +58,12 @@ params$fit_plot
 
 # Goodness of fit table
 ```{r, message=FALSE, warning=FALSE}
-kable(params$gof_table) 
+kable(params$gof_table) %>%
+  kable_styling(full_width = FALSE)
 ```
-Table 1. The goodness of fit statistics. 
-'dist' is the distribution name; 'ad' is the Anderson-Darling statistic; 'ks' is the Kolmogorov-Smirnov statistic; 'cvm' is the Cramer-von Mises statistic; 'aic' is the Akaike's Information Criterion; 'aicc' is the Akaike's Information Criterion corrected for sample size; 'bic' is the Bayesian Information Criterion; 'delta' is the Information Criterion differences; 'weight' is the Information Criterion weights. 'delta' and 'weight' are based on 'aic' for censored data and 'aicc' for non-censored data. 
+
+Table 1. The goodness of fit statistics.
+'dist' is the distribution name; 'npars' is the number of parameters; 'nobs' is the number of observations; 'log_lik' is the log-likelihood; 'aic' is the Akaike's Information Criterion; 'aicc' is the Akaike's Information Criterion corrected for sample size; 'delta' is the Information Criterion differences; 'wt' is the Information Criterion weights; 'bic' is the Bayesian Information Criterion; 'ad' is the Anderson-Darling statistic; 'ks' is the Kolmogorov-Smirnov statistic; 'cvm' is the Cramer-von Mises statistic. 'delta' and 'wt' are based on 'aic' for censored data and 'aicc' for non-censored data. 
 
 \newpage
 
@@ -52,13 +74,11 @@ params$model_average_plot
 
 # Estimated hazardous/protective concentration
 ```{r, message=FALSE, warning=FALSE}
-avehc <- ssd_hc(params$fit_dist, proportion = c(0.01, 0.05, 0.1, 0.2), ci = TRUE, nboot = params$nboot, min_pboot = 0.8)
-avehc |>
-  mutate(HCx = proportion*100,
-         PCx = (1 - proportion) * 100) |> 
-  dplyr::select(HCx, PCx, est, se, lcl, ucl, nboot, pboot) |>
-  kable(digits = 3)
+params$pred_cl |>
+  kable(digits = 3) %>%
+  kable_styling(full_width = FALSE)
 ```
+
 Table 2. The estimated hazardous/protective concentrations. 
 'HCx' is the % species affected; 'PCx' is the % species protected; 'est' is the model-averaged estimate of the concentration; 'se' is the bootstrap based standard error of the estimate; 'lcl' and 'ucl' are the bootstrapped based lower and upper 95% confidence limits; 'nboot' is the number of bootstrap samples; 'pboot' is the proportion of bootstrap samples that converged. 
 The model-averaged estimate(s) is calculated by treating the distribution as a single weighted mixture distribution. 
@@ -68,6 +88,7 @@ Distributions with an absolute AIC difference greater than a default delta of 9.
 
 # Input data
 ```{r, message=FALSE, warning=FALSE}
-kable(params$data)
+kable(params$data) %>%
+  kable_styling(full_width = FALSE)
 ```
 
