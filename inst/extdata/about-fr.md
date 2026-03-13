@@ -19,10 +19,10 @@ La concentration présentant un risque est la concentration estimée d’une sub
 Pour signaler un bogue, un comportement inattendu ou pour proposer une nouvelle fonctionnalité, veuillez soumettre un issue sur [GitHub à l’adresse suivante](https://github.com/poissonconsulting/shinyssdtools/issues).
 
 Pour citer l’application R ‘ssdtools’ :
-Thorley, J., Fisher, R., Fox, D., and Schwarz, C. 2025. ssdtools v2: An R package to fit Species Sensitivity Distributions. JOSS 10(105): 7492. doi:10.21105/joss.07492.
+Thorley, J., Fisher, R., Fox, D., and Schwarz, C. 2025. [ssdtools v2: An R package to fit Species Sensitivity Distributions. JOSS 10(105): 7492.](https://joss.theoj.org/papers/10.21105/joss.07492) `doi:10.21105/joss.07492`.
 
 Pour citer l’application web :
-Seb Dalgarno (2018) ssdtools: A shiny web app to analyse species sensitivity distributions. Prepared by Poisson Consulting for the Ministry of the Environment, British Columbia. https://bcgov-env.shinyapps.io/ssdtools/
+Seb Dalgarno (2018) ssdtools: A shiny web app to analyse species sensitivity distributions. Prepared by Poisson Consulting for the Ministry of the Environment, British Columbia. `https://bcgov-env.shinyapps.io/ssdtools/`
 
 Pour plus d'information sur l'utilisation de l'inférence multimodèle afin d'obtenir des estimations de HC5, veuillez consulter :
 [Schwarz, C.J. and A.R. Tillmanns. 2019. Improving statistical methods to derive species sensitivity distributions. Water Science Series, WSS2019-07, Province of British Columbia, Victoria.](http://a100.gov.bc.ca/appsdata/acat/documents/r57400/2_1568399094009_8398900200.pdf)

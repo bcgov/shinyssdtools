@@ -25,7 +25,7 @@ There are three options to provide data to the app:
 
 1. **Use the demo Boron dataset**. 
     - Quickly preview the app functionality on a dataset that 'works'. 
-    - Citation: [Canadian Council of Ministers of the Environment. 2009. Canadian water quality guidelines for the protection of aquatic life: Boron. In: Canadian  environmental  quality guidelines, 2009, Canadian Council of  Ministers of the Environment, Winnipeg.](http://ceqg-rcqe.ccme.ca/download/en/324/)
+    - Citation: [Canadian Council of Ministers of the Environment. 2009. Canadian water quality guidelines for the protection of aquatic life: Boron. In: Canadian  environmental  quality guidelines, 2009, Canadian Council of  Ministers of the Environment, Winnipeg.](https://ccme.ca/en/res/boron-en-canadian-water-quality-guidelines-for-the-protection-of-aquatic-life.pdf)
 2. **Upload a csv file**. 
     - Excel file formats are not accepted. If you have an excel file, try exporting a worksheet to csv. 
 3. **Fill out the interactive table**. 

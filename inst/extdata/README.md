@@ -4,7 +4,7 @@ The `CCME data.csv` data file is provided&mdash;with permission to use and redis
 
 The citations and data sources are as follows:
 
-- Boron: [Canadian Council of Ministers of the Environment. 2009. Canadian water quality guidelines for the protection of aquatic life: Boron. In: Canadian  environmental  quality guidelines, 2009, Canadian Council of  Ministers of the Environment, Winnipeg.](http://ceqg-rcqe.ccme.ca/download/en/324/)
+- Boron: [Canadian Council of Ministers of the Environment. 2009. Canadian water quality guidelines for the protection of aquatic life: Boron. In: Canadian  environmental  quality guidelines, 2009, Canadian Council of  Ministers of the Environment, Winnipeg.](https://ccme.ca/en/res/boron-en-canadian-water-quality-guidelines-for-the-protection-of-aquatic-life.pdf)
 - Cadmium: [Canadian  Council of Ministers  of  the  Environment.  2014.  Canadian  water  quality  guidelines  for  the  protection  of  aquatic  life: Cadmium. In: Canadian environmental quality guidelines, 1999, Canadian Council of Ministers of the Environment, Winnipeg.](http://ceqg-rcqe.ccme.ca/download/en/148/)
 - Chloride: [Canadian Council of Ministers of the Environment. 2011. Canadian water quality guidelines for the protection of aquatic life: Chloride. In: Canadian environmental quality guidelines, 1999, Canadian Council of Ministers of the Environment, Winnipeg. ](http://ceqg-rcqe.ccme.ca/download/en/337/)
 - Endosulfan: [Canadian Council of Ministers of the Environment. 2010. Canadian water quality guidelines for the protection of aquatic life:   Endosulfan.   In:   Canadian environmental quality guidelines, 1999, Canadian Council of Ministers of the Environment, Winnipeg.](http://ceqg-rcqe.ccme.ca/download/en/327/)

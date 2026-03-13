@@ -17,17 +17,15 @@
 
 # 1. Install all dependencies from CRAN (not r-universe) to avoid dev versions
 #    Local dev environment may have r-universe packages with ephemeral dev
-#    versions that shinyapps.io can't install.
+#    versions that shinyapps.io can't install. Wipe the renv library and
+#    reinstall everything fresh from CRAN to guarantee a clean lockfile.
+Sys.setenv(RENV_CONFIG_REPOS_OVERRIDE = "https://cran.r-project.org")
 options(repos = c(CRAN = "https://cran.r-project.org"))
-desc <- read.dcf("DESCRIPTION", fields = c("Depends", "Imports"))
-pkgs <- trimws(unlist(strsplit(
-  paste(na.omit(as.character(desc)), collapse = ", "),
-  ","
-)))
-pkgs <- gsub("\\s*\\(.*\\)", "", pkgs)
-base_pkgs <- rownames(installed.packages(priority = c("base", "recommended")))
-pkgs <- pkgs[pkgs != "R" & nchar(pkgs) > 0 & !pkgs %in% base_pkgs]
-renv::rebuild(packages = pkgs)
+lib <- renv::paths$library()
+unlink(lib, recursive = TRUE)
+dir.create(lib, recursive = TRUE)
+unlink("renv.lock")
+renv::install()
 renv::snapshot()
 
 # 2. Build user guide/about HTML for all languages
