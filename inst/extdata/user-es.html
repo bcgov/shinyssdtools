@@ -1,0 +1,198 @@
+
+
+
+<p>Esta aplicación <strong>ajusta distribuciones de sensibilidad de
+especies a datos de concentración</strong>. La aplicación está
+construida a partir del paquete R <a href="https://github.com/bcgov/ssdtools">ssdtools</a> y comparte la
+misma funcionalidad. Puede encontrar más información sobre los métodos
+de ssdtools en <a href="https://bcgov.github.io/ssdtools/articles/">artículos en el sitio
+web</a>.</p>
+<p><em>Consejo: Busque y haga clic en los íconos de información en toda
+la aplicación para encontrar más información sobre una entrada en
+particular.</em></p>
+<div id="paso-1-proporcionar-datos" class="section level3">
+<h3>Paso 1: Proporcionar datos</h3>
+<ul>
+<li>Los datos deben proporcionarse para <strong>solo un químico</strong>
+a la vez.</li>
+<li>Cada especie debe tener solo un valor de concentración.</li>
+<li>Los datos deben tener <strong>al menos una columna</strong> que
+contenga <strong>al menos 6 valores de concentración positivos y no
+faltantes</strong>.</li>
+<li>Opcionalmente, se pueden incluir columnas de <strong>especies y
+grupo</strong>, que se utilizan para etiquetar y colorear la salida del
+gráfico, respectivamente.</li>
+<li>Se aceptan columnas adicionales, pero no son utilizadas por ninguna
+función.</li>
+</ul>
+<center>
+<table>
+<thead>
+<tr class="header">
+<th>Concentración  </th>
+<th>Especies  </th>
+<th>Grupo  </th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2.1</td>
+<td>Oncorhynchus mykiss  </td>
+<td>Pez</td>
+</tr>
+<tr class="even">
+<td>2.4</td>
+<td>Ictalurus punctatus  </td>
+<td>Pez</td>
+</tr>
+<tr class="odd">
+<td>4.1</td>
+<td>Micropterus salmoides  </td>
+<td>Pez</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Brachydanio rerio  </td>
+<td>Pez</td>
+</tr>
+<tr class="odd">
+<td>15.6</td>
+<td>Carassius auratus  </td>
+<td>Pez</td>
+</tr>
+<tr class="even">
+<td>18.3</td>
+<td>Pimephales promelas  </td>
+<td>Pez</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>Daphnia magna  </td>
+<td>Invertebrado</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Opercularia bimarginata  </td>
+<td>Invertebrado</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p>Hay tres opciones para proporcionar datos a la aplicación:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Usar el conjunto de datos de demostración de boro</strong>.
+<ul>
+<li>Vista previa rápida de la funcionalidad de la aplicación en un
+conjunto de datos que ‘funciona’.</li>
+<li>Cita: <a href="https://ccme.ca/en/res/boron-en-canadian-water-quality-guidelines-for-the-protection-of-aquatic-life.pdf">Consejo
+Canadiense de Ministros del Medio Ambiente. 2009. Directrices
+canadienses de calidad del agua para la protección de la vida acuática:
+Boro. En: Directrices de calidad ambiental canadienses, 2009, Consejo
+Canadiense de Ministros del Medio Ambiente, Winnipeg.</a></li>
+</ul></li>
+<li><strong>Cargar un archivo csv</strong>.
+<ul>
+<li>No se aceptan formatos de archivo de Excel. Si tiene un archivo de
+Excel, intente exportar una hoja de cálculo a csv.</li>
+</ul></li>
+<li><strong>Completar la tabla interactiva</strong>.
+<ul>
+<li>Las columnas de Especies y Grupo son opcionales. Haga clic en una
+celda para comenzar a ingresar datos. Haga clic derecho en la tabla para
+eliminar/insertar filas o columnas. Los nombres de las columnas no se
+pueden cambiar.</li>
+</ul></li>
+</ol>
+<p>Opcionalmente, ingrese un <strong>nombre de sustancia tóxica</strong>
+que se utilizará como título predeterminado del gráfico.</p>
+<p>Finalmente, obtenga una vista previa de los datos proporcionados en
+la tabla en el lado derecho de la pestaña. Los datos se pueden descargar
+en formato CSV o XLSX.</p>
+</div>
+<div id="paso-2-ajustar-distribuciones" class="section level3">
+<h3>Paso 2: Ajustar distribuciones</h3>
+<ol style="list-style-type: decimal">
+<li>Especifique <strong>qué columna contiene valores de
+concentración</strong>. La aplicación intenta adivinar qué columna
+contiene valores de concentración basándose en los nombres de las
+columnas de datos. Esto puede necesitar ser corregido.</li>
+<li><strong>Seleccione o deseleccione distribuciones para ajustar los
+datos</strong>. El gráfico de distribuciones ajustadas incluye las
+estimaciones promedio del modelo. Tenga en cuenta que si dos o más
+modelos tienen ajustes superpuestos, el soporte para esta forma de
+modelo estará sobreinflado en los parámetros promediados del modelo.
+Consulte el artículo <a href="https://bcgov.github.io/ssdtools/articles/distributions.html">aquí</a>
+para obtener más información. Haga clic en
+<code>Actualizar Ajuste</code> para actualizar las salidas después de
+cambiar las distribuciones seleccionadas o la opción de reescalado de
+datos.</li>
+<li><strong>Seleccionar si reescalar los datos</strong> Esto especifica
+si dejar los valores de concentración sin cambios (sin marcar) o
+reescalar los valores de concentración dividiendo por la media
+geométrica de los valores finitos positivos mínimos y máximos. El
+reescalado proporciona una mejor estabilidad numérica en los casos donde
+las distribuciones no logran ajustarse. Las estimaciones y las
+estadísticas de bondad de ajuste no se ven afectadas.</li>
+<li>Formatee el gráfico usando las entradas en la barra lateral y
+<strong>descargue el gráfico</strong> en formato PNG o RDS y <strong>la
+tabla de bondad de ajuste</strong> en formato CSV o XLSX. Seleccione
+unidades para mostrarlas en el título del eje x.</li>
+</ol>
+<p>Información adicional sobre la <strong>tabla de bondad de
+ajuste</strong>: Las columnas en la tabla de bondad de ajuste son la
+distribución (dist), el número de parámetros (npars), el número de
+observaciones (nobs), la log-verosimilitud (log_lik), el Criterio de
+Información de Akaike (aic), el Criterio de Información de Akaike
+corregido para el tamaño de la muestra (aicc), las diferencias de los
+Criterios de Información (delta), las ponderaciones de los Criterios de
+Información (wt), el Criterio de Información Bayesiana (bic), la
+estadística de Anderson-Darling (ad), la estadística de
+Kolmogorov-Smirnov (ks), y la estadística de Cramer-von Mises (cvm). La
+predicción es la estimación promediada del modelo (usando aicc) del
+ajuste. La concentración de peligro porcentual es la concentración del
+químico que se predice que afectará ese porcentaje de las especies
+probadas.</p>
+</div>
+<div id="paso-3-predecir-concentración-de-peligro-o-porcentaje-de-especies-afectadas" class="section level3">
+<h3>Paso 3: Predecir concentración de peligro o porcentaje de especies
+afectadas</h3>
+<ol style="list-style-type: decimal">
+<li><p>Hay dos opciones: Estimar la <strong>Concentración</strong> que
+afecta/protege una fracción seleccionada de especies (%) O estimar la
+fracción de especies (%) afectada por una concentración seleccionada.
+Esto afecta el gráfico (línea punteada), el texto que se muestra debajo
+del gráfico y los cálculos de límites de confianza.</p></li>
+<li><p>Seleccione el número de <strong>muestras bootstrap utilizadas
+para calcular límites de confianza</strong>. El número recomendado de
+muestras es 10.000, aunque esto puede llevar algún tiempo para procesar.
+Seleccione un número menor de muestras bootstrap para reducir el tiempo
+de procesamiento. Las distribuciones se tratan como una sola
+distribución de mezcla (en oposición a tomar la media) para el cálculo
+de estimaciones promediadas del modelo. Las distribuciones no se tratan
+como una sola distribución para calcular intervalos de confianza, ya que
+esto aumenta considerablemente el tiempo de procesamiento.</p></li>
+<li><p>Dado que los límites de confianza tardan en calcularse, no se
+calculan automáticamente; debe presionar el botón
+<code>Obtener CL</code>.</p></li>
+<li><p><strong>Formatee el gráfico</strong> usando varias entradas en la
+barra lateral y <strong>descargue el gráfico</strong> en formato PNG o
+RDS y <strong>la tabla de límites de confianza</strong> en formato CSV o
+XLSX.</p></li>
+</ol>
+</div>
+<div id="paso-4-obtener-informe-bcanz" class="section level3">
+<h3>Paso 4: Obtener informe BCANZ</h3>
+<p>Genere un informe en formato HTML o PDF que incluya el gráfico de
+distribución ajustada, la tabla de bondad de ajuste, el gráfico de
+ajuste promediado del modelo y la tabla de concentraciones
+peligrosas/protectoras estimadas. Cualquier opción seleccionada en la
+aplicación se incorporará al informe.</p>
+</div>
+<div id="paso-5-obtener-código-r" class="section level3">
+<h3>Paso 5: Obtener código R</h3>
+<p>Copie el código R para reproducir las salidas de forma programática.
+El código se genera dinámicamente en función de las entradas del usuario
+y las funciones ejecutadas dentro de la aplicación (por ejemplo, el
+código para generar límites de confianza aparecerá después de hacer clic
+en el botón <code>Obtener CL</code>).</p>
+</div>
