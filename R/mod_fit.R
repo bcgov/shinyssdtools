@@ -101,7 +101,7 @@ mod_fit_ui <- function(id) {
                 textInput(
                   ns("yaxis2"),
                   label = span(`data-translate` = "ui_3ylab", "Y-axis label"),
-                  value = "Percent"
+                  value = "Species affected (%)"
                 ),
                 numericInput(
                   ns("size2"),
@@ -290,6 +290,12 @@ mod_fit_server <- function(
       }
     }) %>%
       bindEvent(data_mod$toxicant_name())
+
+    observe({
+      trans <- translations()
+      updateTextInput(session, "yaxis2", value = tr("ui_2ploty", trans))
+    }) %>%
+      bindEvent(translations())
 
     # validation --------------------------------------------------------------
     iv <- InputValidator$new()
