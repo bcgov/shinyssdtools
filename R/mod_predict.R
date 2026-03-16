@@ -164,7 +164,7 @@ mod_predict_ui <- function(id) {
                 ns("ribbonStyle"),
                 label = span(
                   `data-translate` = "ui_3ribbonstyle",
-                  "Estimate and CI style"
+                  "Model averaged SSD and CL style"
                 ),
                 choices = c(
                   "Black filled ribbon" = "TRUE",
