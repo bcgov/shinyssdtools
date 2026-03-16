@@ -1,0 +1,185 @@
+
+
+
+<p>This app <strong>fits species sensitivity distributions to
+concentration data</strong>. The app is built from the R package <a href="https://github.com/bcgov/ssdtools">ssdtools</a>, and shares the
+same functionality. More information on ssdtools methods can be found in
+<a href="https://bcgov.github.io/ssdtools/articles/">articles on the
+website</a>.</p>
+<p><em>Hint: Find and click the info icons throughout the app to find
+more information on a particular input.</em></p>
+<div id="step-1-provide-data" class="section level3">
+<h3>Step 1: Provide data</h3>
+<ul>
+<li>Data should be provided for <strong>only one chemical</strong> at a
+time.</li>
+<li>Each species should have only one concentration value.</li>
+<li>Data must have <strong>at least one column</strong> containing
+<strong>at least 6 positive, non-missing concentration
+values</strong>.</li>
+<li>Any additional columns such as <strong>species</strong> or
+<strong>group</strong> are accepted but are only used by plotting
+functions if there are two or more unique values.</li>
+</ul>
+<center>
+<table>
+<thead>
+<tr class="header">
+<th>Concentration  </th>
+<th>Species  </th>
+<th>Group  </th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2.1</td>
+<td>Oncorhynchus mykiss  </td>
+<td>Fish</td>
+</tr>
+<tr class="even">
+<td>2.4</td>
+<td>Ictalurus punctatus  </td>
+<td>Fish</td>
+</tr>
+<tr class="odd">
+<td>4.1</td>
+<td>Micropterus salmoides  </td>
+<td>Fish</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Brachydanio rerio  </td>
+<td>Fish</td>
+</tr>
+<tr class="odd">
+<td>15.6</td>
+<td>Carassius auratus  </td>
+<td>Fish</td>
+</tr>
+<tr class="even">
+<td>18.3</td>
+<td>Pimephales promelas  </td>
+<td>Fish</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>Daphnia magna  </td>
+<td>Invertebrate</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Opercularia bimarginata  </td>
+<td>Invertebrate</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p>There are three options to provide data to the app:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Use the demo Boron dataset</strong>.
+<ul>
+<li>Quickly preview the app functionality on a dataset that
+‘works’.</li>
+<li>Citation: <a href="https://ccme.ca/en/res/boron-en-canadian-water-quality-guidelines-for-the-protection-of-aquatic-life.pdf">Canadian
+Council of Ministers of the Environment. 2009. Canadian water quality
+guidelines for the protection of aquatic life: Boron. In: Canadian
+environmental quality guidelines, 2009, Canadian Council of Ministers of
+the Environment, Winnipeg.</a></li>
+</ul></li>
+<li><strong>Upload a csv file</strong>.
+<ul>
+<li>Excel file formats are not accepted. If you have an excel file, try
+exporting a worksheet to csv.</li>
+</ul></li>
+<li><strong>Fill out the interactive table</strong>.
+<ul>
+<li>Species and Group columns are optional. Click on a cell to begin
+entering data. Right-click on the table to delete/insert rows or
+columns. Column names cannot be changed.</li>
+</ul></li>
+</ol>
+<p>Optionally, enter a <strong>toxicant name</strong> which will be used
+as the default plot title.</p>
+<p>Finally, preview the data provided in the table on the right hand
+side of the tab. The dataset can be downloaded as CSV or XLSX.</p>
+</div>
+<div id="step-2-fit-distributions" class="section level3">
+<h3>Step 2: Fit distributions</h3>
+<ol style="list-style-type: decimal">
+<li>Specify <strong>which column contains concentration values</strong>.
+The app attempts to guess which column contains concentration values
+based on data column names. This may need to be corrected.</li>
+<li><strong>Select or deselect distributions to fit the
+data</strong>.<br />
+The fitted distributions plot includes the model average estimates. Note
+that if two or more models have overlapping fits then support for this
+model shape will be over inflated in the model averaged
+parameters.<br />
+Please see the article <a href="https://bcgov.github.io/ssdtools/articles/distributions.html">here</a>
+for more information.<br />
+Click <code>Update fit</code> to update the outputs after changing
+selected distributions or data rescaling option.</li>
+<li><strong>Select whether to rescale data</strong> This specifies
+whether to leave the concentration values unchanged (unchecked) or to
+rescale concentration values by dividing by the geometric mean of the
+minimum and maximum positive finite values. Rescaling provides better
+numerical stability in cases where distributions are failing to fit. The
+estimates and goodness-of-fit statistics are unaffected.</li>
+<li>Format the plot using inputs in the sidebar and <strong>download the
+plot</strong> as PNG or RDS and the <strong>goodness of fit
+table</strong> as CSV or XLSX. Select units to display on the x-axis of
+the plot.</li>
+</ol>
+<p>Additional information about the <strong>goodness of fit
+table</strong>: The columns in the goodness of fit table are the
+distribution (dist), the number of parameters (npars), the number of
+observations (nobs), the log-likelihood (log_lik), Akaike’s Information
+Criterion (aic), Akaike’s Information Criterion corrected for sample
+size (aicc), the Information Criterion differences (delta), the
+Information Criterion weights (wt), Bayesian Information Criterion
+(bic), the Anderson-Darling statistic (ad), the Kolmogorov-Smirnov
+statistic (ks), and the Cramer-von Mises statistic (cvm). The prediction
+is the model averaged (using aicc) estimate of the fit. The percent
+hazard concentration is the concentration of the chemical which is
+predicted to affect that percent of the species tested.</p>
+</div>
+<div id="step-3-predict-hazard-concentration-or-percent-of-species-affected" class="section level3">
+<h3>Step 3: Predict hazard concentration or percent of species
+affected</h3>
+<ol style="list-style-type: decimal">
+<li><p>There are two options: Estimate the
+<strong>Concentration</strong> affecting/protecting a selected fraction
+of species (%) OR estimate the fraction of species (%) affected by a
+selected concentration. This affects the plot (dotted line), text
+displayed below the plot and calculations of confidence limits.</p></li>
+<li><p>Select the number of <strong>bootstrap samples used to calculate
+confidence limits</strong>. The recommended number of samples is 10,000,
+although this can take some time to process. Select a lower number of
+bootstrap samples to reduce processing time.<br />
+Distributions are treated as constituting a single mixture distribution
+(as opposed to taking the mean) for calculation of model averaged
+estimates. Distributions are not treated as constituting a single
+distribution for calculating confidence intervals as this increases
+processing time considerably.</p></li>
+<li><p>Since confidence limits take time to calculate, they are not
+calculated automatically; you must press the <code>Get CL</code>
+button.</p></li>
+<li><p><strong>Format plot</strong> using various inputs in sidebar and
+<strong>download the plot</strong> as PNG or RDS and the
+<strong>confidence limits table</strong> as CSV or XLSX.</p></li>
+</ol>
+</div>
+<div id="step-4-get-bcanz-report" class="section level3">
+<h3>Step 4: Get BCANZ report</h3>
+<p>Generate a report in HTML or PDF format including the fitted
+distribution plot, goodness of fit table, model-averaged fit plot and
+table of estimated hazardous/protective concentrations. Any options
+selected in the app will be incorporated into the report.</p>
+</div>
+<div id="step-5-get-r-code" class="section level3">
+<h3>Step 5: Get R code</h3>
+<p>Copy R code to reproduce outputs programmatically. Code is
+dynamically generated based on user inputs and functions executed within
+the app (e.g., code for generating confidence limits will appear after
+<code>Get CL</code> button is clicked).</p>
+</div>

@@ -139,6 +139,6 @@
 <text x='617.05' y='546.43' style='font-size: 9.60px; font-family: sans;' textLength='16.02px' lengthAdjust='spacingAndGlyphs'>100</text>
 <text x='320.55' y='555.04' style='font-size: 9.60px; font-weight: bold; font-family: sans;' textLength='18.69px' lengthAdjust='spacingAndGlyphs'>1.29</text>
 <text x='381.49' y='568.03' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='74.72px' lengthAdjust='spacingAndGlyphs'>Concentration</text>
-<text transform='translate(13.74,279.38) rotate(-90)' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='41.36px' lengthAdjust='spacingAndGlyphs'>Percent</text>
+<text transform='translate(13.74,279.38) rotate(-90)' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='110.74px' lengthAdjust='spacingAndGlyphs'>Species affected (%)</text>
 </g>
 </svg>
