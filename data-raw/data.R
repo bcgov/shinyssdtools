@@ -406,8 +406,8 @@ translations <- dplyr::bind_rows(
   ),
   dplyr::tibble(
     id = "ui_3ribbonstyle",
-    english = "Model averaged estimate and CL style",
-    french = "Style de l'estimation par inf\u00e9rence multimod\u00e8le et bornes",
+    english = "Model averaged SSD and CL style",
+    french = "Style de la DSE moyenn\u00e9e et des LC",
     spanish = "Estilo de estimaci\u00f3n promediada del modelo y LC"
   ),
   dplyr::tibble(

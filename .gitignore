@@ -13,6 +13,7 @@ CLAUDE-TRANSLATIONS.md
 CLAUDE.md
 
 *.html
+!inst/extdata/*.html
 
 docs/
 inst/docs/

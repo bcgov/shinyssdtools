@@ -164,7 +164,7 @@ mod_predict_ui <- function(id) {
                 ns("ribbonStyle"),
                 label = span(
                   `data-translate` = "ui_3ribbonstyle",
-                  "Estimate and CI style"
+                  "Model averaged SSD and CL style"
                 ),
                 choices = c(
                   "Black filled ribbon" = "TRUE",
@@ -204,7 +204,7 @@ mod_predict_ui <- function(id) {
               ),
               textInput(
                 ns("yaxis"),
-                value = "Percent",
+                value = "Species affected (%)",
                 label = span(`data-translate` = "ui_3ylab", "Y-axis label")
               ),
               textInput(
@@ -507,6 +507,12 @@ mod_predict_server <- function(
       }
     }) %>%
       bindEvent(data_mod$toxicant_name())
+
+    observe({
+      trans <- translations()
+      updateTextInput(session, "yaxis", value = tr("ui_2ploty", trans))
+    }) %>%
+      bindEvent(translations())
 
     thresh_rv <- reactiveValues(
       percent = NULL,
