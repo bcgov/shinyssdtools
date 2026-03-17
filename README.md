@@ -97,6 +97,45 @@ name simply make a commit in the master or dev branch and include
 `SHINYAPPS_SECRET` in your repository GitHub secrets). This triggers the
 `deploy-app.yml` GitHub action.
 
+## Consultation
+
+### Versioning
+
+The ssdtools and [shinyssdtools](https://github.com/bcgov/shinyssdtools)
+development team is using [Semantic Versioning](https://semver.org/) for
+numbering releases. For example, using the notation “v 2.3.0”, the first
+number is the major version, the second the minor version and the third
+the patch version – i.e. v MAJOR.MINOR.PATCH. Each of these number
+levels relates to the following types of updates:
+
+- MAJOR versions – updates that result in changes to the way that water
+  quality guideline values are calculated (produced using
+  `ssd_fit_bcanz()` and `ssd_hc_bcanz()` and the shinyssdtools
+  application).
+- MINOR versions – updates that add new functionality (e.g. for
+  researchers) but which do not change the way that water quality
+  guideline values are calculated.
+- PATCH versions – updates that fix bugs.
+
+### Review Process
+
+The jurisdictional consultation and review process for ssdtools updates
+is set out as follows:
+
+- MAJOR version releases
+  - the ssdtools Technical Committee will review and approve/not approve
+    proposed changes to ssdtools and shinyssdtools updates that would
+    constitute MAJOR version releases.
+  - The ssdtools Technical Committee will approve/not approve a MAJOR
+    version release.
+- MINOR versions releases
+  - the ssdtools Technical Committee will be consulted on and will
+    provide guidance on MINOR version updates.
+- PATCH version releases
+  - the ssdtools Technical Committee will not be consulted on PATCH
+    version releases unless the ssdtools and shinyssdtools development
+    team identify a need to do so.
+
 ## License
 
 The code is released under the Apache License 2.0
