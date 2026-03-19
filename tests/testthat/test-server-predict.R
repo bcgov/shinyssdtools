@@ -189,6 +189,47 @@ test_that("model ave plot is valid", {
   )
 })
 
+test_that("xbreaks works when no column matches guess_sp (#103)", {
+  # Dataset with Value/Taxon columns - no "sp" match so selectLabel defaults to "-none-"
+  taxon_data <- data.frame(
+    Value = c(0.002, 0.002, 0.0234, 0.051, 0.068, 0.107, 0.261, 0.334, 1.4, 5.18),
+    Taxon = c("Sp1", "Sp2", "Sp3", "Sp4", "Sp5", "Sp6", "Sp7", "Sp8", "Sp9", "Sp10")
+  )
+  taxon_data <- clean_ssd_data(taxon_data)
+  taxon_fit <- ssdtools::ssd_fit_bcanz(taxon_data, left = "Value", dists = c("lnorm", "gamma"))
+  taxon_args <- list(
+    translations = reactive(test_translations),
+    lang = reactive("english"),
+    data_mod = mock_data_module(data = taxon_data),
+    fit_mod = mock_fit_module(fit = taxon_fit, conc_column = "Value"),
+    big_mark = reactive(","),
+    decimal_mark = reactive("."),
+    main_nav = reactive("predict")
+  )
+
+  testServer(
+    mod_predict_server,
+    args = taxon_args,
+    {
+      suppressWarnings({
+        session$setInputs(
+          threshType = "Concentration",
+          thresh = "0.1",
+          includeCi = FALSE,
+          selectLabel = "-none-",
+          selectColour = "-none-",
+          selectShape = "-none-",
+          xlog = TRUE
+        )
+      })
+      session$flushReact()
+
+      xbreaks <- plot_model_average_xbreaks()
+      expect_true(is.null(xbreaks) || is.numeric(xbreaks))
+    }
+  )
+})
+
 test_that("model ave plot when change thresh", {
   testServer(
     mod_predict_server,

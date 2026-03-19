@@ -865,13 +865,13 @@ mod_predict_server <- function(
       req(percent)
 
       conc_col <- make.names(conc_col)
-      label_col <- ifelse(
-        input$selectLabel == "-none-",
-        NULL,
+      label_col <- if (input$selectLabel == "-none-") {
+        NULL
+      } else {
         make.names(input$selectLabel)
-      )
+      }
 
-      if (label_col %in% names(dat) & conc_col %in% names(dat)) {
+      if (conc_col %in% names(dat) && (is.null(label_col) || label_col %in% names(dat))) {
         gp <- safe_try(ssdtools::ssd_plot(
           dat,
           pred = pred,
