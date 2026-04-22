@@ -557,7 +557,7 @@ mod_predict_server <- function(
       trans <- translations()
       dat <- data_mod$data()
 
-      colour_data <- dat[[value]]
+      colour_data <- dat[[make.names(value)]]
 
       if (is.numeric(colour_data)) {
         return(as.character(tr("ui_hintcolour", trans)[1]))
@@ -572,7 +572,7 @@ mod_predict_server <- function(
       trans <- translations()
       dat <- data_mod$data()
 
-      sym_data <- dat[[value]]
+      sym_data <- dat[[make.names(value)]]
 
       if (is.numeric(sym_data)) {
         return(as.character(tr("ui_hintsym", trans)[1]))
