@@ -1,5 +1,9 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# shinyssdtools 0.5.3 (2026-04-23)
+
+- Fix validation and plot rendering for CSV column headers with non-syntactic characters (e.g., spaces).
+
 # shinyssdtools 0.5.0 (2026-01-06)
 
 - Added comprehensive testing infrastructure with shinytest2 and testthat.
