@@ -4,6 +4,16 @@
 
 - Fix validation and plot rendering for CSV column headers with non-syntactic characters (e.g., spaces).
 
+# shinyssdtools 0.5.2 (2026-03-19)
+
+- Fix x-axis tick marks error when label selector is set to `-none-`.
+
+# shinyssdtools 0.5.1 (2026-03-16)
+
+- Fix y-axis label default to translated "Species affected (%)" on fit and predict plots.
+- Update ribbon option label to "Model averaged SSD and CL style".
+- Track rendered about/user guide HTML files so `install_github` includes About and User Guide tabs.
+
 # shinyssdtools 0.5.0 (2026-01-06)
 
 - Added comprehensive testing infrastructure with shinytest2 and testthat.
