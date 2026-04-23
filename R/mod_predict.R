@@ -906,6 +906,8 @@ mod_predict_server <- function(
       req(dat)
       req(pred)
 
+      conc_col <- make.names(conc_col)
+
       # Derive CI flag from pred data (check if CI columns exist)
       # This prevents double rendering by not depending on cl_requested() directly
       has_ci <- all(c("lcl", "ucl") %in% names(pred))

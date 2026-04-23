@@ -100,6 +100,11 @@ test_that("non-syntactic column names: validators accept columns with spaces", {
   wait_for_predict(app)
 
   expect_true(app$get_value(output = "predict_mod-has_predict"))
+
+  predict_plot_rendered <- app$get_js(
+    "!!document.querySelector('#predict_mod-plotPred img')"
+  )
+  expect_true(predict_plot_rendered)
 })
 
 test_that("data upload: insufficient conc values", {
