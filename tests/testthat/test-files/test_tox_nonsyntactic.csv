@@ -1,9 +1,17 @@
-Toxicity value,Group,General taxa,Species
-32,Grp1,Microalga,Sp1
-17020,Grp1,Microalga,Sp2
-143000,Grp2,Flatworm,Sp3
-470,Grp3,Cladoceran,Sp4
-14,Grp3,Cladoceran,Sp5
-248,Grp4,Insect,Sp6
-7.7,Grp5,Amphipod,Sp7
-20,Grp5,Gastropod,Sp8
+Toxicity value,Group,Phylum,General taxa,Common name,Species
+32,Grp1,Chlorophyta,Microalga,Common1,Sp1
+17020,Grp1,Chlorophyta,Microalga,Common1,Sp2
+143000,Grp2,Platyhelminthes,Flatworm,Common2,Sp3
+470,Grp3,Arthropoda,Cladoceran,Common3,Sp4
+14,Grp3,Arthropoda,Cladoceran,Common3,Sp5
+248,Grp4,Arthropoda,Insect,Common4,Sp6
+7.7,Grp5,Arthropoda,Amphipod,Common5,Sp7
+20,Grp5,Mollusca,Gastropod,Common6,Sp8
+20,Grp5,Mollusca,Bivalve,Common7,Sp9
+20,Grp5,Mollusca,Bivalve,Common8,Sp10
+500,Grp5,Mollusca,Bivalve,Common9,Sp11
+500,Grp5,Mollusca,Bivalve,Common10,Sp12
+500,Grp5,Mollusca,Bivalve,Common11,Sp13
+500,Grp6,Chordata,Fish,Common12,Sp14
+500,Grp6,Chordata,Fish,Common13,Sp15
+13000,Grp6,Chordata,Fish,Common14,Sp16

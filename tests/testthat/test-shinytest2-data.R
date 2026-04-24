@@ -90,23 +90,26 @@ test_that("non-syntactic column names: validators accept columns with spaces", {
   )
   wait_for_data(app)
 
-  app$set_inputs(main_nav = "fit")
-  wait_for_fit(app)
-
   expect_equal(
     app$get_value(input = "fit_mod-selectConc"),
     "Toxicity value"
   )
-  expect_true(app$get_value(output = "fit_mod-has_fit"))
+
+  app$set_inputs(main_nav = "fit")
+  app$wait_for_idle(timeout = 10000)
+
+  # Use isTRUE — output$has_fit returns a shinyvalidate error list
+  # rather than a bare logical when validation fails, and wait_for_fit's
+  # `!has_fit` check errors on that list.
+  expect_true(isTRUE(app$get_value(output = "fit_mod-has_fit")))
 
   app$set_inputs(main_nav = "predict")
-  wait_for_predict(app)
+  app$wait_for_idle(timeout = 10000)
+  expect_true(isTRUE(app$get_value(output = "predict_mod-has_predict")))
 
   app$set_inputs(`predict_mod-selectColour` = "General taxa")
   app$set_inputs(`predict_mod-selectShape` = "General taxa")
   app$wait_for_idle()
-
-  expect_true(app$get_value(output = "predict_mod-has_predict"))
 
   predict_plot_rendered <- app$get_js(
     "!!document.querySelector('#predict_mod-plotPred img')"
