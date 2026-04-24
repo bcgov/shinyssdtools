@@ -78,8 +78,9 @@ test_that("workflow: data -> predict, plot and table render, state values", {
   # the first transition from hidden to visible the server-side input
   # value can briefly read FALSE before the client binding settles,
   # producing a flaky snapshot. Set it explicitly to pin the expected
-  # default before capturing.
-  app$set_inputs(`predict_mod-includeCi` = TRUE)
+  # default before capturing. `wait_ = FALSE` because setting TRUE when
+  # already TRUE produces no server output update.
+  app$set_inputs(`predict_mod-includeCi` = TRUE, wait_ = FALSE)
   app$wait_for_idle()
 
   predict_state <- app$get_values(
