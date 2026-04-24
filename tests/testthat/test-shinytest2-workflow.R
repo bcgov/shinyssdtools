@@ -73,6 +73,16 @@ test_that("workflow: data -> predict, plot and table render, state values", {
   has_predict <- app$get_value(output = "predict_mod-has_predict")
   expect_true(has_predict)
 
+  # The includeCi checkbox defaults to TRUE (R/mod_predict.R:124) but sits
+  # inside a conditionalPanel gated on output['predict_mod-has_fit']. On
+  # the first transition from hidden to visible the server-side input
+  # value can briefly read FALSE before the client binding settles,
+  # producing a flaky snapshot. Set it explicitly to pin the expected
+  # default before capturing. `wait_ = FALSE` because setting TRUE when
+  # already TRUE produces no server output update.
+  app$set_inputs(`predict_mod-includeCi` = TRUE, wait_ = FALSE)
+  app$wait_for_idle()
+
   predict_state <- app$get_values(
     input = c(
       "predict_mod-thresh",

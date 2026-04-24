@@ -304,7 +304,7 @@ mod_fit_server <- function(
       trans <- translations()
       dat <- data_mod$data()
 
-      conc_data <- dat[[value]]
+      conc_data <- dat[[make.names(value)]]
 
       if (!has_numeric_concentration(conc_data)) {
         return(as.character(tr("ui_hintnum", trans)[1]))
