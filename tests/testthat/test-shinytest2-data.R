@@ -85,19 +85,26 @@ test_that("non-syntactic column names: validators accept columns with spaces", {
   app <- create_workflow_app("csv-upload-nonsyntactic")
   withr::defer(app$stop())
 
-  app$upload_file(`data_mod-uploadData` = "test-files/test_tox3.csv")
+  app$upload_file(
+    `data_mod-uploadData` = "test-files/test_tox_nonsyntactic.csv"
+  )
   wait_for_data(app)
 
   app$set_inputs(main_nav = "fit")
-  app$set_inputs(`fit_mod-selectConc` = "Toxicity value")
   wait_for_fit(app)
 
+  expect_equal(
+    app$get_value(input = "fit_mod-selectConc"),
+    "Toxicity value"
+  )
   expect_true(app$get_value(output = "fit_mod-has_fit"))
 
   app$set_inputs(main_nav = "predict")
+  wait_for_predict(app)
+
   app$set_inputs(`predict_mod-selectColour` = "General taxa")
   app$set_inputs(`predict_mod-selectShape` = "General taxa")
-  wait_for_predict(app)
+  app$wait_for_idle()
 
   expect_true(app$get_value(output = "predict_mod-has_predict"))
 
