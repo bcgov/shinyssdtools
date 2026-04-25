@@ -15,18 +15,18 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-# 1. Install all dependencies from CRAN (not r-universe) to avoid dev versions
-#    Local dev environment may have r-universe packages with ephemeral dev
-#    versions that shinyapps.io can't install. Wipe the renv library and
-#    reinstall everything fresh from CRAN to guarantee a clean lockfile.
+# 1. Sync renv library to DESCRIPTION and verify lockfile matches.
+#    CRAN-only repos avoid r-universe dev versions that shinyapps.io can't
+#    install. renv::install() adds any missing/updated Imports/Depends from
+#    DESCRIPTION without destroying the active session's library; snapshot
+#    then pins the lockfile to the current library state. The synchronized
+#    check fails fast if rsconnect would otherwise report
+#    "Library and lockfile are out of sync".
 Sys.setenv(RENV_CONFIG_REPOS_OVERRIDE = "https://cran.r-project.org")
 options(repos = c(CRAN = "https://cran.r-project.org"))
-lib <- renv::paths$library()
-unlink(lib, recursive = TRUE)
-dir.create(lib, recursive = TRUE)
-unlink("renv.lock")
 renv::install()
-renv::snapshot()
+renv::snapshot(prompt = FALSE)
+stopifnot(isTRUE(renv::status()$synchronized))
 
 # 2. Build user guide/about HTML for all languages
 rmarkdown::render("inst/extdata/user-en.md", output_format = "html_fragment")
