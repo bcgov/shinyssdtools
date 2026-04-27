@@ -33,6 +33,7 @@ Imports:
     ggplot2,
     glue,
     jsonlite,
+    kableExtra,
     knitr,
     magrittr,
     pkgload,
@@ -51,7 +52,6 @@ Imports:
     writexl
 Suggests:
     covr,
-    kableExtra,
     RColorBrewer,
     rsconnect,
     testthat (>= 3.0.0),
