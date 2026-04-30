@@ -1,2 +1,4 @@
 renv.lock
 renv/
+.Rhistory
+**/.Rhistory
