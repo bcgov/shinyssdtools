@@ -1,6 +1,6 @@
 Package: shinyssdtools
 Title: ssdtools Shiny App
-Version: 0.5.2
+Version: 0.5.3
 Authors@R: 
     c(person(given = "Seb",
              family = "Dalgarno",
@@ -33,8 +33,10 @@ Imports:
     ggplot2,
     glue,
     jsonlite,
+    kableExtra,
     knitr,
     magrittr,
+    pkgload,
     rclipboard,
     readr,
     rhandsontable,
@@ -50,10 +52,8 @@ Imports:
     writexl
 Suggests:
     covr,
-    kableExtra,
     RColorBrewer,
     rsconnect,
-    pkgload,
     testthat (>= 3.0.0),
     ssddata,
     shinytest2,

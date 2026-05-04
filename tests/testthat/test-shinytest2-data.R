@@ -81,6 +81,42 @@ test_that("data upload: test tox3", {
   expect_true(gof_table_rendered)
 })
 
+test_that("non-syntactic column names: validators accept columns with spaces", {
+  app <- create_workflow_app("csv-upload-nonsyntactic")
+  withr::defer(app$stop())
+
+  app$upload_file(
+    `data_mod-uploadData` = "test-files/test_tox_nonsyntactic.csv"
+  )
+  wait_for_data(app)
+
+  expect_equal(
+    app$get_value(input = "fit_mod-selectConc"),
+    "Toxicity value"
+  )
+
+  app$set_inputs(main_nav = "fit")
+  app$wait_for_idle(timeout = 10000)
+
+  # Use isTRUE — output$has_fit returns a shinyvalidate error list
+  # rather than a bare logical when validation fails, and wait_for_fit's
+  # `!has_fit` check errors on that list.
+  expect_true(isTRUE(app$get_value(output = "fit_mod-has_fit")))
+
+  app$set_inputs(main_nav = "predict")
+  app$wait_for_idle(timeout = 10000)
+  expect_true(isTRUE(app$get_value(output = "predict_mod-has_predict")))
+
+  app$set_inputs(`predict_mod-selectColour` = "General taxa")
+  app$set_inputs(`predict_mod-selectShape` = "General taxa")
+  app$wait_for_idle()
+
+  predict_plot_rendered <- app$get_js(
+    "!!document.querySelector('#predict_mod-plotPred img')"
+  )
+  expect_true(predict_plot_rendered)
+})
+
 test_that("data upload: insufficient conc values", {
   app <- create_workflow_app("csv-upload-insufficient")
   withr::defer(app$stop())

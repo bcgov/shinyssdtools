@@ -204,7 +204,7 @@ mod_report_server <- function(
       req(fit_mod$has_fit())
 
       toxicant <- input$toxicant
-      data <- data_mod$data()
+      data <- data_mod$clean_data()
       dists <- fit_mod$dists()
       fit_plot <- fit_mod$fit_plot()
       gof_table <- fit_mod$gof_table()
