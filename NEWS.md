@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# shinyssdtools 0.5.4 (2026-06-11)
+
+- Fix BCANZ report generation failure on the deployed app by moving `kableExtra` and `pkgload` from Suggests to Imports.
+- Make deployment script non-destructive and verify renv library/lockfile synchronization before deploying.
+
 # shinyssdtools 0.5.3 (2026-04-23)
 
 - Fix validation and plot rendering for CSV column headers with non-syntactic characters (e.g., spaces).
@@ -13,6 +18,12 @@
 - Fix y-axis label default to translated "Species affected (%)" on fit and predict plots.
 - Update ribbon option label to "Model averaged SSD and CL style".
 - Track rendered about/user guide HTML files so `install_github` includes About and User Guide tabs.
+- Confidence limits on the prediction plot are now included by default.
+- Added tooltips to table column headers.
+- Fixed broken links on About and User Guide tabs (CCME and ACAT URLs).
+- Updated French translations following review.
+- Reviewed About and User Guide content for correctness and added links to specific ssdtools vignettes.
+- Corrected JOSS article link.
 
 # shinyssdtools 0.5.0 (2026-01-06)
 
@@ -28,6 +39,10 @@
   - Added option to include confidence limits on model-average plot with selectable ribbon/line style.
   - Added HTML preview for BCANZ reports before download.
   - Bootstrap samples now accept any value (not just preset options).
+  - Added button to copy generated R code from the R Code tab.
+  - Added shinyssdtools version to BCANZ report.
+  - Moved toxicant name field to Data tab; value can be used as plot title.
+  - Moved language selection to a dropdown in the navbar.
 - Clarified minimum data requirements (6+ positive, non-missing values) with better error messages.
 - Improved help text throughout app with `shinyhelper` icons.
 
