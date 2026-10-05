@@ -2,10 +2,18 @@
 % Please edit documentation in R/run-app.R
 \name{run_app}
 \alias{run_app}
+\alias{run_ssdtools_app}
 \title{Run Shiny ssdtools Application}
 \usage{
 run_app()
+
+run_ssdtools_app()
 }
 \description{
 Run Shiny ssdtools Application
 }
+\section{Functions}{
+\itemize{
+\item \code{run_ssdtools_app()}: Alias for \code{run_app()}
+
+}}
