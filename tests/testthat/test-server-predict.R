@@ -335,7 +335,7 @@ test_that("predictions include lcl/ucl when Get CL clicked", {
 })
 
 test_that("model ave plot includes CL", {
-  set_test_seed()
+  set_test_seed(99)
   testServer(
     mod_predict_server,
     args = predict_args,
@@ -393,7 +393,7 @@ test_that("model ave plot includes CL", {
 })
 
 test_that("model ave plot with line style CI", {
-  set_test_seed()
+  set_test_seed(99)
   testServer(
     mod_predict_server,
     args = predict_args,
