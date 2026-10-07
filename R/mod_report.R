@@ -146,7 +146,7 @@ mod_report_server <- function(
       )
       avehc |>
         dplyr::mutate(HCx = .data$proportion * 100, PCx = (1 - .data$proportion) * 100) |>
-        dplyr::select(.data$HCx, .data$PCx, .data$est, .data$se, .data$lcl, .data$ucl, .data$nboot, .data$pboot)
+        dplyr::select("HCx", "PCx", "est", "se", "lcl", "ucl", "nboot", "pboot")
     })
 
     observe({
