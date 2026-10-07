@@ -26,7 +26,7 @@ mod_rcode_ui <- function(id) {
       width = 350,
       div(
         h5(span(`data-translate` = "ui_tabcode", "Get R code")),
-      ) %>%
+      ) |>
         shinyhelper::helper(
           type = "markdown",
           content = "rcodeTab",
@@ -95,7 +95,7 @@ mod_rcode_server <- function(id, translations, data_mod, fit_mod, predict_mod) {
       if (is.null(label_val) || label_val == "-none-") {
         return("NULL")
       }
-      paste0("'", label_val %>% make.names(), "'")
+      paste0("'", label_val |> make.names(), "'")
     })
 
     code_colour <- reactive({
@@ -103,7 +103,7 @@ mod_rcode_server <- function(id, translations, data_mod, fit_mod, predict_mod) {
       if (is.null(colour_val) || colour_val == "-none-") {
         return("NULL")
       }
-      paste0("'", colour_val %>% make.names(), "'")
+      paste0("'", colour_val |> make.names(), "'")
     })
 
     code_shape <- reactive({
@@ -111,7 +111,7 @@ mod_rcode_server <- function(id, translations, data_mod, fit_mod, predict_mod) {
       if (is.null(shape_val) || shape_val == "-none-") {
         return("NULL")
       }
-      paste0("'", shape_val %>% make.names(), "'")
+      paste0("'", shape_val |> make.names(), "'")
     })
 
     code_hc <- reactive({
@@ -213,7 +213,7 @@ mod_rcode_server <- function(id, translations, data_mod, fit_mod, predict_mod) {
     generate_data_code <- function() {
       req(data_mod$has_data())
       clean_data <- data_mod$clean_data()
-      data_str <- utils::capture.output(dput(clean_data)) %>%
+      data_str <- utils::capture.output(dput(clean_data)) |>
         glue::glue_collapse()
 
       c(
@@ -266,7 +266,7 @@ mod_rcode_server <- function(id, translations, data_mod, fit_mod, predict_mod) {
       c(
         paste0("dist <- ssd_fit_bcanz("),
         paste0("  data,"),
-        paste0("  left = '", fit_mod$conc_column() %>% make.names(), "',"),
+        paste0("  left = '", fit_mod$conc_column() |> make.names(), "',"),
         paste0("  dists = ", dists_str, ","),
         paste0("  silent = TRUE,"),
         paste0("  rescale = ", fit_mod$rescale()),
@@ -410,7 +410,7 @@ mod_rcode_server <- function(id, translations, data_mod, fit_mod, predict_mod) {
 
       threshold_vals <- predict_mod$threshold_values()
 
-      nboot_clean <- clean_nboot(predict_mod$nboot()) %>% as.integer()
+      nboot_clean <- clean_nboot(predict_mod$nboot()) |> as.integer()
 
       if (predict_mod$threshold_type() != "Concentration") {
         form <- "ssd_hp_bcanz"

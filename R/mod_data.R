@@ -26,7 +26,7 @@ mod_data_ui <- function(id) {
       width = 400,
       div(
         h5(span(`data-translate` = "ui_tabdata", "Provide data")),
-      ) %>%
+      ) |>
         shinyhelper::helper(
           type = "markdown",
           content = "dataTab",
@@ -146,13 +146,13 @@ mod_data_server <- function(id, translations, lang, shared_toxicant_name = NULL)
             value = toxicant_name
           )
         }
-      }) %>%
+      }) |>
         bindEvent(shared_toxicant_name())
 
       # Update shared value when this module's input changes
       observe({
         shared_toxicant_name(input$toxicant)
-      }) %>%
+      }) |>
         bindEvent(input$toxicant)
     }
 
@@ -167,7 +167,7 @@ mod_data_server <- function(id, translations, lang, shared_toxicant_name = NULL)
       df <- df[, c("Species", "Conc", "Group")]
       colnames(df) <- c(spp, conc, grp)
       df
-    }) %>%
+    }) |>
       bindEvent(translations(), input$demoData)
 
     upload_data <- reactive({
@@ -205,7 +205,7 @@ mod_data_server <- function(id, translations, lang, shared_toxicant_name = NULL)
       )
 
       return(result)
-    }) %>%
+    }) |>
       bindEvent(input$uploadData)
 
     handson_data <- reactive({
@@ -229,22 +229,22 @@ mod_data_server <- function(id, translations, lang, shared_toxicant_name = NULL)
 
     handson_data_done <- reactive({
       handson_data()
-    }) %>%
+    }) |>
       bindEvent(input$handson_done, translations())
 
     observe({
       active_source("upload")
-    }) %>%
+    }) |>
       bindEvent(input$uploadData)
 
     observe({
       active_source("demo")
-    }) %>%
+    }) |>
       bindEvent(input$demoData)
 
     observe({
       active_source("handson")
-    }) %>%
+    }) |>
       bindEvent(input$handson_done)
 
     current_data <- reactive({
@@ -271,7 +271,7 @@ mod_data_server <- function(id, translations, lang, shared_toxicant_name = NULL)
 
     names_data <- reactive({
       data <- clean_data()
-      names(data) %<>% make.names()
+      names(data) <- make.names(names(data))
       data
     })
 
@@ -314,7 +314,7 @@ mod_data_server <- function(id, translations, lang, shared_toxicant_name = NULL)
         class = 'table-striped table-hover table-bordered',
         selection = 'none',
         extensions = 'Buttons'
-      ) %>%
+      ) |>
         DT::formatStyle(
           columns = colnames(data),
           backgroundColor = 'white',

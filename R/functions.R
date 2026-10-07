@@ -43,7 +43,7 @@ clean_nboot <- function(x) {
 #' @return A tibble with X1, X2, ... X200 columns removed
 #' @keywords internal
 remove_blank_headers <- function(data) {
-  data %>%
+  data |>
     dplyr::select(-dplyr::any_of(paste0("X", 1:200)))
 }
 
@@ -52,8 +52,8 @@ remove_blank_headers <- function(data) {
 #' @return A tibble with empty columns removed
 #' @keywords internal
 remove_empty_columns <- function(data) {
-  data %>%
-    dplyr::as_tibble() %>%
+  data |>
+    dplyr::as_tibble() |>
     dplyr::select(dplyr::where(~ !all(is.na(.x) | .x == "")))
 }
 
@@ -62,10 +62,10 @@ remove_empty_columns <- function(data) {
 #' @return A tibble with empty rows removed
 #' @keywords internal
 remove_empty_rows <- function(data) {
-  data %>%
-    dplyr::as_tibble() %>%
+  data <- dplyr::as_tibble(data)
+  data |>
     dplyr::filter(
-      if (ncol(.) > 0) {
+      if (ncol(data) > 0) {
         !dplyr::if_all(dplyr::everything(), ~ is.na(.x) | .x == "")
       } else {
         TRUE
@@ -78,9 +78,9 @@ remove_empty_rows <- function(data) {
 #' @return A cleaned tibble
 #' @export
 clean_ssd_data <- function(data) {
-  data %>%
-    remove_blank_headers() %>%
-    remove_empty_columns() %>%
+  data |>
+    remove_blank_headers() |>
+    remove_empty_columns() |>
     remove_empty_rows()
 }
 
@@ -328,7 +328,7 @@ ssd_hc_ave <- function(x, percent, nboot) {
     )
   }
 
-  dplyr::bind_rows(ave, dist) %>%
+  dplyr::bind_rows(ave, dist) |>
     dplyr::mutate_at(c("est", "se", "ucl", "lcl", "wt"), ~ signif(., 3))
 }
 
@@ -364,7 +364,7 @@ ssd_hp_ave <- function(x, conc, nboot) {
     )
   }
 
-  dplyr::bind_rows(ave, dist) %>%
+  dplyr::bind_rows(ave, dist) |>
     dplyr::mutate_at(c("est", "se", "ucl", "lcl", "wt"), ~ signif(., 3))
 }
 
