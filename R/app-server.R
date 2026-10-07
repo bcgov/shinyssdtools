@@ -55,7 +55,7 @@ app_server <- function(input, output, session) {
   trans <- reactive({
     translations$trans <- translations[[current_lang()]]
     translations
-  }) %>%
+  }) |>
     bindEvent(current_lang())
 
   client_translations <- reactive({
@@ -75,7 +75,7 @@ app_server <- function(input, output, session) {
       "updateTranslations",
       list(translations = client_translations(), language = current_lang())
     )
-  }) %>%
+  }) |>
     bindEvent(client_translations())
 
   # --- Number formatting
@@ -86,7 +86,7 @@ app_server <- function(input, output, session) {
       "spanish" = ".",
       ","  # Default for English
     )
-  }) %>%
+  }) |>
     bindEvent(current_lang())
 
   decimal_mark <- reactive({
@@ -96,7 +96,7 @@ app_server <- function(input, output, session) {
       "spanish" = ",",
       "."  # Default for English
     )
-  }) %>%
+  }) |>
     bindEvent(current_lang())
 
   # Module Server Calls -----------------------------------------------------
@@ -181,7 +181,7 @@ app_server <- function(input, output, session) {
       p(sver),
       includeHTML(file_path)
     )
-  }) %>%
+  }) |>
     bindEvent(current_lang())
 
   output$ui_userguide <- renderUI({
@@ -204,6 +204,6 @@ app_server <- function(input, output, session) {
     }
 
     includeHTML(file_path)
-  }) %>%
+  }) |>
     bindEvent(current_lang())
 }

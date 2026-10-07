@@ -15,8 +15,10 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-#' @import shiny magrittr bslib shinyvalidate
+#' @import shiny bslib shinyvalidate
 #' @importFrom ssdtools ssd_fit_bcanz
+#' @importFrom kableExtra save_kable
 #' @importFrom knitr kable
+#' @importFrom pkgload pkg_name
 #' @importFrom rlang .data
 NULL

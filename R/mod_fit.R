@@ -30,7 +30,7 @@ mod_fit_ui <- function(id) {
           tagList(
             div(
               h5(span(`data-translate` = "ui_tabfit", "Fit distributions")),
-            ) %>%
+            ) |>
               shinyhelper::helper(
                 type = "markdown",
                 content = "fitTab",
@@ -194,7 +194,7 @@ mod_fit_server <- function(
         current_val <- isolate(fit_trigger())
         fit_trigger(current_val + 1)
       }
-    }) %>%
+    }) |>
       bindEvent(main_nav())
 
     # Also increment when manual update is needed
@@ -202,7 +202,7 @@ mod_fit_server <- function(
       needs_update(FALSE)
       current_val <- isolate(fit_trigger())
       fit_trigger(current_val + 1)
-    }) %>%
+    }) |>
       bindEvent(input$updateFit)
 
     # Auto-update for critical changes
@@ -212,13 +212,13 @@ mod_fit_server <- function(
         current_val <- isolate(fit_trigger())
         fit_trigger(current_val + 1)
       }
-    }) %>%
+    }) |>
       bindEvent(input$selectConc, data_mod$data(), ignoreInit = TRUE)
 
     # monitor if out of date
     observe({
       needs_update(TRUE)
-    }) %>%
+    }) |>
       bindEvent(input$selectDist, input$rescale)
 
     fit_dist <- reactive({
@@ -244,13 +244,13 @@ mod_fit_server <- function(
         silent = TRUE,
         rescale = rescale
       ))
-    }) %>%
+    }) |>
       bindCache(
         input$selectConc,
         input$selectDist,
         input$rescale,
         data_mod$data()
-      ) %>%
+      ) |>
       bindEvent(fit_trigger())
 
     # Dynamic icon for update button
@@ -260,7 +260,7 @@ mod_fit_server <- function(
       } else {
         icon("check-circle", class = paste(color_button_icon, "me-1"))
       }
-    }) %>%
+    }) |>
       bindEvent(needs_update())
 
     observe({
@@ -276,7 +276,7 @@ mod_fit_server <- function(
         choices = choices,
         selected = selected
       )
-    }) %>%
+    }) |>
       bindEvent(data_mod$clean_data())
 
     observe({
@@ -288,13 +288,13 @@ mod_fit_server <- function(
           value = toxicant_name
         )
       }
-    }) %>%
+    }) |>
       bindEvent(data_mod$toxicant_name())
 
     observe({
       trans <- translations()
       updateTextInput(session, "yaxis2", value = tr("ui_2ploty", trans))
-    }) %>%
+    }) |>
       bindEvent(translations())
 
     # validation --------------------------------------------------------------
@@ -360,14 +360,14 @@ mod_fit_server <- function(
 
       trans <- translations()
       gof <-
-        ssdtools::ssd_gof(dist, wt = TRUE) %>%
+        ssdtools::ssd_gof(dist, wt = TRUE) |>
         # Remove at_bound and computable columns
-        dplyr::select(-at_bound, -computable) %>%
+        dplyr::select(-at_bound, -computable) |>
         # Round different columns to different sig figs
         dplyr::mutate(
           dplyr::across(c(log_lik, aic, aicc, bic), ~ signif(.x, 4))
-        ) %>%
-        dplyr::mutate_if(is.numeric, ~ signif(., 3)) %>%
+        ) |>
+        dplyr::mutate_if(is.numeric, ~ signif(., 3)) |>
         dplyr::arrange(dplyr::desc(.data$wt))
       names(gof) <- gsub("weight", tr("ui_2weight", trans), names(gof))
       gof
@@ -379,7 +379,7 @@ mod_fit_server <- function(
     observe({
       render_status$plot_ready <- FALSE
       render_status$table_ready <- FALSE
-    }) %>%
+    }) |>
       bindEvent(fit_dist())
 
     output$plotDist <- renderPlot(
@@ -425,14 +425,14 @@ mod_fit_server <- function(
         waiter_distplot$hide()
         waiter_gof$hide()
       }
-    }) %>%
+    }) |>
       bindEvent(render_status$plot_ready, render_status$table_ready)
 
     # Notify when failed fits
     fit_fail <- reactive({
       dist <- fit_dist()
       paste0(setdiff(input$selectDist, names(dist)), collapse = ", ")
-    }) %>%
+    }) |>
       bindEvent(fit_dist())
 
     output$fitFail <- renderText({
@@ -446,7 +446,7 @@ mod_fit_server <- function(
         ),
         "</font>"
       ))
-    }) %>%
+    }) |>
       bindEvent(fit_fail())
 
     # download handlers -------------------------------------------------------
@@ -498,7 +498,7 @@ mod_fit_server <- function(
       iv$is_valid() &&
         !is.null(fit_dist()) &&
         !inherits(fit_dist(), "try-error")
-    }) %>%
+    }) |>
       bindEvent(fit_dist(), iv$is_valid())
 
     output$has_fit <- has_fit

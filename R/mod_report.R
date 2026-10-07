@@ -30,7 +30,7 @@ mod_report_ui <- function(id) {
           tagList(
             div(
               h5(span(`data-translate` = "ui_tabreport", "Get BCANZ report")),
-            ) %>%
+            ) |>
               shinyhelper::helper(
                 type = "markdown",
                 content = "reportTab",
@@ -174,7 +174,7 @@ mod_report_server <- function(
         choices = choices,
         selected = nboot_value
       )
-    }) %>%
+    }) |>
       bindEvent(lang(), predict_mod$nboot())
 
     # Update toxicant input when shared value changes from another module
@@ -189,13 +189,13 @@ mod_report_server <- function(
             value = toxicant_name
           )
         }
-      }) %>%
+      }) |>
         bindEvent(shared_toxicant_name())
 
       # Update shared value when this module's input changes
       observe({
         shared_toxicant_name(input$toxicant)
-      }) %>%
+      }) |>
         bindEvent(input$toxicant)
     }
 
@@ -268,12 +268,12 @@ mod_report_server <- function(
       html_string <- gsub('<a href=', '<a target="_blank" href=', html_string, fixed = TRUE)
 
       html_string
-    }) %>%
+    }) |>
       bindEvent(input$generateReport)
 
     has_preview <- reactive({
       !is.null(report_preview_html())
-    }) %>%
+    }) |>
       bindEvent(report_preview_html())
 
     output$has_preview <- has_preview
@@ -297,7 +297,7 @@ mod_report_server <- function(
         "
         ))
       }
-    }) %>%
+    }) |>
       bindEvent(report_preview_html())
 
     # Generate fresh PDF for download

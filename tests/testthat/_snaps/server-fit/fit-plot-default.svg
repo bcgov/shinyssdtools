@@ -133,9 +133,9 @@
 <polyline points='197.84,546.24 197.84,543.50 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <polyline points='370.30,546.24 370.30,543.50 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <polyline points='542.76,546.24 542.76,543.50 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
-<text x='195.17' y='555.04' style='font-size: 9.60px; font-family: sans;' textLength='5.34px' lengthAdjust='spacingAndGlyphs'>1</text>
-<text x='364.96' y='555.04' style='font-size: 9.60px; font-family: sans;' textLength='10.68px' lengthAdjust='spacingAndGlyphs'>10</text>
-<text x='534.75' y='555.04' style='font-size: 9.60px; font-family: sans;' textLength='16.02px' lengthAdjust='spacingAndGlyphs'>100</text>
+<text x='197.84' y='555.04' text-anchor='middle' style='font-size: 9.60px; font-family: sans;' textLength='5.34px' lengthAdjust='spacingAndGlyphs'>1</text>
+<text x='370.30' y='555.04' text-anchor='middle' style='font-size: 9.60px; font-family: sans;' textLength='10.68px' lengthAdjust='spacingAndGlyphs'>10</text>
+<text x='542.76' y='555.04' text-anchor='middle' style='font-size: 9.60px; font-family: sans;' textLength='16.02px' lengthAdjust='spacingAndGlyphs'>100</text>
 <text x='340.52' y='568.03' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='112.73px' lengthAdjust='spacingAndGlyphs'>Concentration (mg/L)</text>
 <text transform='translate(13.74,283.68) rotate(-90)' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='119.40px' lengthAdjust='spacingAndGlyphs'>Cumulative Probability</text>
 <rect x='643.54' y='244.17' width='70.99' height='79.03' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
