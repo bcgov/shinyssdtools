@@ -33,7 +33,7 @@ mod_predict_ui <- function(id) {
               `data-translate` = "ui_tabpredict",
               "Get predictions"
             )),
-          ) %>%
+          ) |>
             shinyhelper::helper(
               type = "markdown",
               content = "predictTab",
@@ -412,7 +412,7 @@ mod_predict_server <- function(
         current_val <- isolate(predict_trigger())
         predict_trigger(current_val + 1)
       }
-    }) %>%
+    }) |>
       bindEvent(main_nav())
 
     # Also trigger when threshold values change
@@ -421,7 +421,7 @@ mod_predict_server <- function(
         current_val <- isolate(predict_trigger())
         predict_trigger(current_val + 1)
       }
-    }) %>%
+    }) |>
       bindEvent(
         thresh_rv$percent,
         thresh_rv$conc,
@@ -435,14 +435,14 @@ mod_predict_server <- function(
         current_val <- isolate(predict_trigger())
         predict_trigger(current_val + 1)
       }
-    }) %>%
+    }) |>
       bindEvent(input$getCl)
 
     # Show waiter when prediction starts
     observe({
       render_status$plot_ready <- FALSE
       waiter_pred_plot$show()
-    }) %>%
+    }) |>
       bindEvent(predict_trigger())
 
     observe({
@@ -459,7 +459,7 @@ mod_predict_server <- function(
         choices = choices,
         selected = input$threshType
       )
-    }) %>%
+    }) |>
       bindEvent(translations())
 
     observe({
@@ -476,7 +476,7 @@ mod_predict_server <- function(
         choices = choices,
         selected = input$ribbonStyle
       )
-    }) %>%
+    }) |>
       bindEvent(translations())
 
     observe({
@@ -493,7 +493,7 @@ mod_predict_server <- function(
         choices = choices,
         selected = choices[2]
       )
-    }) %>%
+    }) |>
       bindEvent(lang())
 
     observe({
@@ -505,13 +505,13 @@ mod_predict_server <- function(
           value = toxicant_name
         )
       }
-    }) %>%
+    }) |>
       bindEvent(data_mod$toxicant_name())
 
     observe({
       trans <- translations()
       updateTextInput(session, "yaxis", value = tr("ui_2ploty", trans))
-    }) %>%
+    }) |>
       bindEvent(translations())
 
     thresh_rv <- reactiveValues(
@@ -714,7 +714,7 @@ mod_predict_server <- function(
       if (render_status$plot_ready) {
         waiter_pred_plot$hide()
       }
-    }) %>%
+    }) |>
       bindEvent(render_status$plot_ready)
 
     # Dynamic text outputs for HC/PC values
@@ -798,7 +798,7 @@ mod_predict_server <- function(
     observe({
       cl_requested(TRUE)
       cl_nboot(clean_nboot(input$bootSamp))
-    }) %>%
+    }) |>
       bindEvent(input$getCl)
 
     # Trigger plot update when includeCi checkbox changes and CL has been generated
@@ -807,7 +807,7 @@ mod_predict_server <- function(
         current_val <- isolate(predict_trigger())
         predict_trigger(current_val + 1)
       }
-    }) %>%
+    }) |>
       bindEvent(input$includeCi, ignoreInit = TRUE)
 
     predict_hc <- reactive({
@@ -832,7 +832,7 @@ mod_predict_server <- function(
           proportion = unique(c(1:99, thresh_rv$percent)) / 100
         )
       }
-    }) %>%
+    }) |>
       bindCache(
         thresh_rv$percent,
         thresh_rv$conc,
@@ -840,7 +840,7 @@ mod_predict_server <- function(
         cl_requested(),
         cl_nboot(),
         input$includeCi
-      ) %>%
+      ) |>
       bindEvent(predict_trigger())
 
     transformation <- reactive({
@@ -915,17 +915,17 @@ mod_predict_server <- function(
       colour <- if (input$selectColour == "-none-") {
         NULL
       } else {
-        input$selectColour %>% make.names()
+        input$selectColour |> make.names()
       }
       label <- if (input$selectLabel == "-none-") {
         NULL
       } else {
-        input$selectLabel %>% make.names()
+        input$selectLabel |> make.names()
       }
       shape <- if (input$selectShape == "-none-") {
         NULL
       } else {
-        input$selectShape %>% make.names()
+        input$selectShape |> make.names()
       }
       percent <- if (!input$checkHc || is.null(perc)) {
         NULL
@@ -1001,12 +1001,12 @@ mod_predict_server <- function(
       y$dists <- NULL
       y$samples <- NULL
       y <-
-        y %>%
+        y |>
         dplyr::arrange(dplyr::desc(.data$wt))
       waiter::waiter_hide()
       y
-    }) %>%
-      bindCache(thresh_rv$percent, thresh_rv$conc, input$bootSamp) %>%
+    }) |>
+      bindCache(thresh_rv$percent, thresh_rv$conc, input$bootSamp) |>
       bindEvent(input$getCl)
 
     describe_cl <- reactive({
@@ -1051,7 +1051,7 @@ mod_predict_server <- function(
     has_predict <- reactive({
       iv$is_valid() &&
         !is.null(predict_hc())
-    }) %>%
+    }) |>
       bindEvent(predict_hc(), iv$is_valid())
 
     output$has_predict <- has_predict
@@ -1059,7 +1059,7 @@ mod_predict_server <- function(
 
     has_cl <- reactive({
       !is.null(table_cl())
-    }) %>%
+    }) |>
       bindEvent(table_cl())
 
     output$has_cl <- has_cl
