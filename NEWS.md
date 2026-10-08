@@ -1,4 +1,94 @@
-<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
+
+# shinyssdtools 0.5.4 (2026-06-11)
+
+- Fix BCANZ report generation failure on the deployed app by moving `kableExtra` and `pkgload` from Suggests to Imports.
+- Make deployment script non-destructive and verify renv library/lockfile synchronization before deploying.
+
+# shinyssdtools 0.5.3 (2026-04-23)
+
+- Fix validation and plot rendering for CSV column headers with non-syntactic characters (e.g., spaces).
+
+# shinyssdtools 0.5.2 (2026-03-19)
+
+- Fix x-axis tick marks error when label selector is set to `-none-`.
+
+# shinyssdtools 0.5.1 (2026-03-16)
+
+- Fix y-axis label default to translated "Species affected (%)" on fit and predict plots.
+- Update ribbon option label to "Model averaged SSD and CL style".
+- Track rendered about/user guide HTML files so `install_github` includes About and User Guide tabs.
+- Confidence limits on the prediction plot are now included by default.
+- Added tooltips to table column headers.
+- Fixed broken links on About and User Guide tabs (CCME and ACAT URLs).
+- Updated French translations following review.
+- Reviewed About and User Guide content for correctness and added links to specific ssdtools vignettes.
+- Corrected JOSS article link.
+
+# shinyssdtools 0.5.0 (2026-01-06)
+
+- Added comprehensive testing infrastructure with shinytest2 and testthat.
+- Updated to CRAN ssdtools version 2.4.0.
+  - Changed `ssd_fit_dists()` to `ssd_fit_bcanz()` for BCANZ compliance.
+  - Updated `ssd_gof()` and `ssd_hp()` for deprecated argument changes.
+- Major UI/UX improvements:
+  - Refactored app into modular architecture for better maintainability.
+  - Switched to `bslib` for modern UI components and improved layouts.
+  - Added "Update Fit" button to prevent unintended recalculations.
+  - Improved client-side translation system for instant language switching.
+  - Added option to include confidence limits on model-average plot with selectable ribbon/line style.
+  - Added HTML preview for BCANZ reports before download.
+  - Bootstrap samples now accept any value (not just preset options).
+  - Added button to copy generated R code from the R Code tab.
+  - Added shinyssdtools version to BCANZ report.
+  - Moved toxicant name field to Data tab; value can be used as plot title.
+  - Moved language selection to a dropdown in the navbar.
+- Clarified minimum data requirements (6+ positive, non-missing values) with better error messages.
+- Improved help text throughout app with `shinyhelper` icons.
+
+# shinyssdtools 0.4.1 (2025-04-02)
+
+- Updated TESTING.md file. 
+
+# shinyssdtools 0.4.0 (2025-03-04)
+
+- Update to CRAN ssdtools version 2.3.0.
+  - Remove invpareto from distribution options. 
+- Update citation to latest JOSS paper.
+
+# shinyssdtools 0.3.5 (2024-12-18)
+
+- Remove unused package dependencies of stringr and scales. 
+
+# shinyssdtools 0.3.4 (2024-12-12)
+
+- Update plotting functions to match new arguments in ssdtools.
+- Code rendering is now simplified as most plot 'add-ons' have been incorporated into `ssd_plot()`.
+- French big.mark fixed.
+
+# shinyssdtools 0.3.3 (2024-12-05)
+
+- Added label size to rendered code for prediction plot. 
+
+# shinyssdtools 0.3.2 (2024-11-28)
+
+- Adding TESTING.md file for steps on how to manually test app.
+- Internal changes.
+
+# shinyssdtools 0.3.1 (2024-11-08)
+
+- Fix prediction plot x-axis label/breaks bugs 
+  - incorrect breaks after transform
+  - incorrect bold face if breaks outside limits
+  - label function breaking if breaks outside limits and converted to NA
+
+# shinyssdtools 0.3.0 (2024-10-01)
+
+- More patches for compatibility with ssdtools CRAN version 2.0.0
+- Removed at_boundary_ok and computable UI inputs
+- Fixed bug in predict plot dotted line caused by rounding estimated hazard concentration 
+- Improved plot axis labels (i.e., in both French and English versions)
+
 
 # shinyssdtools 0.2.0 (2024-02-09)
 
@@ -29,5 +119,3 @@
 # shinyssdtools 0.0.3.9000 (2021-04-02)
 
 - Internal changes only.
-
-

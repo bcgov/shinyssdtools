@@ -1,22 +1,68 @@
-# install cran ssdtools
-remotes::install_github("poissonconsulting/ssdtools")
-# get cran versions of poisson pkgs
-pak::pak("err")
-pak::pak("universals")
-pak::pak("chk")
+# Copyright 2015-2025 Province of British Columbia
+# Copyright 2021 Environment and Climate Change Canada
+# Copyright 2023-2025 Australian Government Department of Climate Change,
+# Energy, the Environment and Water
+#
+#    Licensed under the Apache License, Version 2.0 (the "License");
+#    you may not use this file except in compliance with the License.
+#    You may obtain a copy of the License at
+#
+#       https://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS,
+#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    See the License for the specific language governing permissions and
+#    limitations under the License.
 
-# deploy to bcgov test site
-rsconnect::deployApp(account = "bcgov-env", appName = "shinyssdtools_test", 
-                     forceUpdate = TRUE)
+# 1. Sync renv library to DESCRIPTION and verify lockfile matches.
+#    CRAN-only repos avoid r-universe dev versions that shinyapps.io can't
+#    install. renv::install() adds any missing/updated Imports/Depends from
+#    DESCRIPTION without destroying the active session's library; snapshot
+#    then pins the lockfile to the current library state. The synchronized
+#    check fails fast if rsconnect would otherwise report
+#    "Library and lockfile are out of sync".
+Sys.setenv(RENV_CONFIG_REPOS_OVERRIDE = "https://cran.r-project.org")
+options(repos = c(CRAN = "https://cran.r-project.org"))
+renv::install()
+renv::snapshot(prompt = FALSE)
+stopifnot(isTRUE(renv::status()$synchronized))
 
-# deploy to bcgov live site
-rsconnect::deployApp(account = "bcgov-env", appName = "ssdtools", 
-                     forceUpdate = TRUE)
+# 2. Build user guide/about HTML for all languages
+rmarkdown::render("inst/extdata/user-en.md", output_format = "html_fragment")
+rmarkdown::render("inst/extdata/user-fr.md", output_format = "html_fragment")
+rmarkdown::render("inst/extdata/user-es.md", output_format = "html_fragment")
+rmarkdown::render("inst/extdata/about-en.md", output_format = "html_fragment")
+rmarkdown::render("inst/extdata/about-fr.md", output_format = "html_fragment")
+rmarkdown::render("inst/extdata/about-es.md", output_format = "html_fragment")
 
-# deploy to poissonconsulting test site
-rsconnect::deployApp(account = "poissonconsulting", appName = "shinyssdtools-dev", 
-                     forceUpdate = TRUE)
+# 3. Build helpfiles from user guides (single source of truth)
+source("scripts/build-helpfiles.R")
 
-# deploy to poissonconsulting live site
-rsconnect::deployApp(account = "poissonconsulting", appName = "shinyssdtools", 
-                     forceUpdate = TRUE)
+# 4. Deploy to poissonconsulting test site
+rsconnect::deployApp(
+  account = "poissonconsulting",
+  appName = "shinyssdtools-dev",
+  forceUpdate = TRUE
+)
+
+# 5. Deploy to poissonconsulting live site
+rsconnect::deployApp(
+  account = "poissonconsulting",
+  appName = "shinyssdtools",
+  forceUpdate = TRUE
+)
+
+# 6. Deploy to bcgov test site (requires bcgov-env account access)
+# rsconnect::deployApp(
+#   account = "bcgov-env",
+#   appName = "shinyssdtools_test",
+#   forceUpdate = TRUE
+# )
+
+# 7. Deploy to bcgov live site (requires bcgov-env account access)
+# rsconnect::deployApp(
+#   account = "bcgov-env",
+#   appName = "ssdtools",
+#   forceUpdate = TRUE
+# )

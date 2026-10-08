@@ -1,4 +1,20 @@
 
+<!--
+Copyright 2015-2025 Province of British Columbia
+Copyright 2021 Environment and Climate Change Canada
+Copyright 2023-2025 Australian Government Department of Climate Change,
+Energy, the Environment and Water
+&#10;   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+&#10;      https://www.apache.org/licenses/LICENSE-2.0
+&#10;   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # shinyssdtools
@@ -41,6 +57,7 @@ package, `shinyssdtools` also provides
 - a bilingual (English/French) interface;
 - generation of R scripts for reproducibility;
 - customization and downloads of plots and tables
+- Generation of html/pdf report
 
 ## Information
 
@@ -80,11 +97,52 @@ name simply make a commit in the master or dev branch and include
 `SHINYAPPS_SECRET` in your repository GitHub secrets). This triggers the
 `deploy-app.yml` GitHub action.
 
+## Consultation
+
+### Versioning
+
+The ssdtools and [shinyssdtools](https://github.com/bcgov/shinyssdtools)
+development team is using [Semantic Versioning](https://semver.org/) for
+numbering releases. For example, using the notation “v 2.3.0”, the first
+number is the major version, the second the minor version and the third
+the patch version – i.e. v MAJOR.MINOR.PATCH. Each of these number
+levels relates to the following types of updates:
+
+- MAJOR versions – updates that result in changes to the way that water
+  quality guideline values are calculated (produced using
+  `ssd_fit_bcanz()` and `ssd_hc_bcanz()` and the shinyssdtools
+  application).
+- MINOR versions – updates that add new functionality (e.g. for
+  researchers) but which do not change the way that water quality
+  guideline values are calculated.
+- PATCH versions – updates that fix bugs.
+
+### Review Process
+
+The jurisdictional consultation and review process for ssdtools updates
+is set out as follows:
+
+- MAJOR version releases
+  - the ssdtools Technical Committee will review and approve/not approve
+    proposed changes to ssdtools and shinyssdtools updates that would
+    constitute MAJOR version releases.
+  - The ssdtools Technical Committee will approve/not approve a MAJOR
+    version release.
+- MINOR versions releases
+  - the ssdtools Technical Committee will be consulted on and will
+    provide guidance on MINOR version updates.
+- PATCH version releases
+  - the ssdtools Technical Committee will not be consulted on PATCH
+    version releases unless the ssdtools and shinyssdtools development
+    team identify a need to do so.
+
 ## License
 
 The code is released under the Apache License 2.0
 
-Copyright 2021 Province of British Columbia
+Copyright 2015-2025 Province of British Columbia, 2021 Environment and
+Climate Change Canada, 2023-2025 Australian Government Department of
+Climate Change, Energy, the Environment and Water
 
 Licensed under the Apache License, Version 2.0 (the “LICENSE”); you may
 not use this file except in compliance with the License. You may obtain

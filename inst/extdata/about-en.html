@@ -1,0 +1,54 @@
+
+
+
+<p>This app fits species sensitivity distributions to concentration
+data. The app is built from the R package <a href="https://bcgov.github.io/ssdtools/">ssdtools</a>, and shares the
+same functionality. It will be updated and redeployed following any
+relevant changes to ssdtools. It is recommended that when reporting the
+HC5 estimates generated using this app that the version of ssdtools and
+the name of the distributions fit to the dataset are listed.</p>
+<p>For more information on the methods used, see the ssdtools
+articles:</p>
+<ul>
+<li><a href="https://bcgov.github.io/ssdtools/articles/distributions.html">Distributions</a>
+- probability distributions available for fitting SSDs</li>
+<li><a href="https://bcgov.github.io/ssdtools/articles/model-averaging.html">Model
+Averaging</a> - how model-averaged SSD estimates are calculated</li>
+<li><a href="https://bcgov.github.io/ssdtools/articles/confidence-intervals.html">Confidence
+Intervals</a> - methods for calculating uncertainty bounds on hazard
+concentrations</li>
+<li><a href="https://bcgov.github.io/ssdtools/articles/small-sample-bias.html">Small
+Sample Bias</a> - bias considerations when working with limited sample
+sizes</li>
+<li><a href="https://bcgov.github.io/ssdtools/articles/customising-plots.html">Customising
+Plots</a> - modifying SSD plot outputs</li>
+<li><a href="https://bcgov.github.io/ssdtools/articles/faqs.html">FAQs</a> -
+frequently asked questions</li>
+</ul>
+<p>The columns in the goodness of fit table are the distribution (dist),
+the number of parameters (npars), the number of observations (nobs), the
+log-likelihood (log_lik), Akaike’s Information Criterion (aic), Akaike’s
+Information Criterion corrected for sample size (aicc), the AICc
+difference (delta), the AICc based Akaike weight (wt), Bayesian
+Information Criterion (bic), the Anderson-Darling statistic (ad), the
+Kolmogorov-Smirnov statistic (ks), and the Cramer-von Mises statistic
+(cvm). The prediction is the model averaged (using aicc) estimate of the
+fit. The percent hazard concentration is the concentration of the
+chemical which is predicted to affect that percent of the species
+tested.</p>
+<p>To report a bug, unexpected behaviour, or to request a feature,
+please file a <a href="https://github.com/poissonconsulting/shinyssdtools/issues">GitHub
+issue here</a>.</p>
+<p>To cite the ssdtools package in publications, use: Thorley, J.,
+Fisher, R., Fox, D., and Schwarz, C. 2025. <a href="https://joss.theoj.org/papers/10.21105/joss.07492">ssdtools v2: An
+R package to fit Species Sensitivity Distributions. JOSS 10(105):
+7492.</a> <code>doi:10.21105/joss.07492</code>.</p>
+<p>To cite the web app, use: Seb Dalgarno (2018) ssdtools: A shiny web
+app to analyse species sensitivity distributions. Prepared by Poisson
+Consulting for the Ministry of the Environment, British Columbia.
+<code>https://bcgov-env.shinyapps.io/ssdtools/</code></p>
+<p>For more information on using model averaging to generate HC5
+estimates, please see: <a href="http://a100.gov.bc.ca/appsdata/acat/documents/r57400/2_1568399094009_8398900200.pdf">Schwarz,
+C.J. and A.R. Tillmanns. 2019. Improving statistical methods to derive
+species sensitivity distributions. Water Science Series, WSS2019-07,
+Province of British Columbia, Victoria.</a></p>

@@ -1,0 +1,4 @@
+dist,proportion,est,se,lcl,ucl,wt,level,est_method,ci_method,boot_method,nboot,pboot
+average,0.05,1.29,0.905,1.15,3.23,1,0.95,multi,weighted_samples,parametric,5,1
+gamma,0.05,1.07,1.16,0.722,3.21,0.668,0.95,cdf,percentile,parametric,5,1
+lnorm,0.05,1.68,1.42,1.77,4.83,0.332,0.95,cdf,percentile,parametric,5,1
