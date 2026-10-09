@@ -1006,7 +1006,9 @@ mod_predict_server <- function(
       waiter::waiter_hide()
       y
     }) |>
-      bindCache(thresh_rv$percent, thresh_rv$conc, input$bootSamp) |>
+      # The fit too: other fits can have the same estimate to 3 significant
+      # figures (#129).
+      bindCache(fit_mod$fit_dist(), thresh_rv$percent, thresh_rv$conc, input$bootSamp) |>
       bindEvent(input$getCl)
 
     describe_cl <- reactive({
