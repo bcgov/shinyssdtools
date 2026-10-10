@@ -425,6 +425,39 @@
       "NeedsCompilation": "yes",
       "Repository": "CRAN"
     },
+    "VGAM": {
+      "Package": "VGAM",
+      "Version": "1.1-14",
+      "Source": "Repository",
+      "Date": "2025-12-02",
+      "Title": "Vector Generalized Linear and Additive Models",
+      "Authors@R": "c(person(\"Thomas\", \"Yee\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0002-9970-3907\"), email = \"t.yee@auckland.ac.nz\"), person(\"Cleve\", \"Moler\", role = \"ctb\", comment = \"LINPACK routines in src\"))",
+      "Author": "Thomas Yee [aut, cre] (ORCID: <https://orcid.org/0000-0002-9970-3907>), Cleve Moler [ctb] (LINPACK routines in src)",
+      "Maintainer": "Thomas Yee <t.yee@auckland.ac.nz>",
+      "Depends": [
+        "R (>= 4.1.0)",
+        "methods",
+        "stats",
+        "stats4",
+        "splines"
+      ],
+      "Suggests": [
+        "VGAMextra",
+        "MASS",
+        "mgcv"
+      ],
+      "Enhances": [
+        "VGAMdata"
+      ],
+      "Description": "An implementation of about 6 major classes of statistical regression models. The central algorithm is Fisher scoring and iterative reweighted least squares. At the heart of this package are the vector generalized linear and additive model (VGLM/VGAM) classes. VGLMs can be loosely thought of as multivariate GLMs. VGAMs are data-driven VGLMs that use smoothing. The book \"Vector Generalized Linear and Additive Models: With an Implementation in R\" (Yee, 2015) <DOI:10.1007/978-1-4939-2818-7> gives details of the statistical framework and the package. Currently only fixed-effects models are implemented. Many (100+) models and distributions are estimated by maximum likelihood estimation (MLE) or penalized MLE. The other classes are RR-VGLMs (reduced-rank VGLMs), quadratic RR-VGLMs, doubly constrained RR-VGLMs, quadratic RR-VGLMs, reduced-rank VGAMs, RCIMs (row-column interaction models)---these classes perform constrained and unconstrained quadratic ordination (CQO/UQO) models in ecology, as well as constrained additive ordination (CAO). Hauck-Donner effect detection is implemented. Note that these functions are subject to change; see the NEWS and ChangeLog files for latest changes.",
+      "License": "GPL-3",
+      "URL": "https://www.stat.auckland.ac.nz/~yee/VGAM/",
+      "NeedsCompilation": "yes",
+      "BuildVignettes": "yes",
+      "LazyLoad": "yes",
+      "LazyData": "yes",
+      "Repository": "CRAN"
+    },
     "abind": {
       "Package": "abind",
       "Version": "1.4-8",
@@ -3639,11 +3672,11 @@
     },
     "ssdtools": {
       "Package": "ssdtools",
-      "Version": "2.6.0",
+      "Version": "2.7.0",
       "Source": "Repository",
       "Title": "Species Sensitivity Distributions",
       "Authors@R": "c( person(\"Joe\", \"Thorley\", , \"joe@poissonconsulting.ca\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0002-7683-4592\")), person(\"Rebecca\", \"Fisher\", , \"R.Fisher@aims.gov.au\", role = \"aut\"), person(\"David\", \"Fox\", , \"david.fox@environmetrics.net.au\", role = \"aut\"), person(\"Carl\", \"Schwarz\", role = \"aut\"), person(\"Angeline\", \"Tillmanns\", role = \"ctb\"), person(\"Seb\", \"Dalgarno\", , \"seb@poissonconsulting.ca\", role = \"ctb\", comment = c(ORCID = \"0000-0002-3658-4517\")), person(\"Kathleen\", \"McTavish\", role = \"ctb\"), person(\"Heather\", \"Thompson\", role = \"ctb\"), person(\"Doug\", \"Spry\", role = \"ctb\"), person(\"Rick\", \"van Dam\", role = \"ctb\"), person(\"Graham\", \"Batley\", role = \"ctb\"), person(\"Ali\", \"Azizishirazi\", role = \"ctb\"), person(\"Nadine\", \"Hussein\", , \"nadine@poissonconsulting.ca\", role = \"ctb\", comment = c(ORCID = \"0000-0003-4470-8361\")), person(\"Sarah\", \"Lyons\", , \"sarah@poissonconsulting.ca\", role = \"ctb\", comment = c(ORCID = \"0000-0002-6745-6796\")), person(\"Duncan\", \"Kennedy\", , \"duncan@poissonconsulting.ca\", role = \"ctb\", comment = c(ORCID = \"0009-0001-4880-5751\")), person(\"Stephanie\", \"Hazlitt\", role = \"ctb\"), person(\"Hadley\", \"Wickham\", role = \"ctb\"), person(\"Sergio\", \"Ibarra Espinosa\", role = \"ctb\"), person(\"Andy\", \"Teucher\", role = \"ctb\"), person(\"Emilie\", \"Doussantousse\", role = \"ctb\"), person(\"Nan-Hung\", \"Hsieh\", role = \"ctb\"), person(\"Florencia\", \"D'Andrea\", role = \"ctb\"), person(\"Eduard\", \"Szöcs\", role = \"ctb\", comment = c(ORCID = \"0000-0001-5376-1194\")), person(\"Province of British Columbia\", role = c(\"fnd\", \"cph\")), person(\"Environment and Climate Change Canada\", role = c(\"fnd\", \"cph\")), person(\"Australian Government Department of Climate Change, Energy, the Environment and Water\", role = c(\"fnd\", \"cph\")) )",
-      "Description": "Species sensitivity distributions are cumulative probability distributions which are fitted to toxicity concentrations for different species as described by Posthuma et al.(2001) <isbn:9781566705783>. The ssdtools package uses Maximum Likelihood to fit distributions such as the gamma, log-logistic, log-normal and log-normal log-normal mixture. Multiple distributions can be averaged using Akaike Information Criteria.  Confidence intervals on hazard concentrations and proportions are produced by bootstrapping.",
+      "Description": "Species sensitivity distributions are cumulative probability distributions which are fitted to toxicity concentrations for different species as described by Posthuma et al. (2001) <isbn:9781566705783>. The ssdtools package uses Maximum Likelihood to fit distributions such as the gamma, log-logistic, log-normal and log-normal log-normal mixture. Multiple distributions can be averaged using Akaike Information Criteria.  Confidence intervals on hazard concentrations and proportions are produced by bootstrapping.",
       "License": "Apache License (== 2.0) | file LICENSE",
       "URL": "https://github.com/bcgov/ssdtools, https://bcgov.github.io/ssdtools/",
       "BugReports": "https://github.com/bcgov/ssdtools/issues",
@@ -3651,19 +3684,17 @@
         "R (>= 4.1)"
       ],
       "Imports": [
-        "abind",
         "chk",
+        "dplyr",
         "furrr",
         "generics",
         "ggplot2",
-        "ggtext",
         "glue",
         "goftest",
         "graphics",
         "grid",
         "lifecycle",
         "parallel",
-        "plyr",
         "purrr",
         "Rcpp",
         "readr",
@@ -3675,28 +3706,23 @@
         "tibble",
         "TMB",
         "universals",
-        "utils"
+        "utils",
+        "VGAM"
       ],
       "Suggests": [
         "actuar",
         "covr",
-        "dplyr",
         "EnvStats",
         "extraDistr",
         "fitdistrplus",
         "grDevices",
         "knitr",
         "latex2exp",
-        "magrittr",
-        "mle.tools",
         "patchwork",
-        "reshape2",
         "rmarkdown",
         "testthat (>= 3.0.0)",
         "tidyr",
-        "tidyselect",
         "tinytex",
-        "VGAM",
         "withr"
       ],
       "LinkingTo": [
@@ -3705,11 +3731,11 @@
         "TMB"
       ],
       "VignetteBuilder": "knitr",
+      "Config/roxygen2/version": "8.1.0",
       "Config/testthat/edition": "3",
       "Encoding": "UTF-8",
       "Language": "en-US",
       "LazyData": "true",
-      "RoxygenNote": "7.3.3.9000",
       "NeedsCompilation": "yes",
       "Author": "Joe Thorley [aut, cre] (ORCID: <https://orcid.org/0000-0002-7683-4592>), Rebecca Fisher [aut], David Fox [aut], Carl Schwarz [aut], Angeline Tillmanns [ctb], Seb Dalgarno [ctb] (ORCID: <https://orcid.org/0000-0002-3658-4517>), Kathleen McTavish [ctb], Heather Thompson [ctb], Doug Spry [ctb], Rick van Dam [ctb], Graham Batley [ctb], Ali Azizishirazi [ctb], Nadine Hussein [ctb] (ORCID: <https://orcid.org/0000-0003-4470-8361>), Sarah Lyons [ctb] (ORCID: <https://orcid.org/0000-0002-6745-6796>), Duncan Kennedy [ctb] (ORCID: <https://orcid.org/0009-0001-4880-5751>), Stephanie Hazlitt [ctb], Hadley Wickham [ctb], Sergio Ibarra Espinosa [ctb], Andy Teucher [ctb], Emilie Doussantousse [ctb], Nan-Hung Hsieh [ctb], Florencia D'Andrea [ctb], Eduard Szöcs [ctb] (ORCID: <https://orcid.org/0000-0001-5376-1194>), Province of British Columbia [fnd, cph], Environment and Climate Change Canada [fnd, cph], Australian Government Department of Climate Change, Energy, the Environment and Water [fnd, cph]",
       "Maintainer": "Joe Thorley <joe@poissonconsulting.ca>",

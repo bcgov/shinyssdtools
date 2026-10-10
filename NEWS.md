@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# shinyssdtools 0.5.5 (2026-10-09)
+
+- Update to CRAN ssdtools version 2.7.0 (#127).
+- Fix the confidence limits table sometimes showing the limits of a previous fit, such as after correcting a concentration, when the estimate was unchanged to 3 significant figures (#129).
+
 # shinyssdtools 0.5.4 (2026-06-11)
 
 - Fix BCANZ report generation failure on the deployed app by moving `kableExtra` and `pkgload` from Suggests to Imports.
