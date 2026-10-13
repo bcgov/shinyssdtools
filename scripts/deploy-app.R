@@ -22,9 +22,13 @@
 #    then pins the lockfile to the current library state. The synchronized
 #    check fails fast if rsconnect would otherwise report
 #    "Library and lockfile are out of sync".
+#    renv::load() switches to the isolated project library so dev versions
+#    in the user library (e.g. from r-universe or GitHub) are not picked up.
 Sys.setenv(RENV_CONFIG_REPOS_OVERRIDE = "https://cran.r-project.org")
 options(repos = c(CRAN = "https://cran.r-project.org"))
+renv::load()
 renv::install()
+renv::install("rsconnect")
 renv::snapshot(prompt = FALSE)
 stopifnot(isTRUE(renv::status()$synchronized))
 
