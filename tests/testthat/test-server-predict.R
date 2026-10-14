@@ -305,6 +305,53 @@ test_that("CL table is valid", {
   )
 })
 
+test_that("CL table is of the current fit when its estimate is unchanged (#129)", {
+  # Boron, and boron with its median concentration 5% higher: both give an
+  # HC5 of 1.26 to 3 significant figures.
+  data_b <- test_data
+  i <- order(data_b$Conc)[14]
+  data_b$Conc[i] <- data_b$Conc[i] * 1.05
+  fit_a <- ssdtools::ssd_fit_bcanz(test_data, dists = c("lnorm", "gamma"))
+  fit_b <- ssdtools::ssd_fit_bcanz(data_b, dists = c("lnorm", "gamma"))
+  fit <- reactiveVal(fit_a)
+  fit_mod_ab <- fit_mod
+  fit_mod_ab$fit_dist <- fit
+  args <- predict_args
+  args$fit_mod <- fit_mod_ab
+
+  testServer(
+    mod_predict_server,
+    args = args,
+    {
+      session$setInputs(
+        threshType = "Concentration",
+        thresh = "5",
+        includeCi = TRUE,
+        bootSamp = "5"
+      )
+      session$flushReact()
+      session$setInputs(getCl = 1)
+      session$flushReact()
+      conc_a <- session$returned$threshold_values()$conc
+      cl_a <- session$returned$predict_cl()
+
+      fit(fit_b)
+      session$flushReact()
+      session$setInputs(getCl = 2)
+      session$flushReact()
+      expect_identical(session$returned$threshold_values()$conc, conc_a)
+      cl_b <- session$returned$predict_cl()
+
+      est_b <- ssdtools::ssd_hc_bcanz(fit_b, proportion = 0.05, average = FALSE)
+      expect_equal(
+        cl_b$est[match(est_b$dist, cl_b$dist)],
+        signif(est_b$est, 3)
+      )
+      expect_false(identical(cl_a, cl_b))
+    }
+  )
+})
+
 test_that("predictions include lcl/ucl when Get CL clicked", {
   set_test_seed()
   testServer(
