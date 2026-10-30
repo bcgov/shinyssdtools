@@ -13,11 +13,14 @@
 <url><loc>/reference/calculate_threshold_percent.html</loc></url>
 <url><loc>/reference/clean_nboot.html</loc></url>
 <url><loc>/reference/clean_ssd_data.html</loc></url>
+<url><loc>/reference/dt_header_tooltip_callback.html</loc></url>
 <url><loc>/reference/dt_options.html</loc></url>
+<url><loc>/reference/dt_weight_color_bar.html</loc></url>
 <url><loc>/reference/estimate_hc.html</loc></url>
 <url><loc>/reference/estimate_hp.html</loc></url>
 <url><loc>/reference/estimate_time.html</loc></url>
 <url><loc>/reference/format_r_code.html</loc></url>
+<url><loc>/reference/gof_header_tooltips.html</loc></url>
 <url><loc>/reference/gp_xbreaks.html</loc></url>
 <url><loc>/reference/guess_conc.html</loc></url>
 <url><loc>/reference/guess_sp.html</loc></url>
